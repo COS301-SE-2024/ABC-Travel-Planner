@@ -1,0 +1,21 @@
+#Env files
+.env
+.env.local
+.env.template
+
+#tmp files
+.tmp
+*.tmp
+*.log
+log.txt
+
+#Node
+/node_modules
+
+#VSCode 
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
