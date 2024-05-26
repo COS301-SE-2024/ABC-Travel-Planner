@@ -1,0 +1,17 @@
+{
+  "name": "abc-travel-planner-1",
+  "version": "1.0.0",
+  "description": "travel app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "cd apps/backend && npm run start",
+    "dev:frontend": "cd apps/frontend && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
