@@ -38,19 +38,19 @@ const SplashPage = () => {
 
                 <div style={styles.cardsContainer}>
                     <div className="card" style={styles.card}>
-                        <Image src="/images/Mountains.jpg" className="card-img-top" alt="Travel 1" width={300} height={200} />
+                        <Image src="/Images/Mountains.jpg" className="card-img-top" alt="Travel 1" width={300} height={200} />
                         <div className="card-body">
                             <h5 className="card-title">Explore the Mountains</h5>
                         </div>
                     </div>
                     <div className="card" style={styles.card}>
-                        <Image src="/images/BrazilBeach.jpg" className="card-img-top" alt="Travel 2" width={300} height={200} />
+                        <Image src="/Images/BrazilBeach.jpg" className="card-img-top" alt="Travel 2" width={300} height={200} />
                         <div className="card-body">
                             <h5 className="card-title">Discover the Beaches</h5>
                         </div>
                     </div>
                     <div className="card" style={styles.card}>
-                        <Image src="/images/Forest.jpg" className="card-img-top" alt="Travel 3" width={300} height={200} />
+                        <Image src="/Images/Forest.jpg" className="card-img-top" alt="Travel 3" width={300} height={200} />
                         <div className="card-body">
                             <h5 className="card-title">Adventure in the Forests</h5>
                         </div>
@@ -96,7 +96,7 @@ const styles = {
   container: {
       position: 'relative' as 'relative',
       minHeight: '100vh',
-      backgroundImage: 'url("/images/Background.jpg")',
+      backgroundImage: 'url("/Images/Background.jpg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       display: 'flex',
