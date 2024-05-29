@@ -88,10 +88,10 @@ nav ul li a {
 }
 
 /* HOME*/
+/* HOME*/
 .max-w-sm:hover {
   transform: translateY(-5px); 
 }
-
 
 .rating-container {
   display: flex;

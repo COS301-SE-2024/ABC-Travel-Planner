@@ -1,4 +1,3 @@
-// Home.js
 import React from 'react';
 
 const countries: string[] = [
@@ -22,7 +21,6 @@ const countries: string[] = [
   'Japan',
 ];
 
-
 async function getCountryData(country: string) {
   const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=EA30B923BE4A4CB28EE695CDFFEB1DE7&searchQuery=${encodeURIComponent(country)}`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
@@ -42,25 +40,6 @@ async function getCountryData(country: string) {
     return [];
   }
 }
-// async function getCountryData(country: string) {
-//   const url = 'https://api.content.tripadvisor.com/api/v1/location/search?key=EA30B923BE4A4CB28EE695CDFFEB1DE7&searchQuery=France';
-//   const options = { method: 'GET', headers: { accept: 'application/json' } };
-
-//   try {
-//     const response = await fetch(url, options);
-//     const data = await response.json();
-
-//     const updatedData = await Promise.all(data.data.map(async (destination: any) => {
-//       const imageUrl = await fetchImage(destination.location_id);
-//       return { ...destination, image: imageUrl };
-//     }));
-
-//     return { data: updatedData };
-//   } catch (err) {
-//     console.error(err);
-//   }
-
-// }
 
 async function getData() {
   try {
@@ -76,7 +55,6 @@ async function getData() {
     return { data: [] }; // Return an empty array in case of an error
   }
 }
-
 
 async function fetchImage(locationId: any) {
   const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=EA30B923BE4A4CB28EE695CDFFEB1DE7`;
@@ -97,7 +75,6 @@ async function fetchImage(locationId: any) {
   }
 }
 
-
 const Home = async () => {
   const data = await getData();
   const destinations = data?.data || [];
@@ -107,7 +84,7 @@ const Home = async () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {destinations.map((destination: any, index: number) => (
           <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
-            <img src={destination.image} className="w-full" alt={destination.name} /> 
+            <img src={destination.image} className="w-full h-48 object-cover" alt={destination.name} /> 
             <div className="px-6 py-4">
               <div className="font-bold text-xl mb-2">{destination.name}</div>
               <div className="flex justify-center items-center mb-2">
@@ -131,7 +108,4 @@ const Home = async () => {
   );
 };
 
-
 export default Home;
-
-
