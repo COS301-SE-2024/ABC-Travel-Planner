@@ -10,11 +10,12 @@ import './globals.css';  // Import the global styles from the app folder
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
+    const displayNavbar = pathname !== '/' && pathname !== '/login' && pathname !== '/Login';
 
     return (
         <html lang="en">
             <body>
-                {pathname !== '/' && <Navbar />}
+                {displayNavbar && <Navbar />}
                 {children}
             </body>
         </html>

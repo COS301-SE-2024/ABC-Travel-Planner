@@ -1,4 +1,4 @@
-import SplashPage from './splash';
+import SplashPage from './login/page';
 
 const Page = () => {
     return (
