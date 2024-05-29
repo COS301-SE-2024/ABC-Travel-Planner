@@ -42,38 +42,18 @@ async function getCountryData(country: string) {
     return [];
   }
 }
-// async function getCountryData(country: string) {
-//   const url = 'https://api.content.tripadvisor.com/api/v1/location/search?key=EA30B923BE4A4CB28EE695CDFFEB1DE7&searchQuery=France';
-//   const options = { method: 'GET', headers: { accept: 'application/json' } };
-
-//   try {
-//     const response = await fetch(url, options);
-//     const data = await response.json();
-
-//     const updatedData = await Promise.all(data.data.map(async (destination: any) => {
-//       const imageUrl = await fetchImage(destination.location_id);
-//       return { ...destination, image: imageUrl };
-//     }));
-
-//     return { data: updatedData };
-//   } catch (err) {
-//     console.error(err);
-//   }
-
-// }
 
 async function getData() {
   try {
     const countryDataPromises = countries.map(getCountryData);
     const allCountryData = await Promise.all(countryDataPromises);
 
-    // Flatten the array of arrays
     const combinedData = allCountryData.flat();
 
     return { data: combinedData };
   } catch (err) {
     console.error('Error fetching country data:', err);
-    return { data: [] }; // Return an empty array in case of an error
+    return { data: [] }; 
   }
 }
 
@@ -87,13 +67,13 @@ async function fetchImage(locationId: any) {
     const data = await response.json();
 
     if (data && data.data && data.data.length > 0) {
-      return data.data[0].images.large.url; // Use the first image's medium URL
+      return data.data[0].images.large.url; 
     } else {
-      return null; // No image available
+      return null; 
     }
   } catch (err) {
     console.error(`Error fetching image for location ${locationId}:`, err);
-    return null; // Return null if there's an error
+    return null; 
   }
 }
 
