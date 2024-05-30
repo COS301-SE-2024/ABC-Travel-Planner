@@ -174,100 +174,198 @@ nav ul li a {
 }
 
 /*ACCOUNT*/
-.account-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: rgba(142, 144, 145, 0.9); /* Light grey with transparency */
-  border-radius: 8px;
-  margin-top: 20px;
-  margin-bottom:20px;
+/*ACCOUNT*/
 
+.account-container {
+  max-width: 800px;
+  margin: 90px auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center the content inside the container */
 }
-.account-profile {
+
+.account-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 2rem;
 }
-.account-profile-image {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: #ccc;
-  margin-bottom: 1rem;
-  overflow: hidden;
+
+.account-profile {
+  display: flex;
+  align-items: center;
 }
+
+.account-profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+
 .account-profile-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%; 
+  border-radius: 50%;
 }
 
-.account-info-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.account-info {
-  width: 100%;
-  background-color: rgb(255, 255, 255);
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(82, 80, 80, 0.1); 
-  margin-bottom: 1rem;
-  text-align: center;
-  border: 1px solid #000000;
-}
-
-.account-image-container {
-  margin-top: 1rem;
-}
-
-.account-travel-image {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-.account-button {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border: 1px solid #000000;
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%;
-  max-width: 200px;
-  text-align: center;
-  background-color: rgb(255, 255, 255);
-}
-
-.account-button-icon {
-  margin-right: 0.5rem;
-}
-
-.icon-container {
-  align-items: center;
-  display: flex;
-}
-
-.account-icon {
-  margin-right: 10px;
-}
-.account-name-container {
-  text-align: center;
+.account-profile-details {
+  flex: 1;
 }
 
 .account-name {
-  margin-bottom: 0.5rem; 
-  font-size: 16px;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
 
+.account-email {
+  font-size: 1.5rem;
+  color: #666;
+}
+
+.account-location,
+.account-member-since {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.account-actions {
+  display: flex;
+  align-items: center;
+}
+
+.edit-profile-button {
+  padding: 0.5rem 1rem;
+  background-color: #0077b5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-profile-button:hover {
+  background-color: #005f91;
+}
+
+.account-content {
+  border-top: 1px solid #ddd;
+  padding-top: 2rem;
+}
+
+.info-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-description {
+  line-height: 1.6;
+}
+
+.account-buttons {
+  margin-top: 1rem;
+}
+
+.account-button {
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  background-color: #0077b5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.account-button:hover {
+  background-color: #005f91;
+}
+
+/*REVIEWS=> HOME*/
+.review-container {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.review-button {
+  background-color: #333;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.review-button:hover {
+  background-color: #909090; /* Darken the color on hover */
+}
+
+.reviews {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.review-list {
+  margin-bottom: 1rem;
+}
+
+.review-heading {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.review-item {
+  background-color: #f1f1f1;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.review-label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.review-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.submit-review {
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.submit-review:hover {
+  background-color: #218838;
+}
+
+.rating-container {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
