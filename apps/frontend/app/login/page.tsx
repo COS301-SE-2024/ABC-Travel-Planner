@@ -23,13 +23,12 @@ const SplashPage = () => {
   const handleLogin = async () => {
     const result = await signInWithEmailAndPassword(loginData);
     const {
-        data: { user }
-      } = JSON.parse(result);
-    if (user){
+      data: { user },
+    } = JSON.parse(result);
+    if (user) {
       router.push("/home");
-    }
-    else {
-        alert("Invalid email or password");
+    } else {
+      alert("Invalid email or password");
     }
   };
 
@@ -37,7 +36,7 @@ const SplashPage = () => {
     const getUser = async () => {
       const result = await readUser();
       const {
-        data: { user }
+        data: { user },
       } = JSON.parse(result);
       if (user) {
         router.push("/home");
@@ -45,17 +44,17 @@ const SplashPage = () => {
     };
     getUser();
   }, []);
+
   const handleRegister = async () => {
     if (registerData.password !== registerData.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
     const result = await signUpWithEmailAndPassword(registerData);
-    
-    const {
-       error 
-      } = JSON.parse(result);
-    
+    // console.log(result);
+
+    const { error } = JSON.parse(result);
+
     if (error) {
       alert("Email already in use");
       return;

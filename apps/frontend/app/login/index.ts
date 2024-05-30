@@ -20,6 +20,20 @@ export async function signUpWithEmailAndPassword(data: {
       },
     },
   });
+
+  const {
+    data: { user },
+  } = result;
+  if (user) {
+    await supabase.from("Users").insert([
+      {
+        email: user.email,
+        user_id: user.id,
+        name: user.user_metadata.name,
+        surname: user.user_metadata.surname,
+      },
+    ]);
+  }
   return JSON.stringify(result);
 }
 
@@ -35,5 +49,3 @@ export async function signInWithEmailAndPassword(data: {
   });
   return JSON.stringify(result);
 }
-
-
