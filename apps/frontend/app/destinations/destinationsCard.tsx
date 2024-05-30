@@ -1,16 +1,21 @@
 "use client";
 import React, { useState } from 'react';
-import BookmarkButton from './bookmarkButton';
 import { FaBookmark } from 'react-icons/fa';
-
+import { createClient } from '../utils/supabase/client';
 interface DestinationCardProps {
     destination: any;
 }
 
-const DestinationCard: React.FC<DestinationCardProps> = ({ destination}) => {
+const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
     const [isFavourite, setIsFavourite] = useState(destination.isFavourite);
 
-    const handleFavoriteClick = () => {
+    const handleFavoriteClick = async () => {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase.from('favourite_destinations').insert([
+                { some_column: '', other_column: 'otherValue' },
+            ])
+            .select()
         const newStatus = !isFavourite;
         setIsFavourite(newStatus);
     };
