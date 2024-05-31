@@ -3,7 +3,7 @@ import DestinationCard from './destinationsCard';
 import createSupabaseServerClient from '@/libs/supabase/server';
 import { createClient } from '../utils/supabase/client';
 import readUser from '@/libs/actions';
-
+import ImageSlider from './ImageSlider';
 const countries: string[] = [
   'Nigeria',
   'South Africa',
@@ -183,6 +183,9 @@ const Destinations = async () => {
   return (
     <div className="container">
       <h1 className="title" style={{ fontSize: '2rem' }}>Keep your favorite destinations close by!</h1>
+      <h2 className="title" style={{ fontSize: '1.5rem' }}>My Favourites</h2>
+      <ImageSlider /> {/* Image slider*/}
+      <h2 className="title" style={{ fontSize: '1.5rem' }}>Top destinations</h2>
       <div className="cardContainer">
         {destinations.map((destination, index) => (
           <DestinationCard key={destination.location_id} destination={destination} />

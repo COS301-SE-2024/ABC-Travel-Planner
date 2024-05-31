@@ -38,15 +38,43 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
         const { data, error } = await supabase.from('favourite_destinations').update({status: false}).eq('location_id', `${destination.location_id}`).eq('user_id', `${user?.id}`);
     };
 
+    const handleMoreInfoClick = () => {
+        const modal = document.getElementById(`modal-${destination.location_id}`);
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    };
+
+    const handleCloseClick = () => {
+        const modal = document.getElementById(`modal-${destination.location_id}`);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    };
+
     return (
-        <div className="card">
-            <img src={destination.image} alt={destination.name} className="image" />
-            <p>{destination.address_obj.address_string}</p>
-            <button onClick={handleFavouriteToggle} className="favoriteButton">
-                {isFavourite ? <FaBookmark style={{ color: 'yellow' }} /> : <FaBookmark />}
-            </button>
-        </div>
+        <>
+            <div className="card">
+                <img src={destination.image} alt={destination.name} className="image" />
+                <p>{destination.address_obj.address_string}</p>
+                <button onClick={handleMoreInfoClick} className="moreInfoButton">
+                    More Information 
+                </button >
+                <button onClick={handleFavouriteToggle} className="favoriteButton">
+                    {isFavourite ? <FaBookmark style={{ color: 'yellow' }} /> : <FaBookmark />}
+                </button>
+            </div>
+            {/* The Modal  code and additional information */}
+            <div id={`modal-${destination.location_id}`} className="modal">
+                <div className="modal-content">
+                    <h1 className="title" style={{ fontSize: '1.5rem' }}>Additional Information</h1>
+                    <span className="close" onClick={handleCloseClick}>&times;</span>
+                    <h2>{destination.name}</h2>
+                    {/* <img src={destination.image} alt={destination.name} className="modal-image" /> */}
+                    <p>{destination.description}</p>
+                </div>
+            </div>
+        </>
     );
 };
-
 export default DestinationCard;

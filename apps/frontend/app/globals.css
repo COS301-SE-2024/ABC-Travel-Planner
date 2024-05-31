@@ -369,3 +369,117 @@ nav ul li a {
   gap: 5px;
   margin-bottom: 10px;
 }
+
+/*IMAGE SLIDER*/
+
+
+.image-slider-container {
+  background-color: #ffffff; 
+  margin: 20px auto; 
+  padding: 20px; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 50%;
+}
+
+.image-slider {
+  position: relative; 
+  overflow: hidden; 
+}
+
+.image-container {
+  display: flex; 
+  transition: transform 0.5s ease; 
+}
+
+.image-container img {
+  width: 100%; 
+  height: auto; 
+  opacity: 0; 
+  transition: opacity 0.5s ease; /* Smooth transition for image opacity */
+}
+
+.image-container img.active {
+  opacity: 1; 
+}
+
+.button {
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  background-color: rgba(0, 0, 0, 0.5); 
+  color: white; 
+  border: none; 
+  cursor: pointer;
+  font-size: 1.5rem; 
+}
+
+.prev {
+  left: 0; 
+}
+
+.next {
+  right: 0; 
+}
+.image-label{
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.image-description{
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+/*Destination modal*/
+.modal {
+  display: none;
+  /* Add other styles as needed */
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 80%;
+  position: relative;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
