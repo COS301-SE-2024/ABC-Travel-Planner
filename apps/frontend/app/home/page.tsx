@@ -1,5 +1,6 @@
 import React from 'react';
 import DestinationCard from './DestinationCard';
+import storeLocationIDs from './storeLocationIDs';
 
 const countries: string[] = [
   'Nigeria',
@@ -84,6 +85,7 @@ const Home = async () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {destinations.map((destination: any, index: number) => (
           <DestinationCard key={index} destination={destination} />
+          // <storeLocationIDs data={destination}/>
         ))}
       </div>
     </div>
