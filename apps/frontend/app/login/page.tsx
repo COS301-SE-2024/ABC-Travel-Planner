@@ -32,18 +32,6 @@ const SplashPage = () => {
     }
   };
 
-  useEffect(() => {
-    const getUser = async () => {
-      const result = await readUser();
-      const {
-        data: { user },
-      } = JSON.parse(result);
-      if (user) {
-        router.push("/home");
-      }
-    };
-    getUser();
-  }, []);
 
   const handleRegister = async () => {
     if (registerData.password !== registerData.confirmPassword) {
