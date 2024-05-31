@@ -150,7 +150,8 @@ async function isFavourited() {
   const user = JSON.parse(currUser);
   console.log(user?.data?.user?.id);
   const { data, error } = await supabase.from('favourite_destinations').select('location_id').eq('user_id', `${user?.data?.user?.id}`).eq('status', true);
-  console.log(JSON.stringify(data));
+  console.log(JSON.stringify(data)); 
+  favouritedHash = {};
   if(data && data.length > 0){
     data.forEach((favourite: any) => {
       favouritedHash[favourite.location_id] = true;

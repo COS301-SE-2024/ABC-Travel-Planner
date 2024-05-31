@@ -8,10 +8,10 @@ interface DestinationCardProps {
 }
 
 const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
-  
+
     const [reviews, setReviews] = useState(destination.reviews || []);
 
-    
+
 
     const handleAddReview = (review: { name: string; text: string }) => {
         setReviews([...reviews, review]);
