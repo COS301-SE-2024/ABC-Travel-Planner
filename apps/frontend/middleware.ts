@@ -54,7 +54,21 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user && request.nextUrl.pathname !== "/login") {
+    const loginUrl = new URL("/login", request.nextUrl.origin);
+    console.log("url", loginUrl.toString());
+    return NextResponse.redirect(loginUrl);
+  } else if (
+    user &&
+    (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/")
+  ) {
+    const homeUrl = new URL("/home", request.nextUrl.origin);
+    console.log("url", homeUrl.toString());
+    return NextResponse.redirect(homeUrl);
+  }
 
   return response;
 }
