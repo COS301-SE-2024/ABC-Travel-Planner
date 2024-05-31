@@ -23,12 +23,24 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => 
     };
 
     const handleAddReview = () => {
+        //Call the backend function for creating a review...
         if (newReview.trim() && reviewerName.trim()) {
             onAddReview({ name: reviewerName, text: newReview, rating });
             setNewReview('');
             setReviewerName('');
             setRating(0);
+
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+        
+            // const curruser = await getCurrentUser();
+            // console.log("This is the one we get from the user " + JSON.stringify(curruser));
+            const { data, error } = await supabase.from('favourite_destinations').insert([
+                    { user_id: ${user?.id}, destination_object: destination, location_id: destination.location_id, status: true},
+                ])
+                .select()
         }
+
     };
 
     const handleRatingClick = (selectedRating: number) => {
