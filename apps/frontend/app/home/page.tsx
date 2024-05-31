@@ -29,7 +29,7 @@ async function getCountryData(country: string) {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
-
+    
     const updatedData = await Promise.all(data.data.map(async (destination: any) => {
       const imageUrl = await fetchImage(destination.location_id);
       return { ...destination, image: imageUrl };
