@@ -1,0 +1,22 @@
+// jest.config.cjs
+
+module.exports = {
+  clearMocks: true,
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.jest.json',
+    },
+  },
+  moduleDirectories: ['node_modules', 'src'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  testEnvironment: 'jsdom',
+  testMatch: ['**/__tests__/**/*.test.(ts|tsx)'],
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+  },
+  moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js',
+  },
+  
+};
