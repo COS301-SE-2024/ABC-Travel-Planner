@@ -15,11 +15,11 @@ export const Navbar = () => {
         <Link href='/'>
           <div className='inline-flex items-center p-2 mr-4 cursor-pointer'>
             <Image
-              src='/Images/logo2.png' // Replace with the path to your logo
+              src='/Images/logo2.png' 
               alt='Logo'
-              width={80} // Adjust these values as needed
+              width={80} 
               height={80}
-              className='mr-2 rounded-full border border-white' // Add rounded border to the logo
+              className='mr-2 rounded-full border border-white'
             />
             <span className='text-xl text-white font-bold uppercase tracking-wide'>
               ABC TRAVEL PLANNER
@@ -81,6 +81,18 @@ export const Navbar = () => {
                 Account
               </div>
             </Link>
+            {/* image for profile */}
+            <div className='flex items-center justify-center'>
+            <Image
+                src='/Images/profile2.png' 
+                alt='Avatar'
+                width={32} 
+                height={32}
+                className='ml-2 rounded-full border border-white overflow-hidden' 
+            />
+            </div>
+
+
           </div>
         </div>
       </nav>
