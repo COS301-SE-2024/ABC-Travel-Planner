@@ -90,6 +90,13 @@ const SplashPage = () => {
     } else if (name === "password") {
       isValid = await validatePassword(value);
       setPasswordError(!isValid);
+      if (registerData.confirmPassword !== "") {
+        if (value !== registerData.confirmPassword) {
+          setPasswordsMatch(false);
+        } else {
+          setPasswordsMatch(true);
+        }
+      }
     } else if (name === "confirmPassword") {
       if (value === registerData.password) {
         setPasswordsMatch(true);
