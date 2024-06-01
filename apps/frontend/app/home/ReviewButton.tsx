@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
 interface Review {
-    name: string;
+    name: string; //the username
     text: string;
     rating: number;
+    title: string; 
 }
 
 interface ReviewButtonProps {
@@ -15,7 +16,7 @@ interface ReviewButtonProps {
 const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => {
     const [showReviews, setShowReviews] = useState(false);
     const [newReview, setNewReview] = useState('');
-    const [reviewerName, setReviewerName] = useState('');
+    const [title, setTitle] = useState('');
     const [rating, setRating] = useState(0);
 
     const handleToggleReviews = () => {
@@ -23,10 +24,10 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => 
     };
 
     const handleAddReview = () => {
-        if (newReview.trim() && reviewerName.trim()) {
-            onAddReview({ name: reviewerName, text: newReview, rating });
+        if (newReview.trim() && title.trim()) {
+            onAddReview({ name: "StaticUsername", text: newReview, rating, title });  //the username 
             setNewReview('');
-            setReviewerName('');
+            setTitle('');
             setRating(0);
         }
     };
@@ -45,19 +46,23 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => 
                     <div className="review-list">
                         <h3 className="review-heading">Reviews:</h3>
                         {reviews.map((review, index) => (
-                            <p key={index} className="review-item">
-                                <strong>{review.name}:</strong> {review.text} ({review.rating} stars)
-                            </p>
+                            <div key={index} className="review-item">
+                                <p>
+                                    <u>{review.name}</u> ({review.rating} stars)
+                                </p>
+                                <p><strong>{review.title}</strong></p> {/* Display the title here */}
+                                <p>{review.text}</p>
+                            </div>
                         ))}
                     </div>
                     <div className="review-form">
-                        <label htmlFor="reviewerName" className="review-label">Your Name:</label>
+                        <label htmlFor="title" className="review-label">Title:</label>
                         <input 
-                            id="reviewerName"
+                            id="title"
                             type="text" 
-                            value={reviewerName} 
-                            onChange={(e) => setReviewerName(e.target.value)} 
-                            placeholder="Your name" 
+                            value={title} 
+                            onChange={(e) => setTitle(e.target.value)} 
+                            placeholder="Enter title here" 
                             className="review-input"
                         />
                         <label htmlFor="newReview" className="review-label">Your Review:</label>
