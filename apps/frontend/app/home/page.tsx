@@ -1,11 +1,12 @@
 import React from 'react';
 import DestinationCard from './DestinationCard';
-import Image from 'next/image';
+import getReviews from './getReviews';
+
 const countries: string[] = [
-  'Nigeria',
-  'South Africa',];
+  // 'Nigeria',
+  // 'South Africa',
   // 'Egypt',
-  // 'Kenya',
+  'Kenya',
   // 'Ghana',
   // 'Morocco',
   // 'Ethiopia',
@@ -19,8 +20,8 @@ const countries: string[] = [
   // 'Tunisia',
   // 'China',
   // 'India',
-  // 'Japan',];
-
+  // 'Japan',
+];
 
 async function getCountryData(country: string) {
   const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=EA30B923BE4A4CB28EE695CDFFEB1DE7&searchQuery=${encodeURIComponent(country)}`;
@@ -29,23 +30,13 @@ async function getCountryData(country: string) {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
-
+    
     const updatedData = await Promise.all(data.data.map(async (destination: any) => {
-      const [detailedData, imageUrl] = await Promise.all([
-        getDetailedData(destination.location_id),
-        fetchImage(destination.location_id)
-      ]);
-      if (detailedData) {
-        //const imageUrl = await fetchImage(destination.location_id);
-        return {
-          ...detailedData,
-          image: imageUrl,
-        };
-      }
-      return null;
+      const imageUrl = await fetchImage(destination.location_id);
+      return { ...destination, image: imageUrl };
     }));
 
-    return updatedData.filter((destination: any) => destination !== null && !destination.error);
+    return updatedData;
   } catch (err) {
     console.error(`Error fetching data for ${country}:`, err);
     return [];
@@ -64,26 +55,6 @@ async function getData() {
     console.error('Error fetching country data:', err);
     return { data: [] }; 
   }
-}
-
-async function getDetailedData(locationId: any) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=A3B74876C98B4350AD1788B581E6F381`;
-  const options = { method: 'GET', headers: { accept: 'application/json' } };
-  try {
-    const response = await fetch(url, options);
-    const data = await response.json();
-
-    if (data) {
-      return data;
-    } else {
-      return null;
-    }
-
-  } catch (err) {
-    console.error(`Error fetching image for location ${locationId}:`, err);
-    return null;
-  }
-
 }
 
 async function fetchImage(locationId: any) {
@@ -113,7 +84,7 @@ const Home = async () => {
     <div className="container mx-auto mt-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {destinations.map((destination: any, index: number) => (
-          <DestinationCard key={index} destination={destination} />
+          <DestinationCard key={index} destination={destination} review={getReviews(destination.location_id)}/>
         ))}
       </div>
     </div>

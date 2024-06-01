@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import { createClient } from '../utils/supabase/client';
+import { json } from 'stream/consumers';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Review {
     name: string;
@@ -8,11 +11,12 @@ interface Review {
 }
 
 interface ReviewButtonProps {
+    location_id: string;
     reviews: Review[];
     onAddReview: (review: Review) => void;
 }
 
-const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => {
+const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAddReview }) => {
     const [showReviews, setShowReviews] = useState(false);
     const [newReview, setNewReview] = useState('');
     const [reviewerName, setReviewerName] = useState('');
@@ -22,13 +26,73 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => 
         setShowReviews(!showReviews);
     };
 
-    const handleAddReview = () => {
+    const handleAddReview = async () => {
+        console.log("Handle Add Review entered...")
+        //Call the backend function for creating a review...
+        const location_ids = window.sessionStorage.getItem('Location_ids');
+
         if (newReview.trim() && reviewerName.trim()) {
-            onAddReview({ name: reviewerName, text: newReview, rating });
+            onAddReview({ 
+                name: reviewerName, text: newReview, rating
+            });
             setNewReview('');
             setReviewerName('');
             setRating(0);
+
+            console.log("Proceeding to create client")
+
+            const supabase = createClient();
+            
+            // console.log("Client created")
+            const { data: { user } } = await supabase.auth.getUser();
+            
+            console.log("Retrieving user")
+            // const curruser = await getCurrentUser();
+            // console.log("This is the one we get from the user " + JSON.stringify(curruser));
+
+            const now = new Date();
+            const formattedDate = now.toISOString();
+            
+            console.log("Retrieving user data: " + `${user?.id}`)
+
+            const { data: userData, error: userErr } = await supabase
+            .from('Users')
+            .select("name, surname")
+            .eq('user_id', `${user?.id}`)
+            
+            console.log(userData)
+            
+            if (userData != null) {
+                const destUUID = location_id
+                const reviewUUID = uuidv4();
+
+                const { name, surname } = userData[0];
+
+                const { data: insertData, error: insertError } = await supabase
+                .from('reviews')
+                .insert([{
+                    id: reviewUUID,
+                    created_at: formattedDate,
+                    destination_id: destUUID, 
+                    review_title: "testing_title :)", 
+                    review_text: newReview, 
+                    user_id: `${user?.id}`, 
+                    user_name: name, 
+                    user_surname: surname,
+                    rating: rating
+                }])
+                .select()
+
+                if (insertError) {
+                    console.log("Could not insert data:\n" + JSON.stringify(insertError))
+                }
+
+            }
+            else {
+                console.log("Review could not be created - user does not exist in database")
+            }
         }
+
     };
 
     const handleRatingClick = (selectedRating: number) => {

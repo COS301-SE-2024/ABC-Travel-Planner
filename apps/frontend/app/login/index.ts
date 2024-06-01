@@ -71,4 +71,3 @@ export async function validateEmail(inputEmail: string){
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailPattern.test(inputEmail);
 };
-

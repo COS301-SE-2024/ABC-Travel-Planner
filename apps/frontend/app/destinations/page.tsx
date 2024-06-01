@@ -239,4 +239,3 @@ const Destinations = async () => {
 
 
 export default Destinations;
-
