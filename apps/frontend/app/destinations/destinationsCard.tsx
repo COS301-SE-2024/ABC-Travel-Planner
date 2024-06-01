@@ -69,13 +69,18 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
                 <div className="modal-content">
                     <span className="close" onClick={handleCloseClick}>&times;</span>
                     <img src={destination.image} alt={destination.name} className="modal-image" />
-                    <h1 className="title" style={{ fontSize: '1.5rem' }}>{destination.name}</h1>
-                    <p>{destination.description ? destination.description : ""}</p>
-                    <p>{destination.timezone}</p>
-                    <p><span>Location Category:</span><span>{destination.category.name}</span></p>
-                    <p><span>Location Type:</span><span>{destination.subcategory[0].name}</span></p>
+                    <h1 className="title" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{destination.name}</h1>
+                    <p style={{ marginBottom: '1rem' }}>{destination.description ? destination.description : ""}</p>
+                    <p style={{ marginBottom: '1rem' }}>{destination.timezone}</p>
+                    <p style={{ marginBottom: '1rem' }}>
+                    <span className="font-bold">Location Category:</span> <span>{destination.category.name}</span>
+                    </p>
+                    <p style={{ marginBottom: '1rem' }}>
+                    <span className="font-bold">Location Type:</span> <span>{destination.subcategory[0].name}</span>
+                    </p>
                 </div>
-            </div>
+                </div>
+
         </>
     );
 };
