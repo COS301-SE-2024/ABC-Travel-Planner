@@ -79,7 +79,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination,  review 
                 <p className="text-gray-700 text-base">{destination.address_obj.address_string}</p>
             </div>
             <div className="flex justify-center">
-                <ReviewButton reviews={reviews} onAddReview={handleAddReview} />
+                <ReviewButton location_id={destination.location_id} reviews={reviews} onAddReview={handleAddReview} />
             </div>
         </div>
     </div>

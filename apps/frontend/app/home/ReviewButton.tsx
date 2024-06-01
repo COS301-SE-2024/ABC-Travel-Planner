@@ -11,11 +11,12 @@ interface Review {
 }
 
 interface ReviewButtonProps {
+    location_id: string;
     reviews: Review[];
     onAddReview: (review: Review) => void;
 }
 
-const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => {
+const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAddReview }) => {
     const [showReviews, setShowReviews] = useState(false);
     const [newReview, setNewReview] = useState('');
     const [reviewerName, setReviewerName] = useState('');
@@ -62,7 +63,7 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => 
             console.log(userData)
             
             if (userData != null) {
-                const destUUID = uuidv4();
+                const destUUID = location_id
                 const reviewUUID = uuidv4();
 
                 const { name, surname } = userData[0];
