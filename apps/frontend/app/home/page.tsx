@@ -1,26 +1,26 @@
 import React from 'react';
 import DestinationCard from './DestinationCard';
-import storeLocationIDs from './storeLocationIDs';
+import getReviews from './getReviews';
 
 const countries: string[] = [
-  'Nigeria',
-  'South Africa',
-  'Egypt',
+  // 'Nigeria',
+  // 'South Africa',
+  // 'Egypt',
   'Kenya',
-  'Ghana',
-  'Morocco',
-  'Ethiopia',
-  'Tanzania',
-  'Uganda',
-  'Algeria',
-  'Angola',
-  'Cameroon',
-  'Ivory Coast',
-  'Senegal',
-  'Tunisia',
-  'China',
-  'India',
-  'Japan',
+  // 'Ghana',
+  // 'Morocco',
+  // 'Ethiopia',
+  // 'Tanzania',
+  // 'Uganda',
+  // 'Algeria',
+  // 'Angola',
+  // 'Cameroon',
+  // 'Ivory Coast',
+  // 'Senegal',
+  // 'Tunisia',
+  // 'China',
+  // 'India',
+  // 'Japan',
 ];
 
 async function getCountryData(country: string) {
@@ -84,8 +84,7 @@ const Home = async () => {
     <div className="container mx-auto mt-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {destinations.map((destination: any, index: number) => (
-          <DestinationCard key={index} destination={destination} />
-          // <storeLocationIDs data={destination}/>
+          <DestinationCard key={index} destination={destination} review={getReviews(destination.location_id)}/>
         ))}
       </div>
     </div>

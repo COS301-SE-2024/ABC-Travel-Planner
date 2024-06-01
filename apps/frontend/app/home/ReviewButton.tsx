@@ -42,7 +42,7 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => 
 
             const supabase = createClient();
             
-            console.log("Client created")
+            // console.log("Client created")
             const { data: { user } } = await supabase.auth.getUser();
             
             console.log("Retrieving user")
