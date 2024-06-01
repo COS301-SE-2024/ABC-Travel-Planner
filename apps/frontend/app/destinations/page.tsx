@@ -115,7 +115,6 @@ async function getCountryData(country: string) {
     const filteredData = data.data.filter((destination: any) => destination.name === destination.address_obj.address_string);
 
     const updatedData = await Promise.all(filteredData.map(async (destination: any) => {
-      //const detailedData = await getDetailedData(destination.location_id);
       const [detailedData, imageUrl] = await Promise.all([
         getDetailedData(destination.location_id),
         fetchImage(destination.location_id)
@@ -157,6 +156,7 @@ async function getDetailedData(locationId: any) {
   }
 
 }
+
 async function fetchImage(locationId: any) {
   const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=EA30B923BE4A4CB28EE695CDFFEB1DE7`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
