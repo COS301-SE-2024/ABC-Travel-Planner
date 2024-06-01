@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/expect';
+import '@testing-library/jest-dom';
 import { render, fireEvent } from '@testing-library/react';
 import DestinationCard from '../app/destinations/destinationsCard';
 
@@ -6,7 +6,7 @@ import DestinationCard from '../app/destinations/destinationsCard';
 
 // Mock the createClient function
 
-jest.mock('../utils/supabase/client', () => ({
+jest.mock('../app/utils/supabase/client', () => ({
   createClient: jest.fn(() => ({
     auth: {
       getUser: jest.fn(() => ({

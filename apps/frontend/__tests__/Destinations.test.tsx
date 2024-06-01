@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/expect'; 
+import '@testing-library/jest-dom'; 
 import { render, screen } from '@testing-library/react';
 import Destinations from '../app/destinations/page';
 
