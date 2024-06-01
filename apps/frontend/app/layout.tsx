@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import Navbar from './components/Navbar';
+import { Navbar } from './components/Navbar';
 import './globals.css';  // Import the global styles from the app folder
 
 
