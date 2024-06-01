@@ -1,6 +1,9 @@
 "use client"
 import React, { useState } from 'react';
 
+interface ImageSliderProps {
+  favouriteDestinations: any;
+}
 const images = [
   {
     src: '/Images/india.jpg',
@@ -29,29 +32,29 @@ const images = [
   },
 ];
 
-const ImageSlider = () => {
+const ImageSlider: React.FC<ImageSliderProps> = ({ favouriteDestinations }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToNextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % favouriteDestinations.length);
   };
 
   const goToPrevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? favouriteDestinations.length - 1 : prevIndex - 1));
   };
 
   return (
     <div className="image-slider-container">
     <div className="image-slider">
-      <div className="image-label">{images[currentIndex].label}</div>
+      <div className="image-label">{favouriteDestinations[currentIndex].name}</div>
       <div className="image-container">
         <img
-          src={images[currentIndex].src}
+          src={favouriteDestinations[currentIndex].image}
           alt={`Slide ${currentIndex}`}
           className="active"
         />
       </div>
-      <div className="image-description">{images[currentIndex].description}</div>
+      <div className="image-description">{favouriteDestinations[currentIndex].address_obj.address_string}</div>
       <div className="navigation-buttons">
         <button className="prev" onClick={goToPrevSlide}>&#10094; </button>
         <button className="next" onClick={goToNextSlide}>&#10095;</button>

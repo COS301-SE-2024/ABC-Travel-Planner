@@ -78,7 +78,7 @@ async function fetchImage(locationId: any) {
 const Home = async () => {
   const data = await getData();
   const destinations = data?.data || [];
-  console.log(destinations);
+  //console.log(destinations);
   return (
     <div className="container mx-auto mt-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
