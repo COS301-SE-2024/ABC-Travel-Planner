@@ -35,6 +35,32 @@ nav ul li a {
   text-decoration: none;
 }
 
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.logo-container {
+  text-align: center;
+}
+
+.logo-image {
+  display: block;
+  margin: 0 auto;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%; /* Use a larger border-radius */
+  border: 3px solid grey;
+  overflow: hidden; /* Ensure the image is not cut off */
+}
+
+
+
 /*DESTINATION*/
 .container {
   max-width: 1500px;
