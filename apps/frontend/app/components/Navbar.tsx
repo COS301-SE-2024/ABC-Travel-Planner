@@ -11,7 +11,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className='flex items-center flex-wrap bg-gray-800 p-3'>
+      <nav className='fixed top-0 left-0 right-0 z-10 flex items-center flex-wrap bg-gray-800 p-3'>
         <Link href='/'>
           <div className='inline-flex items-center p-2 mr-4 cursor-pointer'>
             <Image
@@ -91,11 +91,13 @@ export const Navbar = () => {
                 className='ml-2 rounded-full border border-white overflow-hidden' 
             />
             </div>
-
-
           </div>
         </div>
       </nav>
+      {/* Add padding to the body to prevent content from being hidden behind the fixed navbar */}
+      <div className='pt-20'>
+        {/* Your page content here */}
+      </div>
     </>
   );
 };
