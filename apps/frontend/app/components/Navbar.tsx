@@ -27,7 +27,7 @@ export const Navbar = () => {
           </div>
         </Link>
         <button
-          className='inline-flex p-3 hover:bg-green-600 rounded lg:hidden text-white ml-auto hover:text-white outline-none'
+          className='inline-flex p-3 hover:bg-gray-200 hover:text-gray-800 rounded lg:hidden text-white ml-auto hover:text-white outline-none'
           onClick={handleClick}
         >
           <svg
@@ -52,32 +52,32 @@ export const Navbar = () => {
         >
           <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto'>
             <Link href='/home'>
-              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> {/* Change hover colors to light grey */}
+              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Home
               </div>
             </Link>
             <Link href='/search'>
-              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> {/* Change hover colors to light grey */}
+              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Search
               </div>
             </Link>
             <Link href='/destinations'>
-              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> {/* Change hover colors to light grey */}
+              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Destinations
               </div>
             </Link>
             <Link href='/itinerary'>
-              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> {/* Change hover colors to light grey */}
+              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Itinerary
               </div>
             </Link>
             <Link href='/booking'>
-              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> {/* Change hover colors to light grey */}
+              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Booking
               </div>
             </Link>
             <Link href='/account'>
-              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> {/* Change hover colors to light grey */}
+              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Account
               </div>
             </Link>
