@@ -9,7 +9,8 @@ interface DestinationCardProps {
 
 const DestinationCard: React.FC<DestinationCardProps> = ({ destination,  review }) => {
     const [reviews, setReviews] = useState(destination.reviews || []);
-    
+    const [isSet, setIsSet] = useState(false)
+
     interface apiData {
         user_name: string;
         review_text: string;
@@ -21,10 +22,15 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination,  review 
         text: string;
         rating: number;
     }
-
+    
     useEffect(() => {
         const updateReviews = () => {
-            if ((review)) {
+            if (!isSet) {
+                setIsSet(true)
+            }
+            else  {
+             //   console.log("Review already set :)")
+             if ((review)) {
                 console.log("Curr Review Data: " + JSON.stringify(review))
                 console.log("REVIEW VALUE: " + review.value)
                 if (review.value) {
@@ -35,42 +41,24 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination,  review 
                                 name: item.user_name,
                                 text: item.review_text,
                                 rating: item.rating,
-                        }));
-            
+                            }));
+                            
                         setReviews((prevReviews: any) => [...prevReviews, ...transformedReviews]);
+                        setIsSet(true);
                         // console.log(review.user_name)
                         // console.log(review.review_text)
                         // console.log(review.rating)
                     } else console.log("REVIEW VALUE NOT ARRAY - TYPE: " + typeof parsedValue)
                 }
-        }
-        else console.log("REVIEW IS NOT ARRAY..." + JSON.stringify(review))
+            }
+            else console.log("REVIEW IS NOT ARRAY..." + JSON.stringify(review))
+            }
         }
 
         updateReviews();
-    }, []);
+    }, [isSet]);
 
-    // [{
-    //     name: user,
-    //     text: "hi there",
-    //     rating: 5
-    // }]
-
-//   seasons.forEach((season, index) => {
-//     seasonsList.push(<li key={index}>{season}</li>);
-//   });
-
-    // setReviews([...reviews, review]);
-
-    // reviews.map((name, index) => (
-    //     <p key={index} className="review-item">
-    //         <strong>{review.name}:</strong> {review.text} ({review.rating} stars)
-    //     </p>
-    // ))
-    // console.log("Before adding reviews: " + reviews)
-    // console.log("After adding reviews: " + reviews)
-
-
+    
     const handleAddReview = (review: { name: string; text: string }) => {
         setReviews([...reviews, review]);
     };
