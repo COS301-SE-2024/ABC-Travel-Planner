@@ -54,28 +54,37 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
 
     return (
         <>
-            <div className="card">
-                <img src={destination.image} alt={destination.name} className="image" />
-                <p>{destination.address_obj.address_string}</p>
-                <button onClick={handleMoreInfoClick} className="moreInfoButton">
-                    More Information
-                </button >
-                <button onClick={handleFavouriteToggle} className="favoriteButton">
-                    {isFavourite ? <FaBookmark style={{ color: 'yellow' }} /> : <FaBookmark />}
+           
+           <div className="card max-w-sm rounded overflow-hidden shadow-lg flex flex-col items-center p-4">
+            <img src={destination.image} alt={destination.name} className="image w-full h-48 object-cover mb-4" />
+            <p className="text-center text-gray-700 mb-4">{destination.address_obj.address_string}</p>
+            <div className="flex justify-between items-center w-full">
+                <button onClick={handleMoreInfoClick}  className="review-button">
+                More Information
+                </button>
+                <button onClick={handleFavouriteToggle} className="favoriteButton ml-4">
+                {isFavourite ? <FaBookmark style={{ color: 'yellow' }} /> : <FaBookmark />}
                 </button>
             </div>
+            </div>
+
             {/* The Modal  code and additional information */}
             <div id={`modal-${destination.location_id}`} className="modal">
                 <div className="modal-content">
                     <span className="close" onClick={handleCloseClick}>&times;</span>
                     <img src={destination.image} alt={destination.name} className="modal-image" />
-                    <h1 className="title" style={{ fontSize: '1.5rem' }}>{destination.name}</h1>
-                    <p>{destination.description ? destination.description : ""}</p>
-                    <p>{destination.timezone}</p>
-                    <p><span>Location Category:</span><span>{destination.category.name}</span></p>
-                    <p><span>Location Type:</span><span>{destination.subcategory[0].name}</span></p>
+                    <h1 className="title" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{destination.name}</h1>
+                    <p style={{ marginBottom: '1rem' }}>{destination.description ? destination.description : ""}</p>
+                    <p style={{ marginBottom: '1rem' }}>{destination.timezone}</p>
+                    <p style={{ marginBottom: '1rem' }}>
+                    <span className="font-bold">Location Category:</span> <span>{destination.category.name}</span>
+                    </p>
+                    <p style={{ marginBottom: '1rem' }}>
+                    <span className="font-bold">Location Type:</span> <span>{destination.subcategory[0].name}</span>
+                    </p>
                 </div>
-            </div>
+                </div>
+
         </>
     );
 };
