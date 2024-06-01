@@ -81,10 +81,6 @@ const Home = async () => {
   //console.log(destinations);
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4 text-center">Welcome to ABC Travel Planner</h1>
-      <div className="mb-4 logo-container">
-        <Image src="/Images/logo2.png" alt="Logo" width={250} height={250} className="logo-image" />
-      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {destinations.map((destination: any, index: number) => (
           <DestinationCard key={index} destination={destination} />

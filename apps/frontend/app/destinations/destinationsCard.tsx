@@ -54,16 +54,20 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
 
     return (
         <>
-            <div className="card">
-                <img src={destination.image} alt={destination.name} className="image" />
-                <p>{destination.address_obj.address_string}</p>
-                <button onClick={handleMoreInfoClick} className="moreInfoButton">
-                    More Information
-                </button >
-                <button onClick={handleFavouriteToggle} className="favoriteButton">
-                    {isFavourite ? <FaBookmark style={{ color: 'yellow' }} /> : <FaBookmark />}
+           
+           <div className="card max-w-sm rounded overflow-hidden shadow-lg flex flex-col items-center p-4">
+            <img src={destination.image} alt={destination.name} className="image w-full h-48 object-cover mb-4" />
+            <p className="text-center text-gray-700 mb-4">{destination.address_obj.address_string}</p>
+            <div className="flex justify-between items-center w-full">
+                <button onClick={handleMoreInfoClick}  className="review-button">
+                More Information
+                </button>
+                <button onClick={handleFavouriteToggle} className="favoriteButton ml-4">
+                {isFavourite ? <FaBookmark style={{ color: 'yellow' }} /> : <FaBookmark />}
                 </button>
             </div>
+            </div>
+
             {/* The Modal  code and additional information */}
             <div id={`modal-${destination.location_id}`} className="modal">
                 <div className="modal-content">
