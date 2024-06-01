@@ -3,7 +3,7 @@ import DestinationCard from './destinationsCard';
 import createSupabaseServerClient from '@/libs/supabase/server';
 import { createClient } from '../utils/supabase/client';
 import readUser from '@/libs/actions';
-
+import ImageSlider from './ImageSlider';
 const countries: string[] = [
   'Nigeria',
   'South Africa',
@@ -102,6 +102,7 @@ interface favouriteHash {
 }
 
 let favouritedHash: favouriteHash = {};
+let favouriteObjects: any[] = [];
 const supabase = createClient();
 
 async function getCountryData(country: string) {
@@ -111,18 +112,49 @@ async function getCountryData(country: string) {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
+    const filteredData = data.data.filter((destination: any) => destination.name === destination.address_obj.address_string);
 
-    const updatedData = await Promise.all(data.data.map(async (destination: any) => {
-      const imageUrl = await fetchImage(destination.location_id);
-      return { ...destination, image: imageUrl, isFavourite: favouritedHash[destination.location_id] || false};
+    const updatedData = await Promise.all(filteredData.map(async (destination: any) => {
+      const [detailedData, imageUrl] = await Promise.all([
+        getDetailedData(destination.location_id),
+        fetchImage(destination.location_id)
+      ]);
+      if (detailedData) {
+        //const imageUrl = await fetchImage(destination.location_id);
+        return {
+          ...detailedData,
+          image: imageUrl,
+          isFavourite: favouritedHash[destination.location_id] || false,
+        };
+      }
+      return null;
     }));
 
-    return updatedData.filter((destination: any) => destination.name === country);
-    //return updatedData;
+    return updatedData.filter((destination: any) => destination !== null);
   } catch (err) {
     console.error(`Error fetching data for ${country}:`, err);
     return [];
   }
+}
+
+async function getDetailedData(locationId: any) {
+  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=A3B74876C98B4350AD1788B581E6F381`;
+  const options = { method: 'GET', headers: { accept: 'application/json' } };
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    if (data) {
+      return data;
+    } else {
+      return null;
+    }
+
+  } catch (err) {
+    console.error(`Error fetching image for location ${locationId}:`, err);
+    return null;
+  }
+
 }
 
 async function fetchImage(locationId: any) {
@@ -134,9 +166,16 @@ async function fetchImage(locationId: any) {
     const data = await response.json();
 
     if (data && data.data && data.data.length > 0) {
-      return data.data[0].images.original.url; 
+      if (data.data[0].images.original?.url) {
+        return data.data[0].images.original.url;
+      } else if (data.data[0].images.large?.url) {
+        return data.data[0].images.large.url;
+      } else if (data.data[0].images.small?.url) {
+        return data.data[0].images.small.url;
+      }
+      //return data.data[0].images.original.url;
     } else {
-      return null; 
+      return null;
     }
 
   } catch (err) {
@@ -148,12 +187,15 @@ async function fetchImage(locationId: any) {
 async function isFavourited() {
   const currUser = await readUser();
   const user = JSON.parse(currUser);
-  console.log(user?.data?.user?.id);
-  const { data, error } = await supabase.from('favourite_destinations').select('location_id').eq('user_id', `${user?.data?.user?.id}`).eq('status', true);
-  console.log(JSON.stringify(data));
-  if(data && data.length > 0){
+  //console.log(user?.data?.user?.id);
+  const { data, error } = await supabase.from('favourite_destinations').select('destination_object').eq('user_id', `${user?.data?.user?.id}`).eq('status', true);
+  // const { data: destinationObject, error: dError } = await supabase.from('favourite_destinations').select('destination_object').eq('user_id', `${user?.data?.user?.id}`).eq('status', true);
+  //console.log(JSON.stringify(data));
+  favouritedHash = {};
+  if (data && data.length > 0) {
     data.forEach((favourite: any) => {
-      favouritedHash[favourite.location_id] = true;
+      favouritedHash[favourite.destination_object.location_id] = true;
+      favouriteObjects.push(favourite.destination_object);
     });
   }
 
@@ -163,13 +205,13 @@ async function getData() {
   try {
     const countryDataPromises = countries.map(getCountryData);
     const allCountryData = await Promise.all(countryDataPromises);
-  
+
     const combinedData = allCountryData.flat();
 
     return { data: combinedData };
   } catch (err) {
     console.error('Error fetching country data:', err);
-    return { data: [] }; 
+    return { data: [] };
   }
 }
 
@@ -178,10 +220,14 @@ const Destinations = async () => {
   console.log(favouritedHash);
   const data = await getData();
   const destinations = data?.data || [];
+  console.log(destinations);
 
   return (
     <div className="container">
       <h1 className="title" style={{ fontSize: '2rem' }}>Keep your favorite destinations close by!</h1>
+      <h2 className="title" style={{ fontSize: '1.5rem' }}>My Favourites</h2>
+      { favouriteObjects.length > 0 ? <ImageSlider favouriteDestinations={favouriteObjects} /> : <p>No favourite destinations yet!</p>}
+      <h2 className="title" style={{ fontSize: '1.5rem' }}>Top destinations</h2>
       <div className="cardContainer">
         {destinations.map((destination, index) => (
           <DestinationCard key={destination.location_id} destination={destination} />
