@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { createClient } from '../utils/supabase/client';
@@ -142,3 +143,4 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAdd
 };
 
 export default ReviewButton;
+

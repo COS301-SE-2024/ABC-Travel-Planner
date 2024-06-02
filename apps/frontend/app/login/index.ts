@@ -49,3 +49,25 @@ export async function signInWithEmailAndPassword(data: {
   });
   return JSON.stringify(result);
 }
+
+export async function validatePassword(inputPassword: string) {
+  const minLength = 8;
+  const hasNumber = /\d/.test(inputPassword); // Check if password contains a number
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(inputPassword); // Check if password contains a special character
+
+  // Perform validation checks
+  const isValidLength = inputPassword.length >= minLength;
+  const isValidNumber = hasNumber;
+  const isValidSpecialChar = hasSpecialChar;
+
+  // Set validity based on all criteria
+  const isValid = isValidLength && isValidNumber && isValidSpecialChar;
+
+  return isValid;
+}
+
+export async function validateEmail(inputEmail: string){
+  // Email validation regex pattern
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(inputEmail);
+};
