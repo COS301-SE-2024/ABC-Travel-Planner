@@ -54,7 +54,7 @@ jobs:
         uses: MishaKav/jest-coverage-comment@main
         with:
           hide-comment: true
-          coverage-summary-path: ./apps/coverage/coverage-summary.json
+          coverage-summary-path: ./apps/frontend/coverage/coverage-summary.json
 
       - name: Check the output coverage
         run: |
