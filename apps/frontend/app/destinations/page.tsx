@@ -5,8 +5,8 @@ import { createClient } from '../utils/supabase/client';
 import readUser from '@/libs/actions';
 import ImageSlider from './ImageSlider';
 const countries: string[] = [
-  'Nigeria',];
-  // 'South Africa',
+  'Nigeria',
+  'South Africa',];
   // 'Egypt',
   // 'Kenya',
   // 'Ghana',
@@ -103,7 +103,7 @@ interface favouriteHash {
 
 let favouritedHash: favouriteHash = {};
 let favouriteObjects: any[] = [];
-const supabase = createClient();
+
 
 async function getCountryData(country: string) {
   const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=E2F7795203BC41B981DFD021E4C97B4B&searchQuery=${encodeURIComponent(country)}`;
@@ -185,6 +185,7 @@ async function fetchImage(locationId: any) {
 }
 
 async function isFavourited() {
+  const supabase = await createSupabaseServerClient();
   const currUser = await readUser();
   const user = JSON.parse(currUser);
   //console.log(user?.data?.user?.id);
@@ -192,6 +193,7 @@ async function isFavourited() {
   // const { data: destinationObject, error: dError } = await supabase.from('favourite_destinations').select('destination_object').eq('user_id', `${user?.data?.user?.id}`).eq('status', true);
   //console.log(JSON.stringify(data));
   favouritedHash = {};
+  favouriteObjects = [];
   if (data && data.length > 0) {
     data.forEach((favourite: any) => {
       favouritedHash[favourite.destination_object.location_id] = true;
@@ -239,4 +241,3 @@ const Destinations = async () => {
 
 
 export default Destinations;
-

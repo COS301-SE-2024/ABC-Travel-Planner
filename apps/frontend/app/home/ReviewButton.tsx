@@ -1,8 +1,7 @@
+
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { createClient } from '../utils/supabase/client';
-import { json } from 'stream/consumers';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Review {
     name: string; //the username
@@ -42,7 +41,7 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAdd
             console.log(userData)
             if (userData) {
                 //Frontend 
-                onAddReview({ name: `${userData[0].name}`, text: newReview, rating, title});  //the username 
+                onAddReview({ name: `${userData[0].name}`, text: newReview, rating: rating, title: title});  //the username 
                 setNewReview('');
                 setTitle('');
                 setRating(0);
@@ -52,14 +51,11 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAdd
                 const now = new Date();
                 const formattedDate = now.toISOString();
                 if (userData != null) {
-                    const reviewUUID = uuidv4();
-    
                     const { name, surname } = userData[0];
     
                     const { data: insertData, error: insertError } = await supabase
                     .from('reviews')
                     .insert([{
-                        id: reviewUUID,
                         created_at: formattedDate,
                         destination_id: location_id, 
                         review_title: title, 
@@ -147,3 +143,4 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAdd
 };
 
 export default ReviewButton;
+
