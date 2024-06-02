@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Account from '../app/account/page';
 import { useRouter } from 'next/navigation';
-import logout from '../app/account/index';
+import {logout} from '../app/account/index';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
