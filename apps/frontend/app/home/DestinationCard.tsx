@@ -17,7 +17,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination, review }
       user_name: string;
       review_text: string;
       rating: number;
-      title: string;
+      review_title: string;
   }
 
   interface newData {
@@ -45,7 +45,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination, review }
                               name: item.user_name,
                               text: item.review_text,
                               rating: item.rating,
-                              title: item.title
+                              title: item.review_title
                           }));
                           
                       setReviews((prevReviews: any) => [...prevReviews, ...transformedReviews]);
