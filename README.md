@@ -5,9 +5,6 @@ planning and booking website that aims to revolutionise the way travellers plan 
 trips. Combining the strengths of TripAdvisor and Booking.com with new innovative features,
 the ABC Travel Planner will offer users a seamless and personalised travel experience.
 
-![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Bigmanfish1/d5e1d38427eaf6a78fc2ac70d0f50bc6/raw/jest-coverage-comment__main.json)
-![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796617525-da8bacd4b5ef756cceb20b0e)
-
 ## Team Members and Roles
 **Mishka Dukhanti**
 **Aidan Govender**

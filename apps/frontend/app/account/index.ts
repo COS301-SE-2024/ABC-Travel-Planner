@@ -20,3 +20,4 @@ export async function getUserProfile()
     email: user?.email || "",
   };
 }
+
