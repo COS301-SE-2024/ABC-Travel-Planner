@@ -1,5 +1,6 @@
 
 import Link from 'next/link';
+import React from 'react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
