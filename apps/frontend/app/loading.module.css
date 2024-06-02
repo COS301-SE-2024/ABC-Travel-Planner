@@ -1,0 +1,191 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 10px;
+    /* Adjust margin to make the spacing consistent */
+    width: calc(33.33% - 20px);
+    /* Adjust width to fit 3 cards per row with margin */
+    height: 400px;
+    /* Increase height */
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.borderless {
+    border: none;
+    box-shadow: none;
+}
+
+.image,
+.text,
+.button {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+}
+
+.image {
+    width: 100%;
+    height: 250px;
+    /* Increase height */
+    margin-bottom: 10px;
+}
+
+.text {
+    width: 80%;
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+.button {
+    width: 40%;
+    height: 30px;
+}
+
+.favoriteButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.skeleton {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    animation: skeleton-loading 1.2s infinite ease-in-out;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: #e0e0e0;
+    }
+
+    50% {
+        background-color: #f0f0f0;
+    }
+
+    100% {
+        background-color: #e0e0e0;
+    }
+}
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.skeletonHeading {
+    width: 50%;
+    height: 40px;
+    margin: 20px auto;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    animation: skeleton-loading 1.2s infinite ease-in-out;
+}
+
+.homeCard {
+    max-width: 24rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.homeImage {
+    width: 100%;
+    height: 12rem;
+    /* Equivalent to h-48 */
+    background-color: #e0e0e0;
+}
+
+.homeText {
+    height: 2rem;
+    /* For the title */
+    width: 80%;
+    /* Adjust as needed */
+    margin: 1rem 1.5rem;
+}
+
+.homeAddress {
+    height: 1.25rem;
+    /* Equivalent to text-base */
+    width: 60%;
+    /* Adjust as needed */
+    margin: 0.5rem 1.5rem;
+}
+
+.homeButton {
+    height: 2.5rem;
+    /* Equivalent to the button height */
+    width: 40%;
+    /* Adjust as needed */
+    margin: 1rem auto;
+}
+
+.skeletonImage {
+    width: 100%;
+    height: 256px; /* Same as h-64 */
+    margin-bottom: 1rem; /* Same as mb-4 */
+  }
+  
+  .skeletonText {
+    height: 24px; /* Suitable for text lines */
+    margin-bottom: 0.5rem; /* Same as mb-2 */
+  }
+  
+  .skeletonParagraph {
+    height: 18px; /* Suitable for smaller text */
+    margin-bottom: 0.5rem; /* Same as mb-2 */
+  }
+  
+  .skeletonStar {
+    width: 24px; /* Same as w-6 */
+    height: 24px; /* Same as h-6 */
+    margin-right: 4px; /* Spacing between stars */
+  }
+  
+  .skeletonContainer {
+    padding: 1rem; /* Same as p-4 */
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); /* Same as shadow-lg */
+  }
+
+  .searchHeading {
+    width: 60%;
+    height: 32px; /* Matches fontSize: '2rem' */
+    margin-bottom: 1rem;
+  }
+  
+  .searchSubheading {
+    width: 80%;
+    height: 24px; /* Matches fontSize: '1.5rem' */
+    margin-bottom: 1rem;
+  }
+  
+  .searchButton {
+    width: 120px;
+    height: 40px;
+    margin-right: 1rem;
+  }
+  
+  .searchIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+  }
+  
+  .searchInput {
+    width: 70%;
+    height: 40px;
+    margin-right: 1rem;
+  }
+  
+  .searchSubmitButton {
+    width: 40px;
+    height: 40px;
+  }

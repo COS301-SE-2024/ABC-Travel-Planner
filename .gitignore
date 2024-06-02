@@ -19,3 +19,4 @@ log.txt
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+supabase/.temp/cli-latest
