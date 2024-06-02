@@ -83,7 +83,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination, review }
                     </svg>
                   ))}
                 </div> */}
-                <p className="text-black text-base">{destination.address_obj.address_string}</p>
+                <p className="text-black text-base">{destination.address_obj ? destination.address_obj.address_string: ''}</p>
               </div>
             </div>
           </Link>
