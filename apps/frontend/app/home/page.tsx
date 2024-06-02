@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import DestinationCard from './DestinationCard';
 import Image from 'next/image';
@@ -20,11 +18,11 @@ const countries: string[] = [
   'Cameroon',
   'Ivory Coast',
   'Senegal',
-  'Tunisia',
+  'Tunisia',];
   // 'China',
   // 'India',
   // 'Japan',
-  ];
+  
   let reviewHash: any = {};
 
 async function getCountryData(country: string) {
