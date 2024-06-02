@@ -12,8 +12,8 @@ const getReviews = async (location_id: any) => {
         .select("user_name, review_text, rating, review_title")
         .eq('destination_id', location_id.trim())
 
-    console.log("Review Error: " + JSON.stringify(reviewErr))
-    console.log("Review Data: " + JSON.stringify(reviewData))
+    // console.log("Review Error: " + JSON.stringify(reviewErr))
+    // console.log("Review Data: " + JSON.stringify(reviewData))
 
     return reviewData;
 }
