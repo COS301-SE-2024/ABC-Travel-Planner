@@ -2,7 +2,7 @@ import React from 'react';
 import DestinationCard from './destinationsCard';
 import createSupabaseServerClient from '@/libs/supabase/server';
 import { createClient } from '../utils/supabase/client';
-import readUser from '../libs/actions/index';
+import readUser from '@/libs/actions';
 import ImageSlider from './ImageSlider';
 const countries: string[] = [
   'Nigeria',];
