@@ -6,8 +6,8 @@ import Image from 'next/image';
 import getReviews from './getReviews'
 
 const countries: string[] = [
-  // 'Nigeria',
-  // 'South Africa',
+  'Nigeria',
+  'South Africa',
   'Egypt',
   'Kenya',
   'Ghana',
