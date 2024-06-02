@@ -19,7 +19,7 @@ jobs:
           echo "Beginning to test ${{ github.repository }}"
 
   lint-codebase:
-    name: Lint Frontend
+    name: Test Frontend/Backend
     runs-on: ubuntu-latest
     needs: start
 
@@ -45,16 +45,16 @@ jobs:
         run: |
           cd apps/${{ matrix.folder }}
           npm run test -- --coverage
+          
+      - name: Create coverage folder if not exists
+        run: mkdir -p ./apps/coverage
 
       - name: Jest Code Coverage
         id: coverageComment
-        run: |
-          COVERAGE=$(sed -n 's/.*strong>All files<\/span>.*percentage">\([^<]*\)<.*/\1/p' apps/frontend/coverage/lcov-report/index.html)
-          COLOR=green
-          if (( ${COVERAGE%%.*} < 80 )); then COLOR=red; fi
-          echo "::set-output name=coverage::$COVERAGE"
-          echo "::set-output name=color::$COLOR"
-          echo "::set-output name=summaryHtml::$(cat apps/frontend/coverage/lcov-report/index.html)"
+        uses: MishaKav/jest-coverage-comment@main
+        with:
+          hide-comment: true
+          coverage-summary-path: ./apps/coverage/coverage-summary.json
 
       - name: Check the output coverage
         run: |
