@@ -1,13 +1,13 @@
+
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { createClient } from '../utils/supabase/client';
-import { json } from 'stream/consumers';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Review {
-    name: string;
+    name: string; //the username
     text: string;
     rating: number;
+    title: string; 
 }
 
 interface ReviewButtonProps {
@@ -19,7 +19,7 @@ interface ReviewButtonProps {
 const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAddReview }) => {
     const [showReviews, setShowReviews] = useState(false);
     const [newReview, setNewReview] = useState('');
-    const [reviewerName, setReviewerName] = useState('');
+    const [title, setTitle] = useState('');
     const [rating, setRating] = useState(0);
 
     const handleToggleReviews = () => {
@@ -27,32 +27,10 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAdd
     };
 
     const handleAddReview = async () => {
-        console.log("Handle Add Review entered...")
-        //Call the backend function for creating a review...
-        const location_ids = window.sessionStorage.getItem('Location_ids');
-
-        if (newReview.trim() && reviewerName.trim()) {
-            onAddReview({ 
-                name: reviewerName, text: newReview, rating
-            });
-            setNewReview('');
-            setReviewerName('');
-            setRating(0);
-
-            console.log("Proceeding to create client")
-
+        if (newReview.trim() && title.trim()) {
             const supabase = createClient();
             
-            // console.log("Client created")
             const { data: { user } } = await supabase.auth.getUser();
-            
-            console.log("Retrieving user")
-            // const curruser = await getCurrentUser();
-            // console.log("This is the one we get from the user " + JSON.stringify(curruser));
-
-            const now = new Date();
-            const formattedDate = now.toISOString();
-            
             console.log("Retrieving user data: " + `${user?.id}`)
 
             const { data: userData, error: userErr } = await supabase
@@ -61,38 +39,45 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAdd
             .eq('user_id', `${user?.id}`)
             
             console.log(userData)
-            
-            if (userData != null) {
-                const destUUID = location_id
-                const reviewUUID = uuidv4();
-
-                const { name, surname } = userData[0];
-
-                const { data: insertData, error: insertError } = await supabase
-                .from('reviews')
-                .insert([{
-                    id: reviewUUID,
-                    created_at: formattedDate,
-                    destination_id: destUUID, 
-                    review_title: "testing_title :)", 
-                    review_text: newReview, 
-                    user_id: `${user?.id}`, 
-                    user_name: name, 
-                    user_surname: surname,
-                    rating: rating
-                }])
-                .select()
-
-                if (insertError) {
-                    console.log("Could not insert data:\n" + JSON.stringify(insertError))
+            if (userData) {
+                //Frontend 
+                onAddReview({ name: `${userData[0].name}`, text: newReview, rating: rating, title: title});  //the username 
+                setNewReview('');
+                setTitle('');
+                setRating(0);
+                
+                //Backend Insertion
+                console.log("Retrieving user")
+                const now = new Date();
+                const formattedDate = now.toISOString();
+                if (userData != null) {
+                    const { name, surname } = userData[0];
+    
+                    const { data: insertData, error: insertError } = await supabase
+                    .from('reviews')
+                    .insert([{
+                        created_at: formattedDate,
+                        destination_id: location_id, 
+                        review_title: title, 
+                        review_text: newReview, 
+                        user_id: `${user?.id}`, 
+                        user_name: name,        
+                        user_surname: surname,
+                        rating: rating
+                    }])
+                    .select()
+    
+                    if (insertError) {
+                        console.log("Could not insert data:\n" + JSON.stringify(insertError))
+                    }
                 }
-
-            }
-            else {
-                console.log("Review could not be created - user does not exist in database")
+                else {
+                    console.log("Review could not be created - user does not exist in database")
+                }
+            } else {
+                console.log("ERR: AddReview - Could not add review (User not found in database)")
             }
         }
-
     };
 
     const handleRatingClick = (selectedRating: number) => {
@@ -109,19 +94,23 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAdd
                     <div className="review-list">
                         <h3 className="review-heading">Reviews:</h3>
                         {reviews.map((review, index) => (
-                            <p key={index} className="review-item">
-                                <strong>{review.name}:</strong> {review.text} ({review.rating} stars)
-                            </p>
+                            <div key={index} className="review-item">
+                                <p>
+                                    <u>{review.name}</u> ({review.rating} stars)
+                                </p>
+                                <p><strong>{review.title}</strong></p> {/* Display the title here */}
+                                <p>{review.text}</p>
+                            </div>
                         ))}
                     </div>
                     <div className="review-form">
-                        <label htmlFor="reviewerName" className="review-label">Your Name:</label>
+                        <label htmlFor="title" className="review-label">Title:</label>
                         <input 
-                            id="reviewerName"
+                            id="title"
                             type="text" 
-                            value={reviewerName} 
-                            onChange={(e) => setReviewerName(e.target.value)} 
-                            placeholder="Your name" 
+                            value={title} 
+                            onChange={(e) => setTitle(e.target.value)} 
+                            placeholder="Enter title here" 
                             className="review-input"
                         />
                         <label htmlFor="newReview" className="review-label">Your Review:</label>
@@ -154,3 +143,4 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAdd
 };
 
 export default ReviewButton;
+

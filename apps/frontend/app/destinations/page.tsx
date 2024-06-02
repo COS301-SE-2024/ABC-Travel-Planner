@@ -6,13 +6,13 @@ import readUser from '@/libs/actions';
 import ImageSlider from './ImageSlider';
 const countries: string[] = [
   'Nigeria',
-  'South Africa',
-  'Egypt',
-  'Kenya',
-  'Ghana',
-  'Morocco',
-  'Ethiopia',
-  'Tanzania'];
+  'South Africa',];
+  // 'Egypt',
+  // 'Kenya',
+  // 'Ghana',
+  // 'Morocco',
+  // 'Ethiopia',
+  // 'Tanzania',
 //   'Uganda',
 //   'Algeria',
 //   'Angola',
@@ -103,10 +103,10 @@ interface favouriteHash {
 
 let favouritedHash: favouriteHash = {};
 let favouriteObjects: any[] = [];
-const supabase = createClient();
+
 
 async function getCountryData(country: string) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=EA30B923BE4A4CB28EE695CDFFEB1DE7&searchQuery=${encodeURIComponent(country)}`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=E2F7795203BC41B981DFD021E4C97B4B&searchQuery=${encodeURIComponent(country)}`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -138,7 +138,7 @@ async function getCountryData(country: string) {
 }
 
 async function getDetailedData(locationId: any) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=A3B74876C98B4350AD1788B581E6F381`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=E2F7795203BC41B981DFD021E4C97B4B`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
   try {
     const response = await fetch(url, options);
@@ -158,7 +158,7 @@ async function getDetailedData(locationId: any) {
 }
 
 async function fetchImage(locationId: any) {
-  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=EA30B923BE4A4CB28EE695CDFFEB1DE7`;
+  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=E2F7795203BC41B981DFD021E4C97B4B`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -185,6 +185,7 @@ async function fetchImage(locationId: any) {
 }
 
 async function isFavourited() {
+  const supabase = await createSupabaseServerClient();
   const currUser = await readUser();
   const user = JSON.parse(currUser);
   //console.log(user?.data?.user?.id);
@@ -192,6 +193,7 @@ async function isFavourited() {
   // const { data: destinationObject, error: dError } = await supabase.from('favourite_destinations').select('destination_object').eq('user_id', `${user?.data?.user?.id}`).eq('status', true);
   //console.log(JSON.stringify(data));
   favouritedHash = {};
+  favouriteObjects = [];
   if (data && data.length > 0) {
     data.forEach((favourite: any) => {
       favouritedHash[favourite.destination_object.location_id] = true;

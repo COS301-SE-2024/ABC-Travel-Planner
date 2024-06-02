@@ -1,7 +1,13 @@
 import React from 'react';
+import { FaPhone, FaMapMarkerAlt, FaEnvelope,FaClock } from 'react-icons/fa';
 
+const colors = {
+  primary: '#333',
+  secondary: '#666',
+  accent: '#ccc',
+};
 async function fetchImage(locationId: any) {
-  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=EA30B923BE4A4CB28EE695CDFFEB1DE7`;
+  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=E2F7795203BC41B981DFD021E4C97B4B`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -29,7 +35,7 @@ async function fetchImage(locationId: any) {
 const fetchData = async (locationId: any) => {
   if (!locationId) return;
 
-  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=A3B74876C98B4350AD1788B581E6F381`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=E2F7795203BC41B981DFD021E4C97B4B`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -50,7 +56,6 @@ const fetchData = async (locationId: any) => {
     }
   } catch (error) {
     console.error(`Error fetching destination data for locationId ${locationId}:`, error);
-
   }
 };
 
@@ -61,30 +66,157 @@ export default async function DestinationPage({ params, searchParams }: {
   console.log(params.locationId);
   const destinationData = await fetchData(params.locationId);
 
+  if (!destinationData) {
+    return <div>No data found for this destination.</div>;
+  }
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Destination Page</h1>
-        <div className="rounded shadow-lg p-4">
-          <img src={destinationData.image} alt={destinationData.name} className="w-full h-64 object-cover rounded mb-4" />
-          <h2 className="text-xl font-bold mb-2">{destinationData.name}</h2>
-          <p>{destinationData.description ? destinationData.description : ""}</p>
-          <p>{destinationData.phone ? destinationData.phone : ""}</p>
-          <p>{destinationData.website ? destinationData.website : ""}</p>
-          <p>{destinationData.timezone ? destinationData.timezone : ""}</p>
-          <p>Ranking details <span>{destinationData.ranking_data ? destinationData.ranking_data.ranking_string : ""}</span></p>
-          <p>Location Category <span>{destinationData.category ? destinationData.category.name : ""}</span></p>
-          <p>Location Subcategory <span>{destinationData.subcategory && destinationData.subcategory[0] ? destinationData.subcategory[0].name : ""}</span></p> {/*This can be a loop */}
-          <p>Location Subcategory <span>{destinationData.subcategory && destinationData.subcategory[1] ? destinationData.subcategory[1].name : ""}</span></p>
-          <p className="text-gray-700 mb-2">{destinationData.address_obj ? destinationData.address_obj.address_string: ''}</p>
-          <div className="flex items-center mb-4">
-            {Array.from({ length: destinationData.rating }, (_, i) => (
-              <svg key={i} className="w-6 h-6 fill-current text-yellow-500 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12 2c-.3 0-.6.1-.8.4l-4.2 6.4-6.3.9c-.4.1-.6.5-.5.9.1.3.4.6.8.6h7.2l2.6 6.8c.1.2.3.3.5.3s.4-.1.5-.3l2.6-6.8h7.2c.4 0 .7-.3.8-.6.1-.4-.1-.8-.5-.9l-6.3-.9-4.2-6.4c-.2-.4-.5-.5-.8-.5z" />
-              </svg>
-            ))}
+       <h1 className="text-2xl font-bold mb-4 text-center">{destinationData.name}</h1>
+       <div className="rounded shadow-lg p-4 bg-white">
+        {destinationData.image && (
+          <div className="flex justify-center">
+            <img
+              src={destinationData.image}
+              alt={destinationData.name}
+              className="w-64 h-64 object-cover rounded mb-4"
+            />
           </div>
+        )}
         </div>
+       <div className="rounded shadow-lg p-4 bg-white flex justify-center items-center">
+        
+        <table className="min-w-full bg-white border">
+          <tbody>
+            {destinationData.description && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Description</td>
+                <td className="border px-4 py-2">{destinationData.description}</td>
+              </tr>
+            )}
+            {destinationData.phone && (
+              <tr>
+              <td className="border px-4 py-2 font-semibold"><FaPhone style={{ color: colors.primary }} />Phone</td>
+              <td className="border px-4 py-2">{destinationData.phone}</td>
+            </tr>
+            )}
+            {destinationData.website && (
+              <tr>
+              <td className="border px-4 py-2 font-semibold">Website</td>
+              <td className="border px-4 py-2"><a href={destinationData.website} target="_blank" rel="noopener noreferrer" className="text-blue-500">{destinationData.website}</a></td>
+            </tr>
+            )}
+            {destinationData.address_obj && (
+             <tr>
+             <td className="border px-4 py-2 font-semibold"><FaMapMarkerAlt style={{ color: colors.primary }} />Address</td>
+             <td className="border px-4 py-2">{destinationData.address_obj.address_string}</td>
+           </tr>
+            )}
+            {destinationData.timezone && (
+              <tr>
+              <td className="border px-4 py-2 font-semibold"><FaClock style={{ color: colors.primary }} />TimeZone</td>
+              <td className="border px-4 py-2">{destinationData.timezone}</td>
+            </tr>
+            )}
+            {destinationData.rating && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Rating</td>
+                <td className="border px-4 py-2">{destinationData.rating}</td>
+              </tr>
+            )}
+            {destinationData.num_reviews && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Number of Reviews</td>
+                <td className="border px-4 py-2">{destinationData.num_reviews}</td>
+              </tr>
+            )}
+            {destinationData.ranking && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Ranking</td>
+                <td className="border px-4 py-2">{destinationData.ranking}</td>
+              </tr>
+            )}
+            {destinationData.ranking_position && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Ranking Position</td>
+                <td className="border px-4 py-2">{destinationData.ranking_position}</td>
+              </tr>
+            )}
+            {destinationData.subcategory && destinationData.subcategory.length > 0 && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Subcategories</td>
+                <td className="border px-4 py-2">
+                  <ul className="list-disc list-inside">
+                    {destinationData.subcategory.map((subcat: any, index: number) => (
+                      <li key={index}>{subcat.name}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            )}
+            {destinationData.trip_types && destinationData.trip_types.length > 0 && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Trip Types</td>
+                <td className="border px-4 py-2">
+                  <ul className="list-disc list-inside">
+                    {destinationData.trip_types.map((tripType: any, index: number) => (
+                      <li key={index}>{tripType.localized_name} ({tripType.value})</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            )}
+            {destinationData.awards && destinationData.awards.length > 0 && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Awards</td>
+                <td className="border px-4 py-2">
+                  <ul className="list-disc list-inside">
+                    {destinationData.awards.map((award: any, index: number) => (
+                      <li key={index}>{award.display_name}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            )}
+            {destinationData.email && (
+              <tr>
+              <td className="border px-4 py-2 font-semibold"><FaEnvelope style={{ color: colors.primary }} />Email</td>
+              <td className="border px-4 py-2">{destinationData.email}</td>
+            </tr>
+            )}
+            {destinationData.location_category && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Location Category</td>
+                <td className="border px-4 py-2">{destinationData.location_category.name}</td>
+              </tr>
+            )}
+            {destinationData.latitude && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Latitude</td>
+                <td className="border px-4 py-2">{destinationData.latitude}</td>
+              </tr>
+            )}
+            {destinationData.longitude && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Longitude</td>
+                <td className="border px-4 py-2">{destinationData.longitude}</td>
+              </tr>
+            )}
+            {destinationData.location_string && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Location String</td>
+                <td className="border px-4 py-2">{destinationData.location_string}</td>
+              </tr>
+            )}
+            {destinationData.type_of_trip && (
+              <tr>
+                <td className="border px-4 py-2 font-semibold">Type of Trip</td>
+                <td className="border px-4 py-2">{destinationData.type_of_trip}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-};
-
+}

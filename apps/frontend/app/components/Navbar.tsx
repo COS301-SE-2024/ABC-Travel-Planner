@@ -1,6 +1,9 @@
+
 import Link from 'next/link';
+import React from 'react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useTheme } from 'next-themes';
 
 export const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -9,9 +12,11 @@ export const Navbar = () => {
     setActive(!active);
   };
 
+  const { theme, setTheme } = useTheme();
+
   return (
     <>
-      <nav className='flex items-center flex-wrap bg-gray-800 p-3'>
+      <nav className='fixed top-0 left-0 right-0 z-10 flex items-center flex-wrap bg-gray-800 p-3'>
         <Link href='/'>
           <div className='inline-flex items-center p-2 mr-4 cursor-pointer'>
             <Image
@@ -51,6 +56,11 @@ export const Navbar = () => {
           } w-full lg:inline-flex lg:flex-grow lg:w-auto`}
         >
           <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto'>
+            <Link href=''>
+              <span className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800' onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+                        {theme === 'light' ? 'Dark' : 'Light'} Mode
+              </span>
+            </Link>
             <Link href='/home'>
               <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Home
@@ -91,11 +101,14 @@ export const Navbar = () => {
                 className='ml-2 rounded-full border border-white overflow-hidden' 
             />
             </div>
-
-
           </div>
         </div>
       </nav>
+      {/* Add padding to the body to prevent content from being hidden behind the fixed navbar */}
+      <div className='pt-20'>
+        {/* Your page content here */}
+      </div>
     </>
   );
 };
+
