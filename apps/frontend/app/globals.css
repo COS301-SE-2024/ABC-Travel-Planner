@@ -12,28 +12,8 @@ body {
   background-color: #f5f5f5;
 }
 
-nav {
-  background-color: #333;
-  color: white;
-  padding: 10px;
-}
 
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: space-around;
-  margin: 0;
-  padding: 0;
-}
 
-nav ul li {
-  margin: 0 10px;
-}
-
-nav ul li a {
-  color: white;
-  text-decoration: none;
-}
 
 /*DESTINATION*/
 .container {
@@ -61,6 +41,7 @@ nav ul li a {
   /* Add this to ensure the cards stay in a row */
   flex-basis: 30%; /* Set the initial size of the flex item */
 }
+
 .title {
   margin-bottom: 20px;
 }
@@ -77,6 +58,10 @@ nav ul li a {
   margin-bottom: 1rem;
 }
 
+.moreInfoButton {
+  transition: background-color 0.3s;
+}
+
 .favoriteButton {
   border: none;
   background-color: transparent;
@@ -86,6 +71,7 @@ nav ul li a {
 .checked {
   color: orange;
 }
+
 
 /* HOME*/
 /* HOME*/
@@ -98,6 +84,11 @@ nav ul li a {
   justify-content: center;
   align-items: center;
   margin-top: 1rem; 
+}
+
+.no-underline a {
+  text-decoration: none;
+  color: inherit;
 }
 
 
@@ -459,6 +450,7 @@ nav ul li a {
   border-radius: 8px;
   max-width: 80%;
   position: relative;
+  padding: 1rem;
 }
 
 .close {
@@ -481,5 +473,15 @@ nav ul li a {
   height: auto;
   border-radius: 8px;
   margin-bottom: 10px;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.font-bold {
+  font-weight: bold;
 }
 

@@ -31,7 +31,7 @@ const Account = () => {
               <h1 className="account-name">Jessica Vorster</h1>
               <h2 className="account-email">jessica.vorster@gmail.com</h2>
               <p className="account-location"><FaMapMarkerAlt /> South Africa</p>
-              <p className="account-member-since"><FaRegCalendarAlt /> Member Since: 2015 January 1st</p>
+              <p className="account-member-since"><FaRegCalendarAlt /> Member Since: 2015 January 1</p>
             </div>
           </div>
           <div className="account-actions">
