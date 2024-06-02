@@ -45,7 +45,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
            
            <div className="card max-w-sm rounded overflow-hidden shadow-lg flex flex-col items-center p-4">
             <img src={destination.image} alt={destination.name} className="image w-full h-48 object-cover mb-4" />
-            <p className="text-center text-gray-700 mb-4">{destination.address_obj.address_string}</p>
+            <p className="text-center text-gray-700 mb-4">{destination.address_obj ? destination.address_obj.address_string : ""}</p>
             <div className="flex justify-between items-center w-full">
                 <button onClick={handleMoreInfoClick}  className="review-button">
                 More Information
