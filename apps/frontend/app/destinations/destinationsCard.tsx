@@ -88,4 +88,5 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
         </>
     );
 };
+
 export default DestinationCard;

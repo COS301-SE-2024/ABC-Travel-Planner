@@ -1,3 +1,4 @@
+
 import React from 'react';
 import DestinationCard from './DestinationCard';
 import Image from 'next/image';
@@ -124,3 +125,4 @@ const Home = async () => {
 };
 
 export default Home;
+
