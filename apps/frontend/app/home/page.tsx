@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import DestinationCard from './DestinationCard';
 import Image from 'next/image';
@@ -25,10 +23,10 @@ const countries: string[] = [
   // 'India',
   // 'Japan',
   ];
-  let reviewHash: any = {};
+
 
 async function getCountryData(country: string) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=A3B74876C98B4350AD1788B581E6F381&searchQuery=${encodeURIComponent(country)}`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=&searchQuery=${encodeURIComponent(country)}`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -72,7 +70,7 @@ async function getData() {
 }
 
 async function getDetailedData(locationId: any) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=A3B74876C98B4350AD1788B581E6F381`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
   try {
     const response = await fetch(url, options);
@@ -92,7 +90,7 @@ async function getDetailedData(locationId: any) {
 }
 
 async function fetchImage(locationId: any) {
-  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=A3B74876C98B4350AD1788B581E6F381`;
+  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -110,38 +108,14 @@ async function fetchImage(locationId: any) {
   }
 }
 
-async function getAllReviews(destinations: any) {
-  try {
-    const updatedData = await Promise.all(destinations.map(async (destination: any) => {
-      const reviews = await getReviews(destination.location_id);
-      if (reviews) {
-        //const imageUrl = await fetchImage(destination.location_id);
-        reviewHash[destination.location_id] = reviews;
-        console.log("Review Hash: " + JSON.stringify(reviewHash[destination.location_id]))
-        return {
-          ...reviews,
-        };
-      }
-      return null;
-    }));
-
-    return updatedData.filter((destination: any) => destination !== null && !destination.error);
-  } catch (err) {
-    console.error(`Error fetching data:`, err);
-    return [];
-  }
-}
-
 const Home = async () => {
   const data = await getData();
   const destinations = data?.data || [];
-  // const allReviews = await getAllReviews(destinations);
-  // console.log("all reviews " + JSON.stringify(reviewHash));
-  //console.log(destinations);
+  console.log(destinations);
   return (
     <div className="container mx-auto mt-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {destinations.map(async (destination: any, index: number) => (
+        {destinations.map((destination: any, index: number) => (
           <DestinationCard key={index} destination={destination} review={getReviews(destination.location_id)} />
         ))}
       </div>
@@ -150,4 +124,3 @@ const Home = async () => {
 };
 
 export default Home;
-

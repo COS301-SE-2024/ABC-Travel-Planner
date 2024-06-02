@@ -3,20 +3,11 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  signInWithEmailAndPassword,
-  signUpWithEmailAndPassword,
-  validateEmail,
-  validatePassword,
-} from ".";
+import { signInWithEmailAndPassword, signUpWithEmailAndPassword } from ".";
 import readUser from "@/libs/actions";
 
 const SplashPage = () => {
   const router = useRouter();
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-
   const [loginData, setLoginData] = useState<{
     email: string;
     password: string;
@@ -41,27 +32,26 @@ const SplashPage = () => {
     }
   };
 
-  const handleRegister = async () => {
-    if (
-      !registerData.name ||
-      !registerData.surname ||
-      !registerData.email ||
-      !registerData.password ||
-      !registerData.confirmPassword
-    ) {
-      alert("Please fill in all fields.");
-      return;
-    }
-    if (emailError || passwordError) {
-      alert("Please enter valid email and password.");
-      return;
-    }
+  useEffect(() => {
+    const getUser = async () => {
+      const result = await readUser();
+      const {
+        data: { user },
+      } = JSON.parse(result);
+      if (user) {
+        router.push("/home");
+      }
+    };
+    getUser();
+  }, []);
 
+  const handleRegister = async () => {
     if (registerData.password !== registerData.confirmPassword) {
-      alert("Passwords do not match. Please try again.");
+      alert("Passwords do not match");
       return;
     }
     const result = await signUpWithEmailAndPassword(registerData);
+    // console.log(result);
 
     const { error } = JSON.parse(result);
 
@@ -78,32 +68,9 @@ const SplashPage = () => {
     const { name, value } = e.target;
     setLoginData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleRegisterChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleRegisterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    let isValid = false;
     setRegisterData((prev) => ({ ...prev, [name]: value }));
-    if (name === "email") {
-      isValid = await validateEmail(value);
-      setEmailError(!isValid);
-    } else if (name === "password") {
-      isValid = await validatePassword(value);
-      setPasswordError(!isValid);
-      if (registerData.confirmPassword !== "") {
-        if (value !== registerData.confirmPassword) {
-          setPasswordsMatch(false);
-        } else {
-          setPasswordsMatch(true);
-        }
-      }
-    } else if (name === "confirmPassword") {
-      if (value === registerData.password) {
-        setPasswordsMatch(true);
-      } else {
-        setPasswordsMatch(false);
-      }
-    }
   };
 
   return (
@@ -248,13 +215,7 @@ const SplashPage = () => {
                     value={registerData.email}
                     onChange={handleRegisterChange}
                   />
-                  {emailError && (
-                    <small style={{ color: "red" }}>
-                      Please enter a valid email address
-                    </small>
-                  )}
                 </div>
-
                 <div className="mb-3">
                   <label htmlFor="registerPassword" className="form-label">
                     Password
@@ -267,12 +228,6 @@ const SplashPage = () => {
                     value={registerData.password}
                     onChange={handleRegisterChange}
                   />
-                  {passwordError && (
-                    <small style={{ color: "red" }}>
-                      Password must be alphanumeric and contain at least 8
-                      characters
-                    </small>
-                  )}
                 </div>
                 <div className="mb-3">
                   <label
@@ -289,11 +244,6 @@ const SplashPage = () => {
                     value={registerData.confirmPassword}
                     onChange={handleRegisterChange}
                   />
-                  {!passwordsMatch && (
-                    <small style={{ color: "red" }}>
-                      Passwords do not match
-                    </small>
-                  )}
                 </div>
                 <button
                   onClick={handleRegister}
