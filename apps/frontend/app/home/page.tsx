@@ -26,7 +26,7 @@ const countries: string[] = [
 
 
 async function getCountryData(country: string) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=&searchQuery=${encodeURIComponent(country)}`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=E2F7795203BC41B981DFD021E4C97B4B&searchQuery=${encodeURIComponent(country)}`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -70,7 +70,7 @@ async function getData() {
 }
 
 async function getDetailedData(locationId: any) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=E2F7795203BC41B981DFD021E4C97B4B`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
   try {
     const response = await fetch(url, options);
@@ -90,7 +90,7 @@ async function getDetailedData(locationId: any) {
 }
 
 async function fetchImage(locationId: any) {
-  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=`;
+  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=E2F7795203BC41B981DFD021E4C97B4B`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
