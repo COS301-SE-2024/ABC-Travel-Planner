@@ -1,0 +1,74 @@
+name: Lint Codebase
+on:
+  push:
+    branches: [ main, dev, frontend/testing ]
+  pull_request:
+    branches: [ main, dev ]
+    
+permissions:
+  contents: read
+
+jobs:
+  start:
+    name: Initial Setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Starting Job
+        run: |
+          echo "Beginning to test ${{ github.repository }}"
+
+  lint-codebase:
+    name: Lint Frontend
+    runs-on: ubuntu-latest
+    needs: start
+
+    strategy:
+      matrix:
+        folder: [frontend]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21.x'  
+
+      - name: Install dependencies
+        run: |
+          cd apps/${{ matrix.folder }}
+          npm ci
+
+      - name: Run Tests
+        run: |
+          cd apps/${{ matrix.folder }}
+          npm run test -- --coverage
+
+      - name: Jest Code Coverage
+        id: coverageComment
+        run: |
+          COVERAGE=$(grep -oP '(?<=<span class="strong">All files</span>.*?<span class="percentage">)[^<]+' apps/frontend/coverage/lcov-report/index.html)
+          COLOR=green
+          if [[ $COVERAGE < 80 ]]; then COLOR=red; fi
+          echo "::set-output name=coverage::$COVERAGE"
+          echo "::set-output name=color::$COLOR"
+          echo "::set-output name=summaryHtml::$(cat apps/frontend/coverage/lcov-report/index.html)"
+
+      - name: Check the output coverage
+        run: |
+          echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
+          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
+          echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
+
+      - name: Create the badge
+        uses: schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: d5e1d38427eaf6a78fc2ac70d0f50bc6
+          filename: jest-coverage-comment__main.json
+          label: Coverage
+          message: ${{ steps.coverageComment.outputs.coverage }}%
+          color: ${{ steps.coverageComment.outputs.color }}
+          namedLogo: typescript
