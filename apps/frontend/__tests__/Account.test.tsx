@@ -18,7 +18,7 @@ describe('Account Component', () => {
     expect(screen.getByText('Jessica Vorster')).toBeInTheDocument();
     expect(screen.getByText('jessica.vorster@gmail.com')).toBeInTheDocument();
     expect(screen.getByText('South Africa')).toBeInTheDocument();
-    expect(screen.getByText('Member Since: 2015 January 1st')).toBeInTheDocument();
+    expect(screen.getByText('Member Since: 2015 January 1')).toBeInTheDocument();
   });
 
   it('should call logout and navigate to /login on sign out button click', async () => {
