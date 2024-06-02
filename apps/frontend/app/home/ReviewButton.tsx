@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import { createClient } from '../utils/supabase/client';
+import { json } from 'stream/consumers';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Review {
     name: string; //the username
@@ -9,11 +12,12 @@ interface Review {
 }
 
 interface ReviewButtonProps {
+    location_id: string;
     reviews: Review[];
     onAddReview: (review: Review) => void;
 }
 
-const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => {
+const ReviewButton: React.FC<ReviewButtonProps> = ({ location_id, reviews, onAddReview }) => {
     const [showReviews, setShowReviews] = useState(false);
     const [newReview, setNewReview] = useState('');
     const [title, setTitle] = useState('');
@@ -23,12 +27,60 @@ const ReviewButton: React.FC<ReviewButtonProps> = ({ reviews, onAddReview }) => 
         setShowReviews(!showReviews);
     };
 
-    const handleAddReview = () => {
+    const handleAddReview = async () => {
         if (newReview.trim() && title.trim()) {
-            onAddReview({ name: "StaticUsername", text: newReview, rating, title });  //the username 
-            setNewReview('');
-            setTitle('');
-            setRating(0);
+            const supabase = createClient();
+            
+            const { data: { user } } = await supabase.auth.getUser();
+            console.log("Retrieving user data: " + `${user?.id}`)
+
+            const { data: userData, error: userErr } = await supabase
+            .from('Users')
+            .select("name, surname")
+            .eq('user_id', `${user?.id}`)
+            
+            console.log(userData)
+            if (userData) {
+                //Frontend 
+                onAddReview({ name: `${userData[0].name}`, text: newReview, rating, title});  //the username 
+                setNewReview('');
+                setTitle('');
+                setRating(0);
+                
+                //Backend Insertion
+                console.log("Retrieving user")
+                const now = new Date();
+                const formattedDate = now.toISOString();
+                if (userData != null) {
+                    const reviewUUID = uuidv4();
+    
+                    const { name, surname } = userData[0];
+    
+                    const { data: insertData, error: insertError } = await supabase
+                    .from('reviews')
+                    .insert([{
+                        id: reviewUUID,
+                        created_at: formattedDate,
+                        destination_id: location_id, 
+                        review_title: title, 
+                        review_text: newReview, 
+                        user_id: `${user?.id}`, 
+                        user_name: name,        
+                        user_surname: surname,
+                        rating: rating
+                    }])
+                    .select()
+    
+                    if (insertError) {
+                        console.log("Could not insert data:\n" + JSON.stringify(insertError))
+                    }
+                }
+                else {
+                    console.log("Review could not be created - user does not exist in database")
+                }
+            } else {
+                console.log("ERR: AddReview - Could not add review (User not found in database)")
+            }
         }
     };
 

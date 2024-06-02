@@ -1,17 +1,67 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReviewButton from './ReviewButton';
 import Link from 'next/link';
 
 interface DestinationCardProps {
   destination: any;
+  review: any;
 }
 
-const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
+const DestinationCard: React.FC<DestinationCardProps> = ({ destination, review }) => {
 
   const [reviews, setReviews] = useState(destination.reviews || []);
+  const [isSet, setIsSet] = useState(false)
 
+  interface apiData {
+      user_name: string;
+      review_text: string;
+      rating: number;
+      title: string;
+  }
 
+  interface newData {
+      name: string;
+      text: string;
+      rating: number;
+      title: string;
+  }
+
+  useEffect(() => {
+      const updateReviews = () => {
+          if (!isSet) {
+              setIsSet(true)
+          }
+          else  {
+          //   console.log("Review already set :)")
+          if ((review)) {
+              console.log("Curr Review Data: " + JSON.stringify(review))
+              console.log("REVIEW VALUE: " + review.value)
+              if (review.value) {
+                  const parsedValue = JSON.parse(review.value)
+
+                  if (Array.isArray(parsedValue)) {
+                      const transformedReviews : newData[] = parsedValue.map((item: apiData) => ({
+                              name: item.user_name,
+                              text: item.review_text,
+                              rating: item.rating,
+                              title: item.title
+                          }));
+                          
+                      setReviews((prevReviews: any) => [...prevReviews, ...transformedReviews]);
+                      setIsSet(true);
+                      // console.log(review.user_name)
+                      // console.log(review.review_text)
+                      // console.log(review.rating)
+                  } else console.log("REVIEW VALUE NOT ARRAY - TYPE: " + typeof parsedValue)
+              }
+          }
+          else console.log("REVIEW IS NOT ARRAY..." + JSON.stringify(review))
+          }
+      }
+
+      updateReviews();
+  }, [isSet]);
 
 
     const handleAddReview = (review: { name: string; text: string }) => {
@@ -37,7 +87,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
             </div>
           </Link>
           <div className="flex justify-center" style={{ marginBottom: '10px' }}>
-            <ReviewButton reviews={reviews} onAddReview={handleAddReview} />
+            <ReviewButton location_id={destination.location_id} reviews={reviews} onAddReview={handleAddReview} />
           </div>
         </div>
       );

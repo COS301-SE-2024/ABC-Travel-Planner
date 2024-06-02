@@ -1,11 +1,13 @@
 import React from 'react';
 import DestinationCard from './DestinationCard';
 import Image from 'next/image';
+import getReviews from './getReviews'
+
 const countries: string[] = [
-  'Nigeria',
-  'South Africa',];
+  // 'Nigeria',
+  // 'South Africa',
   // 'Egypt',
-  // 'Kenya',
+  'Kenya',
   // 'Ghana',
   // 'Morocco',
   // 'Ethiopia',
@@ -19,11 +21,12 @@ const countries: string[] = [
   // 'Tunisia',
   // 'China',
   // 'India',
-  // 'Japan',];
+  // 'Japan',
+  ];
 
 
 async function getCountryData(country: string) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=E2F7795203BC41B981DFD021E4C97B4B&searchQuery=${encodeURIComponent(country)}`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=&searchQuery=${encodeURIComponent(country)}`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -67,7 +70,7 @@ async function getData() {
 }
 
 async function getDetailedData(locationId: any) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=E2F7795203BC41B981DFD021E4C97B4B`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
   try {
     const response = await fetch(url, options);
@@ -87,7 +90,7 @@ async function getDetailedData(locationId: any) {
 }
 
 async function fetchImage(locationId: any) {
-  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=E2F7795203BC41B981DFD021E4C97B4B`;
+  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -113,7 +116,7 @@ const Home = async () => {
     <div className="container mx-auto mt-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {destinations.map((destination: any, index: number) => (
-          <DestinationCard key={index} destination={destination} />
+          <DestinationCard key={index} destination={destination} review={getReviews(destination.location_id)} />
         ))}
       </div>
     </div>
