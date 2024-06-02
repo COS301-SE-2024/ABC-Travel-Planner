@@ -70,13 +70,25 @@ const Account = () => {
                 <img src="/Images/profile.jpg" alt="Profile" />
               </div>
               <div className="account-profile-details">
-                <h1 className="account-name">Jessica Vorster</h1>
-                <h2 className="account-email">jessica.vorster@gmail.com</h2>
-                <p className="account-location">
-                  <FaMapMarkerAlt /> South Africa
-                </p>
-                <p className="account-member-since">
-                  <FaRegCalendarAlt /> Member Since: 2015 January 1
+                <h1 className="account-name">
+                  {profileDetails.name} {profileDetails.surname}
+                </h1>
+                <h2 className="account-email">{profileDetails.email}</h2>
+                <div
+                  style={{ alignItems: "center", display: "flex" }}
+                  className="account-location"
+                >
+                  <FaMapMarkerAlt />
+                  <span style={{ marginLeft: "8px" }}>South Africa</span>
+                </div>
+                <p
+                  style={{ alignItems: "center", display: "flex" }}
+                  className="account-member-since"
+                >
+                  <FaRegCalendarAlt />{" "}
+                  <span style={{ marginLeft: "8px" }}>
+                    Member Since: 2023/05/30
+                  </span>
                 </p>
               </div>
             </div>
