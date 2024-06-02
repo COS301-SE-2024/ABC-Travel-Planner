@@ -28,10 +28,10 @@ describe('Account Component', () => {
 
     render(<Account />);
 
-    /*const logoutButton = screen.getByText('Logout');
+    const logoutButton = screen.getByText('Logout');
     fireEvent.click(logoutButton);
 
     expect(logout).toHaveBeenCalled();
-    expect(pushMock).toHaveBeenCalledWith('/login');*/
+    //expect(pushMock).toHaveBeenCalledWith('/login');
   });
 });
