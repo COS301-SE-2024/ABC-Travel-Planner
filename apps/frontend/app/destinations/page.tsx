@@ -5,14 +5,14 @@ import { createClient } from '../utils/supabase/client';
 import readUser from '@/libs/actions';
 import ImageSlider from './ImageSlider';
 const countries: string[] = [
-  'Nigeria',
-  'South Africa',
-  'Egypt',
-  'Kenya',
-  'Ghana',
-  'Morocco',
-  'Ethiopia',
-  'Tanzania'];
+  'Nigeria',];
+  // 'South Africa',
+  // 'Egypt',
+  // 'Kenya',
+  // 'Ghana',
+  // 'Morocco',
+  // 'Ethiopia',
+  // 'Tanzania',
 //   'Uganda',
 //   'Algeria',
 //   'Angola',
