@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useTheme } from 'next-themes';
 
 export const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -8,6 +9,8 @@ export const Navbar = () => {
   const handleClick = () => {
     setActive(!active);
   };
+
+  const { theme, setTheme } = useTheme();
 
   return (
     <>
@@ -55,6 +58,11 @@ export const Navbar = () => {
               <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Home
               </div>
+            </Link>
+            <Link href='/'>
+              <span onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+                        {theme === 'light' ? 'Dark' : 'Light'} Mode
+              </span>
             </Link>
             <Link href='/search'>
               <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 

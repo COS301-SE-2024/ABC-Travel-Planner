@@ -5,7 +5,8 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import { Navbar } from './components/Navbar';
-import './globals.css';  // Import the global styles from the app folder
+import { ThemeProvider } from 'next-themes';
+import './globals.css'; 
 
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -14,10 +15,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <html lang="en">
-            <body>
-                {displayNavbar && <Navbar />}
-                {children}
-            </body>
+            <ThemeProvider>
+                <body>
+                    {displayNavbar && <Navbar />}
+                    {children}
+                </body>
+            </ThemeProvider>
         </html>
     );
 };
