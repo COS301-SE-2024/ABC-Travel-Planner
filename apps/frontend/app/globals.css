@@ -144,7 +144,7 @@ body {
 
 /* HOME*/
 /* HOME*/
-.max-w-sm:hover {
+/* .max-w-sm:hover {
   transform: translateY(-5px); 
 }
 
@@ -158,7 +158,7 @@ body {
 .no-underline a {
   text-decoration: none;
   color: inherit;
-}
+} */
 
 
 /* Search  */
@@ -554,4 +554,107 @@ body {
 .font-bold {
   font-weight: bold;
 }
+
+
+/* home */
+/* styles.css */
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Destination card styles */
+.destination-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+}
+
+.destination-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.destination-card-content {
+  padding: 20px;
+}
+
+.destination-card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.destination-card-description {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Button styles */
+.button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Home component styles */
+/* Add this to your styles.css */
+
+.destination-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+}
+
+.destination-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.destination-card-content {
+  padding: 20px;
+}
+
+.destination-card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.destination-card-description {
+  font-size: 16px;
+  color: #666;
+}
+
 
