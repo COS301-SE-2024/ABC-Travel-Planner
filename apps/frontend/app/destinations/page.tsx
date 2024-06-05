@@ -5,35 +5,35 @@ import { createClient } from '../utils/supabase/client';
 import readUser from '@/libs/actions';
 import ImageSlider from './ImageSlider';
 const countries: string[] = [
-  'Nigeria',
-  'South Africa',
-  'Egypt',
+  // 'Nigeria',
+  // 'South Africa',
+  // 'Egypt',
   'Kenya',
-  'Ghana',
-  'Morocco',
-  'Ethiopia',
-  'Tanzania',
-  'Uganda',
-  'Algeria',
-  'Angola',
-  'Cameroon',
-  'Ivory Coast',
-  'Senegal',
-  'Tunisia',
-  'China',
-  'India',
-  'Japan',
-  'South Korea',
-  'Indonesia',
-  'Pakistan',
-  'Bangladesh',
-  'Vietnam',
-  'Philippines',
-  'Thailand',
-  'Malaysia',
-  'Singapore',
-  'Nepal',
-  'Sri Lanka',];
+  // 'Ghana',
+  // 'Morocco',
+  // 'Ethiopia',
+  // 'Tanzania',
+  // 'Uganda',
+  // 'Algeria',
+  // 'Angola',
+  // 'Cameroon',
+  // 'Ivory Coast',
+  // 'Senegal',
+  // 'Tunisia',
+  // 'China',
+  // 'India',
+  // 'Japan',
+  // 'South Korea',
+  // 'Indonesia',
+  // 'Pakistan',
+  // 'Bangladesh',
+  // 'Vietnam',
+  // 'Philippines',
+  // 'Thailand',
+  // 'Malaysia',
+  // 'Singapore',
+  // 'Nepal',
+  // 'Sri Lanka',];
 //   'Myanmar',
 //   'Germany',
 //   'France',
@@ -95,7 +95,7 @@ const countries: string[] = [
 //   'Marshall Islands',
 //   'Tuvalu',
 //   'New Caledonia',
-// ];
+];
 
 interface favouriteHash {
   [key: string]: boolean;
@@ -106,7 +106,7 @@ let favouriteObjects: any[] = [];
 
 
 async function getCountryData(country: string) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=311F83C8A06848BC9E4AA5D9C3CFA8E9&searchQuery=${encodeURIComponent(country)}`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=A3B74876C98B4350AD1788B581E6F381&searchQuery=${encodeURIComponent(country)}`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -138,7 +138,7 @@ async function getCountryData(country: string) {
 }
 
 async function getDetailedData(locationId: any) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=311F83C8A06848BC9E4AA5D9C3CFA8E9`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=A3B74876C98B4350AD1788B581E6F381`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
   try {
     const response = await fetch(url, options);
@@ -158,7 +158,7 @@ async function getDetailedData(locationId: any) {
 }
 
 async function fetchImage(locationId: any) {
-  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=311F83C8A06848BC9E4AA5D9C3CFA8E9`;
+  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=A3B74876C98B4350AD1788B581E6F381`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {

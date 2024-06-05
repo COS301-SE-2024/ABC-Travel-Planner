@@ -4,29 +4,29 @@ import Image from 'next/image';
 import getReviews from './getReviews'
 
 const countries: string[] = [
-  'Nigeria',
-  'South Africa',
-  'Egypt',
+  // 'Nigeria',
+  // 'South Africa',
+  // 'Egypt',
   'Kenya',
-  'Ghana',
-  'Morocco',
-  'Ethiopia',
-  'Tanzania',
-  'Uganda',
-  'Algeria',
-  'Angola',
-  'Cameroon',
-  'Ivory Coast',
-  'Senegal',
-  'Tunisia',];
+  // 'Ghana',
+  // 'Morocco',
+  // 'Ethiopia',
+  // 'Tanzania',
+  // 'Uganda',
+  // 'Algeria',
+  // 'Angola',
+  // 'Cameroon',
+  // 'Ivory Coast',
+  // 'Senegal',
+  // 'Tunisia',];
   // 'China',
   // 'India',
   // 'Japan',
-  
+]
   let reviewHash: any = {};
 
 async function getCountryData(country: string) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=311F83C8A06848BC9E4AA5D9C3CFA8E9&searchQuery=${encodeURIComponent(country)}`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/search?key=&searchQuery=${encodeURIComponent(country)}`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
@@ -70,7 +70,7 @@ async function getData() {
 }
 
 async function getDetailedData(locationId: any) {
-  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=311F83C8A06848BC9E4AA5D9C3CFA8E9`;
+  const url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/details?key=`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
   try {
     const response = await fetch(url, options);
@@ -90,7 +90,7 @@ async function getDetailedData(locationId: any) {
 }
 
 async function fetchImage(locationId: any) {
-  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=311F83C8A06848BC9E4AA5D9C3CFA8E9`;
+  const imageUrl = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=`;
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
