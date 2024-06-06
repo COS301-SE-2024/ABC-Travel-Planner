@@ -45,7 +45,7 @@ const Home = () => {
     <div className="flex flex-col items-center" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
       <div className="container mx-auto mt-8 bg-gray-300 rounded-lg p-4" style={{ marginTop: '40px' }}>
         <div className="flex justify-end mb-4">
-        <select className="bg-gray-700 text-white font-bold py-2 px-4 rounded" >
+        <select className="bg-blue-600 text-white font-bold py-2 px-4 rounded" >
         <option value="" disabled selected>Select a country</option>
         {popularDestinations.map((location, index) => (
           <option key={index} value={location.name}>
@@ -54,8 +54,8 @@ const Home = () => {
         ))}
       </select>
         </div>
-        <h2 className="text-2xl font-bold mb-4">Top Countries</h2>
-        <div className="flex overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <h2 className="text-2xl font-bold mb-4">Top destinations for your next holiday</h2>
+        <div className="flex overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
           {popularDestinations.map((destination, index) => (
             <div key={index} className="w-64 flex-shrink-0 mr-4" style={{ backgroundColor: 'white', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }}>
               <DestinationCard destination={destination} />
@@ -65,8 +65,8 @@ const Home = () => {
       </div>
       <div className="my-8"></div> {/* Space between containers */}
       <div className="container mx-auto mt-8 bg-gray-300 rounded-lg p-4">
-        <h2 className="text-2xl font-bold my-4">All attractions,events, and sites!</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" style={{ maxHeight: '500px', overflowY: 'scroll' }}>
+        <h2 className="text-2xl font-bold my-4">More to explore</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
           {allLocations.map((destination, index) => (
             <div key={index} className="destination-card" style={{ backgroundColor: 'white' }}>
               <DestinationCard destination={destination} />

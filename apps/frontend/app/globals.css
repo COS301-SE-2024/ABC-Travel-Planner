@@ -571,6 +571,26 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 
 /* Destination card styles */
 .destination-card {
@@ -675,6 +695,9 @@ body {
   grid-area: photos-section;
   display: flex;
   align-items: flex-start; 
+  background-color:#d6d6d6;
+  border-radius: 8px;
+  padding: 10px;
 }
 
 .small-photos {
@@ -710,17 +733,17 @@ body {
   background-color:#d6d6d6;
   border-radius: 8px;
 }
-.google-street-view,
+/* .google-street-view,
 .google-maps-api {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
+} */
 
 .google-street-view h1,
 .google-maps-api h1 {
-  margin-bottom: 10px;
+  margin-right: 20px;
 }
 
 .attractions-section {
@@ -734,6 +757,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin-bottom: 10px;
+  font-size: large
 }
 .reviews-section {
   grid-area: reviews-section;
@@ -746,11 +770,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin-bottom: 10px;
+  font-size: large
 }
 
 .google-street-view iframe,
 .google-maps-api iframe {
-  border: 2px solid rgb(18, 49, 187);
+ 
   border-radius: 8px;
 }
 
