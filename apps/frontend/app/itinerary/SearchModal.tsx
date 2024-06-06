@@ -1,44 +1,37 @@
-import React, { useState } from 'react'
-import Search from "../search/page"
-
-import { Button, Input, Checkbox } from '@nextui-org/react';
+import React, { useState } from 'react';
+import Search from '../search/page';
+import { Button } from '@nextui-org/react';
 import {
-    Modal, 
-    ModalContent, 
-    ModalHeader, 
-    ModalBody, 
-    ModalFooter,
-    useDisclosure 
-  } from "@nextui-org/modal";
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from '@nextui-org/modal';
 
 interface SearchModalProps {
-    isOpen: boolean;
-    onClose: ()=> void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const SearchModal: React.FC<SearchModalProps> = ({isOpen, onClose}) => {
-    return (
+const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
+  return (
+    <>
+      {isOpen && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-50" />
+      )}
       <Modal size="md" isOpen={isOpen} onOpenChange={onClose}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Add an Item</ModalHeader>
-              <ModalBody>
-                <Search />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onClick={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onClick={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
+        <ModalContent className="modal-content">
+          <>
+            <ModalBody>
+              <Search />
+            </ModalBody>
+          </>
         </ModalContent>
       </Modal>
-    );
+    </>
+  );
 };
 
 export default SearchModal;
