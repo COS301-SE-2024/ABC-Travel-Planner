@@ -1,16 +1,11 @@
 "use client"
 import { Input, Button } from "@nextui-org/react";
+import { CgBookmark } from "react-icons/cg";
+
 import React, { useState } from "react";
 import SearchModal from "./SearchModal";
 import "./modal.css";
 
-//Input for the date of the trip
-//...
-
-//Middle section
-  //Plus button
-  //Dynamically add the boxes as the user clicks (if successful)
-  //Done button
   //Save button
 
 const Itinerary = () => {
@@ -98,17 +93,58 @@ const Itinerary = () => {
               </button>
               <button className="bg-blue-500 rounded-md"></button>
             </div>
+
+            <div className="relative border-2 border-black-500 rounded-md item-div">
+              <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none closeButton">
+                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <button className="bg-blue-500 rounded-md"></button>
+            </div>
+
+            <div className="relative border-2 border-black-500 rounded-md item-div">
+              <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none closeButton">
+                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <button className="bg-blue-500 rounded-md"></button>
+            </div>
+
+            <div className="relative border-2 border-black-500 rounded-md item-div">
+              <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none closeButton">
+                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <button className="bg-blue-500 rounded-md"></button>
+            </div>
+
+            <div className="relative border-2 border-black-500 rounded-md item-div">
+              <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none closeButton">
+                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <button className="bg-blue-500 rounded-md"></button>
+            </div>
             
           <div className="relative border-2 rounded-md border-black-500 button-div">
             <Button className="bg-blue-500 rounded-md addButton" key="md" onClick={handleOpen}>+</Button>
             <SearchModal isOpen={isOpen} onClose={handleClose}/>
           </div>
-
           </div>
         </div>
 
-          <div className="absolute bottom-4 right-4 px-8">
+          <div className="absolute bottom-4 right-4 px-12">
             <Button className="border-2 border-black-500 rounded-md doneButton">Done</Button>
+          </div>
+
+          <div className="absolute bottom-4 left-4 px-8 justify-center items-center">
+            <button className="p-1 border-2 border-black-500 rounded-md flex space-x-2 saveButton">
+              <CgBookmark />
+            </button>
           </div>
       </div>
     </div>
