@@ -81,7 +81,7 @@ export const Navbar = () => {
                 Itinerary
               </div>
             </Link>
-            <Link href='/filter'>
+            <Link href='/booking'>
               <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Booking
               </div>

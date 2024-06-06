@@ -8,7 +8,7 @@ const Loading: React.FC = () => {
       {[...Array(5)].map((_, index) => (
         <div key={index} className={styles.filterCard}>
           <div className={`${styles.filterImage} ${styles.skeleton}`}></div>
-          <div className={`${styles.filterContent} ${styles.skeleton}`}>
+          <div className={`${styles.filterContent}`}>
             <div className={`${styles.filterHeader} ${styles.skeleton}`}></div>
             <div className={`${styles.filterText} ${styles.skeleton}`}></div>
             <div className={`${styles.filterText} ${styles.skeleton}`}></div>
