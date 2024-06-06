@@ -4,14 +4,6 @@ import React, { useState } from "react";
 import SearchModal from "./SearchModal";
 import "./modal.css";
 
-const radiusOptions = [
-  "full",
-  "lg",
-  "md",
-  "sm",
-  "none"
-];
-
 //Input for the date of the trip
 //...
 
@@ -22,39 +14,51 @@ const radiusOptions = [
   //Save button
 
 const Itinerary = () => {
-  const [visible, setVisible] = useState(false);
-  const openModal = () => setVisible(true);
-  const closeModal = () => setVisible(false);
-  
+  const [isOpen, setIsOpen] = useState(false);
+  // const [size, setSize] = useState('md');
+
+  // const sizes = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', 'full'];
+
+  const handleOpen = () => {
+    // setSize(size);
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="relative flex flex-col space-x-1 justify-center items-center">
       <div className="flex flex-col border border-gray-300 rounded-lg p-4 bg-white shadow-md w-[96vw] h-auto overflow-auto iteneraryInfo">
         <h1 className="mb-2 text-2xl font-bold text-gray-800 iteneraryHeader">Itinerary Items:</h1>
         <div className="flex justify-start">
-          <label htmlFor="email" className="text-sm font-medium text-gray-700 emailLabel">Email:</label>
+          <label htmlFor="tripName" className="text-sm font-medium text-gray-700 tripNameLabel">Trip Name:</label>
           <Input
-            id="email"
-            type="email"
+            id="tripNameLabel"
+            type="text"
             placeholder="Itinerary name"
-            defaultValue="Default itinerary"
-            className="max-w-[220px] emailInput"
+            defaultValue=""
+            className="border-2 border-black-500 rounded-md max-w-[220px] tripNameLabel"
           />
         </div>
-        <label htmlFor="datePicker" className="text-sm font-medium text-gray-700 emailLabel">Start date of trip:</label>
+
+        <label htmlFor="dateStart" className="text-sm font-medium text-gray-700 tripNameLabel">Start date of trip:</label>
         <Input
-            id="date"
+            id="dateStart"
             type="date"
             placeholder="date"
             defaultValue=""
-            className="max-w-[220px]"
+            className="border-2 border-black-500 rounded-md max-w-[220px] tripNameLabel"
           />
-        <label htmlFor="datePicker" className="text-sm font-medium text-gray-700 emailLabel">End date of trip:</label>
+
+        <label htmlFor="dateEnd" className="text-sm font-medium text-gray-700 tripNameLabel">End date of trip:</label>
         <Input
-            id="date"
+            id="dateEnd"
             type="date"
             placeholder="date"
             defaultValue=""
-            className="max-w-[220px]"
+            className="border-2 border-black-500 rounded-md max-w-[220px] tripNameLabel"
           /> 
 
         <div className="flex justify-center">
@@ -95,9 +99,11 @@ const Itinerary = () => {
               <button className="bg-blue-500 rounded-md"></button>
             </div>
             
-            <div className="relative border-2 rounded-md border-black-500 button-div">
-              <button className="bg-blue-500 rounded-md addButton" onClick={SearchModal}>+</button>
-            </div>
+          <div className="relative border-2 rounded-md border-black-500 button-div">
+            <Button className="bg-blue-500 rounded-md addButton" key="md" onClick={handleOpen}>+</Button>
+            <SearchModal isOpen={isOpen} onClose={handleClose}/>
+          </div>
+
           </div>
         </div>
 

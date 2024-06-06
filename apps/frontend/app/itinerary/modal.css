@@ -18,8 +18,7 @@
   min-height: 80vh;
   max-height: fit-content;
 }
-.emailLabel {
-  margin-left: 20px;
+.tripNameLabel {
   padding: 20px, 20px, 20px, 20px;
   text-align: left;
 }

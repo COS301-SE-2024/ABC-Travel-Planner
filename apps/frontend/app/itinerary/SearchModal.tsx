@@ -1,45 +1,44 @@
-import React from 'react'
-import { Button, Input, Checkbox, useDisclosure } from '@nextui-org/react';
+import React, { useState } from 'react'
+import Search from "../search/page"
+
+import { Button, Input, Checkbox } from '@nextui-org/react';
 import {
     Modal, 
     ModalContent, 
     ModalHeader, 
     ModalBody, 
-    ModalFooter
+    ModalFooter,
+    useDisclosure 
   } from "@nextui-org/modal";
 
 interface SearchModalProps {
-    visible: boolean;
+    isOpen: boolean;
     onClose: ()=> void;
 }
 
-const SearchModal: React.FC<SearchModalProps> = ({ visible, onClose }) => {
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
+const SearchModal: React.FC<SearchModalProps> = ({isOpen, onClose}) => {
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-            <ModalContent>
-                {(onClose) => (
-                    <>
-                        <ModalHeader>
-                            <h3>Welcome to NextUI</h3>
-                        </ModalHeader>
-                        <ModalBody>
-                            <p>This is a simple modal example using NextUI.</p>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="danger" onClick={onClose}>
-                            Close
-                            </Button>
-                            <Button onClick={onClose}>
-                            Submit
-                            </Button>
-                        </ModalFooter>
-                    </>
-                )}
-            </ModalContent>
-        </Modal>
-        );
+      <Modal size="md" isOpen={isOpen} onOpenChange={onClose}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Add an Item</ModalHeader>
+              <ModalBody>
+                <Search />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onClick={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onClick={onClose}>
+                  Action
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    );
 };
 
 export default SearchModal;
