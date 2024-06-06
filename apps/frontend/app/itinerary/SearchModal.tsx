@@ -8,15 +8,13 @@ import {
     ModalFooter
   } from "@nextui-org/modal";
 
-interface dateModalProps {
+interface SearchModalProps {
     visible: boolean;
     onClose: ()=> void;
 }
 
-const DateModal: React.FC<dateModalProps> = ({ visible, onClose }) => {
+const SearchModal: React.FC<SearchModalProps> = ({ visible, onClose }) => {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    // const [startDate, setStartDate] = useState(new Date());
-    // const [endDate, setEndDate] = useState(new Date());
 
     return (
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -44,4 +42,4 @@ const DateModal: React.FC<dateModalProps> = ({ visible, onClose }) => {
         );
 };
 
-export default DateModal;
+export default SearchModal;
