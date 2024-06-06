@@ -35,33 +35,29 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           <p className="text-gray-800 mt-4">{place.description}</p>
 
           <div className="mt-4">
-            <div>
-              <div className="text-right">
-                <p className="text-3xl font-semibold">{place.price}</p>
-                <p className="text-gray-600 text-sm">{place.priceDetails}</p>
-                <p className="text-gray-600 text-sm">{place.disclaimer}</p>
-              </div>
+            <div className="relative inline-block">
               <label htmlFor="date" className="block text-gray-700 text-sm font-bold">
                 Select Date:
               </label>
-            </div>
-            <div className="relative inline-block">
               <select
-                className="block appearance-none w-full bg-white border border-gray-300 rounded-md shadow-sm py-3 px-40 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg" 
+                className="block appearance-none w-full bg-white border border-gray-300 rounded-md shadow-sm py-3 px-40 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg"
                 value={selectedDate}
                 onChange={handleSelectDate}
               >
                 <option value="">Select a date</option>
                 {place.availableDates.map((date: any) => (
-                  <option 
-                    key={date} 
-                    value={date} 
-                    className="text-lg hover:bg-gray-100" 
+                  <option
+                    key={date}
+                    value={date}
+                    className="text-lg hover:bg-gray-100"
                   >
-                    {date}
+                    {date}ZipLining destinations
                   </option>
                 ))}
               </select>
+              {selectedDate && (
+                <p className="text-gray-600 mt-2">Selected Date: {selectedDate}</p>
+              )}
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
                   className="w-4 h-4 fill-current"
@@ -76,10 +72,16 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 </svg>
               </div>
             </div>
+            <div>
+              <div className="text-right">
+                <p className="text-3xl font-semibold">{place.price}</p>
+                <p className="text-gray-600 text-sm">{place.priceDetails}</p>
+                <p className="text-gray-600 text-sm">{place.disclaimer}</p>
+              </div>
+            </div>
+
           </div>
-          {selectedDate && (
-            <p className="text-gray-600 mt-2">Selected Date: {selectedDate}</p>
-          )}
+
         </div>
       </div>
     </div>
