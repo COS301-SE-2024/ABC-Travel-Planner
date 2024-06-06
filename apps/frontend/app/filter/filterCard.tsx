@@ -42,7 +42,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           />
         </div>
         <div className="w-2/3 pl-4">
-          <h1 className="text-4xl font-bold mb-2 text-blue-800">{place.name}</h1>
+          <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.name}</h1>
           <p className="text-gray-700 text-lg font-semibold">{`${place.city}, ${place.country}`}</p>
 
           {place.deal && (
@@ -112,9 +112,9 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               )}
             </div>
             <div className="text-right">
-              <p className="text-3xl text-blue-800 font-semibold">{place.price}</p>
-              <p className="text-blue-800 text-sm">{place.priceDetails}</p>
-              <p className="text-blue-800 text-sm">{place.disclaimer}</p>
+              <p className="text-3xl text-blue-500 font-semibold">{place.price}</p>
+              <p className="text-blue-500 text-sm">{place.priceDetails}</p>
+              <p className="text-blue-500 text-sm">{place.disclaimer}</p>
             </div>
           </div>
 
