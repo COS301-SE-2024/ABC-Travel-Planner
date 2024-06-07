@@ -139,7 +139,7 @@ const Booking = () => {
       </p>
 
       {/* Flights */}
-      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4">
+      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <h2 className="text-xl font-bold mb-4">Flights</h2>
         <ul className="space-y-4">
           {flights.map((flight) => (
@@ -155,8 +155,8 @@ const Booking = () => {
                   height={150}
                   className="rounded mr-4"
                 />
-                <div>
-                  <p className="font-bold">{flight.name}</p>
+                <div className="font-bold text-left">
+                  <p>{flight.name}</p>
                   <p>{flight.details}</p>
                   <p>Date: {flight.date}</p>
                   <p>Time: {flight.time}</p>
@@ -170,7 +170,7 @@ const Booking = () => {
       </div>
 
       {/* Accommodations */}
-      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4">
+      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <h2 className="text-xl font-bold mb-4">Accommodations</h2>
         <ul className="space-y-4">
           {accommodations.map((accommodation) => (
@@ -186,8 +186,8 @@ const Booking = () => {
                   height={150}
                   className="rounded mr-4"
                 />
-                <div>
-                  <p className="font-bold">{accommodation.name}</p>
+                <div className="font-bold text-left">
+                  <p>{accommodation.name}</p>
                   <p>{accommodation.details}</p>
                   <p>Check-in: {accommodation.checkIn}</p>
                   <p>Check-out: {accommodation.checkOut}</p>
@@ -201,7 +201,7 @@ const Booking = () => {
       </div>
 
       {/* Activities */}
-      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4">
+      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <h2 className="text-xl font-bold mb-4">Activities</h2>
         <ul className="space-y-4">
           {activities.map((activity) => (
@@ -217,8 +217,8 @@ const Booking = () => {
                   height={150}
                   className="rounded mr-4"
                 />
-                <div>
-                  <p className="font-bold">{activity.name}</p>
+                <div className="font-bold text-left">
+                  <p >{activity.name}</p>
                   <p>{activity.details}</p>
                   <p>Date: {activity.date}</p>
                   <p>Time: {activity.time}</p>
@@ -231,7 +231,7 @@ const Booking = () => {
         <p className="font-bold mt-4 text-right">Subtotal: R{activityTotal.toFixed(2)}</p>
       </div>
 
-      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4 text-right">
+      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4 text-right" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <h2 className="text-xl font-bold mb-4">Total Trip Cost</h2>
         <p className="text-2xl font-bold">R{finalTotal.toFixed(2)}</p>
       </div>
