@@ -17,7 +17,6 @@
   width: max-content;
 }
 .iteneraries-grid {
-  min-height: 20px;
 }
 .closeButton {
   color: black;
@@ -39,7 +38,8 @@
   height: 40px;
   margin-bottom: 20px;
   color: white;
-
+  margin-left: 20px;
+  margin-top: 30px;
 }
 .saveButton {
   font-size: 40px;
