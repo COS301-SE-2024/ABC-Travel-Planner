@@ -8,7 +8,9 @@ const countries: string[] = [
   // 'Nigeria',
   // 'South Africa',
   // 'Egypt',
+
   //'Kenya',
+
   // 'Ghana',
   // 'Morocco',
   // 'Ethiopia',
@@ -34,6 +36,7 @@ const countries: string[] = [
   // 'Singapore',
   // 'Nepal',
   // 'Sri Lanka',
+
 //   'Myanmar',
 //   'Germany',
 //   'France',
