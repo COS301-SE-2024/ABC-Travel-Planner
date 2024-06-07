@@ -4,25 +4,25 @@ import Image from 'next/image';
 import getReviews from './getReviews'
 
 const countries: string[] = [
-  'Nigeria',
-  'South Africa',
-  'Egypt',
-  'Kenya',
-  'Ghana',
-  'Morocco',
-  'Ethiopia',
-  'Tanzania',
-  'Uganda',
-  'Algeria',
-  'Angola',
-  'Cameroon',
-  'Ivory Coast',
-  'Senegal',
-  'Tunisia',];
+  // 'Nigeria',
+  // 'South Africa',
+  // 'Egypt',
+  // 'Kenya',
+  // 'Ghana',
+  // 'Morocco',
+  // 'Ethiopia',
+  // 'Tanzania',
+  // 'Uganda',
+  // 'Algeria',
+  // 'Angola',
+  // 'Cameroon',
+  // 'Ivory Coast',
+  // 'Senegal',
+  // 'Tunisia',
   // 'China',
   // 'India',
   // 'Japan',
-  
+  ];
   let reviewHash: any = {};
 
 async function getCountryData(country: string) {
