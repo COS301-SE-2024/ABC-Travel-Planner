@@ -11,7 +11,7 @@ const BookMarkComponent: React.FC  = () => {
  
     return (
         <button className="p-1 border-2 border-black-500 rounded-md flex space-x-2 saveButton" onClick={handleClick}>
-            { isSaved ? <FaRegBookmark /> : <FaBookmark /> }
+            { isSaved ? <FaBookmark /> : <FaRegBookmark /> }
         </button>
     );
 };
