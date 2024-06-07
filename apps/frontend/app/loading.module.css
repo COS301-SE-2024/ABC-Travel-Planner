@@ -194,7 +194,14 @@
 
 /* loading.css */
 
-
+.skeletonHeading2 {
+  width: 20%;
+  height: 40px;
+  margin: 14px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  animation: skeleton-loading 1.2s infinite ease-in-out;
+}
 
 .skeletonTitle {
   background-color: #e0e0e0;

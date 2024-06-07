@@ -4,7 +4,7 @@ import styles from '../loading.module.css';
 const ItineraryLoading = () => {
     return (
         <div className="flex flex-col m-4 items-center">
-            <div className="p-8 mt-4 w-full rounded-lg overflow-hidden shadow-xl bg-white">
+            <div  className="p-8 mt-4 w-full rounded-lg overflow-hidden shadow-xl bg-white">
                 <div className="flex justify-between items-center mb-8">
                     <div className={`${styles.skeletonHeading} w-36 h-8`} aria-label="Loading heading"></div>
                     <div className={`${styles.skeletonHeading} w-36 h-8`} aria-label="Loading button"></div>
