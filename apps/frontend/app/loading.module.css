@@ -192,50 +192,27 @@
 
 /* loading.module.css */
 
-.skeleton {
+/* loading.css */
+
+
+
+.skeletonTitle {
   background-color: #e0e0e0;
-  animation: pulse 1.5s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.itineraryImage {
-  width: 120px; /* or whatever size is appropriate */
-  height: 120px;
-  border-radius: 8px;
-}
-
-.itineraryTitle {
-  width: 180px;
-  height: 20px;
-  border-radius: 4px;
-}
-
-.itinerarySubtitle {
-  width: 140px;
-  height: 16px;
-  border-radius: 4px;
-}
-
-.itineraryButton {
   width: 60px;
-  height: 16px;
+  height: 12px;
   border-radius: 4px;
 }
 
-.skeletonHeading {
-  width: 200px;
-  height: 24px;
-  margin: 16px 0;
+.skeletonSubtitle {
+  background-color: #e0e0e0;
+  width: 50px;
+  height: 10px;
+  border-radius: 4px;
+}
+
+.skeletonButton {
+  background-color: #e0e0e0;
+  width: 30px;
+  height: 8px;
   border-radius: 4px;
 }
