@@ -39,7 +39,7 @@ const allLocations = [
 const Home = () => {
   return (
     <div className="flex flex-col" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
-      <div className="w-full mt-8 bg-gray-300  p-4" style={{ marginTop: '40px' }}>
+      <div className="w-full mt-8 bg-blue-300 bg-opacity-75" style={{ marginTop: '40px', padding: '20px' }}>
         <div className="flex justify-end mb-4">
           <select className="bg-blue-600 text-white font-bold py-2 px-4 rounded">
             <option value="" disabled selected>Select a country</option>
@@ -50,7 +50,7 @@ const Home = () => {
             ))}
           </select>
         </div>
-        <h2 className="text-3xl font-bold mb-4">Top destinations for your next holiday</h2>
+        <h2 className="text-3xl font-bold mb-4  text-gray-800">Top destinations for your next holiday</h2>
         <div className="flex overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
           {popularDestinations.map((destination, index) => (
             <div key={index} className="w-64 flex-shrink-0 mr-4" style={{ backgroundColor: 'white', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }}>
@@ -60,8 +60,9 @@ const Home = () => {
         </div>
       </div>
       <div className="my-8"></div> {/* Space between containers */}
-<div className="w-full mt-8 bg-gray-300  p-4">
-  <h2 className="text-3xl font-bold my-4">More to explore</h2>
+      <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px' }}>
+
+      <h2 className="text-3xl font-bold my-4 text-gray-800">More to explore</h2>
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
     {allLocations.map((destination, index) => (
       <div key={index} >

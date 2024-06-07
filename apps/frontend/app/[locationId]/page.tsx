@@ -6,7 +6,7 @@ import ReviewButton from './ReviewButton';
 const TouristPage = () => {
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100">
-      <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
         <div className="small-photos flex flex-col gap-4">
           <Image src="/Images/photo1.jpg" alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
           <Image src="/Images/photo2.jpg" alt="Photo 2" width={200} height={200} className="rounded-lg shadow-lg" />
@@ -24,7 +24,7 @@ const TouristPage = () => {
 
       </div>
       <div className="info-section grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div className="google-street-view p-4 bg-white rounded-lg shadow-lg">
+        <div className="google-street-view p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
           <div className="flex items-center mb-4">
             <FaGoogle size={22} className="mr-2" />
             <h1 className="text-2xl font-semibold">Google Earth View</h1>
@@ -39,7 +39,7 @@ const TouristPage = () => {
             className="rounded-lg"
           ></iframe>
         </div>
-        <div className="google-maps-api p-4 bg-white rounded-lg shadow-lg">
+        <div className="google-maps-api p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
           <div className="flex items-center mb-4">
             <FaAtlas size={22} className="mr-2" />
             <h1 className="text-2xl font-semibold">Google Maps</h1>
@@ -55,7 +55,7 @@ const TouristPage = () => {
           ></iframe>
         </div>
       </div>
-      <div className="attractions-section p-4 bg-white rounded-lg shadow-lg mb-8">
+      <div className="attractions-section p-4 bg-white rounded-lg shadow-lg mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
         <h1 className="text-2xl font-bold mb-4">Attractions</h1>
         <p className="mb-4">
           Come and discover the Eiffel Tower on the only trip to the top of its kind in Europe, and
@@ -65,7 +65,7 @@ const TouristPage = () => {
           The Eiffel Tower in the world
         </p>
       </div>
-      <div className="reviews-section p-4 bg-white  shadow-lg">
+      <div className="reviews-section p-4 bg-white  shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
         <h1 className="text-2xl font-bold mb-4">Reviews</h1>
         {/* <ReviewButton /> */}
       </div>
