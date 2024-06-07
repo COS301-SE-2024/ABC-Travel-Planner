@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import Search from '../search/page';
 import { Button } from '@nextui-org/react';
@@ -10,17 +11,23 @@ import {
   useDisclosure,
 } from '@nextui-org/modal';
 
-interface SearchModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+const SearchModal: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false)
 
-const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
+  const onClose = () => {
+    if (isOpen) {
+      setIsOpen(false)
+    }
+    else setIsOpen(true)
+  }
+
   return (
     <>
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-50" />
+        
       )}
+      <Button className="bg-gray-200 rounded-md addButton" key="md" onClick={onClose}>+</Button>
       <Modal size="md" isOpen={isOpen} onOpenChange={onClose}>
         <ModalContent className="modal-content">
           <>

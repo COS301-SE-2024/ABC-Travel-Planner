@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { Link } from '@nextui-org/react'
 import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-icons/fa';
 
 const Search = () => {
@@ -59,9 +60,11 @@ const Search = () => {
             placeholder={`Search for ${selectedTopic}`}
             className="search-input"
           />
-          <button className="search-button-submit">
-            <FaSearch />
-          </button>
+          <Link href='/filter'>
+            <button className="search-button-submit">
+              <FaSearch />
+            </button>
+          </Link>
         </div>
       )}
     </div>

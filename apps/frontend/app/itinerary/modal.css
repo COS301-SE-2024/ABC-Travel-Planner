@@ -11,7 +11,6 @@
 
 .addButton {
   margin-top: 20px;
-  background-color:  rgb(153, 153, 153);
   font-size: 180px;
   min-height: 20vh;
   min-width: 20vw;
@@ -28,7 +27,6 @@
 }
 .item-div {
   margin-top: 20px;
-  background-color: rgb(153, 153, 153);
   font-size: 180px;
   min-height: 20vh;
   min-width: 20vw;
