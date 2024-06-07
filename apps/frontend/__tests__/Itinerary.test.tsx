@@ -13,7 +13,7 @@ describe('Itinerary Component', () => {
   it('should have the correct class for the title', () => {
     render(<Itinerary />);
 
-    const titleElement = screen.getByText('Your Itinerary');
+    const titleElement = screen.getByText('My Itinerary');
     expect(titleElement).toHaveClass('text-4xl font-bold');
   });
 });
