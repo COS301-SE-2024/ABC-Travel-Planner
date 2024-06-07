@@ -2,6 +2,30 @@ import React from 'react';
 import DestinationCard from './DestinationCard';
 
 
+
+const countries: string[] = [
+  // 'Nigeria',
+  // 'South Africa',
+  // 'Egypt',
+  // 'Kenya',
+  // 'Ghana',
+  // 'Morocco',
+  // 'Ethiopia',
+  // 'Tanzania',
+  // 'Uganda',
+  // 'Algeria',
+  // 'Angola',
+  // 'Cameroon',
+  // 'Ivory Coast',
+  // 'Senegal',
+  // 'Tunisia',
+  // 'China',
+  // 'India',
+  // 'Japan',
+  ];
+  let reviewHash: any = {};
+
+
 const popularDestinations = [
   { name: 'France', image: '/Images/france.jpg', city: 'Paris', location_id: '1', description: 'Description for France' },
   { name: 'Italy', image: '/Images/italy.jpg', city: 'Rome', location_id: '2', description: 'Description for Italy' },
