@@ -3,8 +3,8 @@ import { createClient } from '../utils/supabase/client';
 import createSupabaseServerClient from '../../libs/supabase/server';
 
 const getReviews = async (location_id: any) => {
-    console.log("(" + typeof location_id + ") Recieved id: " + location_id)
-    console.log()
+    // console.log("(" + typeof location_id + ") Recieved id: " + location_id)
+    // console.log()
     const supabase = await createSupabaseServerClient();
             
     const { data: reviewData, error: reviewErr } = await supabase
