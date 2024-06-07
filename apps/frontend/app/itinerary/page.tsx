@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Itinerary = () => {
   return (
     <div className="flex flex-col m-4 items-center">
-      <div className="p-8 mt-4 w-full rounded-lg overflow-hidden shadow-xl bg-white">
+      <div className="p-8 mt-4 w-full  rounded-lg overflow-hidden shadow-xl bg-blue-200">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-gray-800">My Itineraries</h1>
           <button aria-label = "Add Itinerary" className="flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -14,7 +14,7 @@ const Itinerary = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {/* Itinerary Item */}
-          <div className="bg-blue-50 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200">
+          <div className="bg-blue-50 rounded-lg shadow-sm hover:bg-white hover:shadow-lg transition-shadow duration-200">
             <div className="relative w-full h-40 pb-2/3">
               <Image
                 src="/images/paris.jpg"
@@ -40,7 +40,7 @@ const Itinerary = () => {
             </div>
           </div>
           {/* Itinerary Item */}
-          <div className="bg-blue-50 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200">
+          <div className="bg-blue-50 rounded-lg shadow-sm hover:bg-white hover:shadow-lg transition-shadow duration-200">
             <div className="relative w-full h-40 pb-2/3">
               <Image
                 src="/images/japan.jpg"
