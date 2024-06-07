@@ -19,11 +19,10 @@ const countries: string[] = [
   // 'Ivory Coast',
   // 'Senegal',
   // 'Tunisia',
-];
   // 'China',
   // 'India',
   // 'Japan',
-  
+  ];
   let reviewHash: any = {};
 
 async function getCountryData(country: string) {
