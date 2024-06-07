@@ -1,4 +1,5 @@
 import { FaPlus, FaPen, FaTrash } from "react-icons/fa";
+import Image from 'next/image';
 
 const Itinerary = () => {
   return (
@@ -15,19 +16,26 @@ const Itinerary = () => {
           {/* Itinerary Item */}
           <div className="flex flex-row items-center justify-between p-4 my-4 bg-blue-50 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200">
             <div className="flex flex-row items-center">
+              <div className="relative w-28 h-28 mr-4">
+                <Image
+                  src="/images/paris.jpg"
+                  alt="Paris"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+              </div>
               <div className="flex flex-col">
-                <h2 className="text-xl font-semibold text-gray-800">
-                  Trip to Paris
-                </h2>
+                <h2 className="text-xl font-semibold text-gray-800">Trip to Paris</h2>
                 <p className="text-sm text-gray-500">Paris, France</p>
               </div>
             </div>
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center space-x-4">
               <button className="text-sm text-blue-600 hover:text-blue-800 flex items-center">
                 <FaPen className="mr-1" />
                 Edit
               </button>
-              <button className="text-sm text-red-600 hover:text-red-800 flex items-center ml-4">
+              <button className="text-sm text-red-600 hover:text-red-800 flex items-center">
                 <FaTrash className="mr-1" />
                 Delete
               </button>
@@ -36,19 +44,26 @@ const Itinerary = () => {
           {/* Itinerary Item */}
           <div className="flex flex-row items-center justify-between p-4 my-4 bg-blue-50 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200">
             <div className="flex flex-row items-center">
+              <div className="relative w-28 h-28 mr-4">
+                <Image
+                  src="/images/japan.jpg"
+                  alt="Tokyo"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+              </div>
               <div className="flex flex-col">
-                <h2 className="text-xl font-semibold text-gray-800">
-                  Trip to Tokyo
-                </h2>
+                <h2 className="text-xl font-semibold text-gray-800">Trip to Tokyo</h2>
                 <p className="text-sm text-gray-500">Tokyo, Japan</p>
               </div>
             </div>
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center space-x-4">
               <button className="text-sm text-blue-600 hover:text-blue-800 flex items-center">
                 <FaPen className="mr-1" />
                 Edit
               </button>
-              <button className="text-sm text-red-600 hover:text-red-800 flex items-center ml-4">
+              <button className="text-sm text-red-600 hover:text-red-800 flex items-center">
                 <FaTrash className="mr-1" />
                 Delete
               </button>
