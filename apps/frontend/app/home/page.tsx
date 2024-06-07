@@ -15,10 +15,8 @@ const popularDestinations = [
   { name: 'Indonesia', image: '/Images/indonesia.jpeg' },
   { name: 'Turkey', image: '/Images/turkey1.jpg' },
   { name: 'Netherlands', image: '/Images/netherlands.jpg' },
-  { name: 'Japan', image: '/Images/japan.jpg' },
-  { name: 'Italy', image: '/Images/italy.jpg' },
-];
 
+];
 
 const allLocations = [
   { name: 'Eiffel Tower', city: 'Paris', image: '/Images/Paris.jpg', description: 'A wrought-iron lattice tower on the Champ de Mars, known as a global cultural icon of France. Experience like none other.' },
@@ -38,23 +36,21 @@ const allLocations = [
   { name: 'St. Mark\'s Basilica', city: 'Venice', image: '/Images/venice.jpg', description: 'A cathedral church located in Piazza San Marco, known for its Italo-Byzantine architecture and mosaics.' },
 ];
 
-
-
 const Home = () => {
   return (
-    <div className="flex flex-col items-center" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
-      <div className="container mx-auto mt-8 bg-gray-300 rounded-lg p-4" style={{ marginTop: '40px' }}>
+    <div className="flex flex-col" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
+      <div className="w-full mt-8 bg-gray-300  p-4" style={{ marginTop: '40px' }}>
         <div className="flex justify-end mb-4">
-        <select className="bg-blue-600 text-white font-bold py-2 px-4 rounded" >
-        <option value="" disabled selected>Select a country</option>
-        {popularDestinations.map((location, index) => (
-          <option key={index} value={location.name}>
-            {location.name}
-          </option>
-        ))}
-      </select>
+          <select className="bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            <option value="" disabled selected>Select a country</option>
+            {popularDestinations.map((location, index) => (
+              <option key={index} value={location.name}>
+                {location.name}
+              </option>
+            ))}
+          </select>
         </div>
-        <h2 className="text-2xl font-bold mb-4">Top destinations for your next holiday</h2>
+        <h2 className="text-3xl font-bold mb-4">Top destinations for your next holiday</h2>
         <div className="flex overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
           {popularDestinations.map((destination, index) => (
             <div key={index} className="w-64 flex-shrink-0 mr-4" style={{ backgroundColor: 'white', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }}>
@@ -64,19 +60,24 @@ const Home = () => {
         </div>
       </div>
       <div className="my-8"></div> {/* Space between containers */}
-      <div className="container mx-auto mt-8 bg-gray-300 rounded-lg p-4">
-        <h2 className="text-2xl font-bold my-4">More to explore</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
-          {allLocations.map((destination, index) => (
-            <div key={index} className="destination-card" style={{ backgroundColor: 'white' }}>
-              <DestinationCard destination={destination} />
-            </div>
-          ))}
+<div className="w-full mt-8 bg-gray-300  p-4">
+  <h2 className="text-3xl font-bold my-4">More to explore</h2>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
+    {allLocations.map((destination, index) => (
+      <div key={index} className="destination-card bg-white rounded-lg shadow-md overflow-hidden">
+        <img src={destination.image} alt={destination.name} className="w-full h-32 sm:h-48 object-cover"/>
+        <div className="p-4">
+          <h3 className="text-lg font-bold mb-2">{destination.name}</h3>
+          <p className="text-gray-700 text-md mb-1">{destination.city}</p>
+          <p className="text-gray-600 text-md">{destination.description}</p>
         </div>
       </div>
+    ))}
+  </div>
+</div>
+
     </div>
   );
 };
 
 export default Home;
-
