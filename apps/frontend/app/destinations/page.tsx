@@ -8,7 +8,9 @@ const countries: string[] = [
   // 'Nigeria',
   // 'South Africa',
   // 'Egypt',
-  // 'Kenya',
+
+  //'Kenya',
+
   // 'Ghana',
   // 'Morocco',
   // 'Ethiopia',
@@ -34,7 +36,7 @@ const countries: string[] = [
   // 'Singapore',
   // 'Nepal',
   // 'Sri Lanka',
-];
+
 //   'Myanmar',
 //   'Germany',
 //   'France',
@@ -96,7 +98,7 @@ const countries: string[] = [
 //   'Marshall Islands',
 //   'Tuvalu',
 //   'New Caledonia',
-// ];
+ ];
 
 interface favouriteHash {
   [key: string]: boolean;
@@ -219,11 +221,11 @@ async function getData() {
 }
 
 const Destinations = async () => {
-  const favouriteData = await isFavourited();
-  console.log(favouritedHash);
+  // const favouriteData = await isFavourited();
+  // console.log(favouritedHash);
   const data = await getData();
   const destinations = data?.data || [];
-  console.log(destinations);
+  // console.log(destinations);
 
   return (
     <div className="container">
