@@ -64,13 +64,8 @@ const Home = () => {
   <h2 className="text-3xl font-bold my-4">More to explore</h2>
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
     {allLocations.map((destination, index) => (
-      <div key={index} className="destination-card bg-white rounded-lg shadow-md overflow-hidden">
-        <img src={destination.image} alt={destination.name} className="w-full h-32 sm:h-48 object-cover"/>
-        <div className="p-4">
-          <h3 className="text-lg font-bold mb-2">{destination.name}</h3>
-          <p className="text-gray-700 text-md mb-1">{destination.city}</p>
-          <p className="text-gray-600 text-md">{destination.description}</p>
-        </div>
+      <div key={index} >
+        <DestinationCard destination={destination} />
       </div>
     ))}
   </div>

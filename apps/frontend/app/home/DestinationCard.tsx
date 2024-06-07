@@ -1,25 +1,27 @@
 import Link from "next/link";
 
 interface destination {
+  city: string;
   name: string;
   image: string;
   location_id: string;
   description: string;
 }
 
-const DestinationCard = ({ destination }) => {
+const DestinationCard = ({ destination }: { destination: destination }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105">
+    <div className="destination-card bg-white rounded-lg shadow-md overflow-hidden">
       <Link href={`/${destination.location_id}`} passHref>
-  
-          <img src={destination.image} className="w-full h-48 object-cover" alt={destination.name} />
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">{destination.name}</div>
-            <p className="text-gray-700 text-base">{destination.description}</p>
-          </div>
+      
+      <img src={destination.image} alt={destination.name} className="w-full h-32 sm:h-48 object-cover"/>
+          <div className="p-4">
+          <h3 className="text-lg font-bold mb-2">{destination.name}</h3>
+          <p className="text-gray-700 text-md mb-1">{destination.city}</p>
+          <p className="text-gray-600 text-md">{destination.description}</p>
+        </div>
       
       </Link>
-    </div>
+    </div>  
   );
 };
 
