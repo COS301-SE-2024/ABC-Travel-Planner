@@ -39,7 +39,7 @@ const allLocations = [
 const Home = () => {
   return (
     <div className="flex flex-col" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
-      <div className="w-full mt-8 bg-blue-300 bg-opacity-75" style={{ marginTop: '40px', padding: '20px' }}>
+      <div className="w-full mt-8 " style={{ marginTop: '40px', padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <div className="flex justify-end mb-4">
           <select className="bg-blue-600 text-white font-bold py-2 px-4 rounded">
             <option value="" disabled selected>Select a country</option>
