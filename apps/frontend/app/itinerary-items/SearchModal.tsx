@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Search from '../search/page';
 import { Button } from '@nextui-org/react';
 import {
@@ -17,17 +17,17 @@ interface SearchModalProp {
 
 const SearchModal: React.FC<SearchModalProp> = ({ handleAddDiv }) => {
   const [isOpen, setIsOpen] = useState(false)
-
+  
   const onClose = () => {
-    if (isOpen) {
-      handleAddDiv();
-      setIsOpen(false)
-      console.log("Open: " + isOpen)
-    }
-    else  {
-      setIsOpen(true) 
-      console.log("Open: " + isOpen)
-    }
+      if (isOpen) {
+        handleAddDiv();
+        setIsOpen(false)
+        console.log("Open: " + isOpen)
+      }
+      else  {
+        setIsOpen(true) 
+        console.log("Open: " + isOpen)
+      }
   }
 
   return (

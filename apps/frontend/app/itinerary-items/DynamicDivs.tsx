@@ -9,8 +9,8 @@ interface DivItem {
 }
 
 const DynamicDivs: React.FC = () => {
-
     const [divs, setDivs] = useState<DivItem[]>([]);
+    const [isOpen, setIsOpen] = useState(false)
 
     const handleAddDiv = () => {
         console.log("Divs set...")
@@ -20,9 +20,12 @@ const DynamicDivs: React.FC = () => {
     const handleRemoveDiv = (id: number) => {
         setDivs(divs.filter(divItem => divItem.id !== id));
     }
-    //<div className="relative rounded-md border-black-500 button-div">
-    //</div>
-        
+
+    const handleModelClose = () => {
+        setIsOpen(false)
+        handleAddDiv()
+    }
+
     return (
         <>
         {divs.map((divItem) => (
@@ -34,7 +37,7 @@ const DynamicDivs: React.FC = () => {
             </Button>
         </div>
         ))}
-        <SearchModal handleAddDiv={ handleAddDiv }/>
+            <SearchModal handleAddDiv={ handleModelClose }/>
         </>
     );
 };
