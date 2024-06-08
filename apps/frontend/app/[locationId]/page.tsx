@@ -1,12 +1,29 @@
-import Image from 'next/image';
-import React from 'react';
-import { FaGoogle, FaAtlas } from 'react-icons/fa';
-import ReviewButton from './ReviewButton';
+// app/[locationId]/page.tsx
 
-const TouristPage = () => {
+import React from 'react';
+import Image from 'next/image';
+import { FaGoogle, FaAtlas } from 'react-icons/fa';
+import getReviews from '../[locationId]/getReviews';
+
+interface Review {
+  id: number;
+  user: string;
+  comment: string;
+  rating: number;
+  title: string;
+}
+
+interface TouristPageProps {
+  params: { locationId: string };
+}
+
+const TouristPage: React.FC<TouristPageProps> = async ({ params }) => {
+  const location_id = params.locationId || 'default_location_id';
+  const reviews = await getReviews(location_id);
+
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100">
-      <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
+      <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <div className="small-photos flex flex-col gap-4">
           <Image src="/Images/photo1.jpg" alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
           <Image src="/Images/photo2.jpg" alt="Photo 2" width={200} height={200} className="rounded-lg shadow-lg" />
@@ -14,17 +31,16 @@ const TouristPage = () => {
           <Image src="/Images/photo4.jpg" alt="Photo 4" width={200} height={200} className="rounded-lg shadow-lg" />
         </div>
         <div className="main-photos col-span-2 grid grid-cols-2 md:grid-cols-2 gap-3">
-        <div className="main-photo">
-          <Image src="/Images/main.jpg" alt="Photo 1" width={800} height={800} className="rounded-lg shadow-lg" />
+          <div className="main-photo">
+            <Image src="/Images/main.jpg" alt="Photo 1" width={800} height={800} className="rounded-lg shadow-lg" />
+          </div>
+          <div className="second-photo">
+            <Image src="/Images/Paris.jpg" alt="Photo 1" width={900} height={900} className="rounded-lg shadow-lg" />
+          </div>
         </div>
-        <div className="second-photo">
-          <Image src="/Images/Paris.jpg" alt="Photo 1" width={900} height={900} className="rounded-lg shadow-lg" />
-        </div>
-      </div>
-
       </div>
       <div className="info-section grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div className="google-street-view p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
+        <div className="google-street-view p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <div className="flex items-center mb-4">
             <FaGoogle size={22} className="mr-2" />
             <h1 className="text-2xl font-semibold">Google Earth View</h1>
@@ -39,7 +55,7 @@ const TouristPage = () => {
             className="rounded-lg"
           ></iframe>
         </div>
-        <div className="google-maps-api p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
+        <div className="google-maps-api p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <div className="flex items-center mb-4">
             <FaAtlas size={22} className="mr-2" />
             <h1 className="text-2xl font-semibold">Google Maps</h1>
@@ -55,7 +71,7 @@ const TouristPage = () => {
           ></iframe>
         </div>
       </div>
-      <div className="attractions-section p-4 bg-white rounded-lg shadow-lg mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
+      <div className="attractions-section p-4 bg-white rounded-lg shadow-lg mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <h1 className="text-2xl font-bold mb-4">Attractions</h1>
         <p className="mb-4">
           Come and discover the Eiffel Tower on the only trip to the top of its kind in Europe, and
@@ -65,9 +81,45 @@ const TouristPage = () => {
           The Eiffel Tower in the world
         </p>
       </div>
-      <div className="reviews-section p-4 bg-white  shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
-        <h1 className="text-2xl font-bold mb-4">Reviews</h1>
-        {/* <ReviewButton /> */}
+      <div className="w-full p-4 md:p-8 bg-gray-100">
+        {/* Reviews section */}
+        <div className="reviews-section p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+          <h1 className="text-2xl font-bold mb-4">Reviews</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {reviews.map(review => (
+              <div key={review.id} className="review-card bg-white border border-gray-200 p-4 rounded-lg">
+                <h2 className="text-lg font-semibold">{review.user}</h2>
+                <p className="text-gray-600">{review.comment}</p>
+                <p className="text-gray-600">Rating: {review.rating}</p>
+                <p className="text-gray-600">{review.title}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+
+        {/* Review submission form */}
+        <div className="review-form mt-8 p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+          <form className="mx-auto max-w-md">
+            <h1 className="text-2xl font-bold mb-4 text-center">Post A Review</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            </div>
+            <div className="flex items-start mt-4">
+              <label htmlFor="comment" className="review-label mr-2 flex-shrink-0 w-24">Comment:</label>
+              <textarea id="comment" name="comment" className="review-input h-24 flex-grow" required />
+            </div>
+            <div className="flex items-center mt-4">
+              <label htmlFor="rating" className="review-label mr-2 flex-shrink-0 w-24">Rating:</label>
+              <input id="rating" name="rating" type="number" min="1" max="5" className="review-input w-16 mr-2" required />
+              <span className="text-gray-600">out of 5</span>
+            </div>
+            <button type="submit" className="submit-review bg-blue-600 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 mx-auto block">
+              Submit Review
+            </button>
+
+          </form>
+        </div>
+
       </div>
     </div>
   );

@@ -1,20 +1,23 @@
+// getReviews.ts
+
 "use server";
-import { createClient } from '../utils/supabase/client';
-import createSupabaseServerClient from '../../libs/supabase/server';
 
-const getReviews = async (location_id: any) => {
-    console.log("(" + typeof location_id + ") Recieved id: " + location_id)
-    console.log()
-    const supabase = await createSupabaseServerClient();
-            
-    const { data: reviewData, error: reviewErr } = await supabase
-        .from('reviews')
-        .select("user_name, review_text, rating, review_title")
-        .eq('destination_id', location_id.trim())
+// Mock data
+const mockReviews = [
+    { id: 1, user: 'Alice', comment: 'Great place!', rating: 5, title: 'Amazing Experience' },
+    { id: 2, user: 'Bob', comment: 'Not bad', rating: 3, title: 'Decent Visit' },
+    { id: 3, user: 'Charlie', comment: 'Could be better', rating: 2, title: 'Average' },
+];
 
-    // console.log("Review Error: " + JSON.stringify(reviewErr))
-    // console.log("Review Data: " + JSON.stringify(reviewData))
+const getReviews = async (location_id: string) => {
+    if (!location_id) {
+        console.error('Location ID is undefined');
+        return [];
+    }
+    console.log(`(${typeof location_id}) Received id: ${location_id}`);
 
-    return reviewData;
-}
+    // Simulate database call
+    return mockReviews;
+};
+
 export default getReviews;
