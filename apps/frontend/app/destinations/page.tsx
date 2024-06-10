@@ -34,6 +34,38 @@ const countries: string[] = [
   // 'Singapore',
   // 'Nepal',
   // 'Sri Lanka',
+  // 'Nigeria',
+  // 'South Africa',
+  // 'Egypt',
+
+  //'Kenya',
+
+  // 'Ghana',
+  // 'Morocco',
+  // 'Ethiopia',
+  // 'Tanzania',
+  // 'Uganda',
+  // 'Algeria',
+  // 'Angola',
+  // 'Cameroon',
+  // 'Ivory Coast',
+  // 'Senegal',
+  // 'Tunisia',
+  // 'China',
+  // 'India',
+  // 'Japan',
+  // 'South Korea',
+  // 'Indonesia',
+  // 'Pakistan',
+  // 'Bangladesh',
+  // 'Vietnam',
+  // 'Philippines',
+  // 'Thailand',
+  // 'Malaysia',
+  // 'Singapore',
+  // 'Nepal',
+  // 'Sri Lanka',
+
 //   'Myanmar',
 //   'Germany',
 //   'France',
@@ -96,6 +128,7 @@ const countries: string[] = [
 //   'Tuvalu',
 //   'New Caledonia',
 ];
+ ];
 
 interface favouriteHash {
   [key: string]: boolean;
@@ -218,11 +251,11 @@ async function getData() {
 }
 
 const Destinations = async () => {
-  const favouriteData = await isFavourited();
-  console.log(favouritedHash);
+  // const favouriteData = await isFavourited();
+  // console.log(favouritedHash);
   const data = await getData();
   const destinations = data?.data || [];
-  console.log(destinations);
+  // console.log(destinations);
 
   return (
     <div className="container">
@@ -238,6 +271,3 @@ const Destinations = async () => {
     </div>
   );
 };
-
-
-export default Destinations;
