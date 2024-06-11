@@ -1,9 +1,9 @@
 // pages/api/reviews.ts
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getReviews, Review } from '../[location_id]/getReviews';
+import  getReviews, {Review}   from './getReviews';
 
-const addReview = async (reviewData: Review): Promise<Review[]> => {
+/*const addReview = async (reviewData: Review): Promise<Review[]> => {
   // Fetch existing reviews
   const existingReviews = await getReviews();
 
@@ -16,8 +16,8 @@ const addReview = async (reviewData: Review): Promise<Review[]> => {
 
   // For simplicity, you might want to persist the new data here in your actual application
 
-  return existingReviews;
-};
+  return ;
+};*/
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -30,10 +30,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // Add the new review
-      const newReviews = await addReview({ user, title, comment, rating });
+     // const newReviews = await addReview({ user, title, comment, rating });
 
       // Respond with the updated reviews
-      res.status(200).json(newReviews);
+      //res.status(200).json(newReviews);
     } catch (error) {
       console.error('Error adding review:', error);
       res.status(500).json({ message: 'An error occurred while adding the review.' });

@@ -2,6 +2,14 @@
 
 "use server";
 
+export interface Review {
+    id: number;
+    user: string;
+    comment: string;
+    rating: number;
+    title: string;
+  }
+
 // Mock data
 const mockReviews = [
     { id: 1, user: 'Alice', comment: 'Great place!', rating: 5, title: 'Amazing Experience' },
