@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { FaGoogle, FaAtlas } from 'react-icons/fa';
-import getReviews from '../[locationId]/getReviews';
+import getReviews from './getReviews';
 
 interface Review {
   id: number;
