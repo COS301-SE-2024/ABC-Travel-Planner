@@ -1,5 +1,6 @@
 import { FaPlus, FaPen, FaTrash } from "react-icons/fa";
 import Image from "next/image";
+import React from 'react';
 
 const Itinerary = () => {
   return (
