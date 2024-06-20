@@ -6,15 +6,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
+exports.SearchModule = void 0;
 const common_1 = require("@nestjs/common");
-let AppService = class AppService {
-    getHello() {
-        return 'Hello World!';
-    }
+const search_service_1 = require("./search.service");
+const search_controller_1 = require("./search.controller");
+const supabase_module_1 = require("../supabase/supabase.module");
+let SearchModule = class SearchModule {
 };
-exports.AppService = AppService;
-exports.AppService = AppService = __decorate([
-    (0, common_1.Injectable)()
-], AppService);
-//# sourceMappingURL=app.service.js.map
+exports.SearchModule = SearchModule;
+exports.SearchModule = SearchModule = __decorate([
+    (0, common_1.Module)({
+        imports: [supabase_module_1.SupabaseModule],
+        controllers: [search_controller_1.SearchController],
+        providers: [search_service_1.SearchService],
+    })
+], SearchModule);
+//# sourceMappingURL=search.module.js.map

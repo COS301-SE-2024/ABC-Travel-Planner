@@ -9,26 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.SupabaseService = void 0;
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
-let AppController = class AppController {
-    constructor(appService) {
-        this.appService = appService;
+const supabase_js_1 = require("@supabase/supabase-js");
+const config_1 = require("@nestjs/config");
+let SupabaseService = class SupabaseService {
+    constructor(configService) {
+        this.configService = configService;
+        const SUPABASE_URL = this.configService.get('NEST_PUBLIC_SUPABASE_URL');
+        const SUPABASE_KEY = this.configService.get('NEST_PUBLIC_SUPABASE_ANON_KEY');
+        this.supabase = (0, supabase_js_1.createClient)(SUPABASE_URL, SUPABASE_KEY);
     }
-    getHello() {
-        return this.appService.getHello();
+    getClient() {
+        return this.supabase;
     }
 };
-exports.AppController = AppController;
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
-exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService])
-], AppController);
-//# sourceMappingURL=app.controller.js.map
+exports.SupabaseService = SupabaseService;
+exports.SupabaseService = SupabaseService = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [config_1.ConfigService])
+], SupabaseService);
+//# sourceMappingURL=supabase.service.js.map
