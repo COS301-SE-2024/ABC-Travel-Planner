@@ -24,7 +24,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const numRooms = place.roomsLeft < 10 ? place.roomsLeft : null;
 
   return (
-    <div className="relative w-2/3 mx-auto bg-white rounded-lg shadow-md p-4">
+    <div className="relative w-5/6 mx-auto bg-white rounded-lg shadow-md p-4">
       <div className='absolute top-0 right-0 text-right'>
         <div className="mb-2">
           <p className="text-gray-600 inline-block pr-2">{`${place.totalReviews} reviews `}</p>

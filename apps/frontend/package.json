@@ -13,6 +13,8 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@googlemaps/extended-component-library": "^0.6.11",
+    "@googlemaps/js-api-loader": "^1.16.6",
     "@nextui-org/dropdown": "^2.1.25",
     "@nextui-org/react": "^2.4.1",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
@@ -31,6 +33,7 @@
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
     "@testing-library/user-event": "^14.5.2",
+    "@types/google.maps": "^3.55.10",
     "@types/jest": "^29.5.12",
     "@types/node": "^20",
     "@types/react": "^18",

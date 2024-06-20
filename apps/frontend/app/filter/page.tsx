@@ -123,7 +123,7 @@ const destinations = [
 const Filter = async () => {
 
   return (
-    <div className='ml-40 mr-40 mt-16'>
+    <div className='ml-20 mr-20 mt-16'>
       <h1 className='text-5xl font-bold text-gray-800 text-center mb-10'>Zip Lining destinations</h1>
       <div className="flex flex-col gap-4 rounded-lg pt-10" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         

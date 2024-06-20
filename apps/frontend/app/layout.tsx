@@ -2,12 +2,11 @@
 
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Navbar } from './components/Navbar';
 import { ThemeProvider } from 'next-themes';
-import './globals.css'; 
-
+import './globals.css';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
