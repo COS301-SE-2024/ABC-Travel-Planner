@@ -3,27 +3,42 @@ import React, { useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
+import { deleteItinerary,updateItinerary } from ".";
 
 interface ItineraryComponentProps {
   name: string;
   location: string;
-  image: any;
+  image: string;
+  id: any,
+  fetchItineraries: () => void;
 }
 
 const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
   name,
   location,
   image,
+  id,
+  fetchItineraries
 }) => {
+  const [newName, setNewName] = useState(name);
+  const [newLocation, setNewLocation] = useState(location);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const handleNameChange = (e: any) => setNewName(e.target.value);
+  const handleLocationChange = (e: any) => setNewLocation(e.target.value);
 
   const openEditModal = (e:any) => {
     e.preventDefault();
     setShowEditModal(true);
 
   }
-  const closeEditModal = () => setShowEditModal(false);
+  const closeEditModal = () => {
+    setNewName(name);
+    setNewLocation(location);
+    setShowEditModal(false);
+
+
+  };
 
   const openDeleteModal = (e:any) => {
     e.preventDefault();
@@ -34,28 +49,26 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
 
   }
 
-  const handleEdit = () => {
-    
-    // Handle edit action here
-    console.log("Editing itinerary:", { name, location });
+  const handleEdit = async (e: any) => {
+    e.preventDefault();
+    await updateItinerary(id, newName, newLocation);
     closeEditModal();
+    fetchItineraries();
   };
 
-  const handleDelete = () => {
-  
-
-    // Handle delete action here
-    console.log("Deleting itinerary:", { name, location });
+  const handleDelete = async () => {
+     await deleteItinerary(id);
+     fetchItineraries();
     closeDeleteModal();
   };
 
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 cursor-pointer">
-      <Link href={`/itinerary-items?city=${location}&name=${name}`} passHref>
+      <Link href={`/itinerary-items?location=${location}&id=${id}`} passHref>
         <div className="relative w-full h-40 pb-2/3">
           <Image
             src={image}
-            alt={name}
+            alt={location}
             layout="fill"
             objectFit="cover"
             className="rounded-t-lg"
@@ -63,7 +76,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
         </div>
         <div className="p-4">
           <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
-          <p className="text-sm text-gray-500">{location}</p>
+          <p className="ml-1 text-sm text-gray-500">{location}</p>
           <div className="flex justify-end mt-2 space-x-4">
             <button
               className="text-sm text-blue-600 hover:text-blue-800 flex items-center"
@@ -83,12 +96,12 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
         </div>
       </Link>
 
-      {/* Edit Modal */}
+      
       {showEditModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
           <div className="relative w-full max-w-lg mx-auto my-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              {/* Modal Header */}
+              
               <div className="flex justify-between items-center px-6 py-4 bg-blue-600 text-white">
                 <h3 className="text-xl font-semibold">Edit Itinerary</h3>
                 <button
@@ -98,7 +111,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
                   &#215;
                 </button>
               </div>
-              {/* Modal Body */}
+              
               <form onSubmit={handleEdit} className="p-6">
                 <div className="mb-4">
                   <label
@@ -110,7 +123,9 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
                   <input
                     type="text"
                     id="editName"
-                    defaultValue={name}
+                    defaultValue={newName}
+                    onChange={handleNameChange}
+                    value={newName}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   />
                 </div>
@@ -124,7 +139,9 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
                   <input
                     type="text"
                     id="editLocation"
-                    defaultValue={location}
+                    defaultValue={newLocation}
+                    value={newLocation}
+                    onChange={handleLocationChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   />
                 </div>
@@ -149,12 +166,12 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
         </div>
       )}
 
-      {/* Delete Modal */}
+      
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
           <div className="relative w-full max-w-sm mx-auto my-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              {/* Modal Header */}
+             
               <div className="flex justify-between items-center px-6 py-4 bg-red-600 text-white">
                 <h3 className="text-xl font-semibold">Delete Itinerary</h3>
                 <button
@@ -164,7 +181,6 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
                   &#215;
                 </button>
               </div>
-              {/* Modal Body */}
               <div className="p-6">
                 <p className="text-sm text-gray-700">
                   Are you sure you want to delete this itinerary?
