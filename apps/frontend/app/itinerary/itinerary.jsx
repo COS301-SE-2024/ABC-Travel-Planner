@@ -20,11 +20,10 @@ const Itinerary = () => {
   const handleAddItinerary = async (e) => {
     
     e.preventDefault();
-    // Handle adding itinerary logic here (e.g., API call)
-    console.log("Adding itinerary:", { itineraryName, location });
+    
     const data = await createItinerary(itineraryName, location);
     fetchItineraries();
-    console.log("Itinerary created:", data);
+    
 
     closeModal();
   };
