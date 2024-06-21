@@ -9,7 +9,7 @@ import {
   validateEmail,
   validatePassword,
 } from ".";
-import readUser from "@/libs/actions";
+
 
 const SplashPage = () => {
   const router = useRouter();
@@ -29,7 +29,8 @@ const SplashPage = () => {
     confirmPassword: string;
   }>({ name: "", surname: "", email: "", password: "", confirmPassword: "" });
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
     const result = await signInWithEmailAndPassword(loginData);
     const {
       data: { user },
@@ -41,17 +42,9 @@ const SplashPage = () => {
     }
   };
 
-  const handleRegister = async () => {
-    if (
-      !registerData.name ||
-      !registerData.surname ||
-      !registerData.email ||
-      !registerData.password ||
-      !registerData.confirmPassword
-    ) {
-      alert("Please fill in all fields.");
-      return;
-    }
+  const handleRegister = async (e: any) => {
+    e.preventDefault();
+    
     if (emailError || passwordError) {
       alert("Please enter valid email and password.");
       return;
@@ -119,8 +112,8 @@ const SplashPage = () => {
 
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-md-6">
-              <div style={styles.form}>
+            <div onSubmit={handleLogin} className="col-md-6">
+              <form style={styles.form}>
                 <h1 style={{ ...styles.headers, textAlign: "center" }}>
                   Login{" "}
                 </h1>
@@ -136,6 +129,7 @@ const SplashPage = () => {
                     name="email"
                     value={loginData.email}
                     onChange={handleLoginChange}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -149,16 +143,16 @@ const SplashPage = () => {
                     name="password"
                     value={loginData.password}
                     onChange={handleLoginChange}
+                    required
                   />
                 </div>
                 <button
-                  onClick={handleLogin}
                   type="submit"
                   className="btn btn-primary"
                 >
                   Login
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -202,10 +196,10 @@ const SplashPage = () => {
           </div>
         </div>
 
-        <div className="container">
+        <div onSubmit={handleRegister} className="container">
           <div className="row justify-content-center">
             <div className="col-md-6">
-              <div style={styles.form}>
+              <form style={styles.form}>
                 <h1 style={{ ...styles.headers, textAlign: "center" }}>
                   Register
                 </h1>
@@ -220,6 +214,7 @@ const SplashPage = () => {
                     name="name"
                     value={registerData.name}
                     onChange={handleRegisterChange}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -233,6 +228,7 @@ const SplashPage = () => {
                     name="surname"
                     value={registerData.surname}
                     onChange={handleRegisterChange}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -247,6 +243,7 @@ const SplashPage = () => {
                     name="email"
                     value={registerData.email}
                     onChange={handleRegisterChange}
+                    required
                   />
                   {emailError && (
                     <small style={{ color: "red" }}>
@@ -266,6 +263,7 @@ const SplashPage = () => {
                     name="password"
                     value={registerData.password}
                     onChange={handleRegisterChange}
+                    required
                   />
                   {passwordError && (
                     <small style={{ color: "red" }}>
@@ -288,6 +286,7 @@ const SplashPage = () => {
                     name="confirmPassword"
                     value={registerData.confirmPassword}
                     onChange={handleRegisterChange}
+                    required
                   />
                   {!passwordsMatch && (
                     <small style={{ color: "red" }}>
@@ -296,13 +295,12 @@ const SplashPage = () => {
                   )}
                 </div>
                 <button
-                  onClick={handleRegister}
                   type="submit"
                   className="btn btn-primary"
                 >
                   Register
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
