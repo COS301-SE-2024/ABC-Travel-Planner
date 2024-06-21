@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 interface FilterCardProps {
@@ -21,29 +22,69 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
     }
   };
 
-  const numRooms = place.roomsLeft < 10 ? place.roomsLeft : null;
+  function extractLocation(fullString: string) {
+    const parts = fullString.split(/,|\s+/);
+
+    const city = parts.slice(1, -1).join(' ');
+    const country = parts[parts.length - 1];
+
+    return { city, country };
+  }
+  let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
+  const numRooms = null;
+  let address = place.Fg.plusCode?.compoundCode || "Unknown Address";
+  const location = extractLocation(address);
+  const addressParts = address.split(',');
+
+  const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
 
   return (
-    <div className="relative w-5/6 mx-auto bg-white rounded-lg shadow-md p-4">
+
+    <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4">
       <div className='absolute top-0 right-0 text-right'>
         <div className="mb-2">
-          <p className="text-gray-600 inline-block pr-2">{`${place.totalReviews} reviews `}</p>
-          <div className={`rounded-full ${getRatingColor(place.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2`}>
-            {place.rating}
+          <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
+          <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2`}>
+            {place.Fg.rating}
           </div>
         </div>
       </div>
       <div className='flex flex-row justify-start items-start'>
-        <div className="w-1/3">
-          <img
-            src={place.image}
-            alt={place.name}
-            className="rounded-lg h-full w-full object-cover"
-          />
-        </div>
+
+        <Link
+          href={{
+            pathname: '/itinerary-items',
+            query: {
+              destination: JSON.stringify(place),
+              // id: place.id,
+              // name: place.Fg.displayName,
+              // city: location.city,
+              // country: location.country,
+              // rating: place.Fg.rating,
+              // reviews: place.Fg.userRatingCount,
+              // address: place.Fg.formattedAddress,
+              // date: selectedDate || 'No date selected',
+            },
+          }}>
+          <div className="w-1/3">
+            <img
+              src={`${place.firstPhotoUrl}`}
+              alt={place.Fg.displayName}
+              className="rounded-lg h-width w-full object-cover"
+            />
+          </div>
+        </Link>
         <div className="w-2/3 pl-4">
-          <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.name}</h1>
-          <p className="text-gray-700 text-lg font-semibold">{`${place.city}, ${place.country}`}</p>
+        <Link
+            href={{
+              pathname: '/itinerary-items',
+              query: {
+                destination: JSON.stringify(place),
+              },
+            }}
+          >
+          <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.Fg.displayName}</h1>
+          <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
 
           {place.deal && (
             <div className="mt-2">
@@ -53,14 +94,14 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
             </div>
           )}
 
-          <p className="text-gray-800 mt-4">{place.description}</p>
+          <p className="text-gray-800 mt-4">{place.Fg.editorialSummary}</p>
 
-          {place.cancellationFee && (
+          {place.Fg.paymentOptions?.acceptsCreditCards && (
             <div className="mt-2 flex items-center text-green-600 text-sm">
               <svg className="w-5 h-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                 <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm5 7.5l-6 6-3-3 1.414-1.414L9 10.672l4.586-4.586L15 7.5z" />
               </svg>
-              Free cancellation
+              Accepts Credit Cards
             </div>
           )}
 
@@ -69,6 +110,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               {`Only ${numRooms} rooms available at this price`}
             </div>
           )}
+          </Link>
 
           <div className="mt-4 flex justify-between items-end">
             <div className="flex items-center space-x-4">
@@ -79,7 +121,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                   onChange={handleSelectDate}
                 >
                   <option value="">Select a date</option>
-                  {place.availableDates.map((date: any) => (
+                  {availableDates.map((date: any) => (
                     <option
                       key={date}
                       value={date}
@@ -112,15 +154,16 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               )}
             </div>
             <div className="text-right">
-              <p className="text-3xl text-blue-500 font-semibold">{place.price}</p>
-              <p className="text-blue-500 text-sm">{place.priceDetails}</p>
-              <p className="text-blue-500 text-sm">{place.disclaimer}</p>
+              <p className="text-3xl text-blue-500 font-semibold">N/A</p>
+              <p className="text-blue-500 text-sm">per night</p>
+              <p className="text-blue-500 text-sm">Tax and rates included</p>
             </div>
           </div>
 
         </div>
       </div>
     </div>
+
   );
 };
 
