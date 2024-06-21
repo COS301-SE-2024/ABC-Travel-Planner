@@ -2,45 +2,53 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import ItineraryComponent from "./itineraryComponent";
-import { createItinerary } from ".";
-import { getItineraries } from ".";
+import { createItinerary,getItineraries } from ".";
 
 const Itinerary = () => {
-  const [itineraries, setItineraries] = useState([]); // [itinerary1, itinerary2, ...
-  const [isSet, setIsSet] = useState(false);
+  const [itineraries, setItineraries] = useState([]); 
   const [showModal, setShowModal] = useState(false);
   const [itineraryName, setItineraryName] = useState("");
-  const [city, setCity] = useState("");
+  const [location, setLocation] = useState("");
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
     setShowModal(false);
     setItineraryName("");
-    setCity("");
+    setLocation("");
   };
 
   const handleAddItinerary = async (e) => {
+    
     e.preventDefault();
     // Handle adding itinerary logic here (e.g., API call)
-    console.log("Adding itinerary:", { itineraryName, city });
-    const data = await createItinerary(itineraryName, city);
-
+    console.log("Adding itinerary:", { itineraryName, location });
+    const data = await createItinerary(itineraryName, location);
+    fetchItineraries();
     console.log("Itinerary created:", data);
 
     closeModal();
   };
 
+  const fetchItineraries = async () => {
+    const temp = await getItineraries();
+    const itineraries = temp.map((itinerary) => {
+      return (
+        <ItineraryComponent
+          key={itinerary.id}
+          id={itinerary.id}
+          name={itinerary.name}
+          location={itinerary.location}
+          image={itinerary.image}
+          fetchItineraries={fetchItineraries}
+        />
+      );
+    });
+    setItineraries(itineraries);
+  };
+
   useEffect(() => {
-    const fetchItineraries = async () => {
-      if (!isSet) {
-        setIsSet(true);
-      } else {
-        const temp = await getItineraries();
-        console.log("Itineraries:", temp);
-      }
-    };
     fetchItineraries();
-  }, [isSet]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center m-4">
@@ -57,17 +65,10 @@ const Itinerary = () => {
           </button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <ItineraryComponent
-            name="Trip to Paris"
-            location="Paris, France"
-            image="/images/paris.jpg"
-          />
-
-          {/* Additional itinerary components can be added here */}
+          {itineraries}
         </div>
       </div>
 
-      {/* Modal for adding new itinerary */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
           <div className="relative w-full max-w-lg mx-auto my-6">
@@ -84,7 +85,6 @@ const Itinerary = () => {
                   &#215;
                 </button>
               </div>
-              {/* Modal Body */}
               <form onSubmit={handleAddItinerary} className="p-6">
                 <div className="mb-4">
                   <label
@@ -104,16 +104,16 @@ const Itinerary = () => {
                 </div>
                 <div className="mb-4">
                   <label
-                    htmlFor="city"
+                    htmlFor="location"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    City:
+                    Location:
                   </label>
                   <input
                     type="text"
-                    id="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
+                    id="location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
                     required
                     className="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
