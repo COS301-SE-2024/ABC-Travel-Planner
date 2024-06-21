@@ -7,7 +7,7 @@ import SearchCard from '../search/searchCard';
 import { handleSearchAirports } from '../search/index';
 
 
-const Filter =   () => {
+const Filter = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams()
@@ -263,16 +263,27 @@ const Filter =   () => {
   return (
     <div className='ml-20 mr-20 mt-16'>
       <h1 className='text-5xl font-bold text-gray-800 text-center mb-10'>Select a Destination</h1>
-      <div className="flex flex-col gap-4 rounded-lg pt-10" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-
-        {searchResults.length > 0 && (
+      {loading && (
+        <div className="flex justify-center items-center h-20">
+          <div
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-blue-500 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status">
+            <span
+              className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+            >Loading...</span>
+          </div>
+        </div>
+      )}
+      {searchResults.length > 0 && (
+        <div className="flex flex-col gap-4 rounded-lg pt-10" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
             {searchResults.map((result, index) => (
               <FilterCard key={index} place={result} />
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
 
     </div>
   );

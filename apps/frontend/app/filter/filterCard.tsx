@@ -30,6 +30,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
 
     return { city, country };
   }
+  
   let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
   const numRooms = null;
   let address = place.Fg.plusCode?.compoundCode || "Unknown Address";
@@ -39,43 +40,10 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
 
   return (
-
     <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4">
-      <div className='absolute top-0 right-0 text-right'>
-        <div className="mb-2">
-          <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
-          <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2`}>
-            {place.Fg.rating}
-          </div>
-        </div>
-      </div>
-      <div className='flex flex-row justify-start items-start'>
-
-        <Link
-          href={{
-            pathname: '/itinerary-items',
-            query: {
-              destination: JSON.stringify(place),
-              // id: place.id,
-              // name: place.Fg.displayName,
-              // city: location.city,
-              // country: location.country,
-              // rating: place.Fg.rating,
-              // reviews: place.Fg.userRatingCount,
-              // address: place.Fg.formattedAddress,
-              // date: selectedDate || 'No date selected',
-            },
-          }}>
-          <div className="w-1/3">
-            <img
-              src={`${place.firstPhotoUrl}`}
-              alt={place.Fg.displayName}
-              className="rounded-lg h-width w-full object-cover"
-            />
-          </div>
-        </Link>
-        <div className="w-2/3 pl-4">
-        <Link
+      <div className="flex justify-between">
+        <div className="w-1/2 pr-4">
+          <Link
             href={{
               pathname: '/itinerary-items',
               query: {
@@ -83,33 +51,63 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               },
             }}
           >
-          <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.Fg.displayName}</h1>
+            <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.Fg.displayName}</h1>
+          </Link>
           <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
-
-          {place.deal && (
-            <div className="mt-2">
-              <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
-                {place.deal}
+        </div>
+        <div className="text-right">
+          <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
+          <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block`}>
+            {place.Fg.rating}
+          </div>
+        </div>
+      </div>
+      <div className='flex flex-row justify-start items-start mt-4'>
+        <Link
+          href={{
+            pathname: '/itinerary-items',
+            query: {
+              destination: JSON.stringify(place),
+            },
+          }}
+          className="w-1/3"
+        >
+          <img
+            src={`${place.firstPhotoUrl}`}
+            alt={place.Fg.displayName}
+            className="rounded-lg h-width w-full object-cover cursor-pointer"
+          />
+        </Link>
+        <div className="w-2/3 pl-4">
+          <Link
+            href={{
+              pathname: '/itinerary-items',
+              query: {
+                destination: JSON.stringify(place),
+              },
+            }}
+          >
+            {place.deal && (
+              <div className="mt-2">
+                <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
+                  {place.deal}
+                </div>
               </div>
-            </div>
-          )}
-
-          <p className="text-gray-800 mt-4">{place.Fg.editorialSummary}</p>
-
-          {place.Fg.paymentOptions?.acceptsCreditCards && (
-            <div className="mt-2 flex items-center text-green-600 text-sm">
-              <svg className="w-5 h-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm5 7.5l-6 6-3-3 1.414-1.414L9 10.672l4.586-4.586L15 7.5z" />
-              </svg>
-              Accepts Credit Cards
-            </div>
-          )}
-
-          {numRooms && (
-            <div className="mt-2 flex items-center text-red-500 text-sm">
-              {`Only ${numRooms} rooms available at this price`}
-            </div>
-          )}
+            )}
+            <p className="text-gray-800 mt-4">{place.Fg.editorialSummary}</p>
+            {place.Fg.paymentOptions?.acceptsCreditCards && (
+              <div className="mt-2 flex items-center text-green-600 text-sm">
+                <svg className="w-5 h-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm5 7.5l-6 6-3-3 1.414-1.414L9 10.672l4.586-4.586L15 7.5z" />
+                </svg>
+                Accepts Credit Cards
+              </div>
+            )}
+            {numRooms && (
+              <div className="mt-2 flex items-center text-red-500 text-sm">
+                {`Only ${numRooms} rooms available at this price`}
+              </div>
+            )}
           </Link>
 
           <div className="mt-4 flex justify-between items-end">
@@ -159,11 +157,9 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               <p className="text-blue-500 text-sm">Tax and rates included</p>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-
   );
 };
 
