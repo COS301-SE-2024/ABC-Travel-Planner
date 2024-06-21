@@ -1,13 +1,12 @@
 "use server";
 import createSupabaseServerClient from "@/libs/supabase/server";
-import readUser from "@/libs/actions";
 
-const createItinerary = async (itineraryName: string, city: string) => {
+const createItinerary = async (itineraryName: string, location: string) => {
   const supabase = await createSupabaseServerClient();
-  const image = await getItineraryImage(city);
+  const image = await getItineraryImage(location);
   const { data, error } = await supabase
     .from("Itinerary")
-    .insert([{ name: itineraryName, location: city,image: image}])
+    .insert([{ name: itineraryName, location: location, image: image }])
     .select();
   if (error) {
     console.error("error", error);
@@ -15,25 +14,50 @@ const createItinerary = async (itineraryName: string, city: string) => {
   return data;
 };
 
-const getItineraryImage = async (City: string) => {
+const getItineraryImage = async (location: string) => {
   const supabase = await createSupabaseServerClient();
   const { data } = supabase.storage
     .from("locations")
-    .getPublicUrl(`${City}.jpg`);
+    .getPublicUrl(`${location}.jpg`);
   return data.publicUrl;
 };
 
 const getItineraries = async () => {
-    const supabase = await createSupabaseServerClient();
-    const user = await readUser();
-    console.log("user", user);
+  const supabase = await createSupabaseServerClient();
 
-    const { data, error } = await supabase.from("Itinerary").select();
-    if (error) {
-        console.error("error", error);
-    }
-    console.log(data);
-    return data;
-}
+  const { data, error } = await supabase.from("Itinerary").select();
+  if (error) {
+    console.error("error", error);
+  }
+  console.log(data);
+  return data;
+};
 
-export { createItinerary, getItineraries };
+const updateItinerary = async (id: any, itineraryName: string, location: string) => {
+  const supabase = await createSupabaseServerClient();
+  const image = await getItineraryImage(location);
+  const { data, error } = await supabase
+    .from("Itinerary")
+    .update([{ name: itineraryName, location: location, image: image }])
+    .eq("id", id)
+    .select();
+  if (error) {
+    console.error("error", error);
+  }
+  return data;
+};
+
+const deleteItinerary = async (id: any) => {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("Itinerary")
+    .delete()
+    .eq("id", id)
+    .select();
+  if (error) {
+    console.error("error", error);
+  }
+  return data;
+};
+
+export { createItinerary, getItineraries, updateItinerary, deleteItinerary};
