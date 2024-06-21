@@ -20,34 +20,46 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
             return 'bg-red-500';
         }
     };
+
+    function extractLocation(fullString: string) {
+        // Split the string by spaces and commas
+        const parts = fullString.split(/,|\s+/);
+        
+        // Remove the code part and join the remaining parts for city and country
+        const city = parts.slice(1, -1).join(' ');
+        const country = parts[parts.length - 1];
+        
+        return { city, country };
+    }
     let availableDates =  ['2024-06-01', '2024-06-02', '2024-06-03'];
     const numRooms = null;
-    let address = place.plusCode.compoundCode;
+    let address = place.Fg.plusCode.compoundCode;
+    const location = extractLocation(address);
     const addressParts = address.split(',');
 
     const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
-
+    
     return (
-        <div className="relative w-5/6 mx-auto bg-white rounded-lg shadow-md p-4">
+        <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4">
             <div className='absolute top-0 right-0 text-right'>
                 <div className="mb-2">
-                    <p className="text-gray-600 inline-block pr-2">{`${place.userRatingCount} reviews `}</p>
-                    <div className={`rounded-full ${getRatingColor(place.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2`}>
-                        {place.rating}
+                    <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
+                    <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2`}>
+                        {place.Fg.rating}
                     </div>
                 </div>
             </div>
             <div className='flex flex-row justify-start items-start'>
                 <div className="w-1/3">
-                    {/* <img
-                        src={place.image}
-                        alt={place.name}
-                        className="rounded-lg h-full w-full object-cover"
-                    /> */}
+                    <img
+                        src={`${place.firstPhotoUrl}`}
+                        alt={place.Fg.displayName}
+                        className="rounded-lg h-width w-full object-cover"
+                    />
                 </div>
                 <div className="w-2/3 pl-4">
-                    <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
-                    <p className="text-gray-700 text-lg font-semibold">{`${cityCountry}`}</p>
+                    <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.Fg.displayName}</h1>
+                    <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
 
                     {place.deal && (
                         <div className="mt-2">
@@ -57,9 +69,9 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         </div>
                     )}
 
-                    <p className="text-gray-800 mt-4">{place.editorialSummary}</p>
+                    <p className="text-gray-800 mt-4">{place.Fg.editorialSummary}</p>
 
-                    {place.paymentOptions.acceptsCreditCards && (
+                    {place.Fg.paymentOptions?.acceptsCreditCards && (
                         <div className="mt-2 flex items-center text-green-600 text-sm">
                             <svg className="w-5 h-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm5 7.5l-6 6-3-3 1.414-1.414L9 10.672l4.586-4.586L15 7.5z" />

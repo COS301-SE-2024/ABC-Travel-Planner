@@ -2,7 +2,7 @@ import SearchContainer from './searchContainer';
 const Search = () => {
 
   return (
-    <div className="search-container">
+    <div>
       <SearchContainer/>
     </div>
   );
