@@ -18,7 +18,7 @@ const Help = () => {
         </div>
         <ol className="list-decimal list-inside text-left">
           <li>Go to the Itinerary tab.</li>
-          <li>Click on "Add Itinerary" and name your trip and location.</li>
+          <li>Click on &quot;Add Itinerary&quot; and name your trip and location.</li>
           <li>Search for flights, stays, car rentals, attractions, or airport taxis you want to add.</li>
           <li>Add your selected options to the created itinerary.</li>
           <li> You will be prompted to confirm your booking. A confirmation email will be sent to you.</li>
