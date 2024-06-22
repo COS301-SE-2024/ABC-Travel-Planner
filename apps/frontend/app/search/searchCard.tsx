@@ -21,6 +21,61 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         }
     };
 
+    const getPricePlaceholder = (type: string) => {
+        switch (type) {
+          case 'stays':
+            return 'per night';
+          case 'attractions':
+            return 'per ticket';
+          case 'carRental':
+            return 'per day';
+          case 'airportTaxi':
+            return 'per ride';
+          default:
+            return 'Price not available';
+        }
+    };
+
+    const generatePrice = (id: string, type: string, country: string) => {
+        let basePrice;
+        switch (type) {
+            case 'stays':
+                basePrice = 100;
+                break;
+            case 'attractions':
+                basePrice = 50;
+                break;
+            case 'carRental':
+                basePrice = 70;
+                break;
+            case 'airportTaxi':
+                basePrice = 40;
+                break;
+            default:
+                basePrice = 100;
+        }
+
+        let countryMultiplier;
+        switch (country) {
+            case 'Africa':
+                countryMultiplier = 1;
+                break;
+            case 'USA':
+                countryMultiplier = 1.2;
+                break;
+            case 'UK':
+                countryMultiplier = 1.3;
+                break;
+            default:
+                countryMultiplier = 1.1;
+        }
+
+        const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const randomMultiplier = 1 + (seed % 100) / 1000;
+
+        return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
+    };
+
     function extractLocation(fullString: string) {
         // Split the string by spaces and commas
         const parts = fullString.split(/,|\s+/);
@@ -38,9 +93,10 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const addressParts = address.split(',');
 
     const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
-    
+    const price = generatePrice(place.id, place.type, location.country);
+
     return (
-        <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4">
+        <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
             <div className='absolute top-0 right-0 text-right'>
                 <div className="mb-2">
                     <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
@@ -54,17 +110,17 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                     <img
                         src={`${place.firstPhotoUrl}`}
                         alt={place.Fg.displayName}
-                        className="rounded-lg h-width w-full object-cover"
+                        className="rounded-lg object-cover"
                     />
                 </div>
-                <div className="w-2/3 pl-4">
+                <div className="w-2/3 pl-4 overflow-hidden">
                     <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.Fg.displayName}</h1>
                     <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
 
-                    {place.deal && (
+                    {place.Fg.isGoodForChildren && (
                         <div className="mt-2">
                             <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
-                                {place.deal}
+                                Good for families with children
                             </div>
                         </div>
                     )}
@@ -128,8 +184,8 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                             )}
                         </div>
                         <div className="text-right">
-                            <p className="text-3xl text-blue-500 font-semibold">N/A</p>
-                            <p className="text-blue-500 text-sm">per night</p>
+                            <p className="text-3xl text-blue-500 font-semibold">ZAR {price}</p>
+                            <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
                             <p className="text-blue-500 text-sm">Tax and rates included</p>
                         </div>
                     </div>

@@ -14,7 +14,7 @@ const Filter = () => {
 
   const topic = searchParams.get('topic');
   const searchTerm = searchParams.get('term');
-  const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 459, maxWidth = 612) => {
+  const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 400, maxWidth = 500) => {
     return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
   };
 
@@ -86,6 +86,7 @@ const Filter = () => {
             ...place,
             photos: detailedPlace.photos,
             firstPhotoUrl: firstPhotoUrl,
+            type: "stays"
           };
         }));
 
@@ -135,6 +136,7 @@ const Filter = () => {
             ...place,
             photos: detailedPlace.photos,
             firstPhotoUrl: firstPhotoUrl,
+            type: "attractions"
           };
         }));
 
@@ -184,6 +186,7 @@ const Filter = () => {
             ...place,
             photos: detailedPlace.photos,
             firstPhotoUrl: firstPhotoUrl,
+            type: "carRental"
           };
         }));
 
@@ -233,6 +236,7 @@ const Filter = () => {
             ...place,
             photos: detailedPlace.photos,
             firstPhotoUrl: firstPhotoUrl,
+            type: "airportTaxis"
           };
         }));
 

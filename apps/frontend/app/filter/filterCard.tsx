@@ -22,6 +22,61 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
     }
   };
 
+  const getPricePlaceholder = (type: string) => {
+    switch (type) {
+      case 'stays':
+        return 'per night';
+      case 'attractions':
+        return 'per ticket';
+      case 'carRental':
+        return 'per day';
+      case 'airportTaxis':
+        return 'per ride';
+      default:
+        return 'Price not available';
+    }
+  };
+
+  const generatePrice = (id: string, type: string, country: string) => {
+    let basePrice;
+    switch (type) {
+        case 'stays':
+            basePrice = 100;
+            break;
+        case 'attractions':
+            basePrice = 50;
+            break;
+        case 'carRental':
+            basePrice = 70;
+            break;
+        case 'airportTaxi':
+            basePrice = 40;
+            break;
+        default:
+            basePrice = 100;
+    }
+
+    let countryMultiplier;
+    switch (country) {
+        case 'Africa':
+            countryMultiplier = 1;
+            break;
+        case 'USA':
+            countryMultiplier = 1.2;
+            break;
+        case 'UK':
+            countryMultiplier = 1.3;
+            break;
+        default:
+            countryMultiplier = 1.1;
+    }
+
+    const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const randomMultiplier = 1 + (seed % 100) / 1000;
+
+    return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
+};
+
   function extractLocation(fullString: string) {
     const parts = fullString.split(/,|\s+/);
 
@@ -30,7 +85,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
 
     return { city, country };
   }
-  
+
   let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
   const numRooms = null;
   let address = place.Fg.plusCode?.compoundCode || "Unknown Address";
@@ -38,9 +93,10 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const addressParts = address.split(',');
 
   const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
+  const price = generatePrice(place.id, place.type, location.country);
 
   return (
-    <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4">
+    <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-120">
       <div className="flex justify-between">
         <div className="w-1/2 pr-4">
           <Link
@@ -75,10 +131,10 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           <img
             src={`${place.firstPhotoUrl}`}
             alt={place.Fg.displayName}
-            className="rounded-lg h-width w-full object-cover cursor-pointer"
+            className="rounded-lg object-cover cursor-pointer"
           />
         </Link>
-        <div className="w-2/3 pl-4">
+        <div className="w-2/3 pl-4 overflow-hidden">
           <Link
             href={{
               pathname: '/itinerary-items',
@@ -87,10 +143,10 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               },
             }}
           >
-            {place.deal && (
+            {place.Fg.isGoodForChildren && (
               <div className="mt-2">
                 <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
-                  {place.deal}
+                  Good for families with children
                 </div>
               </div>
             )}
@@ -152,8 +208,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               )}
             </div>
             <div className="text-right">
-              <p className="text-3xl text-blue-500 font-semibold">N/A</p>
-              <p className="text-blue-500 text-sm">per night</p>
+              <p className="text-3xl text-blue-500 font-semibold">ZAR {price}</p>
+              <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
               <p className="text-blue-500 text-sm">Tax and rates included</p>
             </div>
           </div>

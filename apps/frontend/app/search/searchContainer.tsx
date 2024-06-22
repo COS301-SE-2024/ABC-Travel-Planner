@@ -16,7 +16,7 @@ const SearchContainer = () => {
         setSearchResults([]);
     };
 
-    const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 459, maxWidth = 612) => {
+    const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 429, maxWidth = 612) => {
         return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
     };
 
@@ -88,6 +88,7 @@ const SearchContainer = () => {
                         ...place,
                         photos: detailedPlace.photos,
                         firstPhotoUrl: firstPhotoUrl,
+                        type: "stays"
                     };
                 }));
 
@@ -137,6 +138,7 @@ const SearchContainer = () => {
                         ...place,
                         photos: detailedPlace.photos,
                         firstPhotoUrl: firstPhotoUrl,
+                        type: "attractions"
                     };
                 }));
 
@@ -186,6 +188,7 @@ const SearchContainer = () => {
                         ...place,
                         photos: detailedPlace.photos,
                         firstPhotoUrl: firstPhotoUrl,
+                        type: "carRental"
                     };
                 }));
 
@@ -235,6 +238,7 @@ const SearchContainer = () => {
                         ...place,
                         photos: detailedPlace.photos,
                         firstPhotoUrl: firstPhotoUrl,
+                        type: "airportTaxis"
                     };
                 }));
 
