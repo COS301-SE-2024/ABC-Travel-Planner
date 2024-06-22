@@ -43,10 +43,9 @@ jobs:
           npm start &
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v3
-        with:
-          browser: chrome
-          wait-on: "http://localhost:3000"
+        run: |
+          cd apps/frontend
+          npx cypress run --browser chrome --config video=false
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL}}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY}}
