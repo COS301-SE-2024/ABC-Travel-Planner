@@ -16,10 +16,22 @@ const createItinerary = async (itineraryName: string, location: string) => {
 
 const getItineraryImage = async (location: string) => {
   const supabase = await createSupabaseServerClient();
-  const { data } = supabase.storage
-    .from("locations")
-    .getPublicUrl(`${location}.jpg`);
-  return data.publicUrl;
+  const { data: list, error } = await supabase.storage.from("locations").list();
+  if (error) {
+    console.error("error", error);
+  } else {
+    const filteredObjects = list.filter(object =>
+      object.name.includes(location)
+    );
+    if (filteredObjects.length == 0) {
+      return "https://rgfpdfcxkoepvqtmtxir.supabase.co/storage/v1/object/public/locations/Default1.jpg";
+    } else {
+      const { data } = supabase.storage
+        .from("locations")
+        .getPublicUrl(`${location}.jpg`);
+      return data.publicUrl;
+    }
+  }
 };
 
 const getItineraries = async () => {
@@ -29,11 +41,14 @@ const getItineraries = async () => {
   if (error) {
     console.error("error", error);
   }
-  console.log(data);
   return data;
 };
 
-const updateItinerary = async (id: any, itineraryName: string, location: string) => {
+const updateItinerary = async (
+  id: any,
+  itineraryName: string,
+  location: string
+) => {
   const supabase = await createSupabaseServerClient();
   const image = await getItineraryImage(location);
   const { data, error } = await supabase
@@ -60,4 +75,4 @@ const deleteItinerary = async (id: any) => {
   return data;
 };
 
-export { createItinerary, getItineraries, updateItinerary, deleteItinerary};
+export { createItinerary, getItineraries, updateItinerary, deleteItinerary };
