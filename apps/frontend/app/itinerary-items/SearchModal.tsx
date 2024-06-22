@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import Search from '../search/page';
+import FilterContainer from './filterContainer';
 import { Button } from '@nextui-org/react';
 import {
   Modal,
@@ -41,7 +42,7 @@ const SearchModal: React.FC<SearchModalProp> = ({ handleAddDiv }) => {
         <ModalContent className="modal-content">
           <>
             <ModalBody>
-              <Search />
+              <FilterContainer />
             </ModalBody>
           </>
         </ModalContent>
