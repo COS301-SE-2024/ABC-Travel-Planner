@@ -1,4 +1,5 @@
 
+
 import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
@@ -71,11 +72,7 @@ export const Navbar = () => {
                 Search
               </div>
             </Link>
-            <Link href='/destinations'>
-              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
-                Destinations
-              </div>
-            </Link>
+            
             <Link href='/itinerary'>
               <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Itineraries
@@ -84,6 +81,11 @@ export const Navbar = () => {
             <Link href='/account'>
               <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Account
+              </div>
+            </Link>
+            <Link href='/help'>
+              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
+                Help ?
               </div>
             </Link>
             {/* image for profile */}

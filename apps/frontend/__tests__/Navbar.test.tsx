@@ -8,15 +8,14 @@ describe("Navbar", () => {
   it("renders the Navbar component", () => {
     render(<Navbar />);
 
-    const homeLink = screen.getByText("Home");
-    const searchLink = screen.getByText("Search");
-    const destinationsLink = screen.getByText("Destinations");
+
     const itineraryLink = screen.getByText("Itineraries");
-    const accountLink = screen.getByText("Account");
+    const homeLink = screen.getByText('Home');
+    const searchLink = screen.getByText('Search');
+    const accountLink = screen.getByText('Account');
 
     expect(homeLink).toBeInTheDocument();
     expect(searchLink).toBeInTheDocument();
-    expect(destinationsLink).toBeInTheDocument();
     expect(itineraryLink).toBeInTheDocument();
     expect(accountLink).toBeInTheDocument();
   });
