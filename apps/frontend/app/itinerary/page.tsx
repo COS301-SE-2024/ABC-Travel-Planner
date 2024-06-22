@@ -21,7 +21,7 @@ const Itinerary = () => {
           <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200">
             <div className="relative w-full h-40 pb-2/3">
               <Image
-                src="/images/paris.jpg"
+                src="/Images/paris.jpg"
                 alt="Paris"
                 layout="fill"
                 objectFit="cover"
@@ -49,7 +49,7 @@ const Itinerary = () => {
           <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200">
             <div className="relative w-full h-40 pb-2/3">
               <Image
-                src="/images/japan.jpg"
+                src="/Images/japan.jpg"
                 alt="Tokyo"
                 layout="fill"
                 objectFit="cover"

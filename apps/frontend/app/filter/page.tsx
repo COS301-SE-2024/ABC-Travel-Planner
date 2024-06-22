@@ -14,6 +14,7 @@ const Filter = () => {
 
   const topic = searchParams.get('topic');
   const searchTerm = searchParams.get('term');
+  const defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
   const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 400, maxWidth = 500) => {
     return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
   };
@@ -76,10 +77,10 @@ const Filter = () => {
       if (places.length) {
         const detailedPlaces = await Promise.all(places.map(async (place) => {
           const detailedPlace = await fetchPlaceDetails(place.id);
-
-          const firstPhotoUrl = detailedPlace.photos.length > 0 ?
+          
+          const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
             constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-            null;
+            defaultImageUrl;
           console.log('First Photo URL:', firstPhotoUrl);
 
           return {
@@ -127,9 +128,9 @@ const Filter = () => {
         const detailedPlaces = await Promise.all(places.map(async (place) => {
           const detailedPlace = await fetchPlaceDetails(place.id);
 
-          const firstPhotoUrl = detailedPlace.photos.length > 0 ?
+          const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
             constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-            null;
+            defaultImageUrl;
           console.log('First Photo URL:', firstPhotoUrl);
 
           return {
@@ -177,9 +178,9 @@ const Filter = () => {
         const detailedPlaces = await Promise.all(places.map(async (place) => {
           const detailedPlace = await fetchPlaceDetails(place.id);
 
-          const firstPhotoUrl = detailedPlace.photos.length > 0 ?
+          const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
             constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-            null;
+            defaultImageUrl;
           console.log('First Photo URL:', firstPhotoUrl);
 
           return {
@@ -227,9 +228,9 @@ const Filter = () => {
         const detailedPlaces = await Promise.all(places.map(async (place) => {
           const detailedPlace = await fetchPlaceDetails(place.id);
 
-          const firstPhotoUrl = detailedPlace.photos.length > 0 ?
+          const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
             constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-            null;
+            defaultImageUrl;
           console.log('First Photo URL:', firstPhotoUrl);
 
           return {

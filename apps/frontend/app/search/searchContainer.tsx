@@ -10,6 +10,7 @@ const SearchContainer = () => {
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
+    const defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
     const [loading, setLoading] = useState(false);
     const handleTopicSelect = (topic: string) => {
         setSelectedTopic(topic);
@@ -79,9 +80,9 @@ const SearchContainer = () => {
                 const detailedPlaces = await Promise.all(places.map(async (place) => {
                     const detailedPlace = await fetchPlaceDetails(place.id);
 
-                    const firstPhotoUrl = detailedPlace.photos.length > 0 ?
-                        constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-                        null;
+                    const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+            defaultImageUrl;
                     console.log('First Photo URL:', firstPhotoUrl);
 
                     return {
@@ -129,9 +130,9 @@ const SearchContainer = () => {
                 const detailedPlaces = await Promise.all(places.map(async (place) => {
                     const detailedPlace = await fetchPlaceDetails(place.id);
 
-                    const firstPhotoUrl = detailedPlace.photos.length > 0 ?
-                        constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-                        null;
+                    const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+            defaultImageUrl;
                     console.log('First Photo URL:', firstPhotoUrl);
 
                     return {
@@ -179,9 +180,9 @@ const SearchContainer = () => {
                 const detailedPlaces = await Promise.all(places.map(async (place) => {
                     const detailedPlace = await fetchPlaceDetails(place.id);
 
-                    const firstPhotoUrl = detailedPlace.photos.length > 0 ?
-                        constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-                        null;
+                    const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+            defaultImageUrl;
                     console.log('First Photo URL:', firstPhotoUrl);
 
                     return {
@@ -229,9 +230,9 @@ const SearchContainer = () => {
                 const detailedPlaces = await Promise.all(places.map(async (place) => {
                     const detailedPlace = await fetchPlaceDetails(place.id);
 
-                    const firstPhotoUrl = detailedPlace.photos.length > 0 ?
-                        constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-                        null;
+                    const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+            defaultImageUrl;
                     console.log('First Photo URL:', firstPhotoUrl);
 
                     return {
