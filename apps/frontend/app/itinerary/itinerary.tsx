@@ -5,7 +5,7 @@ import ItineraryComponent from "./itineraryComponent";
 import { createItinerary,getItineraries } from ".";
 
 const Itinerary = () => {
-  const [itineraries, setItineraries] = useState([]); 
+  const [itineraries, setItineraries] = useState<any>([]); 
   const [showModal, setShowModal] = useState(false);
   const [itineraryName, setItineraryName] = useState("");
   const [location, setLocation] = useState("");
@@ -17,7 +17,7 @@ const Itinerary = () => {
     setLocation("");
   };
 
-  const handleAddItinerary = async (e) => {
+  const handleAddItinerary = async (e: any) => {
     
     e.preventDefault();
     
@@ -30,7 +30,7 @@ const Itinerary = () => {
 
   const fetchItineraries = async () => {
     const temp = await getItineraries();
-    const itineraries = temp.map((itinerary) => {
+    const itineraries = temp?.map((itinerary) => {
       return (
         <ItineraryComponent
           key={itinerary.id}
@@ -53,8 +53,9 @@ const Itinerary = () => {
     <div className="flex flex-col items-center m-4">
       <div className="p-8 mt-4 w-full rounded-lg bg-blue-50 shadow-xl">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800">My Itineraries</h1>
+          <h1 data-testid="itinerariesTitle" className="text-4xl font-bold text-gray-800">My Itineraries</h1>
           <button
+            data-testid="addItineraryButton"
             aria-label="Add Itinerary"
             onClick={openModal}
             className="flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -84,7 +85,7 @@ const Itinerary = () => {
                   &#215;
                 </button>
               </div>
-              <form onSubmit={handleAddItinerary} className="p-6">
+              <form data-testid="ItineraryForm" onSubmit={handleAddItinerary} className="p-6">
                 <div className="mb-4">
                   <label
                     htmlFor="itineraryName"
@@ -93,6 +94,7 @@ const Itinerary = () => {
                     Name:
                   </label>
                   <input
+                    data-testid="itineraryNameInput"
                     type="text"
                     id="itineraryName"
                     value={itineraryName}
@@ -109,6 +111,7 @@ const Itinerary = () => {
                     Location:
                   </label>
                   <input
+                    data-testid="locationInput"
                     type="text"
                     id="location"
                     value={location}
@@ -126,6 +129,7 @@ const Itinerary = () => {
                     Cancel
                   </button>
                   <button
+                    data-testid="addItinerarySubmit"
                     type="submit"
                     className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
