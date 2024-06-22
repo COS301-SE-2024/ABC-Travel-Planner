@@ -15,12 +15,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <html lang="en">
-            <ThemeProvider>
+            {/* <ThemeProvider> */}
                 <body>
                     {displayNavbar && <Navbar />}
                     {children}
                 </body>
-            </ThemeProvider>
+            {/* </ThemeProvider> */}
         </html>
     );
 };
