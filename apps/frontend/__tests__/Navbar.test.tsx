@@ -11,15 +11,13 @@ describe('Navbar', () => {
     const homeLink = screen.getByText('Home');
     const searchLink = screen.getByText('Search');
     const destinationsLink = screen.getByText('Destinations');
-    const itineraryLink = screen.getByText('Itinerary');
-    const bookingLink = screen.getByText('Booking');
+    const itineraryLink = screen.getByText('Itineraries');
     const accountLink = screen.getByText('Account');
 
     expect(homeLink).toBeInTheDocument();
     expect(searchLink).toBeInTheDocument();
     expect(destinationsLink).toBeInTheDocument();
     expect(itineraryLink).toBeInTheDocument();
-    expect(bookingLink).toBeInTheDocument();
     expect(accountLink).toBeInTheDocument();
   });
 });
