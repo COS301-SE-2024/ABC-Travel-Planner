@@ -280,7 +280,7 @@ const Filter = () => {
         </div>
       )}
       {searchResults.length > 0 && (
-        <div className="flex flex-col gap-4 rounded-lg pt-10" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+        <div className="flex flex-col gap-4 rounded-lg pt-10 pb-10" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
             {searchResults.map((result, index) => (
               <FilterCard key={index} place={result} />
