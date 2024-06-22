@@ -10,7 +10,6 @@ import {
   validatePassword,
 } from ".";
 
-
 const SplashPage = () => {
   const router = useRouter();
   const [passwordsMatch, setPasswordsMatch] = useState(true);
@@ -44,7 +43,7 @@ const SplashPage = () => {
 
   const handleRegister = async (e: any) => {
     e.preventDefault();
-    
+
     if (emailError || passwordError) {
       alert("Please enter valid email and password.");
       return;
@@ -122,6 +121,7 @@ const SplashPage = () => {
                     Email address
                   </label>
                   <input
+                    data-testid="signInEmail"
                     type="email"
                     className="form-control"
                     id="loginEmail"
@@ -137,6 +137,7 @@ const SplashPage = () => {
                     Password
                   </label>
                   <input
+                    data-testid="signInPassword"
                     type="password"
                     className="form-control"
                     id="loginPassword"
@@ -147,6 +148,7 @@ const SplashPage = () => {
                   />
                 </div>
                 <button
+                  data-testid="signInSubmit"
                   type="submit"
                   className="btn btn-primary"
                 >
@@ -294,10 +296,7 @@ const SplashPage = () => {
                     </small>
                   )}
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                >
+                <button type="submit" className="btn btn-primary">
                   Register
                 </button>
               </form>
