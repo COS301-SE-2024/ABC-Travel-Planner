@@ -29,7 +29,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
             return 'per ticket';
           case 'carRental':
             return 'per day';
-          case 'airportTaxi':
+          case 'airportTaxis':
             return 'per ride';
           default:
             return 'Price not available';
@@ -48,7 +48,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
             case 'carRental':
                 basePrice = 70;
                 break;
-            case 'airportTaxi':
+            case 'airportTaxis':
                 basePrice = 40;
                 break;
             default:

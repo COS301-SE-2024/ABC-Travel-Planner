@@ -49,7 +49,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         case 'carRental':
             basePrice = 70;
             break;
-        case 'airportTaxi':
+        case 'airportTaxis':
             basePrice = 40;
             break;
         default:
