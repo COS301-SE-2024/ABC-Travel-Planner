@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-icons/fa';
-import { handleSearchAirports } from '.';
+//import { handleSearchAirports } from '.';
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from './searchCard';
 
@@ -258,7 +258,7 @@ const SearchContainer = () => {
         }
         setLoading(true);
         if (selectedTopic === 'flights') {
-            handleSearchAirports(searchTerm);
+            //handleSearchAirports(searchTerm);
         } else if (selectedTopic === 'stays') {
             handleSearchStays(searchTerm);
         } else if (selectedTopic === 'carRentals') {

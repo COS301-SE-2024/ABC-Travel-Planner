@@ -4,7 +4,7 @@ import FilterCard from './filterCard';
 import { useSearchParams } from 'next/navigation';
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from '../search/searchCard';
-import { handleSearchAirports } from '../search/index';
+//import { handleSearchAirports } from '../search/index';
 
 
 const Filter = () => {
