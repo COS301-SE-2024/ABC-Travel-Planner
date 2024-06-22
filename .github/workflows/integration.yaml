@@ -36,6 +36,7 @@ jobs:
         run: |
           cd apps/frontend
           npm run dev &
+          npx wait-on http://localhost:3000
 
       - name: Run Cypress tests
         run: |
