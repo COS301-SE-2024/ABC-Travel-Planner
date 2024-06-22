@@ -1,5 +1,4 @@
 #Env files
-dist/
 .env
 .env.local
 .env.template
@@ -9,7 +8,6 @@ dist/
 *.tmp
 *.log
 log.txt
-
 
 #Node
 /node_modules
@@ -21,4 +19,3 @@ log.txt
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
-
