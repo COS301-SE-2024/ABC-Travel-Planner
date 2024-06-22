@@ -1,9 +1,10 @@
 // app/[locationId]/page.tsx
+"use client"
 
 import React from 'react';
 import Image from 'next/image';
 import { FaGoogle, FaAtlas } from 'react-icons/fa';
-import getReviews from './getReviews';
+import { addReview, getReviews } from './getReviews';
 
 interface Review {
   id: number;
@@ -17,9 +18,36 @@ interface TouristPageProps {
   params: { locationId: string };
 }
 
-const TouristPage: React.FC<TouristPageProps> = async ({ params }) => {
+const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
   const location_id = params.locationId || 'default_location_id';
-  const reviews = await getReviews(location_id);
+  const [reviews, setReviews] = React.useState<Review[]>([]);
+
+  React.useEffect(() => {
+    const fetchReviews = async () => {
+      const fetchedReviews = await getReviews(location_id);
+      setReviews(fetchedReviews);
+    };
+
+    // Fetch reviews only on the client side
+    fetchReviews();
+  }, [location_id]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const comment = formData.get('comment') as string;
+    const rating = parseInt(formData.get('rating') as string, 10);
+
+    await addReview(comment, rating);
+
+    // Manually trigger update
+    const updatedReviews = await getReviews(location_id);
+    setReviews(updatedReviews);
+
+    // Clear the form after submission
+    //const form = event.currentTarget;
+    //form.reset();
+  };
 
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100">
@@ -100,26 +128,38 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }) => {
 
         {/* Review submission form */}
         <div className="review-form mt-8 p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-          <form className="mx-auto max-w-md">
+          <form className="mx-auto max-w-md" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-bold mb-4 text-center">Post A Review</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            </div>
             <div className="flex items-start mt-4">
-              <label htmlFor="comment" className="review-label mr-2 flex-shrink-0 w-24">Comment:</label>
-              <textarea id="comment" name="comment" className="review-input h-24 flex-grow" required />
+              <label htmlFor="rating" className="block font-semibold text-lg">Rating:</label>
+              <input
+                type="number"
+                name="rating"
+                id="rating"
+                min="1"
+                max="5"
+                required
+                className="block w-full border border-gray-300 rounded-md p-2 mb-4"
+              />
             </div>
-            <div className="flex items-center mt-4">
-              <label htmlFor="rating" className="review-label mr-2 flex-shrink-0 w-24">Rating:</label>
-              <input id="rating" name="rating" type="number" min="1" max="5" className="review-input w-16 mr-2" required />
-              <span className="text-gray-600">out of 5</span>
+            <label htmlFor="comment" className="block font-semibold text-lg">Comment:</label>
+            <textarea
+              name="comment"
+              id="comment"
+              rows={4}
+              required
+              className="block w-full border border-gray-300 rounded-md p-2 mb-4"
+            ></textarea>
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+              >
+                Submit Review
+              </button>
             </div>
-            <button type="submit" className="submit-review bg-blue-600 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 mx-auto block">
-              Submit Review
-            </button>
-
           </form>
         </div>
-
       </div>
     </div>
   );

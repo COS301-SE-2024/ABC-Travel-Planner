@@ -2,13 +2,18 @@
 import React, { useState } from "react";
 import Confetti from "react-confetti";
 
+interface ConfirmBookingButtonProps {
+  email: string;
+  bookingDetails: string;
+}
+
 const ConfirmBookingButton = () => {
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
 
   const handleConfirmBooking = () => {
     // Logic to confirm booking and send email 
-    setConfirmationMessage("Congradulations your trip as been booked , Check your email for the confirmation of your booking. Safe travels and enjoy your stay!");
+    setConfirmationMessage("Congratulations your trip as been booked , Check your email for the confirmation of your booking. Safe travels and enjoy your stay!");
     setShowConfetti(true);
   };
 

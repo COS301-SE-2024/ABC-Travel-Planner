@@ -1,4 +1,4 @@
-// pages/api/reviews.ts
+/* pages/api/reviews.ts
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import  getReviews, {Review}   from './getReviews';
@@ -18,7 +18,7 @@ import  getReviews, {Review}   from './getReviews';
 
   return ;
 };*/
-
+/*
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
@@ -41,5 +41,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else {
     res.setHeader('Allow', ['POST']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
-}
+  }*
+}*/
