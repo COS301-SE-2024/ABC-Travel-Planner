@@ -40,12 +40,12 @@ jobs:
       - name: Start application
         run: |
           cd apps/frontend
-          npm start &
+          npm run dev
 
       - name: Run Cypress tests
         run: |
           cd apps/frontend
-          npx cypress run --browser chrome --config video=false
+          npx cypress run --config video=false
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL}}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY}}
