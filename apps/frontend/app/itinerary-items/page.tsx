@@ -1,7 +1,9 @@
+
 import { Input, Button, Link } from "@nextui-org/react";
 import React from "react";
 import SearchModal from "./SearchModal";
 import BookMarkComponent from "./BookMarkComponent";
+
 
 import "./modal.css";
 import DynamicDivs from "./DynamicDivs";
@@ -29,7 +31,7 @@ const getCoordinates = async (location: string) => {
 const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; location?: string; destination?: any } }) => {
   const { location, id, destination } = searchParams;
   console.log(destination);
-
+    
   return (
     <div className="relative flex flex-col space-x-1 justify-center items-center">
     <div className="flex flex-col border border-gray-300 rounded-lg p-4 bg-white shadow-md w-[96vw] h-auto iteneraryInfo">

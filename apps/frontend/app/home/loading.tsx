@@ -23,7 +23,7 @@ const Loading = () => {
             ))}
           </div>
         </div>
-        <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px' }}>
+        <div className="w-full mt-8 bg-gray-100 bg-opacity-75" >
           <h2 className="text-3xl font-bold my-4 text-gray-800">More to explore</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
             {Array.from({ length: 8 }).map((_, index) => (

@@ -27,4 +27,3 @@ const DestinationCard = ({ destination }: { destination: destination }) => {
 
 
 export default DestinationCard;
-
