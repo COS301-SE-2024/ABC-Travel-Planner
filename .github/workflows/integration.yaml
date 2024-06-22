@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd apps/frontend
-          npm install
+          npm ci
 
       - name: Start application
         run: |
