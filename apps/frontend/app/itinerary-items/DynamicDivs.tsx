@@ -99,12 +99,12 @@ interface ItemData {
                     </div>
                 </a> */}
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass">
-                    <a href="#" className='text-center flex justify-center mt-1'>
-                        <img className="w-92 h-40 rounded-t-lg" src={divItem.data.image_link} alt="" />
+                    <a href="#" className='text-center flex justify-center'>
+                        <img className="w-full h-60 rounded-t-lg" src={divItem.data.image_link} alt="" />
                     </a>
                     <div className="p-5">
                         <a href="#">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem.data.Item_Name}</h5>
+                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem.data.Item_Name}</h2>
                         </a>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem.data.Item_Type}</p>
                     </div>
