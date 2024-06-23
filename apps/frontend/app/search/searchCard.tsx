@@ -17,16 +17,16 @@ export const getRatingColor = (rating: number) => {
 
 export const getPricePlaceholder = (type: string) => {
     switch (type) {
-      case 'stays':
-        return 'per night';
-      case 'attractions':
-        return 'per ticket';
-      case 'carRental':
-        return 'per day';
-      case 'airportTaxis':
-        return 'per ride';
-      default:
-        return 'Price not available';
+        case 'stays':
+            return 'per night';
+        case 'attractions':
+            return 'per ticket';
+        case 'carRental':
+            return 'per day';
+        case 'airportTaxis':
+            return 'per ride';
+        default:
+            return 'Price not available';
     }
 };
 
@@ -79,14 +79,14 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     function extractLocation(fullString: string) {
         // Split the string by spaces and commas
         const parts = fullString.split(/,|\s+/);
-        
+
         // Remove the code part and join the remaining parts for city and country
         const city = parts.slice(1, -1).join(' ');
         const country = parts[parts.length - 1];
-        
+
         return { city, country };
     }
-    let availableDates =  ['2024-06-01', '2024-06-02', '2024-06-03'];
+    let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
     const numRooms = null;
     let address = place.Fg.plusCode.compoundCode;
     const location = extractLocation(address);
@@ -98,13 +98,16 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     return (
         <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
             <div className='absolute top-0 right-0 text-right'>
-                <div className="mb-2">
-                    <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
-                    <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2`}>
+                <div className="mb-1">
+                    {/* <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p> */}
+                    <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
                         {place.Fg.rating}
                     </div>
                 </div>
+                <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
             </div>
+            
+
             <div className='flex flex-row justify-start items-start'>
                 <div className="w-1/3">
                     <img
