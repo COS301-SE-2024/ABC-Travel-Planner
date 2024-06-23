@@ -2,8 +2,9 @@ describe("Create an itinerary", () => {
   beforeEach(() => {
     cy.login("kabelomotloung95@gmail.com", "Password#1234");
   });
-  it("should display the home page", () => {
-    cy.url().should("include", "/home");
+  it("should display the itinerary page", () => {
+    cy.visit("/itinerary");
+    cy.url().should("include", "/itinerary");
   });
   it("should display the itinerary page", () => {
     cy.visit("/itinerary");

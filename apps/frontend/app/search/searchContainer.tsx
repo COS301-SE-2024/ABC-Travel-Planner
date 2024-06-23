@@ -274,12 +274,13 @@ const SearchContainer = () => {
 
     return (
         <div>
-            <div className="search-container">
+            <div data-testid="searchContainer" className="search-container">
                 <h1 className="search-title" style={{ fontSize: '2rem' }}>Search at your Convenience!</h1>
                 <p className="search-subtitle" style={{ fontSize: '1.5rem' }}>Click on an icon below to filter your search and provide better results</p>
 
-                <div className="search-button-container">
+                <div data-testid="searchOptions" className="search-button-container">
                     <button
+                        data-testid="flightsButton"
                         className={`search-button ${selectedTopic === 'flights' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('flights')}
                     >
@@ -319,6 +320,7 @@ const SearchContainer = () => {
                 {selectedTopic && (
                     <div className="search-bar-container">
                         <input
+                            data-testid="searchInput"
                             type="text"
                             placeholder={`Search for ${selectedTopic}`}
                             className="search-input"
@@ -326,7 +328,7 @@ const SearchContainer = () => {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <button className="search-button-submit" onClick={handleSearch}>
+                        <button data-testid="searchButton" className="search-button-submit" onClick={handleSearch}>
                             <FaSearch />
                         </button>
                     </div>
