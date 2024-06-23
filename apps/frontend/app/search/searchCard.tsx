@@ -5,88 +5,88 @@ interface SearchCardProps {
     place: any;
 }
 
+export const getRatingColor = (rating: number) => {
+    if (rating >= 4) {
+        return 'bg-green-500';
+    } else if (rating >= 3) {
+        return 'bg-yellow-500';
+    } else {
+        return 'bg-red-500';
+    }
+};
+
+export const getPricePlaceholder = (type: string) => {
+    switch (type) {
+        case 'stays':
+            return 'per night';
+        case 'attractions':
+            return 'per ticket';
+        case 'carRental':
+            return 'per day';
+        case 'airportTaxis':
+            return 'per ride';
+        default:
+            return 'Price not available';
+    }
+};
+
+export const generatePrice = (id: string, type: string, country: string) => {
+    let basePrice;
+    switch (type) {
+        case 'stays':
+            basePrice = 100;
+            break;
+        case 'attractions':
+            basePrice = 50;
+            break;
+        case 'carRental':
+            basePrice = 70;
+            break;
+        case 'airportTaxis':
+            basePrice = 40;
+            break;
+        default:
+            basePrice = 100;
+    }
+
+    let countryMultiplier;
+    switch (country) {
+        case 'Africa':
+            countryMultiplier = 1;
+            break;
+        case 'USA':
+            countryMultiplier = 1.2;
+            break;
+        case 'UK':
+            countryMultiplier = 1.3;
+            break;
+        default:
+            countryMultiplier = 1.1;
+    }
+
+    const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const randomMultiplier = 1 + (seed % 100) / 1000;
+
+    return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
+};
+
 const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const [selectedDate, setSelectedDate] = useState('');
     const handleSelectDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedDate(event.target.value);
     };
 
-    const getRatingColor = (rating: number) => {
-        if (rating >= 4) {
-            return 'bg-green-500';
-        } else if (rating >= 3) {
-            return 'bg-yellow-500';
-        } else {
-            return 'bg-red-500';
-        }
-    };
-
-    const getPricePlaceholder = (type: string) => {
-        switch (type) {
-          case 'stays':
-            return 'per night';
-          case 'attractions':
-            return 'per ticket';
-          case 'carRental':
-            return 'per day';
-          case 'airportTaxis':
-            return 'per ride';
-          default:
-            return 'Price not available';
-        }
-    };
-
-    const generatePrice = (id: string, type: string, country: string) => {
-        let basePrice;
-        switch (type) {
-            case 'stays':
-                basePrice = 100;
-                break;
-            case 'attractions':
-                basePrice = 50;
-                break;
-            case 'carRental':
-                basePrice = 70;
-                break;
-            case 'airportTaxis':
-                basePrice = 40;
-                break;
-            default:
-                basePrice = 100;
-        }
-
-        let countryMultiplier;
-        switch (country) {
-            case 'Africa':
-                countryMultiplier = 1;
-                break;
-            case 'USA':
-                countryMultiplier = 1.2;
-                break;
-            case 'UK':
-                countryMultiplier = 1.3;
-                break;
-            default:
-                countryMultiplier = 1.1;
-        }
-
-        const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-        const randomMultiplier = 1 + (seed % 100) / 1000;
-
-        return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
-    };
-
     function extractLocation(fullString: string) {
         // Split the string by spaces and commas
         const parts = fullString.split(/,|\s+/);
-        
+
         // Remove the code part and join the remaining parts for city and country
         const city = parts.slice(1, -1).join(' ');
         const country = parts[parts.length - 1];
-        
+
         return { city, country };
     }
-    let availableDates =  ['2024-06-01', '2024-06-02', '2024-06-03'];
+    let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
     const numRooms = null;
     let address = place.Fg.plusCode.compoundCode;
     const location = extractLocation(address);
@@ -98,13 +98,16 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     return (
         <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
             <div className='absolute top-0 right-0 text-right'>
-                <div className="mb-2">
-                    <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
-                    <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2`}>
+                <div className="mb-1">
+                    {/* <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p> */}
+                    <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
                         {place.Fg.rating}
                     </div>
                 </div>
+                <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
             </div>
+            
+
             <div className='flex flex-row justify-start items-start'>
                 <div className="w-1/3">
                     <img
