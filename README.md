@@ -7,6 +7,11 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
 
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Bigmanfish1/d5e1d38427eaf6a78fc2ac70d0f50bc6/raw/jest-coverage-comment__main.json)
 ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796617525-da8bacd4b5ef756cceb20b0e)
+[![Build App](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/build.yml/badge.svg)](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/build.yml)
+[![Lint Codebase](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/lint.yml/badge.svg)](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/lint.yml)
+[![Integration Test](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/integration.yaml/badge.svg)](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/integration.yaml)
+![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2024/ABC-Travel-Planner)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/COS301-SE-2024/ABC-Travel-Planner)
 <table>
   <tr>
     <th>Project Board</th>
