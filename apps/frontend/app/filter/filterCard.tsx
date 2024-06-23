@@ -103,8 +103,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
             href={{
               pathname: '/itinerary-items',
               query: {
-                id: JSON.parse(localStorage.getItem('id') as string).id ?? 0,
-                location: JSON.parse(localStorage.getItem('location') as string).location ?? 'default',
+                id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
+                location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
                 destination: JSON.stringify(place),
               },
             }}
@@ -125,8 +125,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           href={{
             pathname: '/itinerary-items',
             query: {
-              id: JSON.parse(localStorage.getItem('id') as string).id ?? 0,
-              location: JSON.parse(localStorage.getItem('location') as string).location ?? 'default',
+              id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
+              location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
               destination: JSON.stringify(place),
             },
           }}
@@ -143,8 +143,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
             href={{
               pathname: '/itinerary-items',
               query: {
-                id: JSON.parse(localStorage.getItem('id') as string).id ?? 0,
-                location: JSON.parse(localStorage.getItem('location') as string).location ?? 'default',
+                id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
+                location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
                 destination: JSON.stringify(place),
               },
             }}
