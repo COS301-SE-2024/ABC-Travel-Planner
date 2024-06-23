@@ -33,7 +33,7 @@ const allLocations = [
   { name: 'Rijksmuseum', city: 'Amsterdam', image: '/Images/amsterdam.jpg', location_id: '14', description: 'A Dutch national museum dedicated to arts and history in Amsterdam, known for its impressive collection.' },
   { name: 'St. Mark\'s Basilica', city: 'Venice', image: '/Images/venice.jpg', location_id: '15', description: 'A cathedral church located in Piazza San Marco, known for its Italo-Byzantine architecture and mosaics.' },
   { name: 'Notre Dame Cathedral', city: 'Paris', image: '/Images/notre-dame.jpg', location_id: '16', description: 'A medieval Catholic cathedral on the Île de la Cité in the fourth arrondissement of Paris.' },
-  { name: 'Louvre Museum', city: 'Paris', image: '/Images/louvre.jpg', location_id: '17', description: 'The world\'s largest art museum and a historic monument in Paris, France.' },
+  { name: 'Louvre Museum', city: 'Paris', image: '/Images/louvre.jpg', location_id: '17', description: 'The world\'s largest art museum and a historic monument in Paris, France. Artistic, Historical, Iconic' },
   { name: 'Champs Elysées / Arc of Triumph', city: 'Paris', image: '/Images/arc-of-triumph.jpeg', location_id: '18', description: 'One of the most famous streets in the world, and the Arc of Triumph, a symbol of French national pride.' },
 ];
 
