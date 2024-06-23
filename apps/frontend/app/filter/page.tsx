@@ -12,8 +12,8 @@ const Filter = () => {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams()
 
-  const topic = searchParams.get('topic');
-  const searchTerm = searchParams.get('term');
+  const topic = searchParams?.get('topic');
+  const searchTerm = searchParams?.get('term');
   const defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
   const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 400, maxWidth = 500) => {
     return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
