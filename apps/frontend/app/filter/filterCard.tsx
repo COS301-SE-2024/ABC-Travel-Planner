@@ -1,83 +1,81 @@
 "use client";
 import Link from 'next/link';
 import React, { useState } from 'react';
-// import UploadItem from "./UploadItem";
-// import UploadInfo from "./UploadInfo";
 
 interface FilterCardProps {
   place: any;
 }
+
+export const getRatingColor = (rating: number) => {
+  if (rating >= 4) {
+    return 'bg-green-500';
+  } else if (rating >= 3) {
+    return 'bg-yellow-500';
+  } else {
+    return 'bg-red-500';
+  }
+};
+
+export const getPricePlaceholder = (type: string) => {
+  switch (type) {
+    case 'stays':
+      return 'per night';
+    case 'attractions':
+      return 'per ticket';
+    case 'carRental':
+      return 'per day';
+    case 'airportTaxis':
+      return 'per ride';
+    default:
+      return 'Price not available';
+  }
+};
+
+export const generatePrice = (id: string, type: string, country: string) => {
+  let basePrice;
+  switch (type) {
+      case 'stays':
+          basePrice = 100;
+          break;
+      case 'attractions':
+          basePrice = 50;
+          break;
+      case 'carRental':
+          basePrice = 70;
+          break;
+      case 'airportTaxis':
+          basePrice = 40;
+          break;
+      default:
+          basePrice = 100;
+  }
+
+  let countryMultiplier;
+  switch (country) {
+      case 'Africa':
+          countryMultiplier = 1;
+          break;
+      case 'USA':
+          countryMultiplier = 1.2;
+          break;
+      case 'UK':
+          countryMultiplier = 1.3;
+          break;
+      default:
+          countryMultiplier = 1.1;
+  }
+
+  const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const randomMultiplier = 1 + (seed % 100) / 1000;
+
+  return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
+};
 
 const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const [selectedDate, setSelectedDate] = useState('');
   const handleSelectDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDate(event.target.value);
   };
-
-  const getRatingColor = (rating: number) => {
-    if (rating >= 4) {
-      return 'bg-green-500';
-    } else if (rating >= 3) {
-      return 'bg-yellow-500';
-    } else {
-      return 'bg-red-500';
-    }
-  };
-
-  const getPricePlaceholder = (type: string) => {
-    switch (type) {
-      case 'stays':
-        return 'per night';
-      case 'attractions':
-        return 'per ticket';
-      case 'carRental':
-        return 'per day';
-      case 'airportTaxis':
-        return 'per ride';
-      default:
-        return 'Price not available';
-    }
-  };
-
-  const generatePrice = (id: string, type: string, country: string) => {
-    let basePrice;
-    switch (type) {
-        case 'stays':
-            basePrice = 100;
-            break;
-        case 'attractions':
-            basePrice = 50;
-            break;
-        case 'carRental':
-            basePrice = 70;
-            break;
-        case 'airportTaxi':
-            basePrice = 40;
-            break;
-        default:
-            basePrice = 100;
-    }
-
-    let countryMultiplier;
-    switch (country) {
-        case 'Africa':
-            countryMultiplier = 1;
-            break;
-        case 'USA':
-            countryMultiplier = 1.2;
-            break;
-        case 'UK':
-            countryMultiplier = 1.3;
-            break;
-        default:
-            countryMultiplier = 1.1;
-    }
-
-    const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const randomMultiplier = 1 + (seed % 100) / 1000;
-
-    return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
-};
 
   function extractLocation(fullString: string) {
     const parts = fullString.split(/,|\s+/);
@@ -101,7 +99,6 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
     <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-120">
       <div className="flex justify-between">
         <div className="w-1/2 pr-4">
-        {/* <UploadInfo destination={place}/> */}
           <Link
             href={{
               pathname: '/itinerary-items',
