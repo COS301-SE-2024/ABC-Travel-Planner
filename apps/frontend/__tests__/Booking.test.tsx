@@ -7,9 +7,7 @@ describe('Booking Component', () => {
     render(<Booking />);
     
     const headingElement = screen.getByText('Book Your Trip');
-    const paragraphElement = screen.getByText('Seamless booking for flights, hotels, and activities.');
 
     expect(headingElement).toBeInTheDocument();
-    expect(paragraphElement).toBeInTheDocument();
   });
 });

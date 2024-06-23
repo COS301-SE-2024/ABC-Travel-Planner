@@ -61,6 +61,7 @@ const Account = () => {
         }}
       >
         <div
+          data-testid="accountContainer"
           className="account-container"
           style={{ padding: "20px", borderRadius: "10px", width: "80%" }}
         >
@@ -70,10 +71,10 @@ const Account = () => {
                 <img src="/Images/profile.jpg" alt="Profile" />
               </div>
               <div className="account-profile-details">
-                <h1 className="account-name">
+                <h1 data-testid="accountName" className="account-name">
                   {profileDetails.name} {profileDetails.surname}
                 </h1>
-                <h2 className="account-email">{profileDetails.email}</h2>
+                <h2 data-testid="accountEmail" className="account-email">{profileDetails.email}</h2>
                 <div
                   style={{ alignItems: "center", display: "flex" }}
                   className="account-location"

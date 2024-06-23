@@ -7,6 +7,11 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
 
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Bigmanfish1/d5e1d38427eaf6a78fc2ac70d0f50bc6/raw/jest-coverage-comment__main.json)
 ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m796617525-da8bacd4b5ef756cceb20b0e)
+[![Build App](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/build.yml/badge.svg)](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/build.yml)
+[![Lint Codebase](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/lint.yml/badge.svg)](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/lint.yml)
+[![Integration Test](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/integration.yaml/badge.svg)](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/integration.yaml)
+![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2024/ABC-Travel-Planner)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/COS301-SE-2024/ABC-Travel-Planner)
 <table>
   <tr>
     <th>Project Board</th>
@@ -16,7 +21,13 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
     <th>Documentation</th>
     <td>
      <ul>
-       <li><a href="https://drive.google.com/drive/folders/1lyyva4NtzyIOwxwUOKRMtfsFis6fee8h?usp=sharing">Demo Video & Documentation</a></li>
+       <li><a href="https://drive.google.com/drive/folders/1lyyva4NtzyIOwxwUOKRMtfsFis6fee8h?usp=sharing">Google Drive link</a></li>
+     </ul>
+     <ul>
+       <li><a href="https://drive.google.com/file/d/1SR8Ux8d2_2mLT3v9ll6KLk3EU1nUdqMD/view?usp=drive_link">Demo 1 Video</a></li>
+     </ul>
+     <ul>
+       <li><a href="https://drive.google.com/file/d/1Gg36B1rfFvXr8QPPPS2dFo3kIDvZ2z4F/view?usp=drive_link">Demo 2 Video</a></li>
      </ul>
     </td>
   </tr>
