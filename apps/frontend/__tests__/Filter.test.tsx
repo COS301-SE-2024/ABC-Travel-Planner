@@ -57,7 +57,7 @@ const place = {
       },
       // other photos...
     ],
-    firstPhotoUrl: "https://places.googleapis.com/v1/places/ChIJyR2OqEB-lR4RRfBDzOLMzZM/photos/AUc7tXWH9NsYZlkgq4oJGL__no741hrh_kO4Wl5csxckF0ijt8cKxb2gI1mw-rmQrhWoiXRkOUUBVWZ4r0gUGjVqdsmcepZgYj17_NM4qPbQi-9w_IfajwPyNLV9zChHqQcDpHebGgHcaNn2JkYw6mRluQeyHNdAW3UEOkzG/media?maxHeightPx=429&maxWidthPx=612&key=AIzaSyDVPDlRQuCtnX0wcKLWgFPH5XZ6oifLieM",
+    firstPhotoUrl: 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg',
     type: "attractions"
   };
   
