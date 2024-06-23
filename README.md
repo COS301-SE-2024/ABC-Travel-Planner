@@ -21,7 +21,13 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
     <th>Documentation</th>
     <td>
      <ul>
-       <li><a href="https://drive.google.com/drive/folders/1lyyva4NtzyIOwxwUOKRMtfsFis6fee8h?usp=sharing">Demo Video & Documentation</a></li>
+       <li><a href="https://drive.google.com/drive/folders/1lyyva4NtzyIOwxwUOKRMtfsFis6fee8h?usp=sharing">Google Drive link</a></li>
+     </ul>
+     <ul>
+       <li><a href="https://drive.google.com/file/d/1SR8Ux8d2_2mLT3v9ll6KLk3EU1nUdqMD/view?usp=drive_link">Demo 1 Video</a></li>
+     </ul>
+     <ul>
+       <li><a href="https://drive.google.com/file/d/1Gg36B1rfFvXr8QPPPS2dFo3kIDvZ2z4F/view?usp=drive_link">Demo 2 Video</a></li>
      </ul>
     </td>
   </tr>
