@@ -50,7 +50,7 @@ const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
   };
 
   return (
-    <div className="w-full p-4 md:p-8 bg-gray-100">
+    <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
       <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <div className="small-photos flex flex-col gap-4">
           <Image src="/Images/photo1.jpg" alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
