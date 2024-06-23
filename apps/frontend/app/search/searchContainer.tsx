@@ -5,6 +5,39 @@ import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-i
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from './searchCard';
 
+export const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 429, maxWidth = 612) => {
+    return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
+};
+
+
+export const fetchPlaceDetails = async (placeId: string) => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+    const url = `https://places.googleapis.com/v1/places/${placeId}`;
+    const fieldMask = 'id,displayName,photos';
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': `${apiKey}`,
+        'X-Goog-FieldMask': fieldMask,
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        throw error;
+    }
+};
 const SearchContainer = () => {
     const [selectedTopic, setSelectedTopic] = useState<string>('');
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -18,39 +51,7 @@ const SearchContainer = () => {
         setSearchTerm('');
     };
 
-    const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 429, maxWidth = 612) => {
-        return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
-    };
-
-
-    const fetchPlaceDetails = async (placeId: string) => {
-        const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-        const url = `https://places.googleapis.com/v1/places/${placeId}`;
-        const fieldMask = 'id,displayName,photos';
-
-        const headers = {
-            'Content-Type': 'application/json',
-            'X-Goog-Api-Key': `${apiKey}`,
-            'X-Goog-FieldMask': fieldMask,
-        };
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: headers,
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-            throw error;
-        }
-    };
+    
 
 
     const handleSearchStays = async (destination: string) => {
@@ -326,7 +327,7 @@ const SearchContainer = () => {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <button className="search-button-submit" onClick={handleSearch}>
+                        <button className="search-button-submit" onClick={handleSearch} aria-label="Search">
                             <FaSearch />
                         </button>
                     </div>
