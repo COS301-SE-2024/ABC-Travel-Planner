@@ -1,6 +1,7 @@
+// page.tsx
 import Head from "next/head";
 import Image from "next/image";
-import ConfirmBookingButton from "../booking/ConfirmBookingButton";
+import dynamic from "next/dynamic"; // Import dynamic for client-side component loading
 
 interface Item {
   id: number;
@@ -13,6 +14,11 @@ interface Item {
   price: number;
   image: string;
 }
+
+// Dynamically import ConfirmBookingButton as a client-side component
+const ConfirmBookingButton = dynamic(() => import('./ConfirmBookingButton'), {
+  ssr: false, // Ensure the component is not server-side rendered
+});
 
 const Booking = () => {
   const convertToRand = (usd: number): number => {
@@ -134,110 +140,79 @@ const Booking = () => {
         <title>Book Your Trip</title>
       </Head>
       <h1 className="text-2xl font-bold mb-4 text-center">Book Your Trip</h1>
-      <p className="text-center text-gray-700 mb-4">
-        Seamless booking for flights, hotels, and activities.
-      </p>
 
-      {/* Flights */}
-      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <h2 className="text-xl font-bold mb-4">Flights</h2>
-        <ul className="space-y-4">
-          {flights.map((flight) => (
-            <li
-              key={flight.id}
-              className="p-4 border rounded flex justify-between items-center"
-            >
-              <div className="flex items-center">
-                <Image
-                  src={flight.image}
-                  alt={flight.name}
-                  width={150}
-                  height={150}
-                  className="rounded mr-4"
-                />
-                <div className="font-bold text-left">
-                  <p>{flight.name}</p>
-                  <p>{flight.details}</p>
-                  <p>Date: {flight.date}</p>
-                  <p>Time: {flight.time}</p>
-                </div>
-              </div>
-              <p className="font-bold">R{convertToRand(flight.price).toFixed(2)}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="font-bold mt-4 text-right">Subtotal: R{flightTotal.toFixed(2)}</p>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {/* Flights */}
+        {flights.map((flight) => (
+          <div key={flight.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+            <Image
+              src={flight.image}
+              alt={flight.name}
+              width={300}
+              height={200}
+              className="rounded mb-4"
+            />
+            <div className="font-bold">
+              <p>{flight.name}</p>
+              <p>{flight.details}</p>
+              <p>Date: {flight.date}</p>
+              <p>Time: {flight.time}</p>
+              <p className="text-right">R{convertToRand(flight.price).toFixed(2)}</p>
+            </div>
+          </div>
+        ))}
+
+        {/* Accommodations */}
+        {accommodations.map((accommodation) => (
+          <div key={accommodation.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+            <Image
+              src={accommodation.image}
+              alt={accommodation.name}
+              width={300}
+              height={200}
+              className="rounded mb-4"
+            />
+            <div className="font-bold">
+              <p>{accommodation.name}</p>
+              <p>{accommodation.details}</p>
+              <p>Check-in: {accommodation.checkIn}</p>
+              <p>Check-out: {accommodation.checkOut}</p>
+              <p className="text-right">R{convertToRand(accommodation.price).toFixed(2)}</p>
+            </div>
+          </div>
+        ))}
+
+        {/* Activities */}
+        {activities.map((activity) => (
+          <div key={activity.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+            <Image
+              src={activity.image}
+              alt={activity.name}
+              width={300}
+              height={200}
+              className="rounded mb-4"
+            />
+            <div className="font-bold">
+              <p>{activity.name}</p>
+              <p>{activity.details}</p>
+              <p>Date: {activity.date}</p>
+              <p>Time: {activity.time}</p>
+              <p className="text-right">R{convertToRand(activity.price).toFixed(2)}</p>
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Accommodations */}
-      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <h2 className="text-xl font-bold mb-4">Accommodations</h2>
-        <ul className="space-y-4">
-          {accommodations.map((accommodation) => (
-            <li
-              key={accommodation.id}
-              className="p-4 border rounded flex justify-between items-center"
-            >
-              <div className="flex items-center">
-                <Image
-                  src={accommodation.image}
-                  alt={accommodation.name}
-                  width={150}
-                  height={150}
-                  className="rounded mr-4"
-                />
-                <div className="font-bold text-left">
-                  <p>{accommodation.name}</p>
-                  <p>{accommodation.details}</p>
-                  <p>Check-in: {accommodation.checkIn}</p>
-                  <p>Check-out: {accommodation.checkOut}</p>
-                </div>
-              </div>
-              <p className="font-bold">R{convertToRand(accommodation.price).toFixed(2)}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="font-bold mt-4 text-right">Subtotal: R{accommodationTotal.toFixed(2)}</p>
-      </div>
-
-      {/* Activities */}
-      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <h2 className="text-xl font-bold mb-4">Activities</h2>
-        <ul className="space-y-4">
-          {activities.map((activity) => (
-            <li
-              key={activity.id}
-              className="p-4 border rounded flex justify-between items-center"
-            >
-              <div className="flex items-center">
-                <Image
-                  src={activity.image}
-                  alt={activity.name}
-                  width={150}
-                  height={150}
-                  className="rounded mr-4"
-                />
-                <div className="font-bold text-left">
-                  <p >{activity.name}</p>
-                  <p>{activity.details}</p>
-                  <p>Date: {activity.date}</p>
-                  <p>Time: {activity.time}</p>
-                </div>
-              </div>
-              <p className="font-bold">R{convertToRand(activity.price).toFixed(2)}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="font-bold mt-4 text-right">Subtotal: R{activityTotal.toFixed(2)}</p>
-      </div>
-
-      <div className="max-w-3xl mx-auto bg-gray-200 rounded-lg shadow-lg p-6 mb-4 text-right" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <h2 className="text-xl font-bold mb-4">Total Trip Cost</h2>
-        <p className="text-2xl font-bold">R{finalTotal.toFixed(2)}</p>
-      </div>
-
-      <div className="flex justify-center">
-        <ConfirmBookingButton />
+      {/* Total Card with Confirm Booking Button */}
+      <div className="flex justify-center mt-4">
+        <div className="w-full max-w-4xl bg-blue-300 rounded-lg shadow-lg p-6 relative text-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+          <h2 className="text-xl font-bold mb-4">Total: </h2>
+          <p className="font-bold mb-4">R{finalTotal.toFixed(2)}</p>
+          <div className="mt-4">
+            <ConfirmBookingButton /> {/* Render the client-side component here */}
+          </div>
+        </div>
       </div>
     </div>
   );

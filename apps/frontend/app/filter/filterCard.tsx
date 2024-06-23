@@ -77,12 +77,6 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
     setSelectedDate(event.target.value);
   };
 
-  
-
-  
-
-  
-
   function extractLocation(fullString: string) {
     const parts = fullString.split(/,|\s+/);
 
@@ -109,6 +103,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
             href={{
               pathname: '/itinerary-items',
               query: {
+                id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
+                location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
                 destination: JSON.stringify(place),
               },
             }}
@@ -129,6 +125,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           href={{
             pathname: '/itinerary-items',
             query: {
+              id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
+              location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
               destination: JSON.stringify(place),
             },
           }}
@@ -145,6 +143,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
             href={{
               pathname: '/itinerary-items',
               query: {
+                id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
+                location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
                 destination: JSON.stringify(place),
               },
             }}
