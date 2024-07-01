@@ -18,9 +18,6 @@ subject = "Booking confirmed!"
 sender = os.getenv('EMAIL_USER')
 GMAIL_APP_PASS = os.getenv('GMAIL_APP_PASS')
 recipient = sys.argv[1]
-print("SENDER: " + sender)
-print("RECIPIENT: " + recipient)
-print("APP PASSWORD: " + GMAIL_APP_PASS)
 
 try:
     with open('email_format.html', 'r') as file:
