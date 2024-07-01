@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from "react";
 import Confetti from "react-confetti";
+import { getUserProfile } from "../account/index"
 
 interface ConfirmBookingButtonProps {
   email: string;
@@ -8,7 +9,8 @@ interface ConfirmBookingButtonProps {
 }
 
 const sendEmail = async() => {
-    const res = await fetch('/api/execute');
+    const email = (await getUserProfile()).email
+    const res = await fetch('/api/execute?email=' + email);
     const data = await res.json();
     console.log(data)
 }
