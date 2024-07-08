@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
+import * as admin from 'firebase-admin';
 
 @Controller('users')
 export class UsersController {
@@ -14,6 +15,6 @@ export class UsersController {
     async getUsers(): Promise<any[]> {
         const snapshot = await this.userService.getUsers();
         console.log(snapshot);
-        return snapshot.docs.map(doc => doc.data());
+        return snapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => doc.data());
     }
 }
