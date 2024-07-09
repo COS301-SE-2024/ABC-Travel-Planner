@@ -29,20 +29,20 @@ const uploadItem = async(itemTitle: any, itemType: any, destination: any, image_
   console.log("Going to upload to db...")
   console.log(tempDetails)
 
-  try {
-    const response = await fetch('/api/DatabaseUpload', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(tempDetails)
-    });
+  // try {
+  //   const response = await fetch('/api/DatabaseUpload', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(tempDetails)
+  //   });
 
-    const data = await response.json();
-    console.log("Response from server: ", data);
-  } catch (error) {
-    console.error("Error uploading item:", error);
-  }
+  //   const data = await response.json();
+  //   console.log("Response from server: ", data);
+  // } catch (error) {
+  //   console.error("Error uploading item:", error);
+  // }
 
   // try {
   //   const response = await axios.post('/api/DatabaseUpload', tempDetails);
@@ -73,7 +73,8 @@ const TempStorage: React.FC<TempStorageProps> = ({id, location, destination, Ite
       }
     }
     else if (destination) {
-      uploadItem(Item_Title, Item_Type, destination, image_url)
+      // uploadItem(Item_Title, Item_Type, destination, image_url)
+      console.log("Destination exists in local storage...")
     }
     else {
       console.log("Destination & id + location values do not match up...")

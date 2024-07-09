@@ -10,7 +10,7 @@ export class ItineraryItemsController {
         //Get User Id by database call...
         // ...
 
-        const user_id = "User2"
+        const user_id = "User1"
 
         try {
             if (body.image && body.itinerary_id && body.location && body.name) {

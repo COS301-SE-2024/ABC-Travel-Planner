@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DynamicDivs from './DynamicDivs';
 import SearchModal from './SearchModal';
 
@@ -22,6 +22,30 @@ const ParentComponent: React.FC<ParentComponentProps> = () => {
     id: number;
     data: ItemData;
   }
+
+  useEffect(() => {
+    // const id = JSON.parse(localStorage.getItem('id') as string).id
+    const id = 1;
+    const baseUrl = 'http://localhost:4000'
+    const apiUrl = new URL(`/itinerary-items/${id}`, baseUrl);
+    const fetchItems = async () => {
+        try {
+          const response = await fetch(apiUrl);
+          const data: ItemData[] = await response.json();
+          console.log("Backend data: " + data);
+          const initialDivs = data.map((dataItem, index) => ({
+              id: index,
+              data: dataItem,
+          }));
+          setDivs(initialDivs);
+          setFetchedData(data);
+        } catch (error) {
+            console.error("Error fetching items:", error);
+        }
+    };
+
+  fetchItems();
+}, []);
 
   const handleAddDiv = (searched: boolean) => {
     if (searched) {

@@ -26,12 +26,13 @@ import "./modal.css"
     const [isOpen, setIsOpen] = useState(false);
     
     useEffect(() => {
-        const id = JSON.parse(localStorage.getItem('id') as string).id
+        // const id = JSON.parse(localStorage.getItem('id') as string).id
+        const id = 1;
         console.log("ID IN DYNAMIC DIV: " + JSON.stringify(id))
 
         const fetchItems = async () => {
             try {
-            const response = await fetch(`/api/DatabaseFetch?id=${id}`);
+            const response = await fetch(`http://localhost:4000/itinerary-items/${id}`);
             const data: ItemData[] = await response.json();
             const initialDivs = data.map((dataItem, index) => ({
                 id: index,
