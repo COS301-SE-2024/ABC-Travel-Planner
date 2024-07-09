@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Body, InternalServerErrorException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import * as admin from 'firebase-admin';
 
 @Controller('users')
 export class UsersController {
