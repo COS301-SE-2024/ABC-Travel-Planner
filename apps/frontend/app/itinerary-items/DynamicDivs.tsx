@@ -4,7 +4,7 @@ import { Button } from '@nextui-org/react';
 import SearchModal from "./SearchModal"
 import "./modal.css"
 
-interface ItemData {
+  interface ItemData {
     Item_Name: string;
     Item_Type: string;
     image_link: string;
@@ -108,7 +108,7 @@ interface ItemData {
 
                 <Button 
                     className="absolute top-2 right-2 text-gray-800 hover:text-gray-700 focus:outline-none closeButton" 
-                    onClick={() => removeDiv(divItem.id)}
+                    onClick={() => removeDiv(divItem?.id)}
                 >
                     <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />

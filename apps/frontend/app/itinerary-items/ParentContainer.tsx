@@ -35,9 +35,9 @@ const ParentComponent: React.FC<ParentComponentProps> = () => {
     }
   };
   
-    const handleRemoveDiv = (id: number) => {
-      setDivs(divs.filter(divItem => divItem.id !== id));
-    };
+  const handleRemoveDiv = (id: number) => {
+    setDivs(divs.filter(divItem => divItem.id !== id));
+  };
 
   return (
     <div>
