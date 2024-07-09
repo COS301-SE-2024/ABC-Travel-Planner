@@ -16,14 +16,15 @@ interface ItemData {
   }
   
   interface DynamicDivsProps {
-    image_url: string;
+    passedDivs: DivItem[];
+    handleRemoveDiv: (id: number) => void;
   }
   
-  const DynamicDivs: React.FC<DynamicDivsProps> = ({ image_url }) => {
+  const DynamicDivs: React.FC<DynamicDivsProps> = ({ passedDivs, handleRemoveDiv: removeDiv }) => {
     const [divs, setDivs] = useState<DivItem[]>([]);
     const [fetchedData, setFetchedData] = useState<ItemData[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-  
+    
     useEffect(() => {
         const id = JSON.parse(localStorage.getItem('id') as string).id
         console.log("ID IN DYNAMIC DIV: " + JSON.stringify(id))
@@ -69,50 +70,45 @@ interface ItemData {
       fetchItems();
     }, []);
   
-    const handleAddDiv = () => {
-      const newId = divs.length;
-      const newDiv = {
-        id: newId,
-        data: fetchedData[newId % fetchedData.length],
-      };
-      setDivs([...divs, newDiv]);
-    };
+    // const handleAddDiv = (searched: boolean) => {
+    //   const newId = divs.length;
+    //   const newDiv = {
+    //     id: newId,
+    //     data: fetchedData[newId % fetchedData.length],
+    //   };
+
+    //   setDivs([...divs, newDiv]);
+    // };
   
-    const handleRemoveDiv = (id: number) => {
-      setDivs(divs.filter(divItem => divItem.id !== id));
-    };
+    // const handleRemoveDiv = (id: number) => {
+    //   setDivs(divs.filter(divItem => divItem.id !== id));
+    // };
   
-    const handleModelClose = () => {
-      setIsOpen(false);
-      handleAddDiv();
-    };
+    // const handleModelClose = () => {
+    //   setIsOpen(false);
+    //   handleAddDiv;
+    // };
 
     return (
         <>
         {divs.map((divItem) => (
             <div key={divItem.id} className="relative border-2 border-black-500 rounded-md item-div font-sans">
-                {/* <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 linkClass">
-                    <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src= alt="" />
-                    <div className="flex flex-col justify-between p-4 leading-normal">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></h5>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
-                    </div>
-                </a> */}
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass">
-                    <a href="#" className='text-center flex justify-center'>
-                        <img className="w-full h-60 rounded-t-lg" src={divItem.data.image_link} alt="" />
+
+                    <a href="#" className='text-center flex justify-center mt-1'>
+                        <img className="w-92 h-40 rounded-t-lg" src={divItem?.data?.image_link} alt="" />
                     </a>
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem.data.Item_Name}</h2>
+                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem?.data?.Item_Name}</h5>
                         </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem.data.Item_Type}</p>
+                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem?.data?.Item_Type}</p>
                     </div>
                 </div>
 
                 <Button 
                     className="absolute top-2 right-2 text-gray-800 hover:text-gray-700 focus:outline-none closeButton" 
-                    onClick={() => handleRemoveDiv(divItem.id)}
+                    onClick={() => removeDiv(divItem.id)}
                 >
                     <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -120,7 +116,6 @@ interface ItemData {
                 </Button>
             </div>
         ))}
-            <SearchModal handleAddDiv={ handleModelClose }/>
         </>
     );
 };
