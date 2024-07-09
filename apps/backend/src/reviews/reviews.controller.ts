@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, InternalServerErrorException } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 
 @Controller('reviews')
@@ -11,11 +11,24 @@ export class ReviewsController {
             console.log("Not all parameters received are valid/existant")
             return;
         }
-        await this.reviewService.addReview(body.name, body.surname, body.email, body.review_text, body.rating, body.destination_id);
+
+        try {
+            await this.reviewService.addReview(body.name, body.surname, body.email, body.review_text, body.rating, body.destination_id);
+        } catch (error) {
+            throw new InternalServerErrorException('Failed to add review to the database');
+        }
     }
 
     @Get(':id')
     async getReviewById(@Param('id') id: number): Promise<any[]> {
-        return await this.reviewService.getReviewById(id);
+        try {
+            const data = await this.reviewService.getReviewById(id);
+            if (data.length == 0) {
+                console.log("No reviews have been found on this destination id")
+            }
+            return data
+        } catch (error) {
+            throw new InternalServerErrorException('Failed to retrieve reviews from database');
+        }
     }
 }

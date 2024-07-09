@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 
 @Injectable()
@@ -15,36 +15,38 @@ export class ReviewsService {
     
     const user_id = '';
     const user_surname = '';
-    
-    await this.db.collection('Reviews').add({
-      user_name,
-      destination_id,
-      review_title,
-      review_text,
-      user_id,
-      user_surname,
-      rating,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
-    });
+   
+    try {
+      await this.db.collection('Reviews').add({
+        user_name,
+        destination_id,
+        review_title,
+        review_text,
+        user_id,
+        user_surname,
+        rating,
+        timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      });
+      
+    } catch (error) {
+      console.log(error)
+      throw new InternalServerErrorException('Could not add review to the database, check server logs');
+    }
   }
 
   async getReviewById(destination_id: number): Promise<any[]> {
 //async getReview(destination_id: number): Promise<admin.firestore.QuerySnapshot> {
     //Database call to get destination_id if not passed through...
     // ...
-
-    const data = await this.db.collection('Reviews').where('destination_id', '==', destination_id).orderBy('timestamp', 'desc').get();
-    
-    if (!data) {
-      console.log("REVIEWS DATA RETURNED NULL")
-      return []
+    try {
+      const data = await this.db.collection('Reviews')
+                                .where('destination_id', '==', destination_id)
+                                .orderBy('timestamp', 'desc')
+                                .get();
+      return data?.docs?.map(review => review.data()) ?? [];
+    } catch (error) {
+      console.log(error)
+      throw new InternalServerErrorException('Could not fetch reviews, check server logs');
     }
-
-    const reviews: any[] | PromiseLike<any[]> = [];
-    data.forEach(element => {
-      reviews.push(element.data())
-    });
-
-    return reviews;
   }
 }

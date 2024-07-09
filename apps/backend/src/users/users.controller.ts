@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, InternalServerErrorException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import * as admin from 'firebase-admin';
 
@@ -8,13 +8,21 @@ export class UsersController {
 
     @Post()
     async addUser(@Body() body: { name: string; surname: string; email: string }): Promise<void> {
-        await this.userService.addUser(body.name, body.surname, body.email);
+        try {
+            await this.userService.addUser(body.name, body.surname, body.email);
+        } 
+        catch (error) {
+            throw new InternalServerErrorException(error.message)
+        }
     }
 
     @Get()
     async getUsers(): Promise<any[]> {
-        const snapshot = await this.userService.getUsers();
-        console.log(snapshot);
-        return snapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot) => doc.data());
+        try {
+            return await this.userService.getUsers();
+        } 
+        catch (error) {
+            throw new InternalServerErrorException(error.message);
+        }
     }
 }
