@@ -1,5 +1,6 @@
 //"use server"
-import { Input, Button, Link } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
+import Link from 'next/link';
 import React from "react";
 import SearchModal from "./SearchModal";
 import BookMarkComponent from "./BookMarkComponent";
@@ -53,6 +54,10 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
 
   }
 
+  const itinerary_id = '1';
+  const response = await fetch(`http://localhost:4000/itinerary-items/${itinerary_id}`);
+  const data = await response.json();
+
   return (
     <>
     <TempStorage id={id} location={location} Item_Title={(destination && (JSON.parse(destination).Fg?.displayName ?? JSON.parse(destination).displayName)) ?? null} Item_Type={(destination && JSON.parse(destination).type) ?? null} destination={(destination && (JSON.parse(destination).Fg?.formattedAddress ?? JSON.parse(destination).formattedAddress)) ?? null} image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null}/>
@@ -92,7 +97,12 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
       
       <div className='mt-10 w-100 h-10'>
         <div className="absolute bottom-4 right-4 px-4">
-          <Link href='/booking'>
+          <Link href={{
+            pathname: '/booking',
+            query: {
+              data: data
+            }
+          }}>
             <Button className="border-2 border-black-500 rounded-md doneButton bg-blue-700">
               Done
             </Button>
