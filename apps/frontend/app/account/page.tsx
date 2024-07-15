@@ -8,6 +8,8 @@ import {
   FaQuestionCircle,
   FaInfoCircle,
   FaSignOutAlt,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
 import { logout, getUserProfile } from ".";
 import { useRouter } from "next/navigation";
@@ -19,11 +21,14 @@ const Account = () => {
     surname: string;
     email: string;
   }>({ name: "", surname: "", email: "" });
+  const [showMenu, setShowMenu] = useState(false);
   const router = useRouter();
+
   const handleSignout = async () => {
     await logout();
     router.push("/login");
   };
+
   useEffect(() => {
     const fetchProfileDetails = async () => {
       const response = await getUserProfile();
@@ -31,101 +36,64 @@ const Account = () => {
     };
     fetchProfileDetails();
   }, []);
+
   if (!profileDetails.name) return <div>Loading...</div>;
+
   return (
-    <div
-      style={{
-        backgroundSize: "100% 100%",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-        color: "#333",
-        fontFamily: "Arial, sans-serif",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        position: "relative",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          data-testid="accountContainer"
-          className="account-container"
-          style={{ padding: "20px", borderRadius: "10px", width: "80%" }}
-        >
-          <div className="account-header">
-            <div className="account-profile">
-              <div className="account-profile-image">
-                <img src="/Images/profile.jpg" alt="Profile" />
-              </div>
-              <div className="account-profile-details">
-                <h1 data-testid="accountName" className="account-name">
-                  {profileDetails.name} {profileDetails.surname}
-                </h1>
-                <h2 data-testid="accountEmail" className="account-email">{profileDetails.email}</h2>
-                <div
-                  style={{ alignItems: "center", display: "flex" }}
-                  className="account-location"
-                >
-                  <FaMapMarkerAlt />
-                  <span style={{ marginLeft: "8px" }}>South Africa</span>
-                </div>
-                <p
-                  style={{ alignItems: "center", display: "flex" }}
-                  className="account-member-since"
-                >
-                  <FaRegCalendarAlt />{" "}
-                  <span style={{ marginLeft: "8px" }}>
-                    Member Since: 2023/05/30
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div className="account-actions">
-              <button className="edit-profile-button">
-                <FaEdit /> Edit Profile
-              </button>
-            </div>
+    <div className="profile-page">
+      <header className="profile-header">
+        <div className="profile-pic">
+          <img src="/Images/profile.jpg" alt="Profile" />
+        </div>
+        <div className="profile-info">
+          <h1>{profileDetails.name} {profileDetails.surname}</h1>
+          <h2>{profileDetails.email}</h2>
+          <div className="location">
+            <FaMapMarkerAlt />
+            <span>South Africa</span>
           </div>
-          <div className="account-content">
-            <div className="account-info">
-              <h3 className="info-heading">Previous Travel History</h3>
-              <p className="info-description">
-                I have always had a passion for exploring new places and
-                experiencing different cultures. Some of my most memorable
-                adventures include hiking the Inca Trail to Machu Picchu,
-                exploring the ancient ruins of Rome, and cruising through the
-                picturesque fjords of Norway. Each journey has taught me
-                something new about the world and myself, and I look forward to
-                many more adventures in the future.
-              </p>
-            </div>
-            <div className="account-buttons">
-              <button className="account-button">
-                <FaQuestionCircle /> Help Center
-              </button>
-              <button className="account-button">
-                <FaInfoCircle /> About
-              </button>
-              <button onClick={handleSignout} className="account-button">
-                <FaSignOutAlt /> Logout
-              </button>
-            </div>
+          <div className="member-since">
+            <FaRegCalendarAlt />
+            <span>Member Since: 2023/05/30</span>
           </div>
         </div>
+        <button className="menu-button" onClick={() => setShowMenu(!showMenu)}>
+          {showMenu ? <FaTimes /> : <FaBars />}
+        </button>
+        {showMenu && (
+          <div className="menu-dropdown">
+            <button><FaEdit /> Edit Profile</button>
+            <button>Manage Account</button>
+            <button>Disable Account</button>
+          </div>
+        )}
+      </header>
+
+      <div className="profile-stats">
+        <div className="following">
+          <span>24</span>
+          <p>Following</p>
+        </div>
+        <div className="followers">
+          <span>33</span>
+          <p>Followers</p>
+        </div>
       </div>
+
+      <section className="saved-itineraries">
+        <h3>Saved Itineraries</h3>
+        <div className="itinerary-cards">
+          <div className="itinerary-card"></div>
+          <div className="itinerary-card"></div>
+          <div className="itinerary-card"></div>
+        </div>
+      </section>
+
+      <section className="profile-actions">
+        <button><FaQuestionCircle /> Help Center</button>
+        <button><FaInfoCircle /> About</button>
+        <button onClick={handleSignout}><FaSignOutAlt /> Logout</button>
+      </section>
     </div>
   );
 };
