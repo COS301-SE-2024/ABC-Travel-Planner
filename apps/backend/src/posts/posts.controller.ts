@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, InternalServerErrorException, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, InternalServerErrorException, Param, BadRequestException } from '@nestjs/common';
 import { PostsService } from '../posts/posts.service';
 
 @Controller('posts')
@@ -27,6 +27,10 @@ export class PostsController {
 
     @Get(':id')
     async getPostsById(@Param('id') id: string): Promise<any[]> {
+        if (!id || id == '') {
+            throw new BadRequestException('no id specified in the request')
+        }
+
         try {
             return await this.postService.getPostsById(id);
         } 

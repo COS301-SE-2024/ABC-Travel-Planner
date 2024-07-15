@@ -1,4 +1,4 @@
-import { Injectable, Inject, InternalServerErrorException } from "@nestjs/common";
+import { Injectable, Inject, InternalServerErrorException, BadRequestException } from "@nestjs/common";
 import * as admin from 'firebase-admin';
 
 @Injectable()
@@ -18,10 +18,11 @@ export class PostsService {
     this.lastPostId = ''
   }
 
+  //Should we add location_id as a parameter?
   async addPost(user_id: string, post_description: string, post_likes: string, post_title: string): Promise<void> {
-    //Database call to get user id...
-    // ...
-
+    if (!user_id || !post_description || !post_likes || !post_title) {
+        throw new BadRequestException('Not all fields are filled in/valid')
+    }
     // const user_id = 'User5';
     // const post_description = "A sensational place to rest for a few days. Definitely go check it out :)"
     // const post_likes = 0
@@ -79,6 +80,10 @@ export class PostsService {
   }
 
   async getPostsById(id: string): Promise<any[]> {
+    if (!id) {
+        throw new BadRequestException('The id field was not specified')
+    }
+
     try {
         const data = await this.db.collection('Posts')
                                   .where('location_id', '==', id)
