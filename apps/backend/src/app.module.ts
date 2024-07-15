@@ -7,6 +7,7 @@ import { ItineraryModule } from './itinerary/itinerary.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import * as path from 'path';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import * as path from 'path';
     UsersModule, 
     FirebaseModule, 
     ReviewsModule,
+    PostsModule
   ],
   controllers: [AppController],
   providers: [AppService],
