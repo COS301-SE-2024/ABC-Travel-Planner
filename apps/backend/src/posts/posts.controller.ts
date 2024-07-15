@@ -26,7 +26,7 @@ export class PostsController {
     }
 
     @Get(':id')
-    async getPostsById(@Param('id') id:number): Promise<any[]> {
+    async getPostsById(@Param('id') id: string): Promise<any[]> {
         try {
             return await this.postService.getPostsById(id);
         } 

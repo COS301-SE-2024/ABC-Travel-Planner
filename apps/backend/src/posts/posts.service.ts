@@ -78,7 +78,7 @@ export class PostsService {
     }
   }
 
-  async getPostsById(id: number): Promise<any[]> {
+  async getPostsById(id: string): Promise<any[]> {
     try {
         const data = await this.db.collection('Posts')
                                   .where('location_id', '==', id)
