@@ -62,6 +62,7 @@ const Account = () => {
         </button>
         {showMenu && (
           <div className="menu-dropdown">
+            <button onClick={() => setShowMenu(false)}><FaTimes /> Close</button>
             <button><FaEdit /> Edit Profile</button>
             <button>Manage Account</button>
             <button>Disable Account</button>
@@ -86,6 +87,10 @@ const Account = () => {
           <div className="itinerary-card"></div>
           <div className="itinerary-card"></div>
           <div className="itinerary-card"></div>
+          <div className="itinerary-card"></div>
+          <div className="itinerary-card"></div>
+          <div className="itinerary-card"></div>
+          
         </div>
       </section>
 

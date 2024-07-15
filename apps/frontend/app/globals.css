@@ -308,14 +308,16 @@ body {
 
 .profile-stats {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around; 
   width: 80%;
   max-width: 900px;
   margin-bottom: 40px;
+  gap: 10px; 
 }
 
 .following, .followers {
   text-align: center;
+  margin: 0 10px; 
 }
 
 .saved-itineraries {
@@ -332,6 +334,21 @@ body {
   display: flex;
   gap: 20px;
   overflow-x: auto;
+  padding-bottom: 15px;
+}
+
+.itinerary-cards::-webkit-scrollbar {
+  height: 12px;
+}
+
+.itinerary-cards::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 10px;
+}
+
+.itinerary-cards::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 10px;
 }
 
 .itinerary-card {
