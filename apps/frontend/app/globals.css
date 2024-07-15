@@ -243,19 +243,22 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 40px;
+  overflow: hidden;
 }
 
 .profile-header {
   display: flex;
   align-items: center;
   position: relative;
-  background: #fff;
+  background: rgba(173, 216, 230, 0.5);
   padding: 40px;
   width: 80%;
   max-width: 900px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 40px;
+  font-weight: bold;
+  font-size: larger;
 }
 
 .profile-pic img {
@@ -308,34 +311,82 @@ body {
 
 .profile-stats {
   display: flex;
-  justify-content: space-around; 
+  justify-content: center; 
+  align-items: center;
   width: 80%;
   max-width: 900px;
   margin-bottom: 40px;
-  gap: 10px; 
+  gap: 20px; 
 }
 
 .following, .followers {
   text-align: center;
-  margin: 0 10px; 
+  margin-left: 110px;
+  margin-right: -40px;
 }
 
 .saved-itineraries {
   width: 80%;
   max-width: 900px;
-  background: #fff;
+  background: rgba(173, 216, 230, 0.5);
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 40px;
+  text-align: center;
+ 
+  max-height: calc(100vh - 200px); 
 }
+
 
 .itinerary-cards {
   display: flex;
   gap: 20px;
   overflow-x: auto;
   padding-bottom: 15px;
+  scrollbar-width: thin; 
+  max-height: 200px;
 }
+
+.itinerary-card {
+  flex: 0 0 auto; 
+  width: 200px; 
+  height: 150px;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.itinerary-image {
+  width: 100%; 
+  height: 100px; 
+  object-fit: cover;
+  border-top-left-radius: 10px; 
+  border-top-right-radius: 10px; 
+}
+
+.itinerary-content {
+  padding: 10px; 
+  text-align: center; 
+}
+
+.view-button {
+  background: #007bff; 
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px; 
+}
+
+.view-button:hover {
+  background: #0056b3; 
+}
+
 
 .itinerary-cards::-webkit-scrollbar {
   height: 12px;
@@ -351,13 +402,7 @@ body {
   border-radius: 10px;
 }
 
-.itinerary-card {
-  flex: 1;
-  min-width: 200px;
-  height: 150px;
-  background: #ddd;
-  border-radius: 10px;
-}
+
 
 .profile-actions {
   display: flex;
@@ -378,7 +423,22 @@ body {
 .profile-actions button:hover {
   background: #0056b3;
 }
-
+.section-title {
+  margin-top: 20px; 
+  text-align: center; 
+  width: 100%;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: larger;
+}
+.Following-title {
+  margin-top: 20px; 
+  text-align: center; 
+  width: 100%;
+  margin-bottom: 30px;
+  font-weight: bold;
+  font-size: larger;
+}
 
 /*REVIEWS=> HOME*/
 .review-container {
