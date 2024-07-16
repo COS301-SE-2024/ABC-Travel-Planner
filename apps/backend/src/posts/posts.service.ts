@@ -1,6 +1,29 @@
 import { Injectable, Inject, InternalServerErrorException, BadRequestException } from "@nestjs/common";
 import * as admin from 'firebase-admin';
 
+interface refinedData {
+  id: string,
+  post_title: string,
+  user_name: string,
+  post_likes: number,
+  post_description: string,
+  location_id: string,
+  timestamp: number,
+}
+
+interface rawData {
+  id: string,
+  post_title: string,
+  user_name: string,
+  post_likes: number,
+  post_description: string,
+  location_id: string,
+  timestamp: {
+    _seconds: number,
+    _nanoseconds: number
+  },
+}
+
 @Injectable()
 export class PostsService {
     private db: admin.firestore.Firestore;
@@ -71,7 +94,17 @@ export class PostsService {
       this.lastPostId = posts[posts.length-1].id
       console.log(posts)
 
-      return this.randomizeFeed(posts) ?? [];
+      const newData: refinedData[] = posts.map((item: rawData) => ({
+          id: item.id,
+          post_title: item.post_title,
+          user_name: item.user_name,
+          post_likes: item.post_likes,
+          post_description: item.post_description,
+          location_id: item.location_id,
+          timestamp: item.timestamp._seconds
+        }));
+
+      return this.randomizeFeed(newData) ?? [];
     }
     catch (error) {
       console.log(error)
