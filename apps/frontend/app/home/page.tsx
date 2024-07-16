@@ -1,7 +1,7 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import DestinationCard from './DestinationCard';
-import useCountrySelection from './useCountrySelection';
+import PostCard from './PostCard';
 
 const popularDestinations = [
   { name: 'France', image: '/Images/france.jpg', city: 'Paris', location_id: '1', description: 'rich history, unique culture, incredible food, and pleasant weather' },
@@ -37,23 +37,20 @@ const allLocations = [
   { name: 'Champs Elysées / Arc of Triumph', city: 'Paris', image: '/Images/arc-of-triumph.jpeg', location_id: '18', description: 'One of the most famous streets in the world, and the Arc of Triumph, a symbol of French national pride.' },
 ];
 
+const mockPosts = [
+  { user: 'Alice', content: 'Just visited the Eiffel Tower! 🗼 #Paris #Travel', date: '2024-07-01', avatar: '/Images/alice.jpg' },
+  { user: 'Bob', content: 'Loving the beaches in Sydney! 🏖️ #Australia', date: '2024-07-02', avatar: '/Images/bob.jpg' },
+  { user: 'Charlie', content: 'Exploring the temples in Kyoto. 🏯 #Japan #Culture', date: '2024-07-03', avatar: '/Images/charlie.jpg' },
+  { user: 'Dana', content: 'The food in Rome is amazing! 🍝 #Italy', date: '2024-07-04', avatar: '/Images/dana.jpg' },
+  { user: 'Eli', content: 'Hiking up Table Mountain was an adventure! ⛰️ #SouthAfrica', date: '2024-07-05', avatar: '/Images/eli.jpg' }
+];
 
 const Home = () => {
-  const { filteredLocations, handleCountryChange } = useCountrySelection(allLocations);
+  const [tab, setTab] = useState('For You');
 
   return (
     <div className="flex flex-col" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
       <div className="w-full mt-8" style={{ marginTop: '40px', padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <div className="flex justify-end mb-4">
-          <select className="bg-blue-600 text-white font-bold py-2 px-4 rounded" onChange={handleCountryChange}>
-            <option value="" disabled selected>Select a country</option>
-            {popularDestinations.map((location, index) => (
-              <option key={index} value={location.city}>
-                {location.name}
-              </option>
-            ))}
-          </select>
-        </div>
         <h2 className="text-3xl font-bold mb-4 text-gray-800">Top destinations for your next holiday</h2>
         <div className="flex overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
           {popularDestinations.map((destination, index) => (
@@ -63,17 +60,31 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <div className="my-8"></div> {/* Space between containers */}
-      <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px' }}>
-        <h2 className="text-3xl font-bold my-4 text-gray-800">More to explore</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
-          {filteredLocations.map((destination, index) => (
-            <div key={index}>
-              <DestinationCard destination={destination} />
-            </div>
+
+      <div className="flex justify-center mb-4 mt-4">
+        <button
+          className={`px-4 py-2 ${tab === 'For You' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tl-md rounded-bl-md`}
+          onClick={() => setTab('For You')}
+        >
+          For You
+        </button>
+        <button
+          className={`px-4 py-2 ${tab === 'Following' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tr-md rounded-br-md`}
+          onClick={() => setTab('Following')}
+        >
+          Following
+        </button>
+      </div>
+
+      <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'left' }}>
+        <h2 className="text-3xl font-bold my-4 text-gray-800">Latest Posts</h2>
+        <div className="flex flex-col items-start space-y-4">
+          {mockPosts.map((post, index) => (
+            <PostCard key={index} user={post.user} content={post.content} date={post.date} avatar={post.avatar} />
           ))}
         </div>
       </div>
+
     </div>
   );
 };
