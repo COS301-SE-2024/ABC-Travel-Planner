@@ -1,5 +1,5 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
 import DestinationCard from './DestinationCard';
 import PostCard from './PostCard';
 
@@ -37,16 +37,36 @@ const allLocations = [
   { name: 'Champs Elysées / Arc of Triumph', city: 'Paris', image: '/Images/arc-of-triumph.jpeg', location_id: '18', description: 'One of the most famous streets in the world, and the Arc of Triumph, a symbol of French national pride.' },
 ];
 
-const mockPosts = [
-  { user: 'Alice', content: 'Just visited the Eiffel Tower! 🗼 #Paris #Travel', date: '2024-07-01', avatar: '/Images/alice.jpg' },
-  { user: 'Bob', content: 'Loving the beaches in Sydney! 🏖️ #Australia', date: '2024-07-02', avatar: '/Images/bob.jpg' },
-  { user: 'Charlie', content: 'Exploring the temples in Kyoto. 🏯 #Japan #Culture', date: '2024-07-03', avatar: '/Images/charlie.jpg' },
-  { user: 'Dana', content: 'The food in Rome is amazing! 🍝 #Italy', date: '2024-07-04', avatar: '/Images/dana.jpg' },
-  { user: 'Eli', content: 'Hiking up Table Mountain was an adventure! ⛰️ #SouthAfrica', date: '2024-07-05', avatar: '/Images/eli.jpg' }
-];
+interface Post {
+  id: string;
+  post_title?: string;
+  post_description?: string;
+  post_likes?: number;
+  location_id?: string;
+  timestamp: number;
+}
 
 const Home = () => {
   const [tab, setTab] = useState('For You');
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/posts');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data: Post[] = await response.json();
+        console.log(data); // Log the fetched data for debugging
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
     <div className="flex flex-col" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
@@ -76,15 +96,20 @@ const Home = () => {
         </button>
       </div>
 
-      <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'left' }}>
+      <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center' }}>
         <h2 className="text-3xl font-bold my-4 text-gray-800">Latest Posts</h2>
-        <div className="flex flex-col items-start space-y-4">
-          {mockPosts.map((post, index) => (
-            <PostCard key={index} user={post.user} content={post.content} date={post.date} avatar={post.avatar} />
+        <div className="flex justify-center items-center flex-wrap space-x-4 space-y-4">
+          {posts.map((post) => (
+            <PostCard
+              key={post.id}
+              post_title={post.post_title || 'Untitled'}
+              post_description={post.post_description || 'No description available.'}
+              post_likes={post.post_likes || 0}
+              timestamp={post.timestamp}
+            />
           ))}
         </div>
       </div>
-
     </div>
   );
 };
