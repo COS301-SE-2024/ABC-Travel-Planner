@@ -9,4 +9,10 @@ export class SearchController {
   async searchPlaces(@Query('textQuery') textQuery: string, @Query('type') type: string): Promise<any> {
     return this.searchService.searchPlaces(textQuery, type);
   }
+
+  @Get('user')
+  async searchUser(@Query('user') user: string): Promise<any> {
+    return this.searchService.searchProfile(user);
+    
+  }
 }

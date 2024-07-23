@@ -54,53 +54,71 @@ const SearchContainer = () => {
 
 
     const handleSearchStays = async (destination: string) => {
-        const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-        const loader = new Loader({
-            apiKey: `${apiKey}`,
-            version: "weekly",
-        });
+        // const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+        // const loader = new Loader({
+        //     apiKey: `${apiKey}`,
+        //     version: "weekly",
+        // });
 
-        loader.load().then(async () => {
-            const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
-            const request = {
-                textQuery: destination,
-                fields: ['accessibilityOptions', 'id', 'displayName', 'formattedAddress', 'paymentOptions', 'plusCode', 'priceLevel', 'rating', 'types', 'userRatingCount', 'websiteURI', 'editorialSummary', 'isGoodForChildren'],
-                includedType: 'lodging',
-                // locationBias: { lat: 37.4161493, lng: -122.0812166 },
-                // isOpenNow: true,
-                // language: 'en-US',
-                maxResultCount: 5,
-                // minRating: 3.2,
-                // region: 'us',
-                // useStrictTypeFiltering: false,
-            };
+        // loader.load().then(async () => {
+        //     const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+        //     const request = {
+        //         textQuery: destination,
+        //         fields: ['accessibilityOptions', 'id', 'displayName', 'formattedAddress', 'paymentOptions', 'plusCode', 'priceLevel', 'rating', 'types', 'userRatingCount', 'websiteURI', 'editorialSummary', 'isGoodForChildren'],
+        //         includedType: 'lodging',
+        //         // locationBias: { lat: 37.4161493, lng: -122.0812166 },
+        //         // isOpenNow: true,
+        //         // language: 'en-US',
+        //         maxResultCount: 5,
+        //         // minRating: 3.2,
+        //         // region: 'us',
+        //         // useStrictTypeFiltering: false,
+        //     };
 
-            const { places } = await Place.searchByText(request);
-            setSearchResults(places);
-            if (places.length) {
-                const detailedPlaces = await Promise.all(places.map(async (place) => {
-                    const detailedPlace = await fetchPlaceDetails(place.id);
+        //     const { places } = await Place.searchByText(request);
+        //     setSearchResults(places);
+        //     if (places.length) {
+        //         const detailedPlaces = await Promise.all(places.map(async (place) => {
+        //             const detailedPlace = await fetchPlaceDetails(place.id);
 
-                    const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
-            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-            defaultImageUrl;
-                    console.log('First Photo URL:', firstPhotoUrl);
+        //             const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+        //     constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+        //     defaultImageUrl;
+        //             console.log('First Photo URL:', firstPhotoUrl);
 
-                    return {
-                        ...place,
-                        photos: detailedPlace.photos,
-                        firstPhotoUrl: firstPhotoUrl,
-                        type: "stays"
-                    };
-                }));
+        //             return {
+        //                 ...place,
+        //                 photos: detailedPlace.photos,
+        //                 firstPhotoUrl: firstPhotoUrl,
+        //                 type: "stays"
+        //             };
+        //         }));
 
-                setSearchResults(detailedPlaces);
-                console.log('Detailed Places:', detailedPlaces);
-            }else {
+        //         setSearchResults(detailedPlaces);
+        //         console.log('Detailed Places:', detailedPlaces);
+        //     }else {
+        //         setSearchResults([]);
+        //     }
+        //     setLoading(false);
+        // });
+        try {
+            const response = await fetch(`http://localhost:4000/search/places?textQuery=${encodeURIComponent(destination)}&type=${encodeURIComponent('stays')}`);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            if(data.length){
+                setSearchResults(data);
+                console.log(JSON.stringify(data));
+            }else{
                 setSearchResults([]);
             }
             setLoading(false);
-        });
+            
+            return data;
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
     };
 
     const handleSearchAttractions = async (destination: string) => {
@@ -132,8 +150,8 @@ const SearchContainer = () => {
                     const detailedPlace = await fetchPlaceDetails(place.id);
 
                     const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
-            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-            defaultImageUrl;
+                        constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+                        defaultImageUrl;
                     console.log('First Photo URL:', firstPhotoUrl);
 
                     return {
@@ -182,8 +200,8 @@ const SearchContainer = () => {
                     const detailedPlace = await fetchPlaceDetails(place.id);
 
                     const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
-            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-            defaultImageUrl;
+                        constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+                        defaultImageUrl;
                     console.log('First Photo URL:', firstPhotoUrl);
 
                     return {
@@ -196,7 +214,7 @@ const SearchContainer = () => {
 
                 setSearchResults(detailedPlaces);
                 console.log('Detailed Places:', detailedPlaces);
-            }else {
+            } else {
                 setSearchResults([]);
             }
             setLoading(false);
@@ -232,8 +250,8 @@ const SearchContainer = () => {
                     const detailedPlace = await fetchPlaceDetails(place.id);
 
                     const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
-            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
-            defaultImageUrl;
+                        constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+                        defaultImageUrl;
                     console.log('First Photo URL:', firstPhotoUrl);
 
                     return {
@@ -336,12 +354,12 @@ const SearchContainer = () => {
 
                 {loading && (
                     <div
-                    className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-blue-500 motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                    role="status">
-                    <span
-                      className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                      >Loading...</span>
-                  </div>
+                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-blue-500 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status">
+                        <span
+                            className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                        >Loading...</span>
+                    </div>
                 )}
 
 

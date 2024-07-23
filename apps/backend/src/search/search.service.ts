@@ -59,7 +59,7 @@ export class SearchService {
                     const detailedPlace = await this.placesClient.getPlace(request, {
                         otherArgs: {
                             headers: {
-                                'X-Goog-FieldMask': 'accessibilityOptions,id,displayName,formattedAddress,paymentOptions,plusCode,priceLevel,rating,types,userRatingCount,editorialSummary'
+                                'X-Goog-FieldMask': 'accessibilityOptions,id,displayName,formattedAddress,paymentOptions,plusCode,priceLevel,rating,types,userRatingCount,editorialSummary,photos'
                             },
                         },
                     });
@@ -70,7 +70,15 @@ export class SearchService {
                         this.defaultImageUrl;
 
                     return {
-                        ...detailedPlace,
+                        formattedAddress: detailedPlace[0].formattedAddress,
+                        displayName: detailedPlace[0].displayName,
+                        editorialSummary: detailedPlace[0].editorialSummary,
+                        userRatingCount: detailedPlace[0].userRatingCount,
+                        plusCode: detailedPlace[0].plusCode,
+                        id: detailedPlace[0].id,
+                        rating: detailedPlace[0].rating,
+                        accessibilityOptions: detailedPlace[0].accessibilityOptions,
+                        paymentOptions: detailedPlace[0].paymentOptions,
                         firstPhotoUrl: firstPhotoUrl,
                         type: type
                     };
@@ -82,5 +90,9 @@ export class SearchService {
             console.error(error);
             throw new Error('Failed to search places');
         }
+    }
+
+    async searchProfile(user: string): Promise<any> {
+
     }
 }
