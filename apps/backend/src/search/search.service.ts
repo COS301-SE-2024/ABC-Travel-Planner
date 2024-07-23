@@ -9,14 +9,35 @@ export class SearchService {
         this.placesClient = new PlacesClient();
     }
 
-    constructImageUrl(photoName: string, apiKey: string, maxHeight = 429, maxWidth = 612){
+    constructImageUrl(photoName: string, apiKey: string, maxHeight = 429, maxWidth = 612) {
         return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
     }
 
-    async searchPlaces(textQuery: string): Promise<any> {
+    async searchPlaces(textQuery: string, type: string): Promise<any> {
+        let includeType: string = '';
+        switch (type) {
+            case 'stays':
+                includeType = 'lodging';
+                break;
+            case 'carRental':
+                includeType = 'car_rental';
+                break;
+            case 'airportTaxis':
+                includeType = '';
+                break;
+            case 'attractions':
+                includeType = '';
+                break;
+            case 'flights':
+                includeType = '';
+                break;
+            default:
+                break;
+        }
+
         const request = {
             textQuery: textQuery,
-            includedType: 'lodging'
+            includedType: includeType
         };
 
         try {
@@ -30,31 +51,28 @@ export class SearchService {
 
             const detailedPlaces = await Promise.all(response[0].places.map(async (place: any) => {
                 if (place !== null) {
-                    console.log(place.id);
                     let name = `places/${place.id}`;
                     const request = {
                         name,
                     };
 
-                    // Run request
                     const detailedPlace = await this.placesClient.getPlace(request, {
                         otherArgs: {
                             headers: {
-                                'X-Goog-FieldMask': '*',
+                                'X-Goog-FieldMask': 'accessibilityOptions,id,displayName,formattedAddress,paymentOptions,plusCode,priceLevel,rating,types,userRatingCount,editorialSummary'
                             },
                         },
                     });
-                    // console.log(detailedPlace[0].photos);
+
                     let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
                     const firstPhotoUrl = detailedPlace[0].photos && detailedPlace[0].photos.length > 0 ?
                         this.constructImageUrl(detailedPlace[0].photos[0].name, apiKey as string) :
                         this.defaultImageUrl;
-                    console.log('First Photo URL:', firstPhotoUrl);
 
                     return {
                         ...detailedPlace,
                         firstPhotoUrl: firstPhotoUrl,
-                        type: "stays"
+                        type: type
                     };
                 }
 

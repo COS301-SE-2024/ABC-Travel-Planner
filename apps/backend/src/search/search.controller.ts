@@ -6,7 +6,7 @@ export class SearchController {
   constructor(private readonly searchService: SearchService) {}
 
   @Get('places')
-  async searchPlaces(@Query('textQuery') textQuery: string): Promise<any> {
-    return this.searchService.searchPlaces(textQuery);
+  async searchPlaces(@Query('textQuery') textQuery: string, @Query('type') type: string): Promise<any> {
+    return this.searchService.searchPlaces(textQuery, type);
   }
 }
