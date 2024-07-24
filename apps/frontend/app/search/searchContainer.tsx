@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
-import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-icons/fa';
+import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch, FaUser} from 'react-icons/fa';
 //import { handleSearchAirports } from '.';
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from './searchCard';
@@ -314,6 +314,13 @@ const SearchContainer = () => {
                     >
                         <FaTaxi className="search-icon" />
                         Airport Taxis
+                    </button>
+                    <button
+                        className="search-button"
+                        onClick={() => handleTopicSelect('profile')}
+                    >
+                        <FaUser className="search-icon" />
+                        Profile
                     </button>
                 </div>
 
