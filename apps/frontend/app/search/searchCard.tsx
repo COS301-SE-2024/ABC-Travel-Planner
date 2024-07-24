@@ -88,7 +88,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     }
     let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
     const numRooms = null;
-    let address = place.plusCode ? place.plusCode.compoundCode : '';
+    let address = place.plusCode ? place.plusCode.compoundCode : 'Unknown Address';
     const location = extractLocation(address);
     const addressParts = address.split(',');
 
@@ -112,14 +112,14 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 <div className="w-1/3">
                     <img
                         src={`${place.firstPhotoUrl}`}
-                        alt={place.displayName.text}
+                        alt={place.displayName}
                         className="rounded-lg object-cover"
                     />
                 </div>
                 <div className="w-2/3 pl-4 overflow-hidden">
-                    <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName.text}</h1>
+                    <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
                     <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
-
+  
                     {place.goodForChildren && (
                         <div className="mt-2">
                             <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
@@ -128,7 +128,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         </div>
                     )}
 
-                    <p className="text-gray-800 mt-4">{place.editorialSummary && place.editorialSummary.text}</p>
+                    <p className="text-gray-800 mt-4">{place.editorialSummary ? place.editorialSummary : ""}</p>
 
                     {place.paymentOptions?.acceptsCreditCards && (
                         <div className="mt-2 flex items-center text-green-600 text-sm">

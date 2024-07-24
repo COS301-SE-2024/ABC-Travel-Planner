@@ -88,7 +88,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
 
   let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
   const numRooms = null;
-  let address = place.Fg.plusCode?.compoundCode || "Unknown Address";
+  let address = place.plusCode ? place.plusCode.compoundCode : 'Unknown Address';
   const location = extractLocation(address);
   const addressParts = address.split(',');
 
@@ -109,14 +109,14 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               },
             }}
           >
-            <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.Fg.displayName}</h1>
+            <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
           </Link>
           <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
         </div>
         <div className="text-right">
-          <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
-          <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block`}>
-            {place.Fg.rating}
+          <p className="text-gray-600 inline-block pr-2">{`${place.userRatingCount} reviews `}</p>
+          <div className={`rounded-full ${getRatingColor(place.rating)} text-white px-2 py-2 text-sm font-semibold inline-block`}>
+            {place.rating}
           </div>
         </div>
       </div>
@@ -134,7 +134,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         >
           <img
             src={`${place.firstPhotoUrl}`}
-            alt={place.Fg.displayName}
+            alt={place.displayName}
             className="rounded-lg object-cover cursor-pointer"
           />
         </Link>
@@ -149,15 +149,15 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               },
             }}
           >
-            {place.Fg.isGoodForChildren && (
+            {place.goodForChildren && (
               <div className="mt-2">
                 <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
                   Good for families with children
                 </div>
               </div>
             )}
-            <p className="text-gray-800 mt-4">{place.Fg.editorialSummary}</p>
-            {place.Fg.paymentOptions?.acceptsCreditCards && (
+            <p className="text-gray-800 mt-4">{place.editorialSummary ? place.editorialSummary : ""}</p>
+            {place.paymentOptions?.acceptsCreditCards && (
               <div className="mt-2 flex items-center text-green-600 text-sm">
                 <svg className="w-5 h-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm5 7.5l-6 6-3-3 1.414-1.414L9 10.672l4.586-4.586L15 7.5z" />

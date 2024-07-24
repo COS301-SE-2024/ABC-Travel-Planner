@@ -71,8 +71,8 @@ export class SearchService {
 
                     return {
                         formattedAddress: detailedPlace[0].formattedAddress,
-                        displayName: detailedPlace[0].displayName,
-                        editorialSummary: detailedPlace[0].editorialSummary,
+                        displayName: detailedPlace[0].displayName ? detailedPlace[0].displayName.text : '',
+                        editorialSummary: detailedPlace[0].editorialSummary ? detailedPlace[0].editorialSummary.text : '',
                         userRatingCount: detailedPlace[0].userRatingCount,
                         plusCode: detailedPlace[0].plusCode,
                         id: detailedPlace[0].id,
