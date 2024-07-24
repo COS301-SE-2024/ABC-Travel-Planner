@@ -8,6 +8,7 @@ export class SearchService {
     private placesClient: any;
     private defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
     private db: admin.firestore.Firestore;
+    private filter: admin.firestore.Filter;
 
     constructor(private configService: ConfigService, @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App) {
         this.placesClient = new PlacesClient();
@@ -99,6 +100,17 @@ export class SearchService {
     }
 
     async searchProfile(user: string): Promise<any> {
+        const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'), admin.firestore.Filter.where('user_name', '>=', user), admin.firestore.Filter.where('user_name', '<=', user + '\uf8ff'))).get();
+        //const data = await this.db.collection('Users').where('name', '>=', user).get();
+        if (data.empty) {
+            return [];
+        }
 
+        const users: any[] = [];
+        data.forEach(doc => {
+            users.push(doc.data());
+        });
+
+        return users;
     }
 }
