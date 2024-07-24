@@ -1,12 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 const { PlacesClient } = require('@googlemaps/places').v1;
 import { ConfigService } from '@nestjs/config';
+import * as admin from 'firebase-admin';
+
 @Injectable()
 export class SearchService {
     private placesClient: any;
     private defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
-    constructor(private configService: ConfigService) {
+    private db: admin.firestore.Firestore;
+
+    constructor(private configService: ConfigService, @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App) {
         this.placesClient = new PlacesClient();
+        this.db = firebaseApp.firestore();
     }
 
     constructImageUrl(photoName: string, apiKey: string, maxHeight = 429, maxWidth = 612) {
