@@ -421,6 +421,7 @@ body {
 
 .itinerary-image {
   width: 100%; 
+  min-height: 100px;
   height: 100px; 
   object-fit: cover;
   border-top-left-radius: 10px; 
@@ -438,7 +439,7 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 5px; 
+  margin-top: 3px; 
 }
 
 .view-button:hover {
