@@ -55,11 +55,11 @@ export class SearchService {
                     const request = {
                         name,
                     };
-
+                    //'accessibilityOptions,id,displayName,formattedAddress,paymentOptions,plusCode,priceLevel,rating,types,userRatingCount,editorialSummary,photos,goodForChildren'
                     const detailedPlace = await this.placesClient.getPlace(request, {
                         otherArgs: {
                             headers: {
-                                'X-Goog-FieldMask': 'accessibilityOptions,id,displayName,formattedAddress,paymentOptions,plusCode,priceLevel,rating,types,userRatingCount,editorialSummary,photos'
+                                'X-Goog-FieldMask': 'accessibilityOptions,id,displayName,formattedAddress,paymentOptions,plusCode,priceLevel,rating,types,userRatingCount,editorialSummary,photos,goodForChildren'
                             },
                         },
                     });
@@ -79,8 +79,9 @@ export class SearchService {
                         rating: detailedPlace[0].rating,
                         accessibilityOptions: detailedPlace[0].accessibilityOptions,
                         paymentOptions: detailedPlace[0].paymentOptions,
+                        goodForChildren: detailedPlace[0].goodForChildren,
                         firstPhotoUrl: firstPhotoUrl,
-                        type: type
+                        // type: type
                     };
                 }
 
