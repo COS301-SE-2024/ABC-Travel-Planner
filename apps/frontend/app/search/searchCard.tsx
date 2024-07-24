@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 interface SearchCardProps {
     place: any;
+    
 }
 
 export const getRatingColor = (rating: number) => {
@@ -196,6 +197,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 </div>
             </div>
         </div>
+        
     );
 };
 

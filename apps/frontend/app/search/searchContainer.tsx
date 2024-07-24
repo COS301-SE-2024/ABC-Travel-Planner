@@ -4,7 +4,13 @@ import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch, FaUser} from '
 //import { handleSearchAirports } from '.';
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from './searchCard';
+import ProfileCard from './ProfileCard';
 
+const mockProfiles = [
+    { id: 1, name: 'John Doe', imageUrl: 'https://via.placeholder.com/150' },
+    { id: 2, name: 'Jane Smith', imageUrl: 'https://via.placeholder.com/150' },
+    { id: 3, name: 'Emily Johnson', imageUrl: 'https://via.placeholder.com/150' },
+];
 const SearchContainer = () => {
     const [selectedTopic, setSelectedTopic] = useState<string>('');
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -253,6 +259,18 @@ const SearchContainer = () => {
         });
     };
 
+    //Handle profile search 
+    const handleSearchProfiles = () => {
+        console.log('Search Term:', searchTerm); // Log the search term
+        setLoading(true);
+        const results = mockProfiles.filter(profile =>
+            profile.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        console.log('Profile Search Results:', results); // Log the results
+        setSearchResults(results);
+        setLoading(false);
+    };
+    
     const handleSearch = async () => {
         if (searchInputRef.current) {
             setSearchTerm(searchInputRef.current.value);
@@ -268,6 +286,11 @@ const SearchContainer = () => {
             handleSearchAttractions(searchTerm);
         } else if (selectedTopic === 'airportTaxis') {
             handleSearchAirportTaxis(searchTerm);
+        } else  if (selectedTopic === 'profile') {
+            handleSearchProfiles();
+            console.log('Searching for profiles...');
+        } else {
+            console.log('Unknown selected topic.');
         }
 
     };
@@ -355,12 +378,19 @@ const SearchContainer = () => {
             </div>
 
             {searchResults.length > 0 && (
-                <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
-                    {searchResults.map((result, index) => (
-                        <SearchCard key={index} place={result} />
-                    ))}
-                </div>
-            )}
+            <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
+                {searchResults.map((result, index) => (
+                    <div key={index}>
+                        {selectedTopic === 'profile' ? (
+                            <ProfileCard profile={result} />
+                        ) : (
+                            <SearchCard place={result} />
+                        )}
+                    </div>
+                ))}
+            </div>
+)}
+
         </div>
     );
 };
