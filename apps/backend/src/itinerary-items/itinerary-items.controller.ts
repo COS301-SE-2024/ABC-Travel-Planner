@@ -35,4 +35,17 @@ export class ItineraryItemsController {
             throw new InternalServerErrorException(error.message);
         }
     }
+
+    @Post(':id')
+    async deleteItineraryItem(userName: string, @Param(':id') id: string): Promise<any> {
+        try {
+            return await this.itineraryItemsService.deleteItineraryItem(userName, id);
+            
+        } catch (error) {
+            console.error(error)
+            return new Promise<any>((resolve, reject) => {
+                reject('Could not delete item');
+            });
+        }
+    }
 }
