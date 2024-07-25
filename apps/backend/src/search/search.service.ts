@@ -61,7 +61,7 @@ export class SearchService {
                     const request = {
                         name,
                     };
-                    //'accessibilityOptions,id,displayName,formattedAddress,paymentOptions,plusCode,priceLevel,rating,types,userRatingCount,editorialSummary,photos,goodForChildren'
+                
                     const detailedPlace = await this.placesClient.getPlace(request, {
                         otherArgs: {
                             headers: {
@@ -101,7 +101,6 @@ export class SearchService {
 
     async searchProfile(user: string): Promise<any> {
         const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'), admin.firestore.Filter.where('user_name', '>=', user), admin.firestore.Filter.where('user_name', '<=', user + '\uf8ff'))).get();
-        //const data = await this.db.collection('Users').where('name', '>=', user).get();
         if (data.empty) {
             return [];
         }

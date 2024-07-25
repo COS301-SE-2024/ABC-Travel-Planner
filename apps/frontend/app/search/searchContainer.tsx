@@ -6,11 +6,6 @@ import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from './searchCard';
 import ProfileCard from './ProfileCard';
 
-const mockProfiles = [
-    { id: 1, name: 'John Doe', imageUrl: 'https://via.placeholder.com/150' },
-    { id: 2, name: 'Jane Smith', imageUrl: 'https://via.placeholder.com/150' },
-    { id: 3, name: 'Emily Johnson', imageUrl: 'https://via.placeholder.com/150' },
-];
 const SearchContainer = () => {
     const [selectedTopic, setSelectedTopic] = useState<string>('');
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -141,13 +136,11 @@ const SearchContainer = () => {
             {searchResults.length > 0 && (
             <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
                 {searchResults.map((result, index) => (
-                    <div key={index}>
-                        {selectedTopic === 'profile' ? (
-                            <ProfileCard profile={result} />
+                        selectedTopic === 'profile' ? (
+                            <ProfileCard key={index} profile={result} />
                         ) : (
-                            <SearchCard place={result} />
-                        )}
-                    </div>
+                            <SearchCard key={index} place={result} />
+                        )
                 ))}
             </div>
 )}
