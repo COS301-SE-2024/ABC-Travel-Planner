@@ -55,4 +55,26 @@ export class ItineraryItemsService {
       throw new InternalServerErrorException('Failed to fetch itinerary-items from the database');
     }
   }
+
+  async deleteItineraryItem(userName: string, id: string) {        
+        const user_name = 'User1';
+        
+        //Logic to delete the item from the db
+        try {
+            const documentRef = this.db.collection('Itinerary-items')
+                                .doc(user_name)
+                                .collection('Items')
+                                .doc(id)
+
+            const doc = await documentRef.get()
+            if (!doc.exists) {
+                throw new Error('Could not locate record - Deletion unsuccessful')
+            }
+            
+            await documentRef.delete();
+        } catch (error) {
+            console.error('Could not delete record: ', error.message)
+            return error.message
+        }
+    }
 }
