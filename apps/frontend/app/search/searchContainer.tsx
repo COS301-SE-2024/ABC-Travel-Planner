@@ -30,7 +30,13 @@ const SearchContainer = () => {
         }
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:4000/search/places?textQuery=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(selectedTopic)}`);
+            let url = '';
+            if(selectedTopic == 'profile'){
+                url = `http://localhost:4000/search/user?user=${encodeURIComponent(searchTerm)}`;
+            }else{
+                url = `http://localhost:4000/search/places?textQuery=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(selectedTopic)}`
+            }
+            const response = await fetch(url);
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -94,7 +100,7 @@ const SearchContainer = () => {
                         Airport Taxis
                     </button>
                     <button
-                        className="search-button"
+                        className={`search-button ${selectedTopic === 'profile' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('profile')}
                     >
                         <FaUser className="search-icon" />

@@ -108,7 +108,12 @@ export class SearchService {
 
         const users: any[] = [];
         data.forEach(doc => {
-            users.push(doc.data());
+            users.push({
+                name: doc.data().name,
+                username: doc.data().username,
+                id: doc.data().user_id,
+                imageUrl: doc.data().image_url
+            });
         });
 
         return users;
