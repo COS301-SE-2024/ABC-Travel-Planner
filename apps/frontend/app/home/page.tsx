@@ -69,18 +69,19 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex flex-col" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
-      <div className="w-full mt-8" style={{ marginTop: '40px', padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+    <div className="flex flex-row">
+      <div className="w-1/4 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', height: '100vh' }}>
         <h2 className="text-3xl font-bold mb-4 text-gray-800">Top destinations for your next holiday</h2>
-        <div className="flex overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
+        <div className="flex flex-col space-y-4">
           {popularDestinations.map((destination, index) => (
-            <div key={index} className="w-64 flex-shrink-0 mr-4" style={{ backgroundColor: 'white', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }}>
+            <div key={index} className="w-full" style={{ backgroundColor: 'white', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }}>
               <DestinationCard destination={destination} />
             </div>
           ))}
         </div>
       </div>
 
+      <div className="flex flex-col w-3/4">
       <div className="flex justify-center mb-4 mt-4">
         <button
           className={`px-4 py-2 ${tab === 'For You' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tl-md rounded-bl-md`}
@@ -95,6 +96,7 @@ const Home = () => {
           Following
         </button>
       </div>
+      
 
       <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center' }}>
         <h2 className="text-3xl font-bold my-4 text-gray-800">Latest Posts</h2>
@@ -110,6 +112,7 @@ const Home = () => {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 };
