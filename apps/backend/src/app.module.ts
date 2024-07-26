@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule } from "@nestjs/config"
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -7,6 +7,7 @@ import { ItineraryModule } from './itinerary/itinerary.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import * as path from 'path';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import * as path from 'path';
     UsersModule, 
     FirebaseModule, 
     ReviewsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
