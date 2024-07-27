@@ -1,5 +1,4 @@
 "use server";
-import readUser from "@/libs/actions";
 import createSupabaseServerClient from "@/libs/supabase/server";
 
 import { getAuth, signOut } from "firebase/auth";
@@ -14,22 +13,21 @@ export async function logout() {
 
 
 export async function updateUserProfile(
-  { name, surname, email, country,user_id }: { name: string; surname: string; email: string; country: string,user_id:string }
+  { name, surname, email, country,user_id }: { name: string; surname: string; email: string; country: string,user_id:string },
+  user: any
   
 ) {
-  const db = getFirestore(app);
-  
-  // if (user) {
-  //   await updateProfile(user, {
-  //     displayName: `${name} ${surname}`,
-  //   });
+    
+    const db = getFirestore(app);
+    
+    
     const docRef = doc(db, "Users", user_id);
     await updateDoc(docRef, {
       name: name,
       surname: surname,
       email: email,
       country: country,
-      
+
 
     });
   }

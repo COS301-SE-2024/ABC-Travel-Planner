@@ -11,11 +11,7 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
-import {
-  logout,
-  updateUserProfile,
-  getSharedItineraries,
-} from ".";
+import { logout, updateUserProfile, getSharedItineraries } from ".";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { createClient } from "../utils/supabase/client";
@@ -39,7 +35,6 @@ const Account = () => {
     country: "",
     imageUrl: "",
     memberSince: "",
-    
   });
   const [originalProfileDetails, setOriginalProfileDetails] =
     useState(profileDetails);
@@ -146,14 +141,14 @@ const Account = () => {
   };
 
   const handleSave = async () => {
+    const temp = Cookie.get("user");
+    console.log(temp);
     // Save changes to the database
     if (file) {
       const url = await uploadImage(file);
       console.log(url);
     }
-    await updateUserProfile(
-      profileDetails
-    );
+    await updateUserProfile(profileDetails,temp);
     toggleEdit(); // Exit edit mode
   };
 
@@ -262,14 +257,17 @@ const Account = () => {
                   {profileDetails.email}
                 </h2>
                 {profileDetails.country && (
-                <div className="flex items-center space-x-2 mt-2">
-                  <FaMapMarkerAlt />
-                  <span>{profileDetails.country}</span>
-                </div>)}
-                
+                  <div className="flex items-center space-x-2 mt-2">
+                    <FaMapMarkerAlt />
+                    <span>{profileDetails.country}</span>
+                  </div>
+                )}
+
                 <div className="flex items-center space-x-2 mt-2">
                   <FaRegCalendarAlt />
-                  <span>Member Since:{profileDetails.memberSince?.substring(5,17)}</span>
+                  <span>
+                    Member Since: {profileDetails.memberSince?.substring(5, 17)}
+                  </span>
                 </div>
               </>
             )}
@@ -282,7 +280,7 @@ const Account = () => {
           </button>
         </div>
         {showMenu && (
-          <div className="mt-4 bg-white shadow-md rounded-lg p-4 absolute right-0 w-48">
+          <div className="mt-4 mr-4 bg-white shadow-md rounded-lg p-4 absolute right-0 w-48">
             <button
               onClick={() => setShowMenu(false)}
               className="block w-full text-left py-2 hover:bg-gray-100"
@@ -353,10 +351,10 @@ const Account = () => {
       </section>
 
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white shadow-md rounded-lg p-6 w-80">
-            <h2 className="text-xl font-semibold mb-4">About This Site</h2>
-            <p className="mb-4">
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>About This Site</h2>
+            <p>
               Welcome to our Travel Planner! This platform is designed to
               simplify your journey by helping you effortlessly organize your
               trips, discover curated itineraries, and access a wealth of travel
@@ -366,12 +364,7 @@ const Account = () => {
               you'll find FAQs, tips, and support to make your travel experience
               even better.
             </p>
-            <button
-              onClick={togglePopup}
-              className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-            >
-              Close
-            </button>
+            <button onClick={togglePopup}>Close</button>
           </div>
         </div>
       )}

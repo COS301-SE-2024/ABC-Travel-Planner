@@ -13,7 +13,9 @@ export async function middleware(request: NextRequest) {
   
   const cookies = request.cookies;
   const userId = cookies.get("user_id");
-  console.log("user_id", userId);
+  // console.log("user_id", userId);
+  // const user = cookies.get("user");
+  // console.log("user", user);
 
  ///need to check if user is logged in or not
 

@@ -14,6 +14,7 @@ import {
 } from ".";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import app from "@/libs/firebase/firebase";
+import getUser from "@/libs/actions/getUser";
 
 const SplashPage = () => {
   const router = useRouter();
@@ -36,11 +37,12 @@ const SplashPage = () => {
   const handleLogin = async (e: any) => {
     e.preventDefault();
     const result = await login(loginData);
-    const tmp = JSON.parse(result);
-    const user = tmp.user;
+    const tmp = JSON.parse(result || "{}");
+    const user = tmp?.user;
 
     if (user) {
       Cookie.set("user_id", user.uid, { expires: 7 });
+      Cookie.set("user", JSON.stringify(user));
       router.push("/home");
     } else {
       alert("Invalid email or password");
@@ -70,8 +72,9 @@ const SplashPage = () => {
       alert("Registration successful!");
       localStorage.setItem("user_id", user.uid);
       Cookie.set("user_id", user.uid, { expires: 7 });
-      const temp = Cookie.get("user_id");
-      console.log(temp);
+      Cookie.set("user", JSON.stringify(user));
+      const temp = Cookie.get("user");
+
       router.push("/home");
     }
   };
@@ -84,31 +87,32 @@ const SplashPage = () => {
     // Use signInWithPopup for browser environments
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log(result);
       if (result.user) {
         const docRef = doc(db, "Users", result.user.uid);
         const temp = result.user.displayName?.split(" ");
-        if (temp?.length == 3) {
-          await setDoc(docRef, {
-            user_id: result.user.uid,
-            name: temp[0],
-            surname: temp[1] + " " + temp[2],
-            email: result.user.email,
-            memberSince: result.user?.metadata?.creationTime,
-          });
-        } else {
-          await setDoc(docRef, {
-            user_id: result.user.uid,
-            name: result?.user?.displayName?.split(" ")[0],
-            surname: result?.user?.displayName?.split(" ")[1],
-            email: result.user.email,
-            memberSince: result.user?.metadata?.creationTime,
-          });
+        const r = await getUser(result.user.uid);
+        if (!r) {
+          if (temp?.length == 3) {
+            await setDoc(docRef, {
+              user_id: result.user.uid,
+              name: temp[0],
+              surname: temp[1] + " " + temp[2],
+              email: result.user.email,
+              memberSince: result.user?.metadata?.creationTime,
+            });
+          } else {
+            await setDoc(docRef, {
+              user_id: result.user.uid,
+              name: result?.user?.displayName?.split(" ")[0],
+              surname: result?.user?.displayName?.split(" ")[1],
+              email: result.user.email,
+              memberSince: result.user?.metadata?.creationTime,
+            });
+          }
         }
       }
       return JSON.stringify(result);
     } catch (error) {
-      console.log(error);
       return null;
     }
   };
@@ -119,6 +123,7 @@ const SplashPage = () => {
       const { user } = JSON.parse(result);
       if (user) {
         Cookie.set("user_id", user.uid, { expires: 7 });
+        Cookie.set("user", JSON.stringify(user));
         router.push("/home");
       } else {
         alert("An error occurred while signing in with Google");

@@ -5,18 +5,23 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import {getFirestore, doc, setDoc} from "firebase/firestore"
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import app from "@/libs/firebase/firebase";
 
 export async function login(data: { email: string; password: string }) {
   const auth = getAuth(app);
-  const result = await signInWithEmailAndPassword(
-    auth,
-    data.email,
-    data.password
-  );
+  try {
+    const result = await signInWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+    return JSON.stringify(result);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
   // console.log(result);
-  return JSON.stringify(result);
 }
 
 export async function signUpWithEmailAndPassword(data: {
@@ -28,13 +33,13 @@ export async function signUpWithEmailAndPassword(data: {
 }) {
   const db = getFirestore(app);
   const auth = getAuth(app);
-  try{
+  try {
     const result = await createUserWithEmailAndPassword(
       auth,
       data.email,
       data.password
     );
-    if(result.user){
+    if (result.user) {
       await updateProfile(result.user, {
         displayName: `${data.name} ${data.surname}`,
       });
@@ -54,7 +59,6 @@ export async function signUpWithEmailAndPassword(data: {
     return JSON.stringify(error);
   }
 }
-
 
 export async function validatePassword(inputPassword: string) {
   const minLength = 8;
