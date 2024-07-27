@@ -21,7 +21,6 @@ export async function login(data: { email: string; password: string }) {
     console.log(error);
     return null;
   }
-  // console.log(result);
 }
 
 export async function signUpWithEmailAndPassword(data: {

@@ -42,7 +42,6 @@ const SplashPage = () => {
 
     if (user) {
       Cookie.set("user_id", user.uid, { expires: 7 });
-      Cookie.set("user", JSON.stringify(user));
       router.push("/home");
     } else {
       alert("Invalid email or password");
@@ -72,8 +71,6 @@ const SplashPage = () => {
       alert("Registration successful!");
       localStorage.setItem("user_id", user.uid);
       Cookie.set("user_id", user.uid, { expires: 7 });
-      Cookie.set("user", JSON.stringify(user));
-      const temp = Cookie.get("user");
 
       router.push("/home");
     }
@@ -123,7 +120,6 @@ const SplashPage = () => {
       const { user } = JSON.parse(result);
       if (user) {
         Cookie.set("user_id", user.uid, { expires: 7 });
-        Cookie.set("user", JSON.stringify(user));
         router.push("/home");
       } else {
         alert("An error occurred while signing in with Google");
@@ -162,8 +158,7 @@ const SplashPage = () => {
       }
     }
   };
-  const temp = Cookie.get("user_id");
-  console.log(temp);
+  
 
   return (
     <div

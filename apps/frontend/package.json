@@ -18,6 +18,7 @@
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.4",
+    "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "cookies": "^0.9.1",
     "firebase": "^10.12.4",
