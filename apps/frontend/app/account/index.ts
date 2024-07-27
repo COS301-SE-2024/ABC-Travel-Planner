@@ -1,10 +1,13 @@
 "use server";
 import readUser from "@/libs/actions";
 import createSupabaseServerClient from "@/libs/supabase/server";
+import {signOut} from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import app from "@/libs/firebase/firebase";
 
 export async function logout() {
-  const supabase = await createSupabaseServerClient();
-  await supabase.auth.signOut();
+  const auth = getAuth(app);
+  await signOut(auth);
 }
 
 export async function getUserProfile() {

@@ -15,16 +15,18 @@ import { logout, getUserProfile, updateUserProfile, getSharedItineraries} from "
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { createClient } from "../utils/supabase/client";
+import Cookie from "js-cookie";
+import getUser from "@/libs/actions/getUser";
 
 const Account = () => {
   const [profileDetails, setProfileDetails] = useState<{
     name: string;
     surname: string;
     email: string;
-    createdAt: string;
+    user_id: string;
     country: string;
     imageUrl: string,
-  }>({ name: "", surname: "", email: "", createdAt: "" ,country: "", imageUrl: ""});
+  }>({ name: "", surname: "", email: "", user_id: "" ,country: "", imageUrl: ""});
   const [originalProfileDetails, setOriginalProfileDetails] =
     useState(profileDetails);
   const [file, setFile] = useState<any>(null);
@@ -60,6 +62,7 @@ const Account = () => {
 
   const handleSignout = async () => {
     await logout();
+    Cookie.remove('user_id');
     router.push("/login");
   };
 
@@ -67,18 +70,30 @@ const Account = () => {
     router.push("/help");
   };
   const fetchProfileDetails = async () => {
-    const response = await getUserProfile();
-    console.log(response);
-    setProfileDetails(response);
+    const temp = Cookie.get('user_id');
+    console.log(temp);
+    const r = await getUser(temp);
+    console.log(r);
+    const tmp = JSON.parse(r || "");
+    setProfileDetails(tmp);
+    // if(response.imageUrl)
+    //   {
+    //     setProfileImage(response.imageUrl);
+    //     console.log(response.imageUrl);
+    //   }
+    //   else{
+    //     setProfileImage("/Images/profile.jpg");
+    //   }
   };
 
   useEffect(() => {
     async function fetch()
     {
       await fetchProfileDetails();
-      const result = await getSharedItineraries();
-      setItineraries(result);
-      console.log(profileDetails);
+      // const result = await getSharedItineraries();
+      // setItineraries(result);
+      
+
     }
     fetch();
     
@@ -223,7 +238,7 @@ const Account = () => {
               <div className="member-since">
                 <FaRegCalendarAlt />
                 <span>
-                  Member Since: {profileDetails.createdAt.substring(0, 10)}
+                  Member Since: 
                 </span>
               </div>
             </>

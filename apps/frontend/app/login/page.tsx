@@ -1,14 +1,19 @@
 "use client";
 import React, { FormEvent, useEffect, useState } from "react";
+import { FaGoogle } from "react-icons/fa";
+import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import {
-  signInWithEmailAndPassword,
+  login,
   signUpWithEmailAndPassword,
   validateEmail,
   validatePassword,
 } from ".";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import app from "@/libs/firebase/firebase";
 
 const SplashPage = () => {
   const router = useRouter();
@@ -30,11 +35,12 @@ const SplashPage = () => {
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    const result = await signInWithEmailAndPassword(loginData);
-    const {
-      data: { user },
-    } = JSON.parse(result);
+    const result = await login(loginData);
+    const tmp = JSON.parse(result);
+    const user = tmp.user;
+
     if (user) {
+      Cookie.set("user_id", user.uid, { expires: 7 });
       router.push("/home");
     } else {
       alert("Invalid email or password");
@@ -55,14 +61,56 @@ const SplashPage = () => {
     }
     const result = await signUpWithEmailAndPassword(registerData);
 
-    const { error } = JSON.parse(result);
+    const { user } = JSON.parse(result);
 
-    if (error) {
+    if (!user) {
       alert("Email already in use");
       return;
     } else {
       alert("Registration successful!");
+      localStorage.setItem("user_id", user.uid);
+      Cookie.set("user_id", user.uid, { expires: 7 });
+      const temp = Cookie.get("user_id");
+      console.log(temp);
       router.push("/home");
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Use signInWithPopup for browser environments
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log(result);
+      if (result.user) {
+        const docRef = doc(db, "Users", result.user.uid);
+        await setDoc(docRef, {
+          user_id: result.user.uid,
+          name: result?.user?.displayName?.split(" ")[0],
+          surname: result?.user?.displayName?.split(" ")[1],
+          email: result.user.email,
+        });
+      }
+      return JSON.stringify(result);
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const result = await signInWithGoogle();
+    if (result) {
+      const { user } = JSON.parse(result);
+      if (user) {
+        Cookie.set("user_id", user.uid, { expires: 7 });
+        router.push("/home");
+      } else {
+        alert("An error occurred while signing in with Google");
+      }
     }
   };
 
@@ -97,6 +145,8 @@ const SplashPage = () => {
       }
     }
   };
+  const temp = Cookie.get("user_id");
+  console.log(temp);
 
   return (
     <div
@@ -114,7 +164,7 @@ const SplashPage = () => {
             <div onSubmit={handleLogin} className="col-md-6">
               <form style={styles.form}>
                 <h1 style={{ ...styles.headers, textAlign: "center" }}>
-                  Login{" "}
+                  Login
                 </h1>
                 <div className="mb-3">
                   <label htmlFor="loginEmail" className="form-label">
@@ -147,13 +197,26 @@ const SplashPage = () => {
                     required
                   />
                 </div>
-                <button
-                  data-testid="signInSubmit"
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  Login
-                </button>
+                <div className="d-flex flex-column align-items-center">
+                  <button
+                    data-testid="signInSubmit"
+                    type="submit"
+                    className="btn btn-primary mb-2 w-60"
+                  >
+                    Login
+                  </button>
+
+                  <h6 className="my-2">Or</h6>
+
+                  <button
+                    data-testid="signInGoogle"
+                    type="button"
+                    className="w-100 max-w-xs bg-white text-blue-500 font-bold py-2 px-4 rounded border border-blue-500 flex items-center justify-center"
+                    onClick={handleGoogleSignIn}
+                  >
+                    <FaGoogle className="mr-2" /> Sign in with Google
+                  </button>
+                </div>
               </form>
             </div>
           </div>

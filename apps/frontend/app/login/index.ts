@@ -1,5 +1,23 @@
 "use server";
-import createSupabaseServerClient from "@/libs/supabase/server";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import {getFirestore, doc, setDoc} from "firebase/firestore"
+import app from "@/libs/firebase/firebase";
+
+export async function login(data: { email: string; password: string }) {
+  const auth = getAuth(app);
+  const result = await signInWithEmailAndPassword(
+    auth,
+    data.email,
+    data.password
+  );
+  // console.log(result);
+  return JSON.stringify(result);
+}
 
 export async function signUpWithEmailAndPassword(data: {
   name: string;
@@ -8,47 +26,34 @@ export async function signUpWithEmailAndPassword(data: {
   password: string;
   confirmPassword: string;
 }) {
-  const supabase = await createSupabaseServerClient();
-
-  const result = await supabase.auth.signUp({
-    email: data.email,
-    password: data.password,
-    options: {
-      data: {
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  try{
+    const result = await createUserWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+    if(result.user){
+      await updateProfile(result.user, {
+        displayName: `${data.name} ${data.surname}`,
+      });
+      const docRef = doc(db, "Users", result.user.uid);
+      await setDoc(docRef, {
+        user_id: result.user.uid,
         name: data.name,
         surname: data.surname,
-      },
-    },
-  });
+        email: data.email,
+      });
+    }
 
-  const {
-    data: { user },
-  } = result;
-  if (user) {
-    await supabase.from("Users").insert([
-      {
-        email: user.email,
-        user_id: user.id,
-        name: user.user_metadata.name,
-        surname: user.user_metadata.surname,
-      },
-    ]);
+    return JSON.stringify(result);
+  } catch (error) {
+    console.log(error);
+    return JSON.stringify(error);
   }
-  return JSON.stringify(result);
 }
 
-export async function signInWithEmailAndPassword(data: {
-  email: string;
-  password: string;
-}) {
-  const supabase = await createSupabaseServerClient();
-
-  const result = await supabase.auth.signInWithPassword({
-    email: data.email,
-    password: data.password,
-  });
-  return JSON.stringify(result);
-}
 
 export async function validatePassword(inputPassword: string) {
   const minLength = 8;
@@ -66,8 +71,8 @@ export async function validatePassword(inputPassword: string) {
   return isValid;
 }
 
-export async function validateEmail(inputEmail: string){
+export async function validateEmail(inputEmail: string) {
   // Email validation regex pattern
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailPattern.test(inputEmail);
-};
+}
