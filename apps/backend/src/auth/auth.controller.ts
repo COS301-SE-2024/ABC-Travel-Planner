@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { Post, Body, InternalServerErrorException, Get } from "@nestjs/common";
+import { Post, Body, InternalServerErrorException } from "@nestjs/common";
 
 @Controller('auth')
 export class AuthController {

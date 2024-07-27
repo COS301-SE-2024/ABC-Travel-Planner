@@ -11,6 +11,7 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+import axios from "axios";
 import { logout, updateUserProfile, getSharedItineraries } from ".";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -36,6 +37,7 @@ const Account = () => {
     imageUrl: "",
     memberSince: "",
   });
+
   const [originalProfileDetails, setOriginalProfileDetails] =
     useState(profileDetails);
   const [file, setFile] = useState<any>(null);
@@ -141,14 +143,22 @@ const Account = () => {
   };
 
   const handleSave = async () => {
-    const temp = Cookie.get("user");
+    const temp = Cookie.get("user_id");
     console.log(temp);
     // Save changes to the database
-    if (file) {
-      const url = await uploadImage(file);
-      console.log(url);
+    // if (file) {
+    //   const url = await uploadImage(file);
+    //   console.log(url);
+    // }
+    if(originalProfileDetails.email !== profileDetails.email)
+    {
+      const response = await axios.post("http://localhost:4000/auth/UpdateEmail",{
+        email:profileDetails.email,
+        user_id:temp
+      });
+      console.log(response);
     }
-    await updateUserProfile(profileDetails,temp);
+    await updateUserProfile(profileDetails);
     toggleEdit(); // Exit edit mode
   };
 

@@ -13,8 +13,7 @@ export async function logout() {
 
 
 export async function updateUserProfile(
-  { name, surname, email, country,user_id }: { name: string; surname: string; email: string; country: string,user_id:string },
-  user: any
+  { name, surname, email, country,user_id }: { name: string; surname: string; email: string; country: string,user_id:string }
   
 ) {
     
