@@ -44,6 +44,7 @@ export async function signUpWithEmailAndPassword(data: {
         name: data.name,
         surname: data.surname,
         email: data.email,
+        memberSince: result.user.metadata.creationTime,
       });
     }
 

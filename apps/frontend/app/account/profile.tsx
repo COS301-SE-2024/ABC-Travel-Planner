@@ -11,7 +11,11 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
-import { logout, getUserProfile, updateUserProfile, getSharedItineraries} from ".";
+import {
+  logout,
+  updateUserProfile,
+  getSharedItineraries,
+} from ".";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { createClient } from "../utils/supabase/client";
@@ -25,12 +29,24 @@ const Account = () => {
     email: string;
     user_id: string;
     country: string;
-    imageUrl: string,
-  }>({ name: "", surname: "", email: "", user_id: "" ,country: "", imageUrl: ""});
+    imageUrl: string;
+    memberSince: string;
+  }>({
+    name: "",
+    surname: "",
+    email: "",
+    user_id: "",
+    country: "",
+    imageUrl: "",
+    memberSince: "",
+    
+  });
   const [originalProfileDetails, setOriginalProfileDetails] =
     useState(profileDetails);
   const [file, setFile] = useState<any>(null);
-  const [profileImage, setProfileImage] = useState(profileDetails.imageUrl || "/Images/profile.jpg"); // Default image path
+  const [profileImage, setProfileImage] = useState(
+    profileDetails.imageUrl || "/Images/profile.jpg"
+  ); // Default image path
   const [originalImage, setOriginalImage] = useState(profileImage); // Store original image for cancellation
   const [showMenu, setShowMenu] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -62,7 +78,7 @@ const Account = () => {
 
   const handleSignout = async () => {
     await logout();
-    Cookie.remove('user_id');
+    Cookie.remove("user_id");
     router.push("/login");
   };
 
@@ -70,7 +86,7 @@ const Account = () => {
     router.push("/help");
   };
   const fetchProfileDetails = async () => {
-    const temp = Cookie.get('user_id');
+    const temp = Cookie.get("user_id");
     console.log(temp);
     const r = await getUser(temp);
     console.log(r);
@@ -87,16 +103,12 @@ const Account = () => {
   };
 
   useEffect(() => {
-    async function fetch()
-    {
+    async function fetch() {
       await fetchProfileDetails();
       // const result = await getSharedItineraries();
       // setItineraries(result);
-      
-
     }
     fetch();
-    
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,26 +122,22 @@ const Account = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file = e.target.files?.[0]; // Use optional chaining
 
-    
-    
-    
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl); // Set the new image URL for preview
       setFile(file);
-      
     }
   };
 
   const uploadImage = async (file: any) => {
     const supabase = createClient();
-    const { data, error } = await supabase.storage.from("Profile Pictures").upload(`${profileDetails.name}_${profileDetails.surname}.jpg`, file,{
-        cacheControl: 'no-store, no-cache, must-revalidate', // Prevent caching at all levels
+    const { data, error } = await supabase.storage
+      .from("Profile Pictures")
+      .upload(`${profileDetails.name}_${profileDetails.surname}.jpg`, file, {
+        cacheControl: "no-store, no-cache, must-revalidate", // Prevent caching at all levels
         upsert: true, // Replace file if it already exists
-    });
-    
-}
-
+      });
+  };
 
   const handleCancel = () => {
     setProfileDetails(originalProfileDetails); // Revert to original details
@@ -142,9 +150,10 @@ const Account = () => {
     if (file) {
       const url = await uploadImage(file);
       console.log(url);
-
     }
-    await updateUserProfile(profileDetails.name, profileDetails.surname, profileDetails.email);
+    await updateUserProfile(
+      profileDetails
+    );
     toggleEdit(); // Exit edit mode
   };
 
@@ -176,122 +185,167 @@ const Account = () => {
   };
 
   return (
-    <div className="profile-page">
-      <header className="profile-header">
-        <div className="profile-pic">
-          <img src={profileImage} alt="Profile" />
-          {isEditing && (
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="image-input"
+    <div className="bg-gray-100 min-h-screen p-6">
+      <header className="bg-blue-100 shadow-md rounded-lg p-6 mb-6">
+        <div className="flex items-center space-x-4">
+          <div className="relative">
+            <img
+              src={profileImage}
+              alt="Profile"
+              className="w-24 h-24 rounded-full object-cover"
             />
-          )}
+            {isEditing && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="absolute bottom-0 right-0 opacity-0 cursor-pointer w-10 h-10"
+              />
+            )}
+          </div>
+          <div className="flex-1">
+            {isEditing ? (
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  name="name"
+                  value={profileDetails.name}
+                  onChange={handleInputChange}
+                  placeholder="First Name"
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+                <input
+                  type="text"
+                  name="surname"
+                  value={profileDetails.surname}
+                  onChange={handleInputChange}
+                  placeholder="Surname"
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  value={profileDetails.email}
+                  onChange={handleInputChange}
+                  placeholder="Email"
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+                <input
+                  type="text"
+                  name="country"
+                  value={profileDetails.country}
+                  onChange={handleInputChange}
+                  placeholder="Country"
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+                <div className="flex space-x-4">
+                  <button
+                    onClick={handleSave}
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={handleCancel}
+                    className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <h1 className="text-2xl font-bold">
+                  {profileDetails.name} {profileDetails.surname}
+                </h1>
+                <h2 className="text-lg text-gray-600">
+                  {profileDetails.email}
+                </h2>
+                {profileDetails.country && (
+                <div className="flex items-center space-x-2 mt-2">
+                  <FaMapMarkerAlt />
+                  <span>{profileDetails.country}</span>
+                </div>)}
+                
+                <div className="flex items-center space-x-2 mt-2">
+                  <FaRegCalendarAlt />
+                  <span>Member Since:{profileDetails.memberSince?.substring(5,17)}</span>
+                </div>
+              </>
+            )}
+          </div>
+          <button
+            className="ml-4 p-2 text-gray-600 hover:text-gray-800"
+            onClick={() => setShowMenu(!showMenu)}
+          >
+            {showMenu ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
-        <div className="profile-info">
-          {isEditing ? (
-            <div className="edit-profile">
-              <input
-                type="text"
-                name="name"
-                value={profileDetails.name}
-                onChange={handleInputChange}
-                placeholder="First Name"
-                className="edit-input"
-              />
-              <input
-                type="text"
-                name="surname"
-                value={profileDetails.surname}
-                onChange={handleInputChange}
-                placeholder="Surname"
-                className="edit-input"
-              />
-              <input
-                type="email"
-                name="email"
-                value={profileDetails.email}
-                onChange={handleInputChange}
-                placeholder="Email"
-                className="edit-input"
-              />
-              <div className="edit-buttons">
-                <button onClick={handleSave} className="save-button">
-                  Save
-                </button>
-                <button onClick={handleCancel} className="cancel-button">
-                  Cancel
-                </button>
-              </div>
-            </div>
-          ) : (
-            <>
-              <h1>
-                {profileDetails.name} {profileDetails.surname}
-              </h1>
-              <h2>{profileDetails.email}</h2>
-              <div className="location">
-                <FaMapMarkerAlt />
-                <span>{profileDetails.country}</span>
-              </div>
-              <div className="member-since">
-                <FaRegCalendarAlt />
-                <span>
-                  Member Since: 
-                </span>
-              </div>
-            </>
-          )}
-        </div>
-        <button className="menu-button" onClick={() => setShowMenu(!showMenu)}>
-          {showMenu ? <FaTimes /> : <FaBars />}
-        </button>
         {showMenu && (
-          <div className="menu-dropdown">
-            <button onClick={() => setShowMenu(false)}>
+          <div className="mt-4 bg-white shadow-md rounded-lg p-4 absolute right-0 w-48">
+            <button
+              onClick={() => setShowMenu(false)}
+              className="block w-full text-left py-2 hover:bg-gray-100"
+            >
               <FaTimes /> Close
             </button>
-            <button onClick={openEditProfile}>
+            <button
+              onClick={openEditProfile}
+              className="block w-full text-left py-2 hover:bg-gray-100"
+            >
               <FaEdit /> Edit Profile
             </button>
-            <button onClick={togglePopup}>
+            <button
+              onClick={togglePopup}
+              className="block w-full text-left py-2 hover:bg-gray-100"
+            >
               <FaInfoCircle /> About
             </button>
-            <button onClick={handleHelpCenter}>
+            <button
+              onClick={handleHelpCenter}
+              className="block w-full text-left py-2 hover:bg-gray-100"
+            >
               <FaQuestionCircle /> Help Center
             </button>
-            <button onClick={handleSignout}>
+            <button
+              onClick={handleSignout}
+              className="block w-full text-left py-2 hover:bg-gray-100"
+            >
               <FaSignOutAlt /> Logout
             </button>
           </div>
         )}
       </header>
 
-      <section className="saved-itineraries">
-        <h3 className="Following-title">My Following</h3>
-        <div className="profile-stats">
-          <div className="following" onClick={toggleFollowing}>
-            <span>24</span>
-            <p>Following</p>
+      <section className="bg-blue-100 shadow-md rounded-lg p-6">
+        <h3 className="text-xl font-semibold mb-4">My Following</h3>
+        <div className="flex space-x-4 mb-6">
+          <div className="text-center cursor-pointer" onClick={toggleFollowing}>
+            <span className="text-2xl font-bold">24</span>
+            <p className="text-gray-600">Following</p>
           </div>
-          <div className="followers" onClick={toggleFollowers}>
-            <span>33</span>
-            <p>Followers</p>
+          <div className="text-center cursor-pointer" onClick={toggleFollowers}>
+            <span className="text-2xl font-bold">33</span>
+            <p className="text-gray-600">Followers</p>
           </div>
         </div>
-        <h3 className="section-title">Shared Itineraries</h3>
-        <div className="itinerary-cards">
+        <h3 className="text-xl font-semibold mb-4">Shared Itineraries</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {itineraries.map((itinerary: any, index: any) => (
-            <div key={index} className="itinerary-card">
+            <div
+              key={index}
+              className="bg-white shadow-md rounded-lg overflow-hidden"
+            >
               <img
                 src={itinerary.image}
                 alt={itinerary.name}
-                className="itinerary-image"
+                className="w-full h-40 object-cover"
               />
-              <div className="itinerary-content">
-                <h4>{itinerary.name}</h4>
-                <button className="view-button">View</button>
+              <div className="p-4">
+                <h4 className="text-lg font-semibold">{itinerary.name}</h4>
+                <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                  View
+                </button>
               </div>
             </div>
           ))}
@@ -299,10 +353,10 @@ const Account = () => {
       </section>
 
       {showPopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <h2>About This Site</h2>
-            <p>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white shadow-md rounded-lg p-6 w-80">
+            <h2 className="text-xl font-semibold mb-4">About This Site</h2>
+            <p className="mb-4">
               Welcome to our Travel Planner! This platform is designed to
               simplify your journey by helping you effortlessly organize your
               trips, discover curated itineraries, and access a wealth of travel
@@ -312,7 +366,12 @@ const Account = () => {
               you'll find FAQs, tips, and support to make your travel experience
               even better.
             </p>
-            <button onClick={togglePopup}>Close</button>
+            <button
+              onClick={togglePopup}
+              className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

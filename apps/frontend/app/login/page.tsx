@@ -87,12 +87,24 @@ const SplashPage = () => {
       console.log(result);
       if (result.user) {
         const docRef = doc(db, "Users", result.user.uid);
-        await setDoc(docRef, {
-          user_id: result.user.uid,
-          name: result?.user?.displayName?.split(" ")[0],
-          surname: result?.user?.displayName?.split(" ")[1],
-          email: result.user.email,
-        });
+        const temp = result.user.displayName?.split(" ");
+        if (temp?.length == 3) {
+          await setDoc(docRef, {
+            user_id: result.user.uid,
+            name: temp[0],
+            surname: temp[1] + " " + temp[2],
+            email: result.user.email,
+            memberSince: result.user?.metadata?.creationTime,
+          });
+        } else {
+          await setDoc(docRef, {
+            user_id: result.user.uid,
+            name: result?.user?.displayName?.split(" ")[0],
+            surname: result?.user?.displayName?.split(" ")[1],
+            email: result.user.email,
+            memberSince: result.user?.metadata?.creationTime,
+          });
+        }
       }
       return JSON.stringify(result);
     } catch (error) {
