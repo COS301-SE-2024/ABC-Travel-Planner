@@ -3,12 +3,15 @@ import React, { useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import ItineraryComponent from "./itineraryComponent";
 import { createItinerary,getItineraries } from ".";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Itinerary = () => {
   const [itineraries, setItineraries] = useState<any>([]); 
   const [showModal, setShowModal] = useState(false);
   const [itineraryName, setItineraryName] = useState("");
   const [location, setLocation] = useState("");
+  const [user_id, setUser_id] = useState("");
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
@@ -20,9 +23,12 @@ const Itinerary = () => {
   const handleAddItinerary = async (e: any) => {
     
     e.preventDefault();
+    const result = axios.post("http://localhost:4000/itinerary/create",{name: itineraryName,location,user_id});
+    const r = axios.post("http://localhost:4000/itinerary/getItineraries",{user_id});
+    console.log(result);
     
-    const data = await createItinerary(itineraryName, location);
-    fetchItineraries();
+    // const data = await createItinerary(itineraryName, location);
+    // fetchItineraries();
     
 
     closeModal();
@@ -46,6 +52,7 @@ const Itinerary = () => {
   };
 
   useEffect(() => {
+    Cookies.get("user_id") && setUser_id(Cookies.get("user_id") || "");
     fetchItineraries();
   }, []);
 

@@ -102,6 +102,7 @@ const Account = () => {
   useEffect(() => {
     async function fetch() {
       await fetchProfileDetails();
+      
       // const result = await getSharedItineraries();
       // setItineraries(result);
     }
@@ -276,7 +277,7 @@ const Account = () => {
                 <div className="flex items-center space-x-2 mt-2">
                   <FaRegCalendarAlt />
                   <span>
-                    Member Since: {profileDetails.memberSince?.substring(5, 17)}
+                    Member Since: {profileDetails.memberSince}
                   </span>
                 </div>
               </>

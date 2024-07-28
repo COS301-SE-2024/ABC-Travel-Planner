@@ -35,6 +35,7 @@ const SplashPage = () => {
   }>({ name: "", surname: "", email: "", password: "", confirmPassword: "" });
 
   const handleLogin = async (e: any) => {
+    
     e.preventDefault();
     const result = await login(loginData);
     const tmp = JSON.parse(result || "{}");
@@ -89,13 +90,14 @@ const SplashPage = () => {
         const temp = result.user.displayName?.split(" ");
         const r = await getUser(result.user.uid);
         if (!r) {
+          
           if (temp?.length == 3) {
             await setDoc(docRef, {
               user_id: result.user.uid,
               name: temp[0],
               surname: temp[1] + " " + temp[2],
               email: result.user.email,
-              memberSince: result.user?.metadata?.creationTime,
+              memberSince: new Date().toISOString().substring(0, 10),
             });
           } else {
             await setDoc(docRef, {
@@ -103,7 +105,7 @@ const SplashPage = () => {
               name: result?.user?.displayName?.split(" ")[0],
               surname: result?.user?.displayName?.split(" ")[1],
               email: result.user.email,
-              memberSince: result.user?.metadata?.creationTime,
+              memberSince: new Date().toISOString().substring(0, 10),
             });
           }
         }
@@ -114,7 +116,8 @@ const SplashPage = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (e: any) => {
+    e.preventDefault();
     const result = await signInWithGoogle();
     if (result) {
       const { user } = JSON.parse(result);
