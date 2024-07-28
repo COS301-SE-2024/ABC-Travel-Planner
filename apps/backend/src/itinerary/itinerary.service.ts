@@ -4,13 +4,14 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class ItineraryService {
     constructor(@Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App){}
-    async createItinerary(itinerary: any) {
-        const result = await this.firebaseApp.firestore().collection('Itineraries').add(itinerary);
-        return result;
+    async createItinerary(name: string, location: string, user_id: string) {
+        const result = await this.firebaseApp.firestore().collection('Itineraries').add({name, location, user_id, shared: false, dateCreated: new Date().toISOString().substring(0, 10)});
+        const temp = await this.firebaseApp.firestore().collection('Itineraries').doc(result.id).update({id: result.id});
+        return temp;
     }
 
-    async getItineraries() {
-        const result = await this.firebaseApp.firestore().collection('Itineraries').get();
+    async getItineraries(user_id: string) {
+        const result = await this.firebaseApp.firestore().collection('Itineraries').where('user_id', '==', user_id).get();
         return result.docs.map(doc => doc.data());
     }
 
@@ -19,8 +20,8 @@ export class ItineraryService {
         return result.data();
     }
 
-    async updateItinerary(itineraryId: string, itinerary: any) {
-        const result = await this.firebaseApp.firestore().collection('Itineraries').doc(itineraryId).update(itinerary);
+    async updateItinerary(itineraryId: string, name: string, location: string) {
+        const result = await this.firebaseApp.firestore().collection('Itineraries').doc(itineraryId).update({name, location});
         return result;
     }
 
