@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin'
+import { UserNotFoundException } from 'src/Exceptions/user-not-found-exception';
 
 @Injectable()
 export class FollowService {
@@ -13,6 +14,13 @@ export class FollowService {
     // Username is passed down or a db call is made...
     // ...
     userName = 'User1';
+
+    //Check if user exists in db...
+    const currUserExists = (await this.db.collection('Users').doc(userName).get()).exists
+    
+    if (!currUserExists) {
+      throw new UserNotFoundException(userName)
+    }
 
     try {
           const followers = await this.db
@@ -33,6 +41,13 @@ export class FollowService {
     // ...
     userName = 'User1';
 
+    //Check if user exists in db...
+    const currUserExists = (await this.db.collection('Users').doc(userName).get()).exists
+    
+    if (!currUserExists) {
+      throw new UserNotFoundException(userName)
+    }
+
     try {
           const following = await this.db
               .collection('Follow-Details')
@@ -51,15 +66,29 @@ export class FollowService {
     // Username is passed down or a db call is made...
     // ...
     currUser = 'User1';
+    userToFollow = 'User3';
 
     try {
 
-      //
+      //Check if user exists in db...
+      const currUserExists = (await this.db.collection('Users').doc(currUser).get()).exists
+      const userToFollowExists = (await this.db.collection('Users').doc(userToFollow).get()).exists
+      
+      if (!currUserExists) {
+        throw new UserNotFoundException(currUser)
+      }
+
+      if (!userToFollowExists) {
+        throw new UserNotFoundException(currUser)
+      }
+
       const followResponse = await this.db
             .collection('Follow-Details')
             .doc(currUser)
             .collection('Following')
-            .add({
+            .doc(userToFollow)
+            .set({
+              followedUserRef: this.db.collection(userToFollow),
               timestamp: admin.firestore.FieldValue.serverTimestamp(),
             })
       
@@ -74,6 +103,17 @@ export class FollowService {
     // ...
     currUser = 'User1'; 
 
+    //Check if user exists in db...
+    const currUserExists = (await this.db.collection('Users').doc(currUser).get()).exists
+    const userToFollowExists = (await this.db.collection('Users').doc(userToFollow).get()).exists
+    
+    if (!currUserExists) {
+      throw new UserNotFoundException(currUser)
+    }
 
+    if (!userToFollowExists) {
+      throw new UserNotFoundException(currUser)
+    }
+    
   }
 }
