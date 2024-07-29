@@ -8,6 +8,7 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import * as path from 'path';
 import { PostsModule } from './posts/posts.module';
+import { FollowModule } from './follow/follow.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { PostsModule } from './posts/posts.module';
     UsersModule, 
     FirebaseModule, 
     ReviewsModule,
-    PostsModule
+    PostsModule,
+    FollowModule
   ],
   controllers: [AppController],
   providers: [AppService],
