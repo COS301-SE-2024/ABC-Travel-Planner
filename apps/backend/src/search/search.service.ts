@@ -29,13 +29,13 @@ export class SearchService {
                 includeType = 'car_rental';
                 break;
             case 'airportTaxis':
-                includeType = '';
+                includeType = 'travel_agency';
                 break;
             case 'attractions':
                 includeType = '';
                 break;
             case 'flights':
-                includeType = '';
+                includeType = 'airport';
                 break;
             default:
                 break;
@@ -69,7 +69,7 @@ export class SearchService {
                             },
                         },
                     });
-
+                    console.log(JSON.stringify(detailedPlace[0].types));
                     let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
                     const firstPhotoUrl = detailedPlace[0].photos && detailedPlace[0].photos.length > 0 ?
                         this.constructImageUrl(detailedPlace[0].photos[0].name, apiKey as string) :
@@ -100,7 +100,8 @@ export class SearchService {
     }
 
     async searchProfile(user: string): Promise<any> {
-        const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'), admin.firestore.Filter.where('user_name', '>=', user), admin.firestore.Filter.where('user_name', '<=', user + '\uf8ff'))).get();
+        //admin.firestore.Filter.where('user_name', '>=', user), admin.firestore.Filter.where('user_name', '<=', user + '\uf8ff')
+        const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'))).get();
         if (data.empty) {
             return [];
         }
@@ -109,7 +110,7 @@ export class SearchService {
         data.forEach(doc => {
             users.push({
                 name: doc.data().name,
-                username: doc.data().username,
+                //username: doc.data().username,
                 id: doc.data().user_id,
                 imageUrl: doc.data().image_url
             });
