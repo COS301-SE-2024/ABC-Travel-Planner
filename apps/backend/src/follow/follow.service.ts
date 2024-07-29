@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin'
-import { UserNotFoundException } from 'src/Exceptions/user-not-found-exception';
+import { NotFoundException } from 'src/Exceptions/not-found-exception';
+import { FollowException } from 'src/Exceptions/follow-unsuccessful-exception';
 
 @Injectable()
 export class FollowService {
@@ -19,11 +20,11 @@ export class FollowService {
     const currUserExists = (await this.db.collection('Users').doc(userName).get()).exists
     
     if (!currUserExists) {
-      throw new UserNotFoundException(userName)
+      throw new NotFoundException("User", userName)
     }
 
     try {
-          const followers = await this.db
+        const followers = await this.db
               .collection('Follow-Details')
               .doc(userName)
               .collection('Followers')
@@ -45,11 +46,11 @@ export class FollowService {
     const currUserExists = (await this.db.collection('Users').doc(userName).get()).exists
     
     if (!currUserExists) {
-      throw new UserNotFoundException(userName)
+      throw new NotFoundException("User", userName)
     }
 
     try {
-          const following = await this.db
+        const following = await this.db
               .collection('Follow-Details')
               .doc(userName)
               .collection('Followers')
@@ -66,20 +67,19 @@ export class FollowService {
     // Username is passed down or a db call is made...
     // ...
     currUser = 'User1';
-    userToFollow = 'User3';
+    userToFollow = 'User2';
 
     try {
-
       //Check if user exists in db...
       const currUserExists = (await this.db.collection('Users').doc(currUser).get()).exists
       const userToFollowExists = (await this.db.collection('Users').doc(userToFollow).get()).exists
       
       if (!currUserExists) {
-        throw new UserNotFoundException(currUser)
+        throw new NotFoundException("User", currUser)
       }
 
       if (!userToFollowExists) {
-        throw new UserNotFoundException(currUser)
+        throw new NotFoundException("User", userToFollow)
       }
 
       const followResponse = await this.db
@@ -91,6 +91,28 @@ export class FollowService {
               followedUserRef: this.db.collection(userToFollow),
               timestamp: admin.firestore.FieldValue.serverTimestamp(),
             })
+
+      console.log(followResponse)
+
+      const followerResponse = await this.db
+            .collection('Follow-Details')
+            .doc(userToFollow)
+            .collection('Followers')
+            .doc(currUser)
+            .set({
+              followedUserRef: this.db.collection(userToFollow),
+              timestamp: admin.firestore.FieldValue.serverTimestamp(),
+            })
+  
+      console.log(followerResponse)
+
+      if (!followResponse) {
+        throw new FollowException(true, "follow", currUser, userToFollow)
+      }
+
+      if (!followerResponse) {
+        throw new FollowException(true, "follower", currUser, userToFollow)
+      }
       
     } catch (error) {
       console.error(error)
@@ -102,18 +124,44 @@ export class FollowService {
     // Username is passed down or a db call is made...
     // ...
     currUser = 'User1'; 
+    userToUnfollow = 'User2';
 
     //Check if user exists in db...
     const currUserExists = (await this.db.collection('Users').doc(currUser).get()).exists
-    const userToFollowExists = (await this.db.collection('Users').doc(userToFollow).get()).exists
+    const userToUnfollowExists = (await this.db.collection('Users').doc(userToUnfollow).get()).exists
     
     if (!currUserExists) {
-      throw new UserNotFoundException(currUser)
+      throw new NotFoundException("User", currUser)
     }
 
-    if (!userToFollowExists) {
-      throw new UserNotFoundException(currUser)
+    if (!userToUnfollowExists) {
+      throw new NotFoundException("User", userToUnfollow)
     }
-    
+
+    const unfollowResponse = await this.db
+            .collection('Follow-Details')
+            .doc(currUser)
+            .collection('Following')
+            .doc(userToUnfollow)
+            .delete()
+
+    console.log(unfollowResponse)
+
+    const unfollowerResponse = await this.db
+          .collection('Follow-Details')
+          .doc(userToUnfollow)
+          .collection('Followers')
+          .doc(currUser)
+          .delete()
+
+    console.log(unfollowerResponse)
+
+    if (!unfollowResponse) {
+      throw new FollowException(false, "follow", currUser, userToUnfollow)
+    }
+
+    if (!unfollowerResponse) {
+      throw new FollowException(false, "follower", currUser, userToUnfollow)
+    }
   }
 }
