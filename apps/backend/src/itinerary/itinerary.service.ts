@@ -20,8 +20,8 @@ export class ItineraryService {
         return result.data();
     }
 
-    async updateItinerary(itineraryId: string, name: string, location: string) {
-        const result = await this.firebaseApp.firestore().collection('Itineraries').doc(itineraryId).update({name, location});
+    async updateItinerary(itineraryId: string, name: string, location: string, imageUrl: string) {
+        const result = await this.firebaseApp.firestore().collection('Itineraries').doc(itineraryId).update({name, location, imageUrl});
         return result;
     }
 

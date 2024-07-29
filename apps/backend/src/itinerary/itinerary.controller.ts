@@ -27,8 +27,8 @@ export class ItineraryController {
     }
 
     @Post('update')
-    async updateItinerary(@Body() body: {itineraryId: string, name: string, location: string}) {
-        return this.itineraryService.updateItinerary(body.itineraryId, body.name, body.location);
+    async updateItinerary(@Body() body: {itineraryId: string, name: string, location: string, imageUrl: string}) {
+        return this.itineraryService.updateItinerary(body.itineraryId, body.name, body.location, body.imageUrl);
     }
 
     @Post('delete')

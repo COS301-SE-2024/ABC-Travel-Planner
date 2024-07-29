@@ -37,6 +37,10 @@ const SplashPage = () => {
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
+    if (loginData.email === "" || loginData.password === "") {
+      alert("Please enter email and password");
+      return;
+    }
     const result = await login(loginData);
     const tmp = JSON.parse(result || "{}");
     const user = tmp?.user;
@@ -168,7 +172,7 @@ const SplashPage = () => {
 
         <div className="container">
           <div className="row justify-content-center">
-            <div onSubmit={handleLogin} className="col-md-6">
+            <div  className="col-md-6">
               <form style={styles.form}>
                 <h1 style={{ ...styles.headers, textAlign: "center" }}>
                   Login
@@ -207,7 +211,8 @@ const SplashPage = () => {
                 <div className="d-flex flex-column align-items-center">
                   <button
                     data-testid="signInSubmit"
-                    type="submit"
+                    type="button"
+                    onClick={handleLogin}
                     className="btn btn-primary mb-2 w-60"
                   >
                     Login

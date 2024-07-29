@@ -11,7 +11,7 @@ const Itinerary = () => {
   const [showModal, setShowModal] = useState(false);
   const [itineraryName, setItineraryName] = useState("");
   const [location, setLocation] = useState("");
-  const [user_id, setUser_id] = useState("");
+
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
@@ -22,6 +22,7 @@ const Itinerary = () => {
 
   const handleAddItinerary = async (e: any) => {
     e.preventDefault();
+    const user_id = Cookies.get("user_id");
     const imageUrl = await getItineraryImage(location);
     await axios.post("http://localhost:4000/itinerary/create",{name: itineraryName,location,user_id,imageUrl});
     
@@ -32,26 +33,27 @@ const Itinerary = () => {
   };
 
   const fetchItineraries = async () => {
+    const user_id = Cookies.get("user_id");
     const temp = await axios.post("http://localhost:4000/itinerary/getItineraries",{user_id: user_id});
     
-    console.log(temp);
-    // const itineraries = temp?.data?.map((itinerary: any) => {
-    //   return (
-    //     <ItineraryComponent
-    //       key={itinerary.id}
-    //       id={itinerary.id}
-    //       name={itinerary.name}
-    //       location={itinerary.location}
-    //       image={itinerary.imageUrl}
-    //       fetchItineraries={fetchItineraries}
-    //     />
-    //   );
-    // });
-    // setItineraries(itineraries);
+    const itineraries = temp?.data?.map((itinerary: any) => {
+      return (
+        <ItineraryComponent
+          key={itinerary.id}
+          id={itinerary.id}
+          name={itinerary.name}
+          location={itinerary.location}
+          image={itinerary.imageUrl}
+          fetchItineraries={fetchItineraries}
+          shared={itinerary.shared}
+        />
+      );
+    });
+    setItineraries(itineraries);
   };
 
   useEffect(() => {
-    Cookies.get("user_id") && setUser_id(Cookies.get("user_id") || "");
+    
     fetchItineraries();
   }, []);
 

@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import { deleteItinerary,updateItinerary } from ".";
+import { deleteItinerary,updateItinerary , getItineraryImage} from ".";
+import axios from "axios";
 
 interface ItineraryComponentProps {
   name: string;
   location: string;
   image: string;
+  shared: boolean;
   id: any,
   fetchItineraries: () => void;
 }
@@ -18,6 +20,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
   location,
   image,
   id,
+  shared,
   fetchItineraries
 }) => {
   const [newName, setNewName] = useState(name);
@@ -51,13 +54,14 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
 
   const handleEdit = async (e: any) => {
     e.preventDefault();
-    await updateItinerary(id, newName, newLocation);
+    const imageUrl = await getItineraryImage(newLocation);
+    await axios.post("http://localhost:4000/itinerary/update",{itineraryId:id,name:newName,location:newLocation,imageUrl});
     closeEditModal();
     fetchItineraries();
   };
 
   const handleDelete = async () => {
-     await deleteItinerary(id);
+     await axios.post("http://localhost:4000/itinerary/delete",{itineraryId:id});
      fetchItineraries();
     closeDeleteModal();
   };
@@ -111,6 +115,15 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
                   &#215;
                 </button>
               </div>
+              {/* <div className="relative w-100 h-40">
+          <Image
+            src={image}
+            alt={location}
+            layout="fill"
+            objectFit="cover"
+            
+          />
+        </div> */}
               
               <form onSubmit={handleEdit} className="p-6">
                 <div className="mb-4">
