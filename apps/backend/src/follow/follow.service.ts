@@ -17,20 +17,31 @@ export class FollowService {
     userName = 'User1';
 
     //Check if user exists in db...
-    const currUserExists = (await this.db.collection('Users').doc(userName).get()).exists
+    // const currUser = this.db.collection('Users').doc(userName);
+    // const currUserDoc = await currUser.get();
+    // const currUserExists = currUserDoc.exists
     
-    if (!currUserExists) {
-      throw new NotFoundException("User", userName)
-    }
+    // console.log(`Fetching document: Users/${userName}`);
+    // console.log(`Document snapshot: ${JSON.stringify(currUserDoc)}`);
+    // console.log(`Document exists: ${currUserExists}`);
+
+    // if (!currUserExists) {
+    //   throw new NotFoundException("User", userName)
+    // }
 
     try {
-        const followers = await this.db
+        const followersData = await this.db
               .collection('Follow-Details')
               .doc(userName)
               .collection('Followers')
               .get()
+            
+        const followers = followersData.docs.map( follower => ({
+          userName: follower.id,
+          ...follower.data()
+        }))
 
-        return followers?.docs?.map(follower => follower.data()) ?? [];
+        return followers ?? [];
     } catch (error) {
         console.error(error)
         throw new Error(error);
@@ -43,20 +54,25 @@ export class FollowService {
     userName = 'User1';
 
     //Check if user exists in db...
-    const currUserExists = (await this.db.collection('Users').doc(userName).get()).exists
+    // const currUserExists = (await this.db.collection('Users').doc(userName).get()).exists
     
-    if (!currUserExists) {
-      throw new NotFoundException("User", userName)
-    }
+    // if (!currUserExists) {
+    //   throw new NotFoundException("User", userName)
+    // }
 
     try {
-        const following = await this.db
+        const followingData = await this.db
               .collection('Follow-Details')
               .doc(userName)
-              .collection('Followers')
+              .collection('Following')
               .get()
 
-        return following?.docs?.map(follower => follower.data()) ?? [];
+        const following = followingData.docs.map( followee => ({
+          userName: followee.id,
+          ...followee.data()
+        }))
+
+        return following ?? [];
     } catch (error) {
         console.error(error)
         throw new Error(error);
@@ -66,21 +82,21 @@ export class FollowService {
   async follow(currUser : string, userToFollow: string) : Promise<void> {
     // Username is passed down or a db call is made...
     // ...
-    currUser = 'User1';
-    userToFollow = 'User2';
+    // currUser = 'User1';
+    // userToFollow = 'User2';
 
     try {
       //Check if user exists in db...
-      const currUserExists = (await this.db.collection('Users').doc(currUser).get()).exists
-      const userToFollowExists = (await this.db.collection('Users').doc(userToFollow).get()).exists
+      // const currUserExists = (await this.db.collection('Users').doc(currUser).get()).exists
+      // const userToFollowExists = (await this.db.collection('Users').doc(userToFollow).get()).exists
       
-      if (!currUserExists) {
-        throw new NotFoundException("User", currUser)
-      }
+      // if (!currUserExists) {
+      //   throw new NotFoundException("User", currUser)
+      // }
 
-      if (!userToFollowExists) {
-        throw new NotFoundException("User", userToFollow)
-      }
+      // if (!userToFollowExists) {
+      //   throw new NotFoundException("User", userToFollow)
+      // }
 
       const followResponse = await this.db
             .collection('Follow-Details')
@@ -88,7 +104,7 @@ export class FollowService {
             .collection('Following')
             .doc(userToFollow)
             .set({
-              followedUserRef: this.db.collection(userToFollow),
+              followedUserRef: this.db.collection('Users').doc(userToFollow),
               timestamp: admin.firestore.FieldValue.serverTimestamp(),
             })
 
@@ -100,7 +116,7 @@ export class FollowService {
             .collection('Followers')
             .doc(currUser)
             .set({
-              followedUserRef: this.db.collection(userToFollow),
+              followedUserRef: this.db.collection('Users').doc(userToFollow),
               timestamp: admin.firestore.FieldValue.serverTimestamp(),
             })
   
@@ -123,20 +139,21 @@ export class FollowService {
   async unfollow(currUser : string, userToUnfollow : string) : Promise<void> {
     // Username is passed down or a db call is made...
     // ...
-    currUser = 'User1'; 
-    userToUnfollow = 'User2';
+
+    // currUser = 'User1'; 
+    // userToUnfollow = 'User4';
 
     //Check if user exists in db...
-    const currUserExists = (await this.db.collection('Users').doc(currUser).get()).exists
-    const userToUnfollowExists = (await this.db.collection('Users').doc(userToUnfollow).get()).exists
+    // const currUserExists = (await this.db.collection('Users').doc(currUser).get()).exists
+    // const userToUnfollowExists = (await this.db.collection('Users').doc(userToUnfollow).get()).exists
     
-    if (!currUserExists) {
-      throw new NotFoundException("User", currUser)
-    }
+    // if (!currUserExists) {
+    //   throw new NotFoundException("User", currUser)
+    // }
 
-    if (!userToUnfollowExists) {
-      throw new NotFoundException("User", userToUnfollow)
-    }
+    // if (!userToUnfollowExists) {
+    //   throw new NotFoundException("User", userToUnfollow)
+    // }
 
     const unfollowResponse = await this.db
             .collection('Follow-Details')
