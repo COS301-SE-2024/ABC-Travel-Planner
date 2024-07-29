@@ -173,7 +173,7 @@ const SplashPage = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div  className="col-md-6">
-              <form style={styles.form}>
+              <form onSubmit={handleLogin} style={styles.form}>
                 <h1 style={{ ...styles.headers, textAlign: "center" }}>
                   Login
                 </h1>
@@ -211,8 +211,7 @@ const SplashPage = () => {
                 <div className="d-flex flex-column align-items-center">
                   <button
                     data-testid="signInSubmit"
-                    type="button"
-                    onClick={handleLogin}
+                    type="submit"
                     className="btn btn-primary mb-2 w-60"
                   >
                     Login
@@ -273,10 +272,10 @@ const SplashPage = () => {
           </div>
         </div>
 
-        <div onSubmit={handleRegister} className="container">
+        <div  className="container">
           <div className="row justify-content-center">
             <div className="col-md-6">
-              <form style={styles.form}>
+              <form onSubmit={handleRegister} style={styles.form}>
                 <h1 style={{ ...styles.headers, textAlign: "center" }}>
                   Register
                 </h1>
