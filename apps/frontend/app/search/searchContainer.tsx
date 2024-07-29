@@ -26,10 +26,11 @@ const SearchContainer = () => {
         setLoading(true);
         try {
             let url = '';
+            const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
             if(selectedTopic == 'profile'){
-                url = `http://localhost:4000/search/user?user=${encodeURIComponent(searchTerm)}`;
+                url = `${backendUrl}/search/user?user=${encodeURIComponent(searchTerm)}`;
             }else{
-                url = `http://localhost:4000/search/places?textQuery=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(selectedTopic)}`
+                url = `${backendUrl}/search/places?textQuery=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(selectedTopic)}`
             }
             const response = await fetch(url);
             if (!response.ok) {

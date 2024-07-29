@@ -34,35 +34,35 @@ export const getPricePlaceholder = (type: string) => {
 export const generatePrice = (id: string, type: string, country: string) => {
   let basePrice;
   switch (type) {
-      case 'stays':
-          basePrice = 100;
-          break;
-      case 'attractions':
-          basePrice = 50;
-          break;
-      case 'carRental':
-          basePrice = 70;
-          break;
-      case 'airportTaxis':
-          basePrice = 40;
-          break;
-      default:
-          basePrice = 100;
+    case 'stays':
+      basePrice = 100;
+      break;
+    case 'attractions':
+      basePrice = 50;
+      break;
+    case 'carRental':
+      basePrice = 70;
+      break;
+    case 'airportTaxis':
+      basePrice = 40;
+      break;
+    default:
+      basePrice = 100;
   }
 
   let countryMultiplier;
   switch (country) {
-      case 'Africa':
-          countryMultiplier = 1;
-          break;
-      case 'USA':
-          countryMultiplier = 1.2;
-          break;
-      case 'UK':
-          countryMultiplier = 1.3;
-          break;
-      default:
-          countryMultiplier = 1.1;
+    case 'Africa':
+      countryMultiplier = 1;
+      break;
+    case 'USA':
+      countryMultiplier = 1.2;
+      break;
+    case 'UK':
+      countryMultiplier = 1.3;
+      break;
+    default:
+      countryMultiplier = 1.1;
   }
 
   const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -199,7 +199,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                   >
                     <path
                       fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                       clipRule="evenodd"
                     />
                   </svg>

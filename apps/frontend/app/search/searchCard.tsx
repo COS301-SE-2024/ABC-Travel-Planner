@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 interface SearchCardProps {
     place: any;
-    
+
 }
 
 export const getRatingColor = (rating: number) => {
@@ -107,7 +107,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 </div>
                 <p className="text-gray-600 inline-block pr-2">{`${place.userRatingCount} reviews `}</p>
             </div>
-            
+
 
             <div className='flex flex-row justify-start items-start'>
                 <div className="w-1/3">
@@ -120,7 +120,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 <div className="w-2/3 pl-4 overflow-hidden">
                     <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
                     <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
-  
+
                     {place.goodForChildren && (
                         <div className="mt-2">
                             <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
@@ -173,7 +173,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                                     >
                                         <path
                                             fillRule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                             clipRule="evenodd"
                                         />
                                     </svg>
@@ -197,7 +197,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 </div>
             </div>
         </div>
-        
+
     );
 };
 

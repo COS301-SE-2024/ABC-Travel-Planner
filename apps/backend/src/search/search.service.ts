@@ -101,7 +101,8 @@ export class SearchService {
 
     async searchProfile(user: string): Promise<any> {
         //admin.firestore.Filter.where('user_name', '>=', user), admin.firestore.Filter.where('user_name', '<=', user + '\uf8ff')
-        const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'))).get();
+        //admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'),
+        const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('username', '>=', user), admin.firestore.Filter.where('username', '<=', user + '\uf8ff'))).get();
         if (data.empty) {
             return [];
         }
@@ -110,7 +111,7 @@ export class SearchService {
         data.forEach(doc => {
             users.push({
                 name: doc.data().name,
-                //username: doc.data().username,
+                username: doc.data().username,
                 id: doc.data().user_id,
                 imageUrl: doc.data().image_url
             });
