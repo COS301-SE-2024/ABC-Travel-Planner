@@ -78,8 +78,14 @@ interface ItemData {
       setDivs([...divs, newDiv]);
     };
   
-    const handleRemoveDiv = (id: number) => {
-      setDivs(divs.filter(divItem => divItem.id !== id));
+    const handleRemoveDiv = async (id: number) => {
+      try {
+          setDivs(divs.filter(divItem => divItem.id !== id));
+          const response = await fetch(`/api/DatabaseDelete?id=${divs[id].data.id}`);
+          console.log(response)
+      } catch (error) {
+        console.error("Could not remove item: ", error)
+      }
     };
   
     const handleModelClose = () => {

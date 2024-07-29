@@ -57,27 +57,40 @@ const TempStorage: React.FC<TempStorageProps> = ({id, location, destination, Ite
   const [i, setI] = useState('');
 
   useEffect(() => {
-    //Checks if it has been stored... Useful for retrieving later on
-    if (!destination) {
-      handleSave()
-      const storedLocation = localStorage.getItem('location');
-      const storedID = localStorage.getItem('id');
-      
-      if (storedLocation) {
-        setL(storedLocation);
-        console.log(`Location: ${storedLocation}`)
+    console.log(id)
+    console.log(location)
+    console.log(destination)
+    console.log(Item_Title)
+    console.log(Item_Type)
+    console.log(image_url)
+
+    const init = async () => {
+      //Checks if it has been stored... Useful for retrieving later on
+      if (!image_url) {
+        console.log("DESTINATION === NULL")
+        handleSave()
+        const storedLocation = localStorage.getItem('location');
+        const storedID = localStorage.getItem('id');
+        
+        if (storedLocation) {
+          setL(storedLocation);
+          console.log(`Location: ${storedLocation}`)
+        }
+        if (storedID) {
+          setI(storedID);
+          console.log(`ID: ${storedID}`)
+        }
       }
-      if (storedID) {
-        setI(storedID);
-        console.log(`ID: ${storedID}`)
+      else if (image_url) {
+        console.log("DESTINATION NOT NULL")
+        uploadItem(Item_Title, Item_Type, destination, image_url)
+      }
+      else {
+        console.log("Destination & id + location values do not match up...")
       }
     }
-    else if (destination) {
-      uploadItem(Item_Title, Item_Type, destination, image_url)
-    }
-    else {
-      console.log("Destination & id + location values do not match up...")
-    }
+
+    init();
   }, []);
 
   const handleSave = () => {

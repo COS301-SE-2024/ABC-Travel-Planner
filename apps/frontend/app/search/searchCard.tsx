@@ -88,7 +88,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     }
     let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
     const numRooms = null;
-    let address = place.Fg.plusCode.compoundCode;
+    let address = place.Eg.plusCode?.compoundCode;
     const location = extractLocation(address);
     const addressParts = address.split(',');
 
@@ -99,12 +99,12 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
             <div className='absolute top-0 right-0 text-right'>
                 <div className="mb-1">
-                    {/* <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p> */}
-                    <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
-                        {place.Fg.rating}
+                    {/* <p className="text-gray-600 inline-block pr-2">{`${place.Eg.userRatingCount} reviews `}</p> */}
+                    <div className={`rounded-full ${getRatingColor(place.Eg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
+                        {place.Eg.rating}
                     </div>
                 </div>
-                <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
+                <p className="text-gray-600 inline-block pr-2">{`${place.Eg.userRatingCount} reviews `}</p>
             </div>
             
 
@@ -112,15 +112,15 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 <div className="w-1/3">
                     <img
                         src={`${place.firstPhotoUrl}`}
-                        alt={place.Fg.displayName}
+                        alt={place.Eg.displayName}
                         className="rounded-lg object-cover"
                     />
                 </div>
                 <div className="w-2/3 pl-4 overflow-hidden">
-                    <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.Fg.displayName}</h1>
+                    <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.Eg.displayName}</h1>
                     <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
 
-                    {place.Fg.isGoodForChildren && (
+                    {place.Eg.isGoodForChildren && (
                         <div className="mt-2">
                             <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
                                 Good for families with children
@@ -128,9 +128,9 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         </div>
                     )}
 
-                    <p className="text-gray-800 mt-4">{place.Fg.editorialSummary}</p>
+                    <p className="text-gray-800 mt-4">{place.Eg.editorialSummary}</p>
 
-                    {place.Fg.paymentOptions?.acceptsCreditCards && (
+                    {place.Eg.paymentOptions?.acceptsCreditCards && (
                         <div className="mt-2 flex items-center text-green-600 text-sm">
                             <svg className="w-5 h-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm5 7.5l-6 6-3-3 1.414-1.414L9 10.672l4.586-4.586L15 7.5z" />

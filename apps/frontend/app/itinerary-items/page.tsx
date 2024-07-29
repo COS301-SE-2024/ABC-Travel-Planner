@@ -54,7 +54,8 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
   const { location, id, destination } = searchParams;
   console.log("Location: " + location);
   console.log("ID: " + id);
-  
+  console.log("Destination: " + destination)
+
   if (destination) {
     const obj = JSON.parse(destination)
     const itemTitle = obj.Fg?.displayName ?? obj.displayName
@@ -62,7 +63,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
     const firstPhotoUrl = obj.firstPhotoUrl
     const location = obj.Fg?.formattedAddress ?? obj.formattedAddress
 
-    console.log("Destination: " + obj);
+    // console.log("Destination: " + obj);
     console.log("====================")
     console.log("id: " + obj.id)
     console.log("firstPhotoUrl: " + obj.firstPhotoUrl)
@@ -78,7 +79,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
 
   return (
     <>
-    <TempStorage id={id} location={location} Item_Title={(destination && (JSON.parse(destination).Fg?.displayName ?? JSON.parse(destination).displayName)) ?? null} Item_Type={(destination && JSON.parse(destination).type) ?? null} destination={(destination && (JSON.parse(destination).Fg?.formattedAddress ?? JSON.parse(destination).formattedAddress)) ?? null} image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null}/>
+    <TempStorage id={id} location={location} Item_Title={(destination && (JSON.parse(destination).Eg?.displayName ?? JSON.parse(destination).displayName)) ?? null} Item_Type={(destination && JSON.parse(destination).type) ?? null} destination={(destination && (JSON.parse(destination).Eg?.formattedAddress ?? JSON.parse(destination).formattedAddress)) ?? null} image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null}/>
     <div className="relative flex flex-col space-x-1 justify-center items-center">
     <div className="flex flex-col border border-gray-300 rounded-lg p-4 bg-white shadow-md w-[96vw] h-auto iteneraryInfo">
       <h1 className="mb-2 text-2xl font-bold text-gray-800 iteneraryHeader "  style={{ fontSize: '2rem', marginBottom:20 }}>Itinerary Items:</h1>
