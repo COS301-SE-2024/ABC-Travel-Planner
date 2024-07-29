@@ -11,26 +11,30 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+import app from "@/libs/firebase/firebase";
 import axios from "axios";
-import { logout, updateUserProfile, getSharedItineraries } from ".";
+import {
+  logout,
+  updateUserProfile,
+  getSharedItineraries,
+  updateImageURL,
+} from ".";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { createClient } from "../utils/supabase/client";
 import Cookie from "js-cookie";
 import getUser from "@/libs/actions/getUser";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const Account = () => {
   const [profileDetails, setProfileDetails] = useState<{
-    name: string;
-    surname: string;
+    username: string;
     email: string;
     user_id: string;
     country: string;
     imageUrl: string;
     memberSince: string;
   }>({
-    name: "",
-    surname: "",
+    username: "",
     email: "",
     user_id: "",
     country: "",
@@ -42,7 +46,7 @@ const Account = () => {
     useState(profileDetails);
   const [file, setFile] = useState<any>(null);
   const [profileImage, setProfileImage] = useState(
-    profileDetails.imageUrl || "/Images/profile.jpg"
+    profileDetails.imageUrl || ""
   ); // Default image path
   const [originalImage, setOriginalImage] = useState(profileImage); // Store original image for cancellation
   const [showMenu, setShowMenu] = useState(false);
@@ -89,20 +93,15 @@ const Account = () => {
     console.log(r);
     const tmp = JSON.parse(r || "");
     setProfileDetails(tmp);
-    // if(response.imageUrl)
-    //   {
-    //     setProfileImage(response.imageUrl);
-    //     console.log(response.imageUrl);
-    //   }
-    //   else{
-    //     setProfileImage("/Images/profile.jpg");
-    //   }
+    if (tmp.imageUrl) {
+      setProfileImage(tmp.imageUrl);
+    }
   };
 
   useEffect(() => {
     async function fetch() {
       await fetchProfileDetails();
-      
+
       // const result = await getSharedItineraries();
       // setItineraries(result);
     }
@@ -128,13 +127,11 @@ const Account = () => {
   };
 
   const uploadImage = async (file: any) => {
-    const supabase = createClient();
-    const { data, error } = await supabase.storage
-      .from("Profile Pictures")
-      .upload(`${profileDetails.name}_${profileDetails.surname}.jpg`, file, {
-        cacheControl: "no-store, no-cache, must-revalidate", // Prevent caching at all levels
-        upsert: true, // Replace file if it already exists
-      });
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `Profiles/${profileDetails.user_id}.jpg`);
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    await updateImageURL({ user_id: profileDetails.user_id, imageURL: url });
   };
 
   const handleCancel = () => {
@@ -147,16 +144,18 @@ const Account = () => {
     const temp = Cookie.get("user_id");
     console.log(temp);
     // Save changes to the database
-    // if (file) {
-    //   const url = await uploadImage(file);
-    //   console.log(url);
-    // }
-    if(originalProfileDetails.email !== profileDetails.email)
-    {
-      const response = await axios.post("http://localhost:4000/auth/UpdateEmail",{
-        email:profileDetails.email,
-        user_id:temp
-      });
+    if (file) {
+      const url = await uploadImage(file);
+      console.log(url);
+    }
+    if (originalProfileDetails.email !== profileDetails.email) {
+      const response = await axios.post(
+        "http://localhost:4000/auth/UpdateEmail",
+        {
+          email: profileDetails.email,
+          user_id: temp,
+        }
+      );
       console.log(response);
     }
     await updateUserProfile(profileDetails);
@@ -195,11 +194,13 @@ const Account = () => {
       <header className="bg-blue-100 shadow-md rounded-lg p-6 mb-6">
         <div className="flex items-center space-x-4">
           <div className="relative">
-            <img
-              src={profileImage}
-              alt="Profile"
-              className="w-24 h-24 rounded-full object-cover"
-            />
+            {profileDetails.imageUrl && (
+              <img
+                src={profileImage}
+                alt="Profile"
+                className="w-24 h-24 rounded-full object-cover"
+              />
+            )}
             {isEditing && (
               <input
                 type="file"
@@ -214,18 +215,10 @@ const Account = () => {
               <div className="space-y-4">
                 <input
                   type="text"
-                  name="name"
-                  value={profileDetails.name}
+                  name="username"
+                  value={profileDetails.username}
                   onChange={handleInputChange}
-                  placeholder="First Name"
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                  type="text"
-                  name="surname"
-                  value={profileDetails.surname}
-                  onChange={handleInputChange}
-                  placeholder="Surname"
+                  placeholder="Username"
                   className="w-full p-2 border border-gray-300 rounded"
                 />
                 <input
@@ -262,7 +255,7 @@ const Account = () => {
             ) : (
               <>
                 <h1 className="text-2xl font-bold">
-                  {profileDetails.name} {profileDetails.surname}
+                  {profileDetails.username}
                 </h1>
                 <h2 className="text-lg text-gray-600">
                   {profileDetails.email}
@@ -274,12 +267,12 @@ const Account = () => {
                   </div>
                 )}
 
-                <div className="flex items-center space-x-2 mt-2">
-                  <FaRegCalendarAlt />
-                  <span>
-                    Member Since: {profileDetails.memberSince}
-                  </span>
-                </div>
+                {profileDetails.memberSince && (
+                  <div className="flex items-center space-x-2 mt-2">
+                    <FaRegCalendarAlt />
+                    <span>Member Since: {profileDetails.memberSince}</span>
+                  </div>
+                )}
               </>
             )}
           </div>

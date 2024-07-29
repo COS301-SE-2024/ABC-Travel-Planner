@@ -11,9 +11,9 @@ export class ItineraryController {
     }
 
     @Post('create')
-    async createItinerary(@Body() body: {name: string, location: string,user_id: string}) { 
+    async createItinerary(@Body() body: {name: string, location: string,user_id: string,imageUrl: string}) { 
         try {
-            return this.itineraryService.createItinerary(body.name,body.location,body.user_id);
+            return this.itineraryService.createItinerary(body.name,body.location,body.user_id,body.imageUrl);
         }
         catch (error) {
             throw error;

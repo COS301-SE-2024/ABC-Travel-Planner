@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import {
   login,
   signUpWithEmailAndPassword,
@@ -35,7 +36,6 @@ const SplashPage = () => {
   }>({ name: "", surname: "", email: "", password: "", confirmPassword: "" });
 
   const handleLogin = async (e: any) => {
-    
     e.preventDefault();
     const result = await login(loginData);
     const tmp = JSON.parse(result || "{}");
@@ -87,27 +87,20 @@ const SplashPage = () => {
       const result = await signInWithPopup(auth, provider);
       if (result.user) {
         const docRef = doc(db, "Users", result.user.uid);
-        const temp = result.user.displayName?.split(" ");
+
         const r = await getUser(result.user.uid);
         if (!r) {
-          
-          if (temp?.length == 3) {
-            await setDoc(docRef, {
-              user_id: result.user.uid,
-              name: temp[0],
-              surname: temp[1] + " " + temp[2],
-              email: result.user.email,
-              memberSince: new Date().toISOString().substring(0, 10),
-            });
-          } else {
-            await setDoc(docRef, {
-              user_id: result.user.uid,
-              name: result?.user?.displayName?.split(" ")[0],
-              surname: result?.user?.displayName?.split(" ")[1],
-              email: result.user.email,
-              memberSince: new Date().toISOString().substring(0, 10),
-            });
-          }
+          const storage = getStorage(app);
+          const storageRef = ref(storage, `Profiles/default.jpg`);
+          const url = await getDownloadURL(storageRef);
+          console.log(url);
+          await setDoc(docRef, {
+            user_id: result.user.uid,
+            username: result?.user?.displayName,
+            email: result.user.email,
+            memberSince: new Date().toISOString().substring(0, 10),
+            imageUrl: url,
+          });
         }
       }
       return JSON.stringify(result);
@@ -161,7 +154,6 @@ const SplashPage = () => {
       }
     }
   };
-  
 
   return (
     <div

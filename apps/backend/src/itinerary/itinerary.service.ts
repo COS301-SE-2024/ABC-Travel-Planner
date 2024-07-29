@@ -4,8 +4,8 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class ItineraryService {
     constructor(@Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App){}
-    async createItinerary(name: string, location: string, user_id: string) {
-        const result = await this.firebaseApp.firestore().collection('Itineraries').add({name, location, user_id, shared: false, dateCreated: new Date().toISOString().substring(0, 10)});
+    async createItinerary(name: string, location: string, user_id: string,imageUrl: string) {
+        const result = await this.firebaseApp.firestore().collection('Itineraries').add({name, location, user_id, shared: false, dateCreated: new Date().toISOString().substring(0, 10), imageUrl});
         const temp = await this.firebaseApp.firestore().collection('Itineraries').doc(result.id).update({id: result.id});
         return temp;
     }
@@ -29,4 +29,6 @@ export class ItineraryService {
         const result = await this.firebaseApp.firestore().collection('Itineraries').doc(itineraryId).delete();
         return result;
     }
+
+   
 }

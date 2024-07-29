@@ -10,10 +10,16 @@ export async function logout() {
   await signOut(auth);
 }
 
-
+export async function updateImageURL({ user_id, imageURL }: { user_id: string; imageURL: string }) {
+  const db = getFirestore(app);
+  const docRef = doc(db, "Users", user_id);
+  await updateDoc(docRef, {
+    imageUrl: imageURL,
+  });
+}
 
 export async function updateUserProfile(
-  { name, surname, email, country,user_id }: { name: string; surname: string; email: string; country: string,user_id:string }
+  { username, email, country,user_id }: { username: string; email: string; country: string,user_id:string }
   
 ) {
     
@@ -22,8 +28,7 @@ export async function updateUserProfile(
     
     const docRef = doc(db, "Users", user_id);
     await updateDoc(docRef, {
-      name: name,
-      surname: surname,
+      username: username,
       email: email,
       country: country,
 
