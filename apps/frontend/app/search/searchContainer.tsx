@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
-import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch, FaUser} from 'react-icons/fa';
+import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch, FaUser } from 'react-icons/fa';
 //import { handleSearchAirports } from '.';
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from './searchCard';
@@ -13,10 +13,12 @@ const SearchContainer = () => {
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
     const [loading, setLoading] = useState(false);
+    const [searchInitiated, setSearchInitiated] = useState(false);
     const handleTopicSelect = (topic: string) => {
         setSelectedTopic(topic);
         setSearchResults([]);
         setSearchTerm('');
+        setSearchInitiated(false);
     };
 
     const handleSearch = async () => {
@@ -24,31 +26,33 @@ const SearchContainer = () => {
             setSearchTerm(searchInputRef.current.value);
         }
         setLoading(true);
+        setSearchInitiated(true);
         try {
             let url = '';
             const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-            if(selectedTopic == 'profile'){
+            if (selectedTopic == 'profile') {
                 url = `${backendUrl}/search/user?user=${encodeURIComponent(searchTerm)}`;
-            }else{
+            } else {
                 url = `${backendUrl}/search/places?textQuery=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(selectedTopic)}`
             }
             const response = await fetch(url);
             if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            if(data.length){
+            if (data.length) {
                 setSearchResults(data);
                 console.log(JSON.stringify(data));
-            }else{
+            } else {
                 setSearchResults([]);
             }
             setLoading(false);
-            
+
             return data;
-          } catch (error) {
+        } catch (error) {
             console.error('Error fetching data:', error);
-          }
+            setLoading(false);
+        }
 
     };
 
@@ -135,17 +139,22 @@ const SearchContainer = () => {
             </div>
 
             {searchResults.length > 0 && (
-            <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
-                {searchResults.map((result, index) => (
+                <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
+                    {searchResults.map((result, index) => (
                         selectedTopic === 'profile' ? (
                             <ProfileCard key={index} profile={result} />
                         ) : (
                             <SearchCard key={index} place={result} />
                         )
-                ))}
-            </div>
-)}
+                    ))}
+                </div>
+            )}
 
+            {searchInitiated && !loading && searchResults.length === 0 && (
+                <div className="flex justify-center items-center h-20 mt-10">
+                    <p className="text-gray-500 text-lg">No search results found.</p>
+                </div>
+            )}
         </div>
     );
 };

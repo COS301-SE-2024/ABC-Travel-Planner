@@ -25,7 +25,7 @@ export class SearchService {
             case 'stays':
                 includeType = 'lodging';
                 break;
-            case 'carRental':
+            case 'carRentals':
                 includeType = 'car_rental';
                 break;
             case 'airportTaxis':
@@ -54,6 +54,10 @@ export class SearchService {
                     },
                 },
             });
+
+            if (!response[0] || !response[0].places || response[0].places.length === 0) {
+                return [];
+            }
 
             const detailedPlaces = await Promise.all(response[0].places.map(async (place: any) => {
                 if (place !== null) {
@@ -95,14 +99,14 @@ export class SearchService {
             return detailedPlaces;
         } catch (error) {
             console.error(error);
-            throw new Error('Failed to search places');
+            return [];
         }
     }
 
     async searchProfile(user: string): Promise<any> {
         //admin.firestore.Filter.where('user_name', '>=', user), admin.firestore.Filter.where('user_name', '<=', user + '\uf8ff')
         //admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'),
-        const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('username', '>=', user), admin.firestore.Filter.where('username', '<=', user + '\uf8ff'))).get();
+        const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'), admin.firestore.Filter.where('username', '>=', user), admin.firestore.Filter.where('username', '<=', user + '\uf8ff'))).get();
         if (data.empty) {
             return [];
         }

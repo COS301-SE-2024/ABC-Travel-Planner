@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import FilterCard from './filterCard';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from '../search/searchCard';
 //import { handleSearchAirports } from '../search/index';
@@ -10,7 +10,9 @@ import SearchCard from '../search/searchCard';
 const Filter = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [searchInitiated, setSearchInitiated] = useState(false);
 
   const topic = searchParams?.get('topic');
   const searchTerm = searchParams?.get('term');
@@ -24,14 +26,14 @@ const Filter = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        if(data.length){
-            setSearchResults(data);
-            console.log(JSON.stringify(data));
-        }else{
-            setSearchResults([]);
+        if (data.length) {
+          setSearchResults(data);
+          console.log(JSON.stringify(data));
+        } else {
+          setSearchResults([]);
         }
         setLoading(false);
-        
+
         return data;
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -40,6 +42,7 @@ const Filter = () => {
 
     if (searchTerm && topic) {
       setLoading(true);
+      setSearchInitiated(true);
       generalSearch(searchTerm, topic);
     }
   }, [searchTerm, topic]);
@@ -68,7 +71,17 @@ const Filter = () => {
         </div>
       )}
 
-
+      {searchResults.length === 0 && !loading && (
+        <div className="flex flex-col items-center gap-4 rounded-lg pt-10 pb-10">
+          <p className="text-gray-500 text-lg">No search results found.</p>
+          <button
+            onClick={() => router.back()}
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Go Back
+          </button>
+        </div>
+      )}
     </div>
   );
 };
