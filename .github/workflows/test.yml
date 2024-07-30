@@ -1,7 +1,7 @@
 name: Test Code
 on:
   push:
-    branches: [ main, dev, frontend/testing ]
+    branches: [ main, dev ]
   pull_request:
     branches: [ main, dev ]
     
@@ -73,7 +73,7 @@ jobs:
           echo "auth: ${{ secrets.GIST_SECRET }}"
           
       - name: Create the badge
-        uses: schneegans/dynamic-badges-action@latest
+        uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: d5e1d38427eaf6a78fc2ac70d0f50bc6
