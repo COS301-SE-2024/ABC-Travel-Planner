@@ -62,6 +62,17 @@ jobs:
           echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
           echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
 
+      - name: Verify GIST_SECRET
+        run: |
+          if [ -z "$GIST_SECRET" ]; then
+            echo "GIST_SECRET is empty"
+            exit 1
+          else
+            echo "GIST_SECRET is set"
+          fi
+        env:
+          GIST_SECRET: ${{ secrets.GIST_SECRET }}
+          
       - name: Create the badge
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
