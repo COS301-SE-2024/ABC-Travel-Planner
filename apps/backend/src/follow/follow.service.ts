@@ -11,10 +11,10 @@ export class FollowService {
     this.db = firebaseApp.firestore();
   }
 
-  async getFollowers(userName: string) : Promise<any[]> {
+  async getFollowers(user_id: string) : Promise<any[]> {
     // Username is passed down or a db call is made...
     // ...
-    userName = 'User1';
+    user_id = 'User1';
 
     //Check if user exists in db...
     // const currUser = this.db.collection('Users').doc(userName);
@@ -32,7 +32,7 @@ export class FollowService {
     try {
         const followersData = await this.db
               .collection('Follow-Details')
-              .doc(userName)
+              .doc(user_id)
               .collection('Followers')
               .get()
             
@@ -48,10 +48,10 @@ export class FollowService {
     }
   }
 
-  async getFollowing(userName: string) : Promise<any[]> {
+  async getFollowing(user_id: string) : Promise<any[]> {
     // Username is passed down or a db call is made...
     // ...
-    userName = 'User1';
+    user_id = 'User1';
 
     //Check if user exists in db...
     // const currUserExists = (await this.db.collection('Users').doc(userName).get()).exists
@@ -63,7 +63,7 @@ export class FollowService {
     try {
         const followingData = await this.db
               .collection('Follow-Details')
-              .doc(userName)
+              .doc(user_id)
               .collection('Following')
               .get()
 

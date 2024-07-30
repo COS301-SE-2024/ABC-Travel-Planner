@@ -8,13 +8,13 @@ export class FollowController {
     ) {}
 
     @Get('followers/:id')
-    async getFollowers(@Param('id') userName: string) : Promise<any[]> {
-        return await this.followService.getFollowers(userName);
+    async getFollowers(@Param('id') user_id: string) : Promise<any[]> {
+        return await this.followService.getFollowers(user_id);
     }
 
     @Get('following/:id')
-    async getFollowing(@Param('id') userName: string) : Promise<any[]> {
-        return await this.followService.getFollowing(userName);
+    async getFollowing(@Param('id') user_id: string) : Promise<any[]> {
+        return await this.followService.getFollowing(user_id);
     }
 
     @Post('follow')
