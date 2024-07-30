@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import DestinationCard from './DestinationCard';
 import PostCard from './PostCard';
 
@@ -46,9 +47,21 @@ interface Post {
   timestamp: number;
 }
 
+interface Place {
+  name: string;
+  photos?: {
+    photo_reference: string;
+  }[];
+  formatted_address: string;
+  place_id: string;
+  types: string[];
+}
+
+
 const Home = () => {
   const [tab, setTab] = useState('For You');
   const [posts, setPosts] = useState<Post[]>([]);
+  const [popularDestinations, setPopularDestinations] = useState<{ image: string }[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -68,51 +81,83 @@ const Home = () => {
     fetchPosts();
   }, []);
 
+  useEffect(() => {
+    const fetchPopularDestinations = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/google-maps/popular-destinations');
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log('Full Response:', data); // Log the entire response
+        const places = data.results;
+        if (!places) {
+          throw new Error('No places found in response');
+        }
+  
+        const imageDestinations = places.map((place : Place) => {
+          if (place.photos && place.photos.length > 0) {
+            return {
+              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
+            };
+          } else {
+            return { image: '/Images/default.jpg' };
+          }
+        });
+  
+        console.log('Image Destinations:', imageDestinations);
+        setPopularDestinations(imageDestinations);
+      } catch (error) {
+        console.error('Error fetching popular destinations:', error);
+      }
+    };
+  
+    fetchPopularDestinations();
+  }, []);
+  
+
   return (
     <div className="flex flex-row">
       <div className="w-1/4 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', height: '100vh' }}>
         <h2 className="text-3xl font-bold mb-4 text-gray-800">Top destinations for your next holiday</h2>
         <div className="flex flex-col space-y-4">
-          {popularDestinations.map((destination, index) => (
-            <div key={index} className="w-full" style={{ backgroundColor: 'white', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }}>
-              <DestinationCard destination={destination} />
-            </div>
-          ))}
+        {popularDestinations.map((destination, index) => (
+        <img key={index} src={destination.image} alt={`Destination ${index}`} />
+      ))}
         </div>
       </div>
 
-      <div className="flex flex-col w-3/4">
-      <div className="flex justify-center mb-4 mt-4">
-        <button
-          className={`px-4 py-2 ${tab === 'For You' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tl-md rounded-bl-md`}
-          onClick={() => setTab('For You')}
-        >
-          For You
-        </button>
-        <button
-          className={`px-4 py-2 ${tab === 'Following' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tr-md rounded-br-md`}
-          onClick={() => setTab('Following')}
-        >
-          Following
-        </button>
-      </div>
-      
 
-      <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center' }}>
+      <div className="w-full mt-8 justify-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center' }}>
         <h2 className="text-3xl font-bold my-4 text-gray-800">Latest Posts</h2>
-        <div className="flex justify-center items-center flex-wrap space-x-4 space-y-4">
-          {posts.map((post) => (
-            <PostCard
-              key={post.id}
-              post_title={post.post_title || 'Untitled'}
-              post_description={post.post_description || 'No description available.'}
-              post_likes={post.post_likes || 0}
-              timestamp={post.timestamp}
-            />
-          ))}
+        <div className="flex justify-center flex-col w-3/4">
+          <div className="flex justify-center mb-4 mt-4">
+            <button
+              className={`px-4 py-2 ${tab === 'For You' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tl-md rounded-bl-md`}
+              onClick={() => setTab('For You')}
+            >
+              For You
+            </button>
+            <button
+              className={`px-4 py-2 ${tab === 'Following' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tr-md rounded-br-md`}
+              onClick={() => setTab('Following')}
+            >
+              Following
+            </button>
+          </div>
+          <div className="flex justify-center items-center flex-wrap space-x-4 space-y-4">
+            {posts.map((post) => (
+              <PostCard
+                key={post.id}
+                post_title={post.post_title || 'Untitled'}
+                post_description={post.post_description || 'No description available.'}
+                post_likes={post.post_likes || 0}
+                timestamp={post.timestamp}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

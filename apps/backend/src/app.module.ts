@@ -9,6 +9,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import * as path from 'path';
 import { PostsModule } from './posts/posts.module';
 import { FollowModule } from './follow/follow.module';
+import { GoogleMapsModule } from './google-maps/google-maps.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { FollowModule } from './follow/follow.module';
     FirebaseModule, 
     ReviewsModule,
     PostsModule,
-    FollowModule
+    FollowModule,
+    GoogleMapsModule
   ],
   controllers: [AppController],
   providers: [AppService],
