@@ -116,8 +116,8 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
             <div className='absolute top-0 right-0 text-right'>
                 <div className="mb-1">
-                    <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
-                        {place.Fg.rating}
+                    <div className={`rounded-full ${getRatingColor(place.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
+                        {place.rating}
                     </div>
                 </div>
                 <p className="text-gray-600 inline-block pr-2">{`${place.userRatingCount} reviews `}</p>
