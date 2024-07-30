@@ -39,17 +39,17 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
   
   if (destination) {
     const obj = JSON.parse(destination)
-    const itemTitle = obj.Fg?.displayName ?? obj.displayName
+    const itemTitle = obj.Eg?.displayName ?? obj.displayName
     const itemType = obj.type
     const firstPhotoUrl = obj.firstPhotoUrl
-    const location = obj.Fg?.formattedAddress ?? obj.formattedAddress
+    const location = obj.Eg?.formattedAddress ?? obj.formattedAddress
 
     console.log("Destination: " + obj);
     console.log("====================")
     console.log("id: " + obj.id)
     console.log("firstPhotoUrl: " + obj.firstPhotoUrl)
     console.log("Type: " + obj.type)
-    console.log("Title (displayName): " + obj.Fg?.displayName)
+    console.log("Title (displayName): " + obj.Eg?.displayName)
 
 
   }
@@ -57,10 +57,17 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
   const itinerary_id = '1';
   const response = await fetch(`http://localhost:4000/itinerary-items/${itinerary_id}`);
   const data = await response.json();
+  
+  const formattedData = data.map((item: any, index: number) => ({
+    id: index + 1,
+    ...item
+  }))
+
+  console.log("DATA PASSED TO BOOKING: " + JSON.stringify(formattedData))
 
   return (
     <>
-    <TempStorage id={id} location={location} Item_Title={(destination && (JSON.parse(destination).Fg?.displayName ?? JSON.parse(destination).displayName)) ?? null} Item_Type={(destination && JSON.parse(destination).type) ?? null} destination={(destination && (JSON.parse(destination).Fg?.formattedAddress ?? JSON.parse(destination).formattedAddress)) ?? null} image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null}/>
+    <TempStorage id={id} location={location} Item_Title={(destination && (JSON.parse(destination).Eg?.displayName ?? JSON.parse(destination).displayName)) ?? null} Item_Type={(destination && JSON.parse(destination).type) ?? null} destination={(destination && (JSON.parse(destination).Eg?.formattedAddress ?? JSON.parse(destination).formattedAddress)) ?? null} image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null}/>
     <div className="relative flex flex-col space-x-1 justify-center items-center">
     <div className="flex flex-col border border-gray-300 rounded-lg p-4 bg-white shadow-md w-[96vw] h-auto iteneraryInfo">
       <h1 className="mb-2 text-2xl font-bold text-gray-800 iteneraryHeader "  style={{ fontSize: '2rem', marginBottom:20 }}>Itinerary Items:</h1>
@@ -100,7 +107,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
           <Link href={{
             pathname: '/booking',
             query: {
-              data: data
+              data: JSON.stringify(formattedData)
             }
           }}>
             <Button className="border-2 border-black-500 rounded-md doneButton bg-blue-700">

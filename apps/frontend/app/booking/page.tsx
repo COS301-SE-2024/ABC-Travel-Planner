@@ -20,7 +20,19 @@ const ConfirmBookingButton = dynamic(() => import('./ConfirmBookingButton'), {
   ssr: false, // Ensure the component is not server-side rendered
 });
 
-const Booking = () => {
+// const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; location?: string; destination?: any } }) => {
+const Booking = async ({ searchParams }: {searchParams: {data?: any}}) => {
+
+  let dynamicFlights: any = []
+  let dynamicAccomodations: any = []
+  let dynamicActivities: any = []
+  
+  const loadData = (data: any): any => {
+    console.log("Object data on booking side: " + data)
+  }
+  
+  loadData(searchParams.data)
+
   const convertToRand = (usd: number): number => {
     const exchangeRate = 18; // 1 USD = 18 ZAR
     return usd * exchangeRate;
