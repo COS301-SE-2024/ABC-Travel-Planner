@@ -126,21 +126,50 @@ export class SearchService {
     }
 
     async searchProfile(user: string): Promise<Profile[]> {
-        const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'), admin.firestore.Filter.where('username', '>=', user), admin.firestore.Filter.where('username', '<=', user + '\uf8ff'))).get();
-        if (data.empty) {
-            return [];
-        }
-
+        const nameQuery = this.db.collection('Users')
+            .where('name', '>=', user)
+            .where('name', '<=', user + '\uf8ff')
+            .orderBy('name')
+            .startAt(user)
+            .endAt(user + '\uf8ff');
+        
+        const usernameQuery = this.db.collection('Users')
+            .where('username', '>=', user)
+            .where('username', '<=', user + '\uf8ff')
+            .orderBy('username')
+            .startAt(user)
+            .endAt(user + '\uf8ff');
+    
+        const [nameResults, usernameResults] = await Promise.all([nameQuery.get(), usernameQuery.get()]);
+    
         const users: Profile[] = [];
-        data.forEach(doc => {
-            users.push({
-                name: doc.data().name,
-                username: doc.data().username,
-                id: doc.data().user_id,
-                imageUrl: doc.data().imageUrl
-            } as Profile);
+        const seen = new Set();
+    
+        nameResults.forEach(doc => {
+            if (!seen.has(doc.id)) {
+                users.push({
+                    name: doc.data().name,
+                    username: doc.data().username,
+                    id: doc.data().user_id,
+                    imageUrl: doc.data().imageUrl
+                } as Profile);
+                seen.add(doc.id);
+            }
         });
-
+    
+        usernameResults.forEach(doc => {
+            if (!seen.has(doc.id)) {
+                users.push({
+                    name: doc.data().name,
+                    username: doc.data().username,
+                    id: doc.data().user_id,
+                    imageUrl: doc.data().imageUrl
+                } as Profile);
+                seen.add(doc.id);
+            }
+        });
+    
         return users;
     }
+    
 }
