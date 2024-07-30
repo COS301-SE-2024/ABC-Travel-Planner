@@ -83,3 +83,4 @@ jobs:
           message: ${{ steps.coverageComment.outputs.coverage }}%
           color: ${{ steps.coverageComment.outputs.color }}
           namedLogo: typescript
+          content: $(echo '${{ steps.coverageComment.outputs.summaryHtml }}' | base64 --decode)
