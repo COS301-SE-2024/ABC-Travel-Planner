@@ -148,9 +148,10 @@ const Account = () => {
       const url = await uploadImage(file);
       console.log(url);
     }
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     if (originalProfileDetails.email !== profileDetails.email) {
       const response = await axios.post(
-        "http://localhost:4000/auth/UpdateEmail",
+        `${backendUrl}/auth/UpdateEmail`,
         {
           email: profileDetails.email,
           user_id: temp,

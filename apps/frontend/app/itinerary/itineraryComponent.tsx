@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import { deleteItinerary,updateItinerary , getItineraryImage} from ".";
+import { deleteItinerary, updateItinerary, getItineraryImage } from ".";
 import axios from "axios";
 
 interface ItineraryComponentProps {
@@ -11,7 +11,7 @@ interface ItineraryComponentProps {
   location: string;
   image: string;
   shared: boolean;
-  id: any,
+  id: any;
   fetchItineraries: () => void;
 }
 
@@ -21,7 +21,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
   image,
   id,
   shared,
-  fetchItineraries
+  fetchItineraries,
 }) => {
   const [newName, setNewName] = useState(name);
   const [newLocation, setNewLocation] = useState(location);
@@ -30,39 +30,42 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
   const handleNameChange = (e: any) => setNewName(e.target.value);
   const handleLocationChange = (e: any) => setNewLocation(e.target.value);
 
-  const openEditModal = (e:any) => {
+  const openEditModal = (e: any) => {
     e.preventDefault();
     setShowEditModal(true);
-
-  }
+  };
   const closeEditModal = () => {
     // setNewName(name);
     // setNewLocation(location);
     setShowEditModal(false);
-
-
   };
 
-  const openDeleteModal = (e:any) => {
+  const openDeleteModal = (e: any) => {
     e.preventDefault();
     setShowDeleteModal(true);
-  }
+  };
   const closeDeleteModal = () => {
     setShowDeleteModal(false);
-
-  }
+  };
 
   const handleEdit = async (e: any) => {
     e.preventDefault();
     const imageUrl = await getItineraryImage(newLocation);
-    await axios.post("http://localhost:4000/itinerary/update",{itineraryId:id,name:newName,location:newLocation,imageUrl});
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    await axios.post(`${backendUrl}/itinerary/update`, {
+      itineraryId: id,
+      name: newName,
+      location: newLocation,
+      imageUrl,
+    });
     closeEditModal();
     fetchItineraries();
   };
 
   const handleDelete = async () => {
-     await axios.post("http://localhost:4000/itinerary/delete",{itineraryId:id});
-     fetchItineraries();
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    await axios.post(`${backendUrl}/itinerary/delete`, { itineraryId: id });
+    fetchItineraries();
     closeDeleteModal();
   };
 
@@ -100,12 +103,10 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
         </div>
       </Link>
 
-      
       {showEditModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
           <div className="relative w-full max-w-lg mx-auto my-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              
               <div className="flex justify-between items-center px-6 py-4 bg-blue-600 text-white">
                 <h3 className="text-xl font-semibold">Edit Itinerary</h3>
                 <button
@@ -124,7 +125,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
             
           />
         </div> */}
-              
+
               <form onSubmit={handleEdit} className="p-6">
                 <div className="mb-4">
                   <label
@@ -138,7 +139,6 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
                     id="editName"
                     defaultValue={name}
                     onChange={handleNameChange}
-                    
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   />
                 </div>
@@ -178,12 +178,10 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
         </div>
       )}
 
-      
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
           <div className="relative w-full max-w-sm mx-auto my-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-             
               <div className="flex justify-between items-center px-6 py-4 bg-red-600 text-white">
                 <h3 className="text-xl font-semibold">Delete Itinerary</h3>
                 <button

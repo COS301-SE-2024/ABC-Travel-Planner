@@ -104,6 +104,7 @@ const SplashPage = () => {
             email: result.user.email,
             memberSince: new Date().toISOString().substring(0, 10),
             imageUrl: url,
+            name: result?.user?.displayName,
           });
         }
       }

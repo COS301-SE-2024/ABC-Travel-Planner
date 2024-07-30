@@ -53,6 +53,7 @@ export async function signUpWithEmailAndPassword(data: {
         email: data.email,
         memberSince: new Date().toISOString().substring(0, 10),
         imageUrl: url,
+        name: `${data.name} ${data.surname}`,
       });
     }
 

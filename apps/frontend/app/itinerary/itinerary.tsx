@@ -24,7 +24,8 @@ const Itinerary = () => {
     e.preventDefault();
     const user_id = Cookies.get("user_id");
     const imageUrl = await getItineraryImage(location);
-    await axios.post("http://localhost:4000/itinerary/create",{name: itineraryName,location,user_id,imageUrl});
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    await axios.post(`${backendUrl}/itinerary/create`,{name: itineraryName,location,user_id,imageUrl});
     
     fetchItineraries();
     
@@ -34,7 +35,8 @@ const Itinerary = () => {
 
   const fetchItineraries = async () => {
     const user_id = Cookies.get("user_id");
-    const temp = await axios.post("http://localhost:4000/itinerary/getItineraries",{user_id: user_id});
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const temp = await axios.post(`${backendUrl}/itinerary/getItineraries`,{user_id: user_id});
     
     const itineraries = temp?.data?.map((itinerary: any) => {
       return (
