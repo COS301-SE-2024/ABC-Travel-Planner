@@ -3,6 +3,28 @@ const { PlacesClient } = require('@googlemaps/places').v1;
 import { ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 
+interface Place {
+    formattedAddress: string;
+    displayName: string;
+    editorialSummary: string;
+    userRatingCount: number;
+    plusCode: any;
+    id: string;
+    rating: number;
+    accessibilityOptions: any; 
+    paymentOptions: any; 
+    goodForChildren: boolean;
+    firstPhotoUrl: string;
+    type: string;
+  }
+  
+  interface Profile {
+    name: string;
+    username: string;
+    id: string;
+    imageUrl: string;
+  }
+
 @Injectable()
 export class SearchService {
     private placesClient: any;
@@ -19,7 +41,7 @@ export class SearchService {
         return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
     }
 
-    async searchPlaces(textQuery: string, type: string): Promise<any> {
+    async searchPlaces(textQuery: string, type: string): Promise<Place[]> {
         let includeType: string = '';
         switch (type) {
             case 'stays':
@@ -91,8 +113,8 @@ export class SearchService {
                         paymentOptions: detailedPlace[0].paymentOptions,
                         goodForChildren: detailedPlace[0].goodForChildren,
                         firstPhotoUrl: firstPhotoUrl,
-                        // type: type
-                    };
+                        type: type
+                    } as Place;
                 }
 
             }));
@@ -103,22 +125,20 @@ export class SearchService {
         }
     }
 
-    async searchProfile(user: string): Promise<any> {
-        //admin.firestore.Filter.where('user_name', '>=', user), admin.firestore.Filter.where('user_name', '<=', user + '\uf8ff')
-        //admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'),
+    async searchProfile(user: string): Promise<Profile[]> {
         const data = await this.db.collection('Users').where(admin.firestore.Filter.or(admin.firestore.Filter.where('name', '>=', user), admin.firestore.Filter.where('name', '<=', user + '\uf8ff'), admin.firestore.Filter.where('username', '>=', user), admin.firestore.Filter.where('username', '<=', user + '\uf8ff'))).get();
         if (data.empty) {
             return [];
         }
 
-        const users: any[] = [];
+        const users: Profile[] = [];
         data.forEach(doc => {
             users.push({
                 name: doc.data().name,
                 username: doc.data().username,
                 id: doc.data().user_id,
-                imageUrl: doc.data().image_url
-            });
+                imageUrl: doc.data().imageUrl
+            } as Profile);
         });
 
         return users;
