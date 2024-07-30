@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 interface SearchCardProps {
     place: any;
-    
 }
 
 export const getRatingColor = (rating: number) => {
@@ -73,26 +72,42 @@ export const generatePrice = (id: string, type: string, country: string) => {
 
 const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const [selectedDate, setSelectedDate] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isNewItineraryModalOpen, setIsNewItineraryModalOpen] = useState(false);
+    const [itineraries, setItineraries] = useState(['Itinerary 1', 'Itinerary 2']);
+    const [newItinerary, setNewItinerary] = useState({ location: '', tripName: '' });
+
     const handleSelectDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedDate(event.target.value);
     };
 
-    function extractLocation(fullString: string) {
-        // Split the string by spaces and commas
-        const parts = fullString.split(/,|\s+/);
+    const handleAddToItineraryClick = () => {
+        setIsModalOpen(true);
+    };
 
-        // Remove the code part and join the remaining parts for city and country
+    const handleNewItineraryClick = () => {
+        setIsModalOpen(false);
+        setIsNewItineraryModalOpen(true);
+    };
+
+    const handleSaveNewItinerary = () => {
+        setItineraries([...itineraries, newItinerary.tripName]);
+        setNewItinerary({ location: '', tripName: '' });
+        setIsNewItineraryModalOpen(false);
+    };
+
+    function extractLocation(fullString: string) {
+        const parts = fullString.split(/,|\s+/);
         const city = parts.slice(1, -1).join(' ');
         const country = parts[parts.length - 1];
-
         return { city, country };
     }
-    let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
+
+    const availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
     const numRooms = null;
-    let address = place.Fg.plusCode.compoundCode;
+    const address = place.Fg.plusCode?.compoundCode || 'Unknown Address';
     const location = extractLocation(address);
     const addressParts = address.split(',');
-
     const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
     const price = generatePrice(place.id, place.type, location.country);
 
@@ -100,14 +115,12 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
             <div className='absolute top-0 right-0 text-right'>
                 <div className="mb-1">
-                    {/* <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p> */}
                     <div className={`rounded-full ${getRatingColor(place.Fg.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
                         {place.Fg.rating}
                     </div>
                 </div>
                 <p className="text-gray-600 inline-block pr-2">{`${place.Fg.userRatingCount} reviews `}</p>
             </div>
-            
 
             <div className='flex flex-row justify-start items-start'>
                 <div className="w-1/3">
@@ -190,14 +203,89 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         <div className="text-right">
                             <p className="text-3xl text-blue-500 font-semibold">ZAR {price}</p>
                             <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
-                            <p className="text-blue-500 text-sm">Tax and rates included</p>
+                            <p className="text-gray-600 text-lg">Free cancellation</p>
+                            <button
+                                onClick={handleAddToItineraryClick}
+                                className="bg-blue-500 text-white rounded-md px-4 py-2 mt-2"
+                            >
+                                Add to Itinerary
+                            </button>
                         </div>
                     </div>
-
                 </div>
             </div>
+
+            {/* First Modal for Selecting or Creating Itinerary */}
+            {isModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white rounded-lg p-6 w-1/3">
+                        <h2 className="text-xl font-semibold mb-4">Select or Create an Itinerary</h2>
+                        <select
+                            className="block appearance-none w-full bg-gray-200 border border-gray-300 rounded-md py-2 px-4 mb-4"
+                            defaultValue=""
+                        >
+                            <option value="" disabled>Select an itinerary</option>
+                            {itineraries.map((itinerary, index) => (
+                                <option key={index} value={itinerary}>{itinerary}</option>
+                            ))}
+                        </select>
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="bg-blue-500 text-white rounded-md px-4 py-2 mr-2"
+                        >
+                            Save to Selected
+                        </button>
+                        <button
+                            onClick={handleNewItineraryClick}
+                            className="bg-green-500 text-white rounded-md px-4 py-2 mr-2"
+                        >
+                            Create New Itinerary
+                        </button>
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="bg-red-500 text-white rounded-md px-4 py-2"
+                        >
+                            Cancel
+                </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Second Modal for Creating a New Itinerary */}
+            {isNewItineraryModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white rounded-lg p-6 w-1/3">
+                        <h2 className="text-xl font-semibold mb-4">Create New Itinerary</h2>
+                        <input
+                            type="text"
+                            placeholder="Location"
+                            value={newItinerary.location}
+                            onChange={(e) => setNewItinerary({ ...newItinerary, location: e.target.value })}
+                            className="block w-full bg-gray-200 border border-gray-300 rounded-md py-2 px-4 mb-4"
+                        />
+                        <input
+                            type="text"
+                            placeholder="Trip Name"
+                            value={newItinerary.tripName}
+                            onChange={(e) => setNewItinerary({ ...newItinerary, tripName: e.target.value })}
+                            className="block w-full bg-gray-200 border border-gray-300 rounded-md py-2 px-4 mb-4"
+                        />
+                        <button
+                            onClick={handleSaveNewItinerary}
+                            className="bg-green-500 text-white rounded-md px-4 py-2 mr-2"
+                        >
+                            Save New Itinerary
+                        </button>
+                        <button
+                            onClick={() => setIsNewItineraryModalOpen(false)}
+                            className="bg-red-500 text-white rounded-md px-4 py-2"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
-        
     );
 };
 
