@@ -61,6 +61,16 @@ jobs:
           echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
           echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
           echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
+
+      - name: Debugging - Print Gist Update Request
+        run: |
+          echo "Updating Gist with:"
+          echo "filename: jest-coverage-comment__main.json"
+          echo "label: Coverage"
+          echo "message: ${{ steps.coverageComment.outputs.coverage }}%"
+          echo "color: ${{ steps.coverageComment.outputs.color }}"
+          echo "namedLogo: typescript"
+          echo "auth: ${{ secrets.GIST_SECRET }}"
           
       - name: Create the badge
         uses: schneegans/dynamic-badges-action@v1.6.0
