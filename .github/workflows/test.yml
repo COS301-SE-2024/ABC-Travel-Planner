@@ -73,7 +73,7 @@ jobs:
           echo "auth: ${{ secrets.GIST_SECRET }}"
           
       - name: Create the badge
-        uses: schneegans/dynamic-badges-action@v1.6.0
+        uses: schneegans/dynamic-badges-action@latest
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: d5e1d38427eaf6a78fc2ac70d0f50bc6
