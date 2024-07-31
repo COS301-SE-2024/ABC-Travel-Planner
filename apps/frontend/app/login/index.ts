@@ -6,8 +6,9 @@ import {
   updateProfile,
 } from "firebase/auth";
 import {getStorage, ref,getDownloadURL} from "firebase/storage";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, collection } from "firebase/firestore";
 import app from "@/libs/firebase/firebase";
+import { time } from "console";
 
 export async function login(data: { email: string; password: string }) {
   const auth = getAuth(app);
@@ -55,6 +56,10 @@ export async function signUpWithEmailAndPassword(data: {
         imageUrl: url,
         name: `${data.name} ${data.surname}`,
       });
+
+      const userRef = doc(db, "Follow-Details", result.user.uid);
+      await setDoc(userRef, {user_id: result.user.uid,name: `${data.name} ${data.surname}`, timestamp: new Date()});
+
     }
 
     return JSON.stringify(result);

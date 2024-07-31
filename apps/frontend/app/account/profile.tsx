@@ -188,16 +188,12 @@ const Account = () => {
   };
 
   return (
-    <div className="profile-page">
+    <div data-testid="accountContainer" className="profile-page">
       <header className="profile-header">
         <div className="profile-pic">
           <div className="relative">
             {profileDetails.imageUrl && (
-              <img
-                src={profileImage}
-                alt="Profile"
-                
-              />
+              <img src={profileImage} alt="Profile" />
             )}
             {isEditing && (
               <input
@@ -248,19 +244,19 @@ const Account = () => {
             </div>
           ) : (
             <>
-              <h1>{profileDetails.username}</h1>
-              <h2>{profileDetails.email}</h2>
+              <h1 data-testid="accountName">{profileDetails.username}</h1>
+              <h2 data-testid="accountEmail">{profileDetails.email}</h2>
               {profileDetails.country && (
-              <div className="location">
-                <FaMapMarkerAlt />
-                <span>{profileDetails.country}</span>
-              </div>
+                <div className="location">
+                  <FaMapMarkerAlt />
+                  <span>{profileDetails.country}</span>
+                </div>
               )}
               {profileDetails.memberSince && (
-              <div className="member-since">
-                <FaRegCalendarAlt />
-                <span>Member Since: {profileDetails.memberSince}</span>
-              </div>
+                <div className="member-since">
+                  <FaRegCalendarAlt />
+                  <span>Member Since: {profileDetails.memberSince}</span>
+                </div>
               )}
             </>
           )}

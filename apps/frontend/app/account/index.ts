@@ -31,8 +31,6 @@ export async function updateUserProfile(
       username: username,
       email: email,
       country: country,
-
-
     });
   }
   
