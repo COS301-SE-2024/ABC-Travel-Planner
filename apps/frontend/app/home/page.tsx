@@ -94,30 +94,35 @@ const Home = () => {
         if (!places) {
           throw new Error('No places found in response');
         }
-  
-        const imageDestinations = places.map((place : Place) => {
-          if (place.photos && place.photos.length > 0) {
+    
+        const imageDestinations = places.map((place: Place) => {
+          
+          if (place.photos && place.photos.length > 0)
+          {
+            console.log(place.photos[0].photo_reference);
             return {
-              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
+              
+              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=AIzaSyDVPDlRQuCtnX0wcKLWgFPH5XZ6oifLieM`,
             };
-          }/* else {
+          } else {
             return { image: '/Images/default.jpg' };
-          }*/
+          }
         });
-  
+    
         console.log('Image Destinations:', imageDestinations);
         setPopularDestinations(imageDestinations);
       } catch (error) {
         console.error('Error fetching popular destinations:', error);
       }
     };
+    
   
     fetchPopularDestinations();
   }, []);
 
   return (
     <div className="flex flex-row">
-      <div className="w-1/4 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', height: '100vh', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <div className="w-1/2 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', height: '100vh', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <h2 className="text-3xl font-bold mb-4 text-gray-800">Top Destinations for Your Next Holiday</h2>
         <div className="flex flex-col space-y-4">
           {popularDestinations.map((destination, index) => (

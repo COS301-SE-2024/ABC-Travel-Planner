@@ -37,7 +37,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_title, post_description, post_
 
   return (
     <div className="flex justify-center items-center w-full">
-      <div className="justify-center w-full max-w-lg bg-pink-100 rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
+      <div className="w-full justify-center w-full max-w-lg bg-pink-100 rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
         <div className="flex items-center justify-between w-full">
           <div>
             <h3 className="text-lg font-bold">{post_title}</h3>
