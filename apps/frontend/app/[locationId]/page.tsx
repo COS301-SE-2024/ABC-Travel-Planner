@@ -1,6 +1,3 @@
-// app/[locationId]/page.tsx
-"use client"
-
 import React from 'react';
 import Image from 'next/image';
 import { FaGoogle, FaAtlas } from 'react-icons/fa';
@@ -18,19 +15,35 @@ interface TouristPageProps {
   params: { locationId: string };
 }
 
-const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
+async function getDetailedData(locationId: any) {
+  try {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    let url = `${backendUrl}/search/detailedPlace?locationId=${encodeURIComponent(locationId)}`
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { locationId: string } }) => {
   const location_id = params.locationId || 'default_location_id';
-  const [reviews, setReviews] = React.useState<Review[]>([]);
+  // const [reviews, setReviews] = React.useState<Review[]>([]);
 
-  React.useEffect(() => {
-    const fetchReviews = async () => {
-      const fetchedReviews = await getReviews(location_id);
-      setReviews(fetchedReviews);
-    };
+  // React.useEffect(() => {
+  //   const fetchReviews = async () => {
+  //     const fetchedReviews = await getReviews(location_id);
+  //     setReviews(fetchedReviews);
+  //   };
 
-    // Fetch reviews only on the client side
-    fetchReviews();
-  }, [location_id]);
+  //   // Fetch reviews only on the client side
+  //   fetchReviews();
+  // }, [location_id]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,7 +55,7 @@ const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
 
     // Manually trigger update
     const updatedReviews = await getReviews(location_id);
-    setReviews(updatedReviews);
+    //setReviews(updatedReviews);
 
     // Clear the form after submission
     //const form = event.currentTarget;
@@ -114,21 +127,21 @@ const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
         <div className="reviews-section p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <h1 className="text-2xl font-bold mb-4">Reviews</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {reviews.map(review => (
+            {/* {reviews.map(review => (
               <div key={review.id} className="review-card bg-white border border-gray-200 p-4 rounded-lg">
                 <h2 className="text-lg font-semibold">{review.user}</h2>
                 <p className="text-gray-600">{review.comment}</p>
                 <p className="text-gray-600">Rating: {review.rating}</p>
                 <p className="text-gray-600">{review.title}</p>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
 
 
         {/* Review submission form */}
         <div className="review-form mt-8 p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-          <form className="mx-auto max-w-md" onSubmit={handleSubmit}>
+          {/* <form className="mx-auto max-w-md" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-bold mb-4 text-center">Post A Review</h1>
             <div className="flex items-start mt-4">
               <label htmlFor="rating" className="block font-semibold text-lg">Rating:</label>
@@ -158,7 +171,7 @@ const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
                 Submit Review
               </button>
             </div>
-          </form>
+          </form> */}
         </div>
       </div>
     </div>

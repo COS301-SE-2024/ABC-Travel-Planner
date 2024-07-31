@@ -114,52 +114,57 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
 
     return (
         <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
-            <div className='absolute top-0 right-0 text-right'>
-                <div className="mb-1">
-                    <div className={`rounded-full ${getRatingColor(place.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
-                        {place.rating}
+            <Link href={`/${place.id}`} passHref>
+                <div className='absolute top-0 right-0 text-right'>
+                    <div className="mb-1">
+                        <div className={`rounded-full ${getRatingColor(place.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
+                            {place.rating}
+                        </div>
                     </div>
+                    <p className="text-gray-600 inline-block pr-2">{`${place.userRatingCount} reviews `}</p>
                 </div>
-                <p className="text-gray-600 inline-block pr-2">{`${place.userRatingCount} reviews `}</p>
-            </div>
+            </Link>
 
             <div className='flex flex-row justify-start items-start'>
                 <div className="w-1/3">
-                    <img
-                        src={`${place.firstPhotoUrl}`}
-                        alt={place.displayName}
-                        className="rounded-lg object-cover"
-                    />
+                    <Link href={`/${place.id}`} passHref>
+                        <img
+                            src={`${place.firstPhotoUrl}`}
+                            alt={place.displayName}
+                            className="rounded-lg object-cover"
+                        />
+                    </Link>
                 </div>
                 <div className="w-2/3 pl-4 overflow-hidden">
-                    <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
-                    <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
+                    <Link href={`/${place.id}`} passHref>
+                        <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
+                        <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
 
-                    {place.goodForChildren && (
-                        <div className="mt-2">
-                            <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
-                                Good for families with children
+                        {place.goodForChildren && (
+                            <div className="mt-2">
+                                <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
+                                    Good for families with children
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
-                    <p className="text-gray-800 mt-4">{place.editorialSummary ? place.editorialSummary : ""}</p>
+                        <p className="text-gray-800 mt-4">{place.editorialSummary ? place.editorialSummary : ""}</p>
 
-                    {place.paymentOptions?.acceptsCreditCards && (
-                        <div className="mt-2 flex items-center text-green-600 text-sm">
-                            <svg className="w-5 h-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm5 7.5l-6 6-3-3 1.414-1.414L9 10.672l4.586-4.586L15 7.5z" />
-                            </svg>
-                            Accepts Credit Cards
-                        </div>
-                    )}
+                        {place.paymentOptions?.acceptsCreditCards && (
+                            <div className="mt-2 flex items-center text-green-600 text-sm">
+                                <svg className="w-5 h-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm5 7.5l-6 6-3-3 1.414-1.414L9 10.672l4.586-4.586L15 7.5z" />
+                                </svg>
+                                Accepts Credit Cards
+                            </div>
+                        )}
 
-                    {numRooms && (
-                        <div className="mt-2 flex items-center text-red-500 text-sm">
-                            {`Only ${numRooms} rooms available at this price`}
-                        </div>
-                    )}
-
+                        {numRooms && (
+                            <div className="mt-2 flex items-center text-red-500 text-sm">
+                                {`Only ${numRooms} rooms available at this price`}
+                            </div>
+                        )}
+                    </Link>
                     <div className="mt-4 flex justify-between items-end">
                         <div className="flex items-center space-x-4">
                             <div className="relative inline-block">
@@ -202,9 +207,11 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                             )}
                         </div>
                         <div className="text-right">
-                            <p className="text-3xl text-blue-500 font-semibold">ZAR {price}</p>
-                            <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
-                            <p className="text-gray-600 text-lg">Free cancellation</p>
+                            <Link href={`/${place.id}`} passHref>
+                                <p className="text-3xl text-blue-500 font-semibold">ZAR {price}</p>
+                                <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
+                                <p className="text-gray-600 text-lg">Free cancellation</p>
+                            </Link>
                             <button
                                 onClick={handleAddToItineraryClick}
                                 className="bg-blue-500 text-white rounded-md px-4 py-2 mt-2"
@@ -247,7 +254,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                             className="bg-red-500 text-white rounded-md px-4 py-2"
                         >
                             Cancel
-                </button>
+                        </button>
                     </div>
                 </div>
             )}
