@@ -69,7 +69,7 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./apps/${{ matrix.folder }}/coverage/*.json
+          files: ./apps/${{ matrix.folder }}/coverage/lcov.info
           
       - name: Create the badge
         uses: schneegans/dynamic-badges-action@v1.6.0
