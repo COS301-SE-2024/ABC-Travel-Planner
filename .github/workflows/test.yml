@@ -71,6 +71,10 @@ jobs:
           echo "color: ${{ steps.coverageComment.outputs.color }}"
           echo "namedLogo: typescript"
           echo "auth: ${{ secrets.GIST_SECRET }}"
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           
       - name: Create the badge
         uses: schneegans/dynamic-badges-action@v1.6.0
