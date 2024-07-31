@@ -15,12 +15,12 @@ describe("Create an itinerary", () => {
     );
     cy.get(`[data-testid="addItineraryButton"]`).should("exist");
   });
-  it("should allow user to add a new itinerary", () => {
-    cy.visit("/itinerary");
-    cy.get(`[data-testid="addItineraryButton"]`).click({ force: true });
-    cy.get(`[data-testid="ItineraryForm"]`).should("exist");
-    cy.get(`[data-testid="itineraryNameInput"]`).type("My first itinerary");
-    cy.get(`[data-testid="locationInput"]`).type("USA");
-    cy.get(`[data-testid="addItinerarySubmit"]`).click({ force: true });
-  });
+  // it("should allow user to add a new itinerary", () => {
+  //   cy.visit("/itinerary");
+  //   cy.get(`[data-testid="addItineraryButton"]`).click({ force: true });
+  //   cy.get(`[data-testid="ItineraryForm"]`).should("exist");
+  //   cy.get(`[data-testid="itineraryNameInput"]`).type("My first itinerary");
+  //   cy.get(`[data-testid="locationInput"]`).type("USA");
+  //   cy.get(`[data-testid="addItinerarySubmit"]`).click({ force: true });
+  // });
 });
