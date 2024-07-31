@@ -100,9 +100,9 @@ const Home = () => {
             return {
               image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
             };
-          } else {
+          }/* else {
             return { image: '/Images/default.jpg' };
-          }
+          }*/
         });
   
         console.log('Image Destinations:', imageDestinations);
@@ -114,32 +114,29 @@ const Home = () => {
   
     fetchPopularDestinations();
   }, []);
-  
 
   return (
     <div className="flex flex-row">
-      <div className="w-1/4 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', height: '100vh' }}>
-        <h2 className="text-3xl font-bold mb-4 text-gray-800">Top destinations for your next holiday</h2>
+      <div className="w-1/4 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', height: '100vh', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <h2 className="text-3xl font-bold mb-4 text-gray-800">Top Destinations for Your Next Holiday</h2>
         <div className="flex flex-col space-y-4">
-        {popularDestinations.map((destination, index) => (
-        <img key={index} src={destination.image} alt={`Destination ${index}`} />
-      ))}
+          {popularDestinations.map((destination, index) => (
+            <img key={index} src={destination.image} alt={`Destination ${index}`} className="rounded-lg shadow-md" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+          ))}
         </div>
       </div>
 
-
-      <div className="w-full mt-8 justify-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center' }}>
-        <h2 className="text-3xl font-bold my-4 text-gray-800">Latest Posts</h2>
-        <div className="flex justify-center flex-col w-3/4">
+      <div className="w-full mt-8 justify-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <div className="flex justify-center flex-col w-3/4 mx-auto">
           <div className="flex justify-center mb-4 mt-4">
             <button
-              className={`px-4 py-2 ${tab === 'For You' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tl-md rounded-bl-md`}
+              className={`px-4 py-2 ${tab === 'For You' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-tl-md rounded-bl-md transition duration-300 ease-in-out transform hover:scale-105`}
               onClick={() => setTab('For You')}
             >
               For You
             </button>
             <button
-              className={`px-4 py-2 ${tab === 'Following' ? 'bg-blue-500' : 'bg-gray-200'} rounded-tr-md rounded-br-md`}
+              className={`px-4 py-2 ${tab === 'Following' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-tr-md rounded-br-md transition duration-300 ease-in-out transform hover:scale-105`}
               onClick={() => setTab('Following')}
             >
               Following
