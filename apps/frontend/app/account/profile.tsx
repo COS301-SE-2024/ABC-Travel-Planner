@@ -323,10 +323,10 @@ const Account = () => {
               Welcome to our Travel Planner! This platform is designed to
               simplify your journey by helping you effortlessly organize your
               trips, discover curated itineraries, and access a wealth of travel
-              resources. Whether you're planning a weekend getaway or a grand
-              adventure, we've got you covered. If you need further assistance
+              resources. Whether you&apos;re planning a weekend getaway or a grand
+              adventure, we&rsquo;ve got you covered. If you need further assistance
               or personalized guidance, be sure to visit our Help Center, where
-              you'll find FAQs, tips, and support to make your travel experience
+              you&rsquo;ll find FAQs, tips, and support to make your travel experience
               even better.
             </p>
             <button onClick={togglePopup}>Close</button>
