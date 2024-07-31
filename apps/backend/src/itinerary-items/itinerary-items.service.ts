@@ -52,9 +52,9 @@ export class ItineraryItemsService {
     }
   }
 
-  async deleteItineraryItem(user_name: string, image_url: string, itinerary_id: string, timestamp: string) : Promise<void> {        
+  async deleteItineraryItem(user_name: string, image_url: string, itinerary_id: string, timestamp: {_seconds: number, _nanoseconds: number}) : Promise<void> {        
         user_name = 'User1';
-        
+        console.log("Received timestamp: " + JSON.stringify(timestamp))
         try {
           //Check if it exists...
           const userItemsDir = this.db
@@ -62,14 +62,27 @@ export class ItineraryItemsService {
                 .doc(user_name)
                 .collection('Items')
 
+          
           const userItemsSnapshot = await userItemsDir
-                .where('image_url', '==', image_url)
-                .where('itinerary_id', '==', itinerary_id)
-                .where('timestamp', '==', timestamp)
-                .get()
+              .where('image_url', '==', image_url)
+              .where('itinerary_id', '==', itinerary_id)
+              .where('timestamp', '==', admin.firestore.Timestamp.fromMillis(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000))
+              .limit(1)
+              .get()
+
+          if (userItemsSnapshot.empty) {
+            console.log("Could not delete... No matching docs found")
+            throw new Error('Could not delete item - not found')
+          }
+
+          //Deleting item...
+          userItemsSnapshot.forEach((item) => {
+            item.ref.delete();
+            console.log("Document deleted successfully")
+          })
 
         } catch (error) {
-            console.error('Could not delete record: ', error.message)
+            console.error('Could not delete document: ', error.message)
             return error.message
         }
     }

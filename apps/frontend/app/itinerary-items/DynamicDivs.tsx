@@ -9,7 +9,10 @@ interface ItemData {
     item_type: string;
     image_url: string;
     itinerary_id: string;
-    timestamp: string;
+    timestamp: {
+        _seconds: string;
+        _nanoseconds: string;
+    }
   }
   
   interface DivItem {
@@ -134,6 +137,7 @@ interface ItemData {
                             <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem.data.item_name}</h2>
                         </a>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem.data.item_type}</p>
+                        <p>TIME: {divItem.data.timestamp._seconds}</p>
                     </div>
                 </div>
 

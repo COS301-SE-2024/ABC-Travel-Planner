@@ -35,7 +35,7 @@ export class ItineraryItemsController {
     }
 
     @Post('delete')
-    async deleteItineraryItem(@Body() body: {user_name: string, image_url: string, itinerary_id: string, timestamp: string}): Promise<any> {
+    async deleteItineraryItem(@Body() body: {user_name: string, image_url: string, itinerary_id: string, timestamp: {_seconds: number, _nanoseconds: number}}): Promise<any> {
         if (!body.user_name) {
             throw new Error('User Name is not present in body')
         }
