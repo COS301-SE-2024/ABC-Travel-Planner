@@ -1,7 +1,7 @@
 name: Test Code
 on:
   push:
-    branches: [ main, dev, frontend/testing ]
+    branches: [ main, dev ]
   pull_request:
     branches: [ main, dev ]
     
@@ -44,31 +44,28 @@ jobs:
       - name: Run Tests
         run: |
           cd apps/${{ matrix.folder }}
-          npm run test -- --coverage
+          npm run test:coverage
           
       - name: Create coverage folder if not exists
-        run: mkdir -p ./apps/coverage
+        run: mkdir -p ./apps/${{ matrix.folder }}/coverage
+
+      - name: List files in coverage directory
+        run: ls -R ./apps/${{ matrix.folder }}/coverage
 
       - name: Jest Code Coverage
         id: coverageComment
         uses: MishaKav/jest-coverage-comment@main
         with:
           hide-comment: true
-          coverage-summary-path: ./apps/frontend/coverage/coverage-summary.json
+          coverage-summary-path: ./apps/${{ matrix.folder }}/coverage/coverage-summary.json
 
       - name: Check the output coverage
         run: |
           echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
           echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
           echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
-
-      - name: Create the badge
-        uses: schneegans/dynamic-badges-action@v1.6.0
+          
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: d5e1d38427eaf6a78fc2ac70d0f50bc6
-          filename: jest-coverage-comment__main.json
-          label: Coverage
-          message: ${{ steps.coverageComment.outputs.coverage }}%
-          color: ${{ steps.coverageComment.outputs.color }}
-          namedLogo: typescript
+          token: ${{ secrets.CODECOV_TOKEN }}

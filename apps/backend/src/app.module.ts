@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { ItineraryModule } from './itinerary/itinerary.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { SearchModule } from './search/search.module';
 import * as path from 'path';
 
 @Module({
@@ -18,6 +19,7 @@ import * as path from 'path';
     UsersModule, 
     FirebaseModule, 
     ReviewsModule,
+    SearchModule
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -25,3 +27,4 @@ import * as path from 'path';
 export class AppModule {
   constructor() {}
 }
+

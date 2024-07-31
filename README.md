@@ -12,6 +12,7 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
 [![Integration Test](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/integration.yaml/badge.svg)](https://github.com/COS301-SE-2024/ABC-Travel-Planner/actions/workflows/integration.yaml)
 ![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2024/ABC-Travel-Planner)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/COS301-SE-2024/ABC-Travel-Planner)
+[![codecov](https://codecov.io/gh/COS301-SE-2024/ABC-Travel-Planner/graph/badge.svg?token=AvwxBFYFv2)](https://codecov.io/gh/COS301-SE-2024/ABC-Travel-Planner)
 <table>
   <tr>
     <th>Project Board</th>

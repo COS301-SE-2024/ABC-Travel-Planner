@@ -96,14 +96,6 @@ const FilterContainer = () => {
 
 
             </div>
-
-            {/* {searchResults.length > 0 && (
-                <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
-                    {searchResults.map((result, index) => (
-                        <SearchCard key={index} place={result} />
-                    ))}
-                </div>
-            )} */}
         </div>
     );
 };
