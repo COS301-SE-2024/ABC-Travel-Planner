@@ -77,7 +77,7 @@ interface ItemData {
       };
       setDivs([...divs, newDiv]);
     };
-  
+  //
     const handleRemoveDiv = async (id: number) => {
       try {
           setDivs(divs.filter(divItem => divItem.id !== id));
