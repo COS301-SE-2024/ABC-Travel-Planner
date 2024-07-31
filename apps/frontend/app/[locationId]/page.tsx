@@ -33,50 +33,24 @@ async function getDetailedData(locationId: any) {
 
 const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { locationId: string } }) => {
   const location_id = params.locationId || 'default_location_id';
-  // const [reviews, setReviews] = React.useState<Review[]>([]);
-
-  // React.useEffect(() => {
-  //   const fetchReviews = async () => {
-  //     const fetchedReviews = await getReviews(location_id);
-  //     setReviews(fetchedReviews);
-  //   };
-
-  //   // Fetch reviews only on the client side
-  //   fetchReviews();
-  // }, [location_id]);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const comment = formData.get('comment') as string;
-    const rating = parseInt(formData.get('rating') as string, 10);
-
-    await addReview(comment, rating);
-
-    // Manually trigger update
-    const updatedReviews = await getReviews(location_id);
-    //setReviews(updatedReviews);
-
-    // Clear the form after submission
-    //const form = event.currentTarget;
-    //form.reset();
-  };
+  const data = await getDetailedData(location_id);
+  console.log(JSON.stringify(data));
 
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
       <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <div className="small-photos flex flex-col gap-4">
-          <Image src="/Images/photo1.jpg" alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src="/Images/photo2.jpg" alt="Photo 2" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src="/Images/photo3.jpg" alt="Photo 3" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src="/Images/photo4.jpg" alt="Photo 4" width={200} height={200} className="rounded-lg shadow-lg" />
+          <Image src={`${data.photos[2]}`} alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
+          <Image src={`${data.photos[3]}`} alt="Photo 2" width={200} height={200} className="rounded-lg shadow-lg" />
+          <Image src={`${data.photos[4]}`} alt="Photo 3" width={200} height={200} className="rounded-lg shadow-lg" />
+          <Image src={`${data.photos[5]}`} alt="Photo 4" width={200} height={200} className="rounded-lg shadow-lg" />
         </div>
         <div className="main-photos col-span-2 grid grid-cols-2 md:grid-cols-2 gap-3">
           <div className="main-photo">
-            <Image src="/Images/main.jpg" alt="Photo 1" width={800} height={800} className="rounded-lg shadow-lg" />
+            <Image src={`${data.photos[0]}`} alt="Photo 1" width={800} height={800} className="rounded-lg shadow-lg" />
           </div>
           <div className="second-photo">
-            <Image src="/Images/Paris.jpg" alt="Photo 1" width={900} height={900} className="rounded-lg shadow-lg" />
+            <Image src={`${data.photos[1]}`} alt="Photo 1" width={900} height={900} className="rounded-lg shadow-lg" />
           </div>
         </div>
       </div>
@@ -113,13 +87,24 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
         </div>
       </div>
       <div className="attractions-section p-4 bg-white rounded-lg shadow-lg mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <h1 className="text-2xl font-bold mb-4">Attractions</h1>
+        <h1 className="text-2xl font-bold mb-4">{data.displayName}</h1>
         <p className="mb-4">
-          Come and discover the Eiffel Tower on the only trip to the top of its kind in Europe, and
-          let pure emotions carry you from the esplanade to the top.
+          {data.editorialSummary}
         </p>
         <p>
-          The Eiffel Tower in the world
+          Address: {data.formattedAddress}
+        </p>
+        <p>
+          Website: {data.websiteUri}
+        </p>
+        <p>
+          Int Phone: {data.internationalPhoneNumber}
+        </p>
+        <p>
+          Rating: {data.rating}
+        </p>
+        <p>
+          User rating count: {data.userRatingCount}
         </p>
       </div>
       <div className="w-full p-4 md:p-8 bg-gray-100">
@@ -127,14 +112,14 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
         <div className="reviews-section p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <h1 className="text-2xl font-bold mb-4">Reviews</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* {reviews.map(review => (
+            {data.reviews.map((review: any) => (
               <div key={review.id} className="review-card bg-white border border-gray-200 p-4 rounded-lg">
                 <h2 className="text-lg font-semibold">{review.user}</h2>
                 <p className="text-gray-600">{review.comment}</p>
                 <p className="text-gray-600">Rating: {review.rating}</p>
                 <p className="text-gray-600">{review.title}</p>
               </div>
-            ))} */}
+            ))}
           </div>
         </div>
 
