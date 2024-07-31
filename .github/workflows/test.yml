@@ -44,7 +44,7 @@ jobs:
       - name: Run Tests
         run: |
           cd apps/${{ matrix.folder }}
-          npm run test -- --coverage
+          npm run test:coverage
           
       - name: Create coverage folder if not exists
         run: mkdir -p ./apps/${{ matrix.folder }}/coverage
