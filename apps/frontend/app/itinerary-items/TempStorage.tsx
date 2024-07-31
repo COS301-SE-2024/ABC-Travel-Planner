@@ -16,12 +16,14 @@ const uploadItem = async(itemTitle: any, itemType: any, destination: any, image_
   const location = localStorage.getItem('location') as string
   console.log("ID (tempstorage): " + id)
   console.log("Location (tempstorage): " + location)
-  
+  const userId = 'User1';   //NEEDS FIX -- Dynamic
+
   const tempDetails = {
-    Item_Title: itemTitle,
-    Item_Type: itemType,
+    user_id: userId,
+    item_name: itemTitle,
+    item_type: itemType,
     location: JSON.parse(location).location,
-    id: JSON.parse(id).id,
+    itinerary_id: JSON.parse(id).id,
     destination: destination,
     image_url: image_url
   }
@@ -30,7 +32,7 @@ const uploadItem = async(itemTitle: any, itemType: any, destination: any, image_
   console.log(tempDetails)
 
   try {
-    const response = await fetch('/api/DatabaseUpload', {
+    const response = await fetch('http://localhost:4000/itinerary-items/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

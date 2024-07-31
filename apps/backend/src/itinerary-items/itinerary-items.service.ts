@@ -9,7 +9,7 @@ export class ItineraryItemsService {
     this.db = firebaseApp.firestore();
   }
 
-  async addItem(image_url: string, itinerary_id: string, location: string, name: string, user_id: string): Promise<void> {
+  async addItem(user_id: string, item_name: string, item_type: string, location: string, itinerary_id: string, destination: string, image_url: string): Promise<void> {
     try {
       const userRef = this.db.collection('Itinerary-items').doc(user_id);
       await userRef.set({
@@ -19,14 +19,16 @@ export class ItineraryItemsService {
       const subCollectionRef = userRef.collection('Items').doc();
 
       await subCollectionRef.set({
-        timestamp: admin.firestore.FieldValue.serverTimestamp(),
-              image_url: image_url,
               itinerary_id,
+              item_name,
+              item_type,
               location,
-              name,
+              image_url,
+              destination,
               user_id,
+              timestamp: admin.firestore.FieldValue.serverTimestamp(),
       });
-
+      
     } 
     catch (error) {
       console.log(error)

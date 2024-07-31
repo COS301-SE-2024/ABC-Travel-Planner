@@ -95,14 +95,14 @@ interface ItemData {
     const timestamp = divs[id].data.timestamp
 
       try {
-        // const response = await fetch(`/api/DatabaseDelete?id=${divs[id].data.id}`);
+        const user_name = 'User1';
         const response = await fetch('http://localhost:4000/itinerary-items/delete', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             //   Authorization: `Bearer ${idToken}`,
             },
-            body: JSON.stringify({ image_url, itinerary_id, timestamp }),
+            body: JSON.stringify({ user_name, image_url, itinerary_id, timestamp }),
           })
         
         console.log(response)
@@ -137,7 +137,6 @@ interface ItemData {
                             <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem.data.item_name}</h2>
                         </a>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem.data.item_type}</p>
-                        <p>TIME: {divItem.data.timestamp._seconds}</p>
                     </div>
                 </div>
 

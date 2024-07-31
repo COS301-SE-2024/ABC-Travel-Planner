@@ -1,26 +1,34 @@
-import { Controller, Get, Post, Body, InternalServerErrorException, BadRequestException, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, InternalServerErrorException, BadRequestException, Param, Res, HttpStatus } from '@nestjs/common';
 import { ItineraryItemsService } from './itinerary-items.service';
+import { Response } from 'express'
 
 @Controller('itinerary-items')
 export class ItineraryItemsController {
     constructor(private readonly itineraryItemsService: ItineraryItemsService) {}
 
-    @Post()
-    async addItem(@Body() body: { user_id: string, image: string, itinerary_id: string, location: string, name: string}): Promise<void> {
-        //Get User Id by database call...
-        // ...
-
+    @Post('add')
+    async addItem(@Body() body: { 
+            user_id: string, 
+            item_name: string, 
+            item_type: string, 
+            location: string, 
+            itinerary_id: string, 
+            destination: string, 
+            image_url: string
+        },
+        @Res() res: Response): Promise<void> {
         try {
-            if (body.image && body.itinerary_id && body.location && body.name) {
-                await this.itineraryItemsService.addItem(body.image, body.itinerary_id, body.location, body.name, body.user_id);
-
+            if (body.user_id && body.item_name && body.item_type && body.location && body.itinerary_id && body.destination && body.image_url ) {
+                const result = await this.itineraryItemsService.addItem(body.user_id, body.item_name, body.item_type, body.location, body.itinerary_id, body.destination, body.image_url);
+                res.status(HttpStatus.CREATED).json(result);
             }
             else {
-                throw new BadRequestException('Not all parameters are correct')
+                res.status(HttpStatus.BAD_REQUEST).json({message: 'Not all parameters are correctly formatted or some are missing'});
+                // throw new BadRequestException('Not all parameters are correctly formatted or some are missing')
             }
         } 
         catch (error) {
-            throw new InternalServerErrorException(error.message)
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: error.message});
         }
     }
 

@@ -1,4 +1,3 @@
-//"use server"
 import { Input, Button, Link } from "@nextui-org/react";
 import React from "react";
 import SearchModal from "./SearchModal";
@@ -7,8 +6,6 @@ import TempStorage from "./TempStorage"
 import createSupabaseServerClient from '../../libs/supabase/server';
 import "./modal.css";
 import DynamicDivs from "./DynamicDivs";
-
-// export const dynamic = 'force-dynamic'
 
 const getCoordinates = async (location: string) => {
   const encodedAddress = encodeURIComponent(location);
@@ -29,26 +26,6 @@ const getCoordinates = async (location: string) => {
     console.error('Error fetching geocode data:', error);
   }
 };
-
-// const getServerData = async(id: any) => {
-//   const supabase = await createSupabaseServerClient();
-//   const { data: ItineraryItemsData, error: ItineraryItemsErr } = await supabase
-//       .from('Itinerary-Items')
-//       .select("*")
-//       .eq('Itinerary_ID', id)
-  
-//   if (ItineraryItemsErr) {
-//     console.log("ERR: " + JSON.stringify(ItineraryItemsErr))
-//   } else if (ItineraryItemsData) {
-//     console.log("Data:\n\n" + JSON.stringify(ItineraryItemsData))
-//     return ItineraryItemsData
-//   } else {
-//     console.log("ERR & DATA is null")
-//   }
-    
-//     return []
-//     // return ItineraryItemsData
-// }
 
 const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; location?: string; destination?: any } }) => {
   const { location, id, destination } = searchParams;
@@ -71,11 +48,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
     console.log("Title (displayName): " + obj.Fg?.displayName)
 
 
-    // console.log("DOES THE RECORD ALREADY EXIST?" + JSON.stringify(existsData))
   }
-
-  // const serverData = await getServerData(id)
-  // console.log("SERVER DATA: " + serverData)
 
   return (
     <>
@@ -110,7 +83,6 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
 
       <div className="flex justify-center">
         <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800">
-            {/* <DynamicDivs data={serverData} /> */}
             <DynamicDivs image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null} />
         </div>
       </div>
