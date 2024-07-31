@@ -137,7 +137,7 @@ const handleCancel = () => {
 
 
   return (
-    <div className="profile-page">
+    <div data-testid="accountContainer" className="profile-page">
       <header className="profile-header">
         <div className="profile-pic">
           <img src={profileImage} alt="Profile" />
@@ -184,10 +184,10 @@ const handleCancel = () => {
             </div>
           ) : (
             <>
-              <h1>
+              <h1 data-testid="accountName">
                 {profileDetails.name} {profileDetails.surname}
               </h1>
-              <h2>{profileDetails.email}</h2>
+              <h2 data-testid="accountEmail" >{profileDetails.email}</h2>
               <div className="location">
                 <FaMapMarkerAlt />
                 <span>South Africa</span>
