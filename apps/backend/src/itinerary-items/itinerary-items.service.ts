@@ -52,22 +52,22 @@ export class ItineraryItemsService {
     }
   }
 
-  async deleteItineraryItem(userName: string, id: string) {        
-        // const user_name = 'User1';
+  async deleteItineraryItem(user_name: string, image_url: string, itinerary_id: string, timestamp: string) : Promise<void> {        
+        user_name = 'User1';
         
-        //Logic to delete the item from the db
         try {
-            const documentRef = this.db.collection('Itinerary-items')
-                                .doc(userName)
-                                .collection('Items')
-                                .doc(id)
+          //Check if it exists...
+          const userItemsDir = this.db
+                .collection('Itinerary-items')
+                .doc(user_name)
+                .collection('Items')
 
-            const doc = await documentRef.get()
-            if (!doc.exists) {
-                throw new Error('Could not locate record - Deletion unsuccessful')
-            }
-            
-            await documentRef.delete();
+          const userItemsSnapshot = await userItemsDir
+                .where('image_url', '==', image_url)
+                .where('itinerary_id', '==', itinerary_id)
+                .where('timestamp', '==', timestamp)
+                .get()
+
         } catch (error) {
             console.error('Could not delete record: ', error.message)
             return error.message

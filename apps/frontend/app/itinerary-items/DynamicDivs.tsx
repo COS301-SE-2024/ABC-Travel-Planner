@@ -9,6 +9,7 @@ interface ItemData {
     item_type: string;
     image_url: string;
     itinerary_id: string;
+    timestamp: string;
   }
   
   interface DivItem {
@@ -86,9 +87,22 @@ interface ItemData {
 
     const handleRemoveDiv = async (id: number) => {
     console.log(`Removing DIV ${id} from: ${divs[id].data.itinerary_id}`)
+    const image_url = divs[id].data.image_url
+    const itinerary_id = divs[id].data.itinerary_id
+    const timestamp = divs[id].data.timestamp
+
       try {
-          const response = await fetch(`/api/DatabaseDelete?id=${divs[id].data.id}`);
-          console.log(response)
+        // const response = await fetch(`/api/DatabaseDelete?id=${divs[id].data.id}`);
+        const response = await fetch('http://localhost:4000/itinerary-items/delete', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            //   Authorization: `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({ image_url, itinerary_id, timestamp }),
+          })
+        
+        console.log(response)
           setDivs(divs.filter(divItem => divItem.id !== id));
       } catch (error) {
         console.error("Could not remove item: ", error)

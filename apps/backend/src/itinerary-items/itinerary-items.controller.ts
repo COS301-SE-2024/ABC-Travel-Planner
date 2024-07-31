@@ -34,10 +34,26 @@ export class ItineraryItemsController {
         }
     }
 
-    @Post(':id')
-    async deleteItineraryItem(userName: string, @Param(':id') id: string): Promise<any> {
+    @Post('delete')
+    async deleteItineraryItem(@Body() body: {user_name: string, image_url: string, itinerary_id: string, timestamp: string}): Promise<any> {
+        if (!body.user_name) {
+            throw new Error('User Name is not present in body')
+        }
+
+        if (!body.image_url) {
+            throw new Error('Image url is not present in body')
+        }
+
+        if (!body.itinerary_id) {
+            throw new Error('Itinerary ID is not present in body')
+        }
+
+        if (!body.timestamp) {
+            throw new Error('Timestamp is not present in body')
+        }
+
         try {
-            return await this.itineraryItemsService.deleteItineraryItem(userName, id);
+            return await this.itineraryItemsService.deleteItineraryItem(body.user_name, body.image_url, body.itinerary_id, body.timestamp);
             
         } catch (error) {
             console.error(error)
