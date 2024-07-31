@@ -47,34 +47,29 @@ jobs:
           npm run test -- --coverage
           
       - name: Create coverage folder if not exists
-        run: mkdir -p ./apps/coverage
+        run: mkdir -p ./apps/${{ matrix.folder }}/coverage
+
+      - name: List files in coverage directory
+        run: ls -R ./apps/${{ matrix.folder }}/coverage
 
       - name: Jest Code Coverage
         id: coverageComment
         uses: MishaKav/jest-coverage-comment@main
         with:
           hide-comment: true
-          coverage-summary-path: ./apps/frontend/coverage/coverage-summary.json
+          coverage-summary-path: ./apps/${{ matrix.folder }}/coverage/coverage-summary.json
 
       - name: Check the output coverage
         run: |
           echo "Coverage Percentage - ${{ steps.coverageComment.outputs.coverage }}"
           echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
           echo "Summary HTML - ${{ steps.coverageComment.outputs.summaryHtml }}"
-
-      - name: Debugging - Print Gist Update Request
-        run: |
-          echo "Updating Gist with:"
-          echo "filename: jest-coverage-comment__main.json"
-          echo "label: Coverage"
-          echo "message: ${{ steps.coverageComment.outputs.coverage }}%"
-          echo "color: ${{ steps.coverageComment.outputs.color }}"
-          echo "namedLogo: typescript"
-          echo "auth: ${{ secrets.GIST_SECRET }}"
+          
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./apps/${{ matrix.folder }}/coverage/*.json
           
       - name: Create the badge
         uses: schneegans/dynamic-badges-action@v1.6.0
