@@ -7,6 +7,7 @@ import { ItineraryModule } from './itinerary/itinerary.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import * as path from 'path';
+import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import * as path from 'path';
       isGlobal: true, // Makes ConfigModule globally available
     }),
     ItineraryModule, 
+    ItineraryItemsModule,
     UsersModule, 
     FirebaseModule, 
     ReviewsModule,

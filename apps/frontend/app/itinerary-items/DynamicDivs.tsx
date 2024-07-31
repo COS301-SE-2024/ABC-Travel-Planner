@@ -5,9 +5,10 @@ import SearchModal from "./SearchModal"
 import "./modal.css"
 
 interface ItemData {
-    Item_Name: string;
-    Item_Type: string;
-    image_link: string;
+    item_name: string;
+    item_type: string;
+    image_url: string;
+    itinerary_id: string;
   }
   
   interface DivItem {
@@ -30,37 +31,42 @@ interface ItemData {
 
         const fetchItems = async () => {
             try {
-            const response = await fetch(`/api/DatabaseFetch?id=${id}`);
-            const data: ItemData[] = await response.json();
-            const initialDivs = data.map((dataItem, index) => ({
-                id: index,
-                data: dataItem,
-            }));
+                const user_id = 'User1'
+                const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
+                
+                const data: ItemData[] = await response.json();
+                console.log("Response from server: " + JSON.stringify(data))
+                
+                const initialDivs = data.map((dataItem, index) => ({
+                    id: index,
+                    data: dataItem,
+                }));
 
-            initialDivs.forEach((data, index) => {
-                switch (data.data.Item_Type) {
-                    case "stays":
-                        data.data.Item_Type = "A place to stay"
-                        break;
-                    case "attractions":
-                        data.data.Item_Type = "Attraction"
-                        break;
-                    case "airportTaxis":
-                        data.data.Item_Type = "Airport Taxi"
-                        break;
-                    case "carRental":
-                        data.data.Item_Type = "Car Rental"
-                        break;
-                    case "flight": 
-                        data.data.Item_Type = "Flight"
-                        break;
+                initialDivs.forEach((data, index) => {
+                    switch (data.data.item_type) {
+                        case "stays":
+                            data.data.item_type = "A place to stay"
+                            break;
+                        case "attractions":
+                            data.data.item_type = "Attraction"
+                            break;
+                        case "airportTaxis":
+                            data.data.item_type = "Airport Taxi"
+                            break;
+                        case "carRental":
+                            data.data.item_type = "Car Rental"
+                            break;
+                        case "flight": 
+                            data.data.item_type = "Flight"
+                            break;
 
-                    default:
-                        break;
-                }
-            });
-            setDivs(initialDivs);
-            setFetchedData(data);
+                        default:
+                            break;
+                    }
+                });
+                setDivs(initialDivs);
+                setFetchedData(data);
+
             } catch (error) {
                 console.error("Error fetching items:", error);
             }
@@ -77,12 +83,13 @@ interface ItemData {
       };
       setDivs([...divs, newDiv]);
     };
-  //
+
     const handleRemoveDiv = async (id: number) => {
+    console.log(`Removing DIV ${id} from: ${divs[id].data.itinerary_id}`)
       try {
-          setDivs(divs.filter(divItem => divItem.id !== id));
           const response = await fetch(`/api/DatabaseDelete?id=${divs[id].data.id}`);
           console.log(response)
+          setDivs(divs.filter(divItem => divItem.id !== id));
       } catch (error) {
         console.error("Could not remove item: ", error)
       }
@@ -106,13 +113,13 @@ interface ItemData {
                 </a> */}
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass">
                     <a href="#" className='text-center flex justify-center'>
-                        <img className="w-full h-60 rounded-t-lg" src={divItem.data.image_link} alt="" />
+                        <img className="w-full h-60 rounded-t-lg" src={divItem.data.image_url} alt="" />
                     </a>
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem.data.Item_Name}</h2>
+                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem.data.item_name}</h2>
                         </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem.data.Item_Type}</p>
+                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem.data.item_type}</p>
                     </div>
                 </div>
 
