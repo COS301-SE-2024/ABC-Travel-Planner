@@ -1,5 +1,6 @@
 //"use server"
-import { Input, Button, Link } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
+import Link from 'next/link';
 import React from "react";
 import SearchModal from "./SearchModal";
 import BookMarkComponent from "./BookMarkComponent";
@@ -7,6 +8,7 @@ import TempStorage from "./TempStorage"
 import createSupabaseServerClient from '../../libs/supabase/server';
 import "./modal.css";
 import DynamicDivs from "./DynamicDivs";
+import ParentContainer from "./ParentContainer";
 
 // export const dynamic = 'force-dynamic'
 
@@ -30,26 +32,6 @@ const getCoordinates = async (location: string) => {
   }
 };
 
-// const getServerData = async(id: any) => {
-//   const supabase = await createSupabaseServerClient();
-//   const { data: ItineraryItemsData, error: ItineraryItemsErr } = await supabase
-//       .from('Itinerary-Items')
-//       .select("*")
-//       .eq('Itinerary_ID', id)
-  
-//   if (ItineraryItemsErr) {
-//     console.log("ERR: " + JSON.stringify(ItineraryItemsErr))
-//   } else if (ItineraryItemsData) {
-//     console.log("Data:\n\n" + JSON.stringify(ItineraryItemsData))
-//     return ItineraryItemsData
-//   } else {
-//     console.log("ERR & DATA is null")
-//   }
-    
-//     return []
-//     // return ItineraryItemsData
-// }
-
 const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; location?: string; destination?: any } }) => {
   const { location, id, destination } = searchParams;
   console.log("Location: " + location);
@@ -58,24 +40,31 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
 
   if (destination) {
     const obj = JSON.parse(destination)
-    const itemTitle = obj.Fg?.displayName ?? obj.displayName
+    const itemTitle = obj.Eg?.displayName ?? obj.displayName
     const itemType = obj.type
     const firstPhotoUrl = obj.firstPhotoUrl
-    const location = obj.Fg?.formattedAddress ?? obj.formattedAddress
+    const location = obj.Eg?.formattedAddress ?? obj.formattedAddress
 
     // console.log("Destination: " + obj);
     console.log("====================")
     console.log("id: " + obj.id)
     console.log("firstPhotoUrl: " + obj.firstPhotoUrl)
     console.log("Type: " + obj.type)
-    console.log("Title (displayName): " + obj.Fg?.displayName)
+    console.log("Title (displayName): " + obj.Eg?.displayName)
 
 
-    // console.log("DOES THE RECORD ALREADY EXIST?" + JSON.stringify(existsData))
   }
 
-  // const serverData = await getServerData(id)
-  // console.log("SERVER DATA: " + serverData)
+  const itinerary_id = '1';
+  const response = await fetch(`http://localhost:4000/itinerary-items/${itinerary_id}`);
+  const data = await response.json();
+  
+  const formattedData = data.map((item: any, index: number) => ({
+    id: index + 1,
+    ...item
+  }))
+
+  console.log("DATA PASSED TO BOOKING: " + JSON.stringify(formattedData))
 
   return (
     <>
@@ -110,14 +99,18 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
 
       <div className="flex justify-center">
         <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800">
-            {/* <DynamicDivs data={serverData} /> */}
-            <DynamicDivs image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null} />
+            <ParentContainer image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null} />
         </div>
       </div>
       
       <div className='mt-10 w-100 h-10'>
         <div className="absolute bottom-4 right-4 px-4">
-          <Link href='/booking'>
+          <Link href={{
+            pathname: '/booking',
+            query: {
+              data: JSON.stringify(formattedData)
+            }
+          }}>
             <Button className="border-2 border-black-500 rounded-md doneButton bg-blue-700">
               Done
             </Button>

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import SearchCard from '../search/searchCard';
 
 const FilterContainer = () => {
     const [selectedTopic, setSelectedTopic] = useState<string>('');

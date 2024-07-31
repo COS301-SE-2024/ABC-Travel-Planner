@@ -1,34 +1,38 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import Search from '../search/page';
 import FilterContainer from './filterContainer';
 import { Button } from '@nextui-org/react';
 import {
   Modal,
   ModalContent,
-  ModalHeader,
   ModalBody,
-  ModalFooter,
-  useDisclosure,
 } from '@nextui-org/modal';
 
 interface SearchModalProp {
-  handleAddDiv: () => void;
+  handleAddDiv: (searched: boolean) => void;
 }
 
 const SearchModal: React.FC<SearchModalProp> = ({ handleAddDiv }) => {
   const [isOpen, setIsOpen] = useState(false)
-  
+  const [searched, setSearched] = useState(false)
+
   const onClose = () => {
-      if (isOpen) {
-        handleAddDiv();
-        setIsOpen(false)
+    if (isOpen) {
+      setIsOpen(false)
+      if (searched) {
+        handleAddDiv(true)
+      }
         console.log("Open: " + isOpen)
+        setSearched(false)
       }
       else  {
         setIsOpen(true) 
         console.log("Open: " + isOpen)
       }
+  }
+
+  const onSearch = () => {
+    setSearched(true)
   }
 
   return (
