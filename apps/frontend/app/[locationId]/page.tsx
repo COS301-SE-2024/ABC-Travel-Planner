@@ -34,13 +34,16 @@ async function getDetailedData(locationId: any) {
 const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { locationId: string } }) => {
   const location_id = params.locationId || 'default_location_id';
   const data = await getDetailedData(location_id);
+  let locationLat = data.locationDetails.latitude;
+  let locationLon = data.locationDetails.longitude;
+  console.log(locationLat + " " + locationLon);
   console.log(JSON.stringify(data));
 
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
       <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <div className="small-photos flex flex-col gap-4">
-          {Array.isArray(data.photos) && data.photos.length > 0 ? (data.photos.map((photo: any) => (
+          {Array.isArray(data.photos) && data.photos.length > 0 ? (data.photos.slice(2, 7).map((photo: any) => (
               <img src={`${photo}`} alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
             ))) : (
               <p>No photos available</p>
