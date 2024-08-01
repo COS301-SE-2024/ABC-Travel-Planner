@@ -234,8 +234,6 @@ body {
 }
 
 /*ACCOUNT*/
-/*ACCOUNT*/
-
 .edit-profile {
   display: flex;
   flex-direction: column;
@@ -305,6 +303,7 @@ body {
   border-radius: 50%;
   border: 3px solid #fff; /* White border */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
 }
 
 .profile-info {
@@ -347,6 +346,7 @@ body {
 .menu-button:hover {
   color: #003366; /* Darker shade on hover */
 }
+
 
 .menu-button {
   background: none;
@@ -422,6 +422,9 @@ body {
 
 .itinerary-image {
   width: 100%; 
+
+  min-height: 100px;
+
   height: 100px; 
   object-fit: cover;
   border-top-left-radius: 10px; 
@@ -431,6 +434,7 @@ body {
 .itinerary-content {
   padding: 10px; 
   text-align: center; 
+
 }
 .view-button {
   background: #007bff; 
@@ -445,6 +449,20 @@ body {
 .view-button:hover {
   background: #0056b3; 
 }
+.view-button {
+  background: #007bff; 
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 3px; 
+}
+
+.view-button:hover {
+  background: #0056b3; 
+}
+
 
 
 .popup-overlay {
@@ -481,7 +499,9 @@ body {
 
 .popup-content button:hover {
   opacity: 0.9;
+
 }
+
 .followers-list,
 .following-list {
   margin-top: 20px;

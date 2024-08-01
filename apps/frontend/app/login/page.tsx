@@ -1,14 +1,21 @@
 "use client";
 import React, { FormEvent, useEffect, useState } from "react";
+import { FaGoogle } from "react-icons/fa";
+import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import {
-  signInWithEmailAndPassword,
+  login,
   signUpWithEmailAndPassword,
   validateEmail,
   validatePassword,
 } from ".";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import app from "@/libs/firebase/firebase";
+import getUser from "@/libs/actions/getUser";
 
 const SplashPage = () => {
   const router = useRouter();
@@ -30,11 +37,16 @@ const SplashPage = () => {
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    const result = await signInWithEmailAndPassword(loginData);
-    const {
-      data: { user },
-    } = JSON.parse(result);
+    if (loginData.email === "" || loginData.password === "") {
+      alert("Please enter email and password");
+      return;
+    }
+    const result = await login(loginData);
+    const tmp = JSON.parse(result || "{}");
+    const user = tmp?.user;
+
     if (user) {
+      Cookie.set("user_id", user.uid, { expires: 7 });
       router.push("/home");
     } else {
       alert("Invalid email or password");
@@ -55,14 +67,64 @@ const SplashPage = () => {
     }
     const result = await signUpWithEmailAndPassword(registerData);
 
-    const { error } = JSON.parse(result);
+    const { user } = JSON.parse(result);
 
-    if (error) {
+    if (!user) {
       alert("Email already in use");
       return;
     } else {
       alert("Registration successful!");
+      localStorage.setItem("user_id", user.uid);
+      Cookie.set("user_id", user.uid, { expires: 7 });
+
       router.push("/home");
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Use signInWithPopup for browser environments
+    try {
+      const result = await signInWithPopup(auth, provider);
+      if (result.user) {
+        const docRef = doc(db, "Users", result.user.uid);
+
+        const r = await getUser(result.user.uid);
+        if (!r) {
+          const storage = getStorage(app);
+          const storageRef = ref(storage, `Profiles/default.jpg`);
+          const url = await getDownloadURL(storageRef);
+          console.log(url);
+          await setDoc(docRef, {
+            user_id: result.user.uid,
+            username: result?.user?.displayName,
+            email: result.user.email,
+            memberSince: new Date().toISOString().substring(0, 10),
+            imageUrl: url,
+            name: result?.user?.displayName,
+          });
+        }
+      }
+      return JSON.stringify(result);
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const handleGoogleSignIn = async (e: any) => {
+    e.preventDefault();
+    const result = await signInWithGoogle();
+    if (result) {
+      const { user } = JSON.parse(result);
+      if (user) {
+        Cookie.set("user_id", user.uid, { expires: 7 });
+        router.push("/home");
+      } else {
+        alert("An error occurred while signing in with Google");
+      }
     }
   };
 
@@ -111,10 +173,10 @@ const SplashPage = () => {
 
         <div className="container">
           <div className="row justify-content-center">
-            <div onSubmit={handleLogin} className="col-md-6">
-              <form style={styles.form}>
+            <div  className="col-md-6">
+              <form onSubmit={handleLogin} style={styles.form}>
                 <h1 style={{ ...styles.headers, textAlign: "center" }}>
-                  Login{" "}
+                  Login
                 </h1>
                 <div className="mb-3">
                   <label htmlFor="loginEmail" className="form-label">
@@ -147,13 +209,26 @@ const SplashPage = () => {
                     required
                   />
                 </div>
-                <button
-                  data-testid="signInSubmit"
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  Login
-                </button>
+                <div className="d-flex flex-column align-items-center">
+                  <button
+                    data-testid="signInSubmit"
+                    type="submit"
+                    className="btn btn-primary mb-2 w-60"
+                  >
+                    Login
+                  </button>
+
+                  <h6 className="my-2">Or</h6>
+
+                  <button
+                    data-testid="signInGoogle"
+                    type="button"
+                    className="w-100 max-w-xs bg-white text-blue-500 font-bold py-2 px-4 rounded border border-blue-500 flex items-center justify-center"
+                    onClick={handleGoogleSignIn}
+                  >
+                    <FaGoogle className="mr-2" /> Sign in with Google
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -198,10 +273,10 @@ const SplashPage = () => {
           </div>
         </div>
 
-        <div onSubmit={handleRegister} className="container">
+        <div  className="container">
           <div className="row justify-content-center">
             <div className="col-md-6">
-              <form style={styles.form}>
+              <form onSubmit={handleRegister} style={styles.form}>
                 <h1 style={{ ...styles.headers, textAlign: "center" }}>
                   Register
                 </h1>
