@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
+import axios from "axios";
+import Cookies from "js-cookie";
+import { getItineraryImage } from '../itinerary';
 
 interface SearchCardProps {
     place: any;
@@ -75,26 +78,40 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const [selectedDate, setSelectedDate] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isNewItineraryModalOpen, setIsNewItineraryModalOpen] = useState(false);
-    const [itineraries, setItineraries] = useState(['Itinerary 1', 'Itinerary 2']);
+    const [itineraries, setItineraries] = useState<any>([]);
     const [newItinerary, setNewItinerary] = useState({ location: '', tripName: '' });
 
     const handleSelectDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedDate(event.target.value);
     };
 
-    const handleAddToItineraryClick = () => {
+    const handleAddToItineraryClick = async () => {
+        const user_id = Cookies.get("user_id");
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const temp = await axios.post(`${backendUrl}/itinerary/getItineraries`, { user_id: user_id });
+        console.log(JSON.stringify(temp.data));
+        setItineraries(temp.data);
         setIsModalOpen(true);
     };
 
     const handleNewItineraryClick = () => {
         setIsModalOpen(false);
         setIsNewItineraryModalOpen(true);
+        
     };
 
-    const handleSaveNewItinerary = () => {
+    const handleSaveNewItinerary = async () => {
         setItineraries([...itineraries, newItinerary.tripName]);
-        setNewItinerary({ location: '', tripName: '' });
         setIsNewItineraryModalOpen(false);
+        const user_id = Cookies.get("user_id");
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const image = await getItineraryImage(newItinerary.location);
+        const newI = await axios.post(`${backendUrl}/itinerary/create`,{name: newItinerary.tripName, location: newItinerary.location,user_id: user_id,imageUrl: image});
+        console.log(JSON.stringify(newI));
+        //Now add the item
+        const newItemData = JSON.parse(newI.config.data);
+        console.log(JSON.stringify({ itinerary_id: newI.data, location: newItemData.location, name: newItemData.name}));
+        const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ image: place.firstPhotoUrl, itinerary_id: newI.data, location: newItemData.location, name: newItemData.name});
     };
 
     function extractLocation(fullString: string) {
@@ -102,6 +119,12 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         const city = parts.slice(1, -1).join(' ');
         const country = parts[parts.length - 1];
         return { city, country };
+    }
+
+    const getItineraries = async () => {
+        const user_id = Cookies.get("user_id");
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const temp = await axios.post(`${backendUrl}/itinerary/getItineraries`, { user_id: user_id });
     }
 
     const availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
@@ -233,8 +256,8 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                             defaultValue=""
                         >
                             <option value="" disabled>Select an itinerary</option>
-                            {itineraries.map((itinerary, index) => (
-                                <option key={index} value={itinerary}>{itinerary}</option>
+                            {itineraries.map((itinerary: any, index: number) => (
+                                <option key={index} value={itinerary.name}>{itinerary.name}</option>
                             ))}
                         </select>
                         <button
