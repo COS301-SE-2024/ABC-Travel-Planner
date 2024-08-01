@@ -40,10 +40,11 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
     <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
       <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <div className="small-photos flex flex-col gap-4">
-          <Image src={`${data.photos[2]}`} alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src={`${data.photos[3]}`} alt="Photo 2" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src={`${data.photos[4]}`} alt="Photo 3" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src={`${data.photos[5]}`} alt="Photo 4" width={200} height={200} className="rounded-lg shadow-lg" />
+          {Array.isArray(data.photos) && data.photos.length > 0 ? (data.photos.map((photo: any) => (
+              <img src={`${photo}`} alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
+            ))) : (
+              <p>No photos available</p>
+            )}
         </div>
         <div className="main-photos col-span-2 grid grid-cols-2 md:grid-cols-2 gap-3">
           <div className="main-photo">
@@ -114,10 +115,11 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.reviews.map((review: any) => (
               <div key={review.id} className="review-card bg-white border border-gray-200 p-4 rounded-lg">
-                <h2 className="text-lg font-semibold">{review.user}</h2>
-                <p className="text-gray-600">{review.comment}</p>
-                <p className="text-gray-600">Rating: {review.rating}</p>
-                <p className="text-gray-600">{review.title}</p>
+                <h2 className="text-lg font-semibold">{review.authorAttribution.displayName}</h2>
+                <p className="text-gray-600">{review.originalText.text}</p>
+                <p className="text-gray-600"><b>Posted:</b> {review.relativePublishTimeDescription}</p>
+                <p className="text-gray-600"><b>Rating:</b> {review.rating}</p>
+                <Image src={`${review.authorAttribution.photoUri}`} alt="Photo 1" width={40} height={40} className="rounded-lg shadow-lg" />
               </div>
             ))}
           </div>
