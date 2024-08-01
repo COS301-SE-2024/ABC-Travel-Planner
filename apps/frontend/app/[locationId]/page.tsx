@@ -44,18 +44,18 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
       <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <div className="small-photos flex flex-col gap-4">
           {Array.isArray(data.photos) && data.photos.length > 0 ? (data.photos.slice(2, 7).map((photo: any) => (
-              <img src={`${photo}`} alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
+            <div key={photo}><img src={`${photo}`} alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" /></div>
+              
             ))) : (
               <p>No photos available</p>
             )}
         </div>
         <div className="main-photos col-span-2 grid grid-cols-2 md:grid-cols-2 gap-3">
-          <div className="main-photo">
-            <Image src={`${data.photos[0]}`} alt="Photo 1" width={800} height={800} className="rounded-lg shadow-lg" />
-          </div>
-          <div className="second-photo">
-            <Image src={`${data.photos[1]}`} alt="Photo 1" width={900} height={900} className="rounded-lg shadow-lg" />
-          </div>
+        {data.photos.slice(0, 2).map((photo: string, index: number) => (
+            <div key={photo} className="main-photo">
+              <Image src={`${photo}`} alt={`Photo ${index + 1}`} width={800} height={800} className="rounded-lg shadow-lg" />
+            </div>
+          ))}
         </div>
       </div>
       <div className="info-section grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
