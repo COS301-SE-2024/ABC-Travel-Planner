@@ -11,7 +11,7 @@ interface TempStorageProps {
   image_url: any
 }
 
-const uploadItem = async(itemTitle: any, itemType: any, destination: any, image_url: any) => { 
+const uploadItem = async(itemTitle: any, itemType: any, destination: any, imageUrl: any) => { 
   const id = localStorage.getItem('id') as string
   const location = localStorage.getItem('location') as string
   console.log("ID (tempstorage): " + id)
@@ -25,7 +25,7 @@ const uploadItem = async(itemTitle: any, itemType: any, destination: any, image_
     location: JSON.parse(location).location,
     itinerary_id: JSON.parse(id).id,
     destination: destination,
-    image_url: image_url
+    image_url: imageUrl
   }
 
   console.log("Going to upload to db...")
@@ -40,8 +40,8 @@ const uploadItem = async(itemTitle: any, itemType: any, destination: any, image_
       body: JSON.stringify(tempDetails)
     });
 
-    const data = await response.json();
-    console.log("Response from server: ", data);
+    // const data = await response.json();
+    console.log("Response from server: ", JSON.stringify(response));
   } catch (error) {
     console.error("Error uploading item:", error);
   }
@@ -57,6 +57,7 @@ const uploadItem = async(itemTitle: any, itemType: any, destination: any, image_
 const TempStorage: React.FC<TempStorageProps> = ({id, location, destination, Item_Title, Item_Type, image_url}) => {
   const [l, setL] = useState('');
   const [i, setI] = useState('');
+  const [isUploading, setIsUploading] = useState(false)
 
   useEffect(() => {
     console.log(id)
@@ -66,7 +67,7 @@ const TempStorage: React.FC<TempStorageProps> = ({id, location, destination, Ite
     console.log(Item_Type)
     console.log(image_url)
 
-    const init = async () => {
+    const init = () => {
       //Checks if it has been stored... Useful for retrieving later on
       if (!image_url) {
         console.log("DESTINATION === NULL")
@@ -84,8 +85,18 @@ const TempStorage: React.FC<TempStorageProps> = ({id, location, destination, Ite
         }
       }
       else if (image_url) {
+        // if (isUploading) return
+        // setIsUploading(true)
+
         console.log("DESTINATION NOT NULL")
-        uploadItem(Item_Title, Item_Type, destination, image_url)
+        try {
+          uploadItem(Item_Title, Item_Type, destination, image_url)
+        } catch (error) {
+          console.error(error)
+        } 
+        finally {
+          // setIsUploading(false)
+        }
       }
       else {
         console.log("Destination & id + location values do not match up...")

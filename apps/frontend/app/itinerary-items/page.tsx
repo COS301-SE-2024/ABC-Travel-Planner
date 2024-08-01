@@ -46,8 +46,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
     console.log("firstPhotoUrl: " + obj.firstPhotoUrl)
     console.log("Type: " + obj.type)
     console.log("Title (displayName): " + obj.Fg?.displayName)
-
-
+    
   }
 
   return (

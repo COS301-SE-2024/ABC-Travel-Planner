@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '@nextui-org/react';
 import SearchModal from "./SearchModal"
 import "./modal.css"
+import Cookie from 'js-cookie'
 
 interface ItemData {
     item_name: string;
@@ -28,57 +29,64 @@ interface ItemData {
     const [divs, setDivs] = useState<DivItem[]>([]);
     const [fetchedData, setFetchedData] = useState<ItemData[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-  
+    const [initialLoad, setInitialLoad] = useState(true);
+
     useEffect(() => {
-        const id = JSON.parse(localStorage.getItem('id') as string).id
-        console.log("ID IN DYNAMIC DIV: " + JSON.stringify(id))
 
-        const fetchItems = async () => {
-            try {
-                const user_id = 'User1'
-                const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
-                
-                const data: ItemData[] = await response.json();
-                console.log("Response from server: " + JSON.stringify(data))
-                
-                const initialDivs = data.map((dataItem, index) => ({
-                    id: index,
-                    data: dataItem,
-                }));
+        if (initialLoad) {
+            setInitialLoad(false)
+        } else {
+            const id = JSON.parse(localStorage.getItem('id') as string).id
+            console.log("ID IN DYNAMIC DIV: " + JSON.stringify(id))
+    
+            const fetchItems = async () => {
+                try {
+                    const user_id = 'User1'
+                    // const user_id = Cookie.get('user_id')
+                    const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
+                    
+                    const data: ItemData[] = await response.json();
+                    console.log("Response from server: " + JSON.stringify(data))
+                    
+                    const initialDivs = data.map((dataItem, index) => ({
+                        id: index,
+                        data: dataItem,
+                    }));
+    
+                    initialDivs.forEach((data, index) => {
+                        switch (data.data.item_type) {
+                            case "stays":
+                                data.data.item_type = "A place to stay"
+                                break;
+                            case "attractions":
+                                data.data.item_type = "Attraction"
+                                break;
+                            case "airportTaxis":
+                                data.data.item_type = "Airport Taxi"
+                                break;
+                            case "carRental":
+                                data.data.item_type = "Car Rental"
+                                break;
+                            case "flight": 
+                                data.data.item_type = "Flight"
+                                break;
+    
+                            default:
+                                break;
+                        }
+                    });
+                    setDivs(initialDivs);
+                    setFetchedData(data);
+                    setInitialLoad(true);
+                } catch (error) {
+                    console.error("Error fetching items:", error);
+                }
+            };
+      
+          fetchItems();
+        }
+    }, [initialLoad])
 
-                initialDivs.forEach((data, index) => {
-                    switch (data.data.item_type) {
-                        case "stays":
-                            data.data.item_type = "A place to stay"
-                            break;
-                        case "attractions":
-                            data.data.item_type = "Attraction"
-                            break;
-                        case "airportTaxis":
-                            data.data.item_type = "Airport Taxi"
-                            break;
-                        case "carRental":
-                            data.data.item_type = "Car Rental"
-                            break;
-                        case "flight": 
-                            data.data.item_type = "Flight"
-                            break;
-
-                        default:
-                            break;
-                    }
-                });
-                setDivs(initialDivs);
-                setFetchedData(data);
-
-            } catch (error) {
-                console.error("Error fetching items:", error);
-            }
-        };
-  
-      fetchItems();
-    }, []);
-  
     const handleAddDiv = () => {
       const newId = divs.length;
       const newDiv = {
@@ -89,7 +97,7 @@ interface ItemData {
     };
 
     const handleRemoveDiv = async (id: number) => {
-    console.log(`Removing DIV ${id} from: ${divs[id].data.itinerary_id}`)
+    console.log(`Removing DIV ${id} from: ${divs[id]?.data?.itinerary_id}`)
     const image_url = divs[id].data.image_url
     const itinerary_id = divs[id].data.itinerary_id
     const timestamp = divs[id].data.timestamp
@@ -106,6 +114,7 @@ interface ItemData {
           })
         
         console.log(response)
+          //Div ids still need to be updated after deletion...
           setDivs(divs.filter(divItem => divItem.id !== id));
       } catch (error) {
         console.error("Could not remove item: ", error)

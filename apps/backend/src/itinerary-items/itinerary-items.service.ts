@@ -11,24 +11,43 @@ export class ItineraryItemsService {
 
   async addItem(user_id: string, item_name: string, item_type: string, location: string, itinerary_id: string, destination: string, image_url: string): Promise<void> {
     try {
-      const userRef = this.db.collection('Itinerary-items').doc(user_id);
-      await userRef.set({
-        timestamp: admin.firestore.FieldValue.serverTimestamp(),
-      });
 
-      const subCollectionRef = userRef.collection('Items').doc();
+      const exists = await this.db
+        .collection('Itinerary-items')
+        .doc(user_id)
+        .collection('Items')
+        .where('user_id', '==', user_id)
+        .where('item_name', '==', item_name)
+        .where('item_type', '==', item_type)
+        .where('location', '==', location)
+        .where('itinerary_id', '==', itinerary_id)
+        .where('destination', '==', destination)
+        .where('image_url', '==', image_url)
+        .limit(1)
+        .get()
 
-      await subCollectionRef.set({
-              itinerary_id,
-              item_name,
-              item_type,
-              location,
-              image_url,
-              destination,
-              user_id,
-              timestamp: admin.firestore.FieldValue.serverTimestamp(),
-      });
-      
+        console.log(exists)
+        console.log(JSON.stringify(exists))
+
+        if (exists.empty) {
+          const userRef = this.db.collection('Itinerary-items').doc(user_id);
+          await userRef.set({
+            timestamp: admin.firestore.FieldValue.serverTimestamp(),
+          });
+    
+          const subCollectionRef = userRef.collection('Items').doc();
+    
+          await subCollectionRef.set({
+                  itinerary_id,
+                  item_name,
+                  item_type,
+                  location,
+                  image_url,
+                  destination,
+                  user_id,
+                  timestamp: admin.firestore.FieldValue.serverTimestamp(),
+          });
+        }
     } 
     catch (error) {
       console.log(error)
