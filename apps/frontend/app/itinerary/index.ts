@@ -1,5 +1,8 @@
 "use server";
 import createSupabaseServerClient from "@/libs/supabase/server";
+import { getStorage,ref,getDownloadURL } from "firebase/storage";
+import app from "@/libs/firebase/firebase";
+
 
 const createItinerary = async (itineraryName: string, location: string) => {
   const supabase = await createSupabaseServerClient();
@@ -14,23 +17,16 @@ const createItinerary = async (itineraryName: string, location: string) => {
   return data;
 };
 
+
 const getItineraryImage = async (location: string) => {
-  const supabase = await createSupabaseServerClient();
-  const { data: list, error } = await supabase.storage.from("locations").list();
-  if (error) {
-    console.error("error", error);
-  } else {
-    const filteredObjects = list.filter(object =>
-      object.name.includes(location)
-    );
-    if (filteredObjects.length == 0) {
-      return "https://rgfpdfcxkoepvqtmtxir.supabase.co/storage/v1/object/public/locations/Default1.jpg";
-    } else {
-      const { data } = supabase.storage
-        .from("locations")
-        .getPublicUrl(`${location}.jpg`);
-      return data.publicUrl;
-    }
+  const storage = getStorage(app);
+  const imageRef = ref(storage, `locations/${location.toLowerCase()}.jpg`);
+  try{
+    const url = await getDownloadURL(imageRef);
+    return url;
+  }catch(e){
+    const url = await getDownloadURL(ref(storage, `locations/Default1.jpg`));
+    return url;
   }
 };
 
@@ -75,4 +71,4 @@ const deleteItinerary = async (id: any) => {
   return data;
 };
 
-export { createItinerary, getItineraries, updateItinerary, deleteItinerary };
+export { createItinerary, getItineraries, updateItinerary, deleteItinerary, getItineraryImage };
