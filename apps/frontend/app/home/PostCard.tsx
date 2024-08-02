@@ -38,47 +38,59 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, image_url, post_title, pos
     setShowComments(!showComments);
     
     //No cache available atm...
-    if (showComments) {
+    if (!showComments) {
       const commentRes = await fetch(`http://localhost:4000/comments/${post_id}`)
-      console.log(await commentRes.text());
+      // console.log(await commentRes.text());
 
+      const midData = await commentRes.text();
+      let receivedComments: Comment[] = [];
+
+      JSON.parse(midData).map((element: { comment_string: string; user_id: string; }) => {
+        receivedComments.push({
+          comment_string: element.comment_string,
+          user_id: element.user_id
+        })
+      });
+
+      setComments(receivedComments)
       // handleAddComment();
     }
   };
 
   const handleAddComment = async () => {
       //Add new comment to the backend...
+      
       //Get Current user...
-      const dataToAdd = {
-        user_id : 'User1',
-        post_id : post_id,
-        comment_string : 'Some random comment',
-      }
-
-      const addCommentRes = await fetch(`http://localhost:4000/comments/post/home`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataToAdd),
-      })
-      
-      if (addCommentRes.ok) {
-        const newComment: Comment = {
-          user_id: 'User1',
-          comment_string: 'Some random comment',
-        };
-      
-        setComments([...comments, newComment]);
-        setNewComment({
-          user_id: '',
-          comment_string: ''
-        });
-      }
-
-      if (newComment) {
+      const currUser = 'User1';      
+        
         //Add to db...
+        if (newComment) {
+          //Testing data
+          const dataToAdd = {
+            user_id : 'User1',
+            post_id : post_id,
+            comment_string : 'Some random comment',
+          }
+
+          const addCommentRes = await fetch(`http://localhost:4000/comments/post/home`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToAdd),
+          })
+
+          if (addCommentRes.ok) {
+            //Do something
+          }
+          
+          setComments([...comments, newComment]);
+          setNewComment({
+            user_id: '',
+            comment_string: ''
+          });
       }
+
   };
 
   return (
