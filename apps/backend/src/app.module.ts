@@ -10,6 +10,7 @@ import * as path from 'path';
 import { PostsModule } from './posts/posts.module';
 import { FollowModule } from './follow/follow.module';
 import { GoogleMapsModule } from './google-maps/google-maps.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { GoogleMapsModule } from './google-maps/google-maps.module';
     ReviewsModule,
     PostsModule,
     FollowModule,
+    CommentsModule,
     GoogleMapsModule
   ],
   controllers: [AppController],

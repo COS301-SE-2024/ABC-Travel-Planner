@@ -6,9 +6,9 @@ export class PostsController {
     constructor(private readonly postService: PostsService) {}
 
     @Post()
-    async addPost(@Body() body: { user_id: string; post_description: string; post_likes: string, post_title: string }): Promise<void> {
+    async addPost(@Body() body: { user_id: string, image_url: string, location_id: string, post_description: string, post_title: string }): Promise<void> {
         try {
-            await this.postService.addPost(body.user_id, body.post_description, body.post_likes, body.post_title);
+            await this.postService.addPost(body.user_id, body.image_url, body.location_id, body.post_description, body.post_title);
         } 
         catch (error) {
             throw new InternalServerErrorException(error.message)

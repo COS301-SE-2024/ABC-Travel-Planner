@@ -3,6 +3,7 @@ import * as admin from 'firebase-admin';
 
 interface refinedData {
   id: string,
+  image_url?: string;
   post_title: string,
   user_name: string,
   post_likes: number,
@@ -41,9 +42,8 @@ export class PostsService {
     this.lastPostId = ''
   }
 
-  //Should we add location_id as a parameter?
-  async addPost(user_id: string, post_description: string, post_likes: string, post_title: string): Promise<void> {
-    if (!user_id || !post_description || !post_likes || !post_title) {
+  async addPost(user_id: string, image_url: string, location_id: string, post_description: string, post_title: string): Promise<void> {
+    if (!user_id || !post_description || !post_title) {
         throw new BadRequestException('Not all fields are filled in/valid')
     }
     // const user_id = 'User5';
@@ -52,13 +52,21 @@ export class PostsService {
     // const post_title = 'Resting in the mountains...'
 
     try {
-      await this.db.collection('Posts').add({
+      const addRes = await this.db.collection('Posts').add({
         user_id, 
+        image_url: image_url ?? 'gs://abctravelplanner.appspot.com/Posts/default.jpg',
+        location_id: location_id ?? 'NULL',
         post_description,
-        post_likes,
+        post_likes: 0,
         post_title,
         timestamp: admin.firestore.FieldValue.serverTimestamp(),
-      });
+      })
+
+      const post_id = addRes.id;
+      const createCommentFolder = await this.db.collection('Comments').doc(post_id).set({
+        user_id: user_id,
+        timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      })
     } 
     catch (error) {
       console.log(error)
