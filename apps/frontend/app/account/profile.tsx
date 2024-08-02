@@ -132,7 +132,9 @@ const Account = () => {
       const postsResponse = await axios.post(`${backendUrl}/posts/getUserPosts`, {
         user_id: userId,
       });
+      
       setPosts(postsResponse.data);
+
 
       // const result = await getSharedItineraries();
       // setItineraries(result);

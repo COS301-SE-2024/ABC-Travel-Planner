@@ -27,6 +27,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
   const [newLocation, setNewLocation] = useState(location);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const handleNameChange = (e: any) => setNewName(e.target.value);
   const handleLocationChange = (e: any) => setNewLocation(e.target.value);
 
@@ -40,13 +41,25 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
     setShowEditModal(false);
   };
 
+
   const openDeleteModal = (e: any) => {
     e.preventDefault();
     setShowDeleteModal(true);
   };
+
+  
   const closeDeleteModal = () => {
     setShowDeleteModal(false);
   };
+
+  const openShareModal = (e: any) => {
+    e.preventDefault();
+    setShowShareModal(true);
+  };
+
+  const closeShareModal = () => {
+    setShowShareModal(false);
+  }
 
   const handleEdit = async (e: any) => {
     e.preventDefault();
@@ -69,6 +82,13 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
     closeDeleteModal();
   };
 
+  const handleShare = async () => {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    await axios.post(`${backendUrl}/itinerary/share`, { itineraryId: id });
+    fetchItineraries();
+    closeShareModal();
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 cursor-pointer relative">
       <Link href={`/itinerary-items?location=${location}&id=${id}`} passHref>
@@ -85,7 +105,9 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
           <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
           <p className="ml-1 text-sm text-gray-500">{location}</p>
           <div className="flex justify-between items-center mt-2">
-            <button className="text-sm text-gray-600 hover:text-gray-800 flex items-center">
+            <button
+             onClick={openShareModal}
+             className="text-sm text-gray-600 hover:text-gray-800 flex items-center">
               <FaShareAlt className="mr-1" />
               Share
             </button>
@@ -222,6 +244,47 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
           </div>
         </div>
       )}
+
+      {showShareModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+          <div className="relative w-full max-w-lg mx-auto my-6">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div className="flex justify-between items-center px-6 py-4 bg-blue-600 text-white">
+                <h3 className="text-xl font-semibold">Share Itinerary</h3>
+                <button
+                  className="text-gray-200 hover:text-gray-300 focus:outline-none"
+                  onClick={closeShareModal}
+                >
+                  &#215;
+                </button>
+              </div>
+              <div className="p-6">
+                <p className="text-sm text-gray-700">
+                  Share this itinerary with your friends!
+                </p>
+                <div className="flex justify-end mt-4">
+                  <button
+                    type="button"
+                    onClick={closeShareModal}
+                    className="px-4 py-2 mr-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    Share
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 };
