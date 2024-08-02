@@ -18,7 +18,11 @@ export class ImagesService {
     let data = fileExists[0];
 
     if (data) {
-      //
+      console.log(await file.getSignedUrl({
+        action: 'read',
+        expires: '11-11-2024',
+    }));
+
     } else {
       console.log("JPG does not exist!")
       file = bucket.file(`Posts/${id}.png`);
@@ -26,7 +30,11 @@ export class ImagesService {
       data = fileExists[0];
 
       if (data) {
-        //
+        console.log(await file.getSignedUrl({
+        action: 'read',
+        expires: '11-11-2024',
+      }));     
+      
       } else {
         console.log("PNG does not exist!")
         console.error('File does not exist for post - loading default image')

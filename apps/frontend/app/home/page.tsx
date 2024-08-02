@@ -75,12 +75,17 @@ const Home = () => {
         }
         const data: Post[] = await response.json();
         
+        //Images...
         data.forEach(async element => {
           console.log("Image ID: " + element.id)
           const imageUrl = await fetch(`http://localhost:4000/images?id=${element.id}`)
           const data = await imageUrl.text();
-          console.log(data)
-          element.image_url = data;
+
+          //Check for png & jpg's
+          if (JSON.parse(data).url) {
+            element.image_url = JSON.parse(data).url;
+          } else element.image_url = data;
+
         });
         
         console.log(data); // Log the fetched data for debugging
