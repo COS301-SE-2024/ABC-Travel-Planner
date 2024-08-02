@@ -99,29 +99,50 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
   };
 
   const followUser = async () => {
-    //Check if already following... 
-    setIsFollowing("Follow")
-
     //Change to dynamic...
     const followData = {
-      curr_user: 'User1',
-      other_user: user_id
+      currUser: 'User1',
+      otherUser: user_id
     }
     
     const response = await fetch(`http://localhost:4000/follow-endpoint/isFollowing`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Add any other headers here if needed
+        //Maybe an Auth header?
       },
       body: JSON.stringify(followData), // Convert the data to JSON
     });
 
-    if (response) {
-      //Make call to unfollow
+    const following = await response.text()
+
+    if (following == "true") {
+      const unfollowRes = await fetch(`http://localhost:4000/follow-endpoint/unfollow`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          //Maybe an Auth header?
+      },
+        body: JSON.stringify({
+          currUser: 'User1',
+          userToUnfollow: user_id
+        }),
+      });
+      console.log(await unfollowRes.text());
       setIsFollowing("Follow");
     } else {
-      //Make call to follow
+      const followRes = await fetch(`http://localhost:4000/follow-endpoint/follow`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          //Maybe an Auth header?
+      },
+        body: JSON.stringify({
+          currUser: 'User1',
+          userToFollow: user_id
+        }),
+      });
+      console.log(await followRes.text());
       setIsFollowing("Following");
     }
   }

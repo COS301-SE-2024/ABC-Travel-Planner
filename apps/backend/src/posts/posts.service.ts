@@ -5,7 +5,8 @@ interface refinedData {
   id: string,
   image_url?: string;
   post_title: string,
-  user_name: string,
+  user_id: string,
+  user_name?: string,
   post_likes: number,
   post_description: string,
   location_id: string,
@@ -17,6 +18,7 @@ interface rawData {
   image_url: string,
   post_title: string,
   user_name: string,
+  user_id: string,
   post_likes: number,
   post_description: string,
   location_id: string,
@@ -103,11 +105,14 @@ export class PostsService {
       this.lastPostId = posts[posts.length-1].id
       console.log(posts)
 
+      //Remember to take the user_id and make a call to get their user_name, and then pass the user_name back...
+
       const newData: refinedData[] = posts.map((item: rawData) => ({
           id: item.id,
           image_url: item.image_url,
           post_title: item.post_title,
           user_name: item.user_name,
+          user_id: item.user_id,
           post_likes: item.post_likes,
           post_description: item.post_description,
           location_id: item.location_id,

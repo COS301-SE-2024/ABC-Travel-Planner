@@ -31,8 +31,16 @@ export class FollowController {
     }
 
     @Post('isFollowing')
-    async isFollowing(@Body() body : { curr_user: string, other_user: string}) : Promise<boolean> {
-        return await this.followService.isFollowing(body.curr_user, body.other_user);
+    async isFollowing(@Body() body : { currUser: string, otherUser: string}) : Promise<boolean> {
+        if (!body.currUser) {
+            throw Error('No current user field specified')
+        }
+
+        if (!body.otherUser) {
+            throw Error('No otherUser field specified')
+        }
+
+        return await this.followService.isFollowing(body.currUser, body.otherUser);
     }
 
     @Post('unfollow')
