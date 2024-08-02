@@ -67,7 +67,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:4000/posts');
+        const response = await fetch(`${process.env.BACKEND_URL}/posts`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -85,7 +85,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPopularDestinations = async () => {
       try {
-        const response = await fetch('http://localhost:4000/google-maps/popular-destinations');
+        const response = await fetch(`${process.env.BACKEND_URL}/google-maps/popular-destinations`);
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
@@ -103,7 +103,7 @@ const Home = () => {
             console.log(place.photos[0].photo_reference);
             return {
               
-              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=AIzaSyDVPDlRQuCtnX0wcKLWgFPH5XZ6oifLieM`,
+              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
             };
           } else {
             return { image: '/Images/default.jpg' };

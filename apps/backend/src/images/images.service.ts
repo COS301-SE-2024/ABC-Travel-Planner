@@ -11,14 +11,34 @@ export class ImagesService {
 
   async getPostImage(id: string): Promise<string> {
     const bucket = this.firebaseApp.storage().bucket();
-    // OR PNG...
-
+    
+    //Accounting for both .jpg files and .png files
     let file = bucket.file(`Posts/${id}.jpg`);
-    if (!file.exists()) {
-        file = bucket.file(`Posts/${id}.png`);
-        if (!file.exists()) {
-          throw new Error('File does not exist in storage bucket');
+    let fileExists = await file.exists();
+    let data = fileExists[0];
+
+    if (data) {
+      //
+    } else {
+      console.log("JPG does not exist!")
+      file = bucket.file(`Posts/${id}.png`);
+      fileExists = await file.exists();
+      data = fileExists[0];
+
+      if (data) {
+        //
+      } else {
+        console.log("PNG does not exist!")
+        console.error('File does not exist for post - loading default image')
+        file = bucket.file(`Posts/placeholder.png`)
+        fileExists = await file.exists();
+        data = fileExists[0];
+        if (data) {
+          //
+        }  else {
+          console.log("Placeholder image doesn't exist?")
         }
+      }
     }
 
     const expiryDate = this.getExpiry();
@@ -32,6 +52,10 @@ export class ImagesService {
     return url;
   }
 
+  async uploadImage(image_name : string, base64 : string) : Promise<void> {
+    //Upload logic...
+  }
+
   getExpiry() : string {
     const currDate = new Date();
     currDate.setDate(currDate.getDate() + 1);
@@ -42,4 +66,15 @@ export class ImagesService {
 
     return `${currMonth}-${currDay}-${currYear}`;
   }
+
+  // generateFirebaseId() : string {
+  //   const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  //   let id = '';
+    
+  //   for (let i = 0; i < 20; i++) {
+  //     id += charset.charAt(Math.floor(Math.random() * charset.length));
+  //   }
+    
+  //   return id;
+  // }
 }
