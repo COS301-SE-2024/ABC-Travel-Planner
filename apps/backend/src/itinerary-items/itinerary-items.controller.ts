@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, InternalServerErrorException, BadRequestException, Param, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, InternalServerErrorException, Param, Res, HttpStatus } from '@nestjs/common';
 import { ItineraryItemsService } from './itinerary-items.service';
 import { Response } from 'express'
 
