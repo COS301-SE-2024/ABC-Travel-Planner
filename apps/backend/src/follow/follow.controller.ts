@@ -30,6 +30,11 @@ export class FollowController {
         return await this.followService.follow(body.currUser, body.userToFollow)
     }
 
+    @Post('isFollowing')
+    async isFollowing(@Body() body : { curr_user: string, other_user: string}) : Promise<boolean> {
+        return await this.followService.isFollowing(body.curr_user, body.other_user);
+    }
+
     @Post('unfollow')
     async unfollow(@Body() body: {currUser: string, userToUnfollow: string}) {
         if (!body.currUser) {

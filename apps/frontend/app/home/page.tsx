@@ -40,6 +40,7 @@ const allLocations = [
 
 interface Post {
   id: string;
+  user_id: string;
   image_id?: string;
   image_url?: string;
   post_title?: string;
@@ -170,6 +171,7 @@ const Home = () => {
               <PostCard
                 key={post.id}
                 post_id={post.id}
+                user_id={post.user_id}
                 image_url={post.image_url}
                 post_title={post.post_title || 'Untitled'}
                 post_description={post.post_description || 'No description available.'}

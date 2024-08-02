@@ -181,4 +181,10 @@ export class FollowService {
       throw new FollowException(false, "follower", currUser, userToUnfollow)
     }
   }
+
+  async isFollowing(user_id: string, otherUser: string) : Promise<boolean> {
+    const isFollowingRef = this.firebaseApp.firestore().collection('Follow-Details').doc(user_id).collection('Following').doc(otherUser);
+    const doc = await isFollowingRef.get();
+    return doc.exists;
+  }
 }
