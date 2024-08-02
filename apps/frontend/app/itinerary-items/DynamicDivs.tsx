@@ -24,25 +24,27 @@ interface ItemData {
   interface DynamicDivsProps {
     image_url: string;
   }
-  
+
+  //Making the component async ensures that it constantly refreshes the whole page on change/useEffect execution
   const DynamicDivs: React.FC<DynamicDivsProps> = ({ image_url }) => {
     const [divs, setDivs] = useState<DivItem[]>([]);
     const [fetchedData, setFetchedData] = useState<ItemData[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-    const [initialLoad, setInitialLoad] = useState(true);
-
+    // const [initialLoad, setInitialLoad] = useState(true);
+    const [fetchCount, setFetchCount] = useState(0);
+    // const user_id = Cookie.get('user_id') 
+    
     useEffect(() => {
-
-        if (initialLoad) {
-            setInitialLoad(false)
-        } else {
+        // console.log("Initial Load: " + initialLoad)
+        // if (initialLoad) {
+            // setInitialLoad(false)
+        // } else {
             const id = JSON.parse(localStorage.getItem('id') as string).id
             console.log("ID IN DYNAMIC DIV: " + JSON.stringify(id))
     
             const fetchItems = async () => {
                 try {
                     const user_id = 'User1'
-                    // const user_id = Cookie.get('user_id')
                     const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
                     
                     const data: ItemData[] = await response.json();
@@ -77,17 +79,26 @@ interface ItemData {
                     });
                     setDivs(initialDivs);
                     setFetchedData(data);
-                    setInitialLoad(true);
+                    // setInitialLoad(true);
                 } catch (error) {
                     console.error("Error fetching items:", error);
                 }
             };
-      
-          fetchItems();
-        }
-    }, [initialLoad])
+
+            console.log("Fetched Data: " + fetchedData)
+            // console.log("Initial Load: " + initialLoad)
+            
+            //Fetches more than once to ensure data is loaded without overfetching
+            if (fetchCount < 3 || !fetchedData || !divs) {
+                console.log("FETCHING...")
+                fetchItems();
+                setFetchCount(fetchCount + 1);
+            }
+        // }
+    }, [fetchedData])
 
     const handleAddDiv = () => {
+      console.log("Current divs: " + JSON.stringify(divs))    
       const newId = divs.length;
       const newDiv = {
         id: newId,
@@ -102,6 +113,8 @@ interface ItemData {
     const itinerary_id = divs[id].data.itinerary_id
     const timestamp = divs[id].data.timestamp
 
+
+    //Remember to get the user token and send it to backend...
       try {
         const user_name = 'User1';
         const response = await fetch('http://localhost:4000/itinerary-items/delete', {
@@ -114,38 +127,37 @@ interface ItemData {
           })
         
         console.log(response)
-          //Div ids still need to be updated after deletion...
-          setDivs(divs.filter(divItem => divItem.id !== id));
+        //Div ids still need to be updated after deletion...
+        setDivs(divs.filter(divItem => divItem.id !== id));
+        
+        //CODE TO CHANGE DIV's IDs... 
+        for (let index = id+1; index < divs.length; index++) {
+            divs[index].id--;
+        }
+
       } catch (error) {
         console.error("Could not remove item: ", error)
       }
     };
   
     const handleModelClose = () => {
+    //   console.log(JSON.stringify(divs))
       setIsOpen(false);
-      handleAddDiv();
     };
 
     return (
         <>
         {divs.map((divItem) => (
-            <div key={divItem.id} className="relative border-2 border-black-500 rounded-md item-div font-sans">
-                {/* <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 linkClass">
-                    <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src= alt="" />
-                    <div className="flex flex-col justify-between p-4 leading-normal">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></h5>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
-                    </div>
-                </a> */}
+            divItem.data && <div key={divItem.id} className="relative border-2 border-black-500 rounded-md item-div font-sans">
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass">
                     <a href="#" className='text-center flex justify-center'>
-                        <img className="w-full h-60 rounded-t-lg" src={divItem.data.image_url} alt="" />
+                        <img className="w-full h-60 rounded-t-lg" src={divItem?.data?.image_url} alt="" />
                     </a>
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem.data.item_name}</h2>
+                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem?.data?.item_name}</h2>
                         </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem.data.item_type}</p>
+                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem?.data?.item_type}</p>
                     </div>
                 </div>
 

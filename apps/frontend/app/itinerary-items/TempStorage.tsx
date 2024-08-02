@@ -40,18 +40,10 @@ const uploadItem = async(itemTitle: any, itemType: any, destination: any, imageU
       body: JSON.stringify(tempDetails)
     });
 
-    // const data = await response.json();
     console.log("Response from server: ", JSON.stringify(response));
   } catch (error) {
     console.error("Error uploading item:", error);
   }
-
-  // try {
-  //   const response = await axios.post('/api/DatabaseUpload', tempDetails);
-  //   console.log("Response from server:", response.data);
-  // } catch (error) {
-  //   console.error("Error uploading item:", error);
-  // }
 }
 
 const TempStorage: React.FC<TempStorageProps> = ({id, location, destination, Item_Title, Item_Type, image_url}) => {

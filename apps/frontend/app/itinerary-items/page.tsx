@@ -29,9 +29,6 @@ const getCoordinates = async (location: string) => {
 
 const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; location?: string; destination?: any } }) => {
   const { location, id, destination } = searchParams;
-  console.log("Location: " + location);
-  console.log("ID: " + id);
-  console.log("Destination: " + destination)
 
   if (destination) {
     const obj = JSON.parse(destination)
@@ -40,12 +37,6 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
     const firstPhotoUrl = obj.firstPhotoUrl
     const location = obj.Fg?.formattedAddress ?? obj.formattedAddress
 
-    // console.log("Destination: " + obj);
-    console.log("====================")
-    console.log("id: " + obj.id)
-    console.log("firstPhotoUrl: " + obj.firstPhotoUrl)
-    console.log("Type: " + obj.type)
-    console.log("Title (displayName): " + obj.Fg?.displayName)
     
   }
 
