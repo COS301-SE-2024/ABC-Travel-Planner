@@ -14,6 +14,7 @@ interface refinedData {
 
 interface rawData {
   id: string,
+  image_url: string,
   post_title: string,
   user_name: string,
   post_likes: number,
@@ -104,6 +105,7 @@ export class PostsService {
 
       const newData: refinedData[] = posts.map((item: rawData) => ({
           id: item.id,
+          image_url: item.image_url,
           post_title: item.post_title,
           user_name: item.user_name,
           post_likes: item.post_likes,

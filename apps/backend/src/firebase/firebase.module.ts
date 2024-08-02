@@ -1,6 +1,7 @@
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { Module, Global } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { getStorage } from 'firebase/storage';
 
 const firebaseProvider = {
   provide: 'FIREBASE_ADMIN',

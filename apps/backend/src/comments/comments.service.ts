@@ -45,6 +45,5 @@ export class CommentsService {
       console.error(error);
       throw new addException('comment', postId);
     }
-    
   }
 }
