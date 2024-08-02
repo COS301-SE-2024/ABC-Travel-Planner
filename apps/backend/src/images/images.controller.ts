@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Query } from '@nestjs/common';
+import { Controller, Get, Body, Query, Res } from '@nestjs/common';
 import { ImagesService } from '../images/images.service';
 
 @Controller('images')
@@ -7,8 +7,8 @@ export class ImagesController {
 
     @Get()
     async getImage(@Query('path') filePath: string) : Promise<string> {
-        return await this.imageservice.getImage(filePath);
+        return await this.imageservice.getPostImage(filePath);
     }
 
-    
+
 }
