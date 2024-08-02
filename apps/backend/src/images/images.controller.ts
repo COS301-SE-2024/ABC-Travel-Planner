@@ -6,8 +6,8 @@ export class ImagesController {
     constructor(private readonly imageservice: ImagesService) {}
 
     @Get()
-    async getImage(@Query('path') filePath: string) : Promise<string> {
-        return await this.imageservice.getPostImage(filePath);
+    async getImage(@Query('id') id: string) : Promise<string> {
+        return await this.imageservice.getPostImage(id);
     }
 
 

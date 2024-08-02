@@ -9,27 +9,37 @@ export class ImagesService {
     this.db = firebaseApp.firestore();
   }
 
-  async getPostImage(filePath: string): Promise<string> {
-    // const imageUrl = await getDownloadURL(storageRef);
-    // try {
-    //     console.log("ImageURL: " + imageUrl)
-    //     return imageUrl;
-    // } catch (error) {
-    //     console.error(error);
-    //     throw new Error('Image not found')
-    // }
-    
-    const bucketName = this.firebaseApp.storage().bucket();
-    console.log("BUCKET NAME: " + bucketName);
-
+  async getPostImage(id: string): Promise<string> {
     const bucket = this.firebaseApp.storage().bucket();
-    const file = bucket.file(filePath);
+    // OR PNG...
+
+    let file = bucket.file(`Posts/${id}.jpg`);
+    if (!file.exists()) {
+        file = bucket.file(`Posts/${id}.png`);
+        if (!file.exists()) {
+          throw new Error('File does not exist in storage bucket');
+        }
+    }
+
+    const expiryDate = this.getExpiry();
+    console.log(expiryDate)
 
     const [url] = await file.getSignedUrl({
         action: 'read',
-        expires: '03-17-2025',
+        expires: expiryDate,
     })
 
     return url;
+  }
+
+  getExpiry() : string {
+    const currDate = new Date();
+    currDate.setDate(currDate.getDate() + 1);
+
+    const currMonth = ('0' + (currDate.getMonth() + 1)).slice(-2); // Months are zero-based
+    const currDay = ('0' + currDate.getDate()).slice(-2);
+    const currYear = currDate.getFullYear();
+
+    return `${currMonth}-${currDay}-${currYear}`;
   }
 }
