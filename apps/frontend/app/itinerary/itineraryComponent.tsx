@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaPen, FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash, FaShareAlt } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteItinerary, updateItinerary, getItineraryImage } from ".";
@@ -70,7 +70,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+    <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 cursor-pointer relative">
       <Link href={`/itinerary-items?location=${location}&id=${id}`} passHref>
         <div className="relative w-full h-40 pb-2/3">
           <Image
@@ -84,21 +84,27 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
         <div className="p-4">
           <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
           <p className="ml-1 text-sm text-gray-500">{location}</p>
-          <div className="flex justify-end mt-2 space-x-4">
-            <button
-              className="text-sm text-blue-600 hover:text-blue-800 flex items-center"
-              onClick={openEditModal}
-            >
-              <FaPen className="mr-1" />
-              Edit
+          <div className="flex justify-between items-center mt-2">
+            <button className="text-sm text-gray-600 hover:text-gray-800 flex items-center">
+              <FaShareAlt className="mr-1" />
+              Share
             </button>
-            <button
-              className="text-sm text-red-600 hover:text-red-800 flex items-center"
-              onClick={openDeleteModal}
-            >
-              <FaTrash className="mr-1" />
-              Delete
-            </button>
+            <div className="flex space-x-4">
+              <button
+                className="text-sm text-blue-600 hover:text-blue-800 flex items-center"
+                onClick={openEditModal}
+              >
+                <FaPen className="mr-1" />
+                Edit
+              </button>
+              <button
+                className="text-sm text-red-600 hover:text-red-800 flex items-center"
+                onClick={openDeleteModal}
+              >
+                <FaTrash className="mr-1" />
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </Link>

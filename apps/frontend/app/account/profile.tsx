@@ -10,6 +10,10 @@ import {
   FaSignOutAlt,
   FaBars,
   FaTimes,
+  FaHeart,
+  FaComment,
+  FaPlus,
+  FaPaperPlane
 } from "react-icons/fa";
 import app from "@/libs/firebase/firebase";
 import axios from "axios";
@@ -42,9 +46,17 @@ const Account = () => {
     memberSince: "",
   });
 
+  interface Post {
+    imageUrl: string;
+    caption: string;
+    post_likes: number;
+    comments: string[]; 
+  }
+
   const [originalProfileDetails, setOriginalProfileDetails] =
     useState(profileDetails);
   const [file, setFile] = useState<any>(null);
+  const [postFile, setPostFile] = useState<any>(null);
   const [profileImage, setProfileImage] = useState(
     profileDetails.imageUrl || ""
   ); // Default image path
@@ -54,6 +66,15 @@ const Account = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
+  //POSTS
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [newPostImage, setNewPostImage] = useState("");
+  const [newPostCaption, setNewPostCaption] = useState("");
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [showCommentModal, setShowCommentModal] = useState(false);
+  const [currentPostIndex, setCurrentPostIndex] = useState<number | null>(null);
+  const [newComment, setNewComment] = useState("");
+  const [enlargedPostIndex, setEnlargedPostIndex] = useState<number | null>(null);
 
   const followers = [
     { username: "follower1", profilePic: "/Images/profile.jpg" },
@@ -101,6 +122,17 @@ const Account = () => {
   useEffect(() => {
     async function fetch() {
       await fetchProfileDetails();
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      const userId = Cookie.get("user_id");
+      const response = await axios.post(`${backendUrl}/itinerary/getMySharedItineraries`, {
+        user_id: userId,
+      });
+
+      setItineraries(response.data);
+      const postsResponse = await axios.post(`${backendUrl}/posts/getUserPosts`, {
+        user_id: userId,
+      });
+      setPosts(postsResponse.data);
 
       // const result = await getSharedItineraries();
       // setItineraries(result);
@@ -133,6 +165,15 @@ const Account = () => {
     const url = await getDownloadURL(storageRef);
     await updateImageURL({ user_id: profileDetails.user_id, imageURL: url });
   };
+
+  const uploadPostImage = async (file: any,post_id: any) => {
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `Posts/${post_id}.jpg`);
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    await axios.post(`${backendUrl}/posts/updateImage`, {postId: post_id,imageUrl: url});
+  }
 
   const handleCancel = () => {
     setProfileDetails(originalProfileDetails); // Revert to original details
@@ -186,6 +227,67 @@ const Account = () => {
     setShowFollowing(!showFollowing);
     setShowFollowers(false);
   };
+  const handleViewClick = (itineraryName: string) => {
+    // router.push(`/viewItinerary/${itineraryName}`);
+    router.push("/viewItinerary");
+  };
+  const handlePostClick = (index: number) => {
+    setEnlargedPostIndex(index);
+  };
+
+  const closeEnlargedPost = () => {
+    setEnlargedPostIndex(null);
+  };
+  const handleNewPostImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPostFile(file);  
+      const imageUrl = URL.createObjectURL(file);
+      setNewPostImage(imageUrl);
+    }
+  };
+
+  const handleNewPostSubmit = async () => {
+    
+    if (newPostImage || newPostCaption) {
+      const newPost = { imageUrl: newPostImage, caption: newPostCaption, post_likes: 0, comments: [] };
+      
+      const result = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/create`, {
+        user_id: profileDetails.user_id,
+        caption: newPost.caption,
+        
+      });
+      if(postFile){
+        await uploadPostImage(postFile,result.data);
+      }
+      setPosts([...posts, newPost]);
+      setNewPostImage("");
+      setNewPostCaption("");
+      setShowPostModal(false);
+      
+    }
+  };
+  const handleLike = (index: number) => {
+    const updatedPosts = [...posts];
+    updatedPosts[index].post_likes += 1;
+    setPosts(updatedPosts);
+  };
+
+  const openCommentModal = (index: number) => {
+    setCurrentPostIndex(index);
+    setShowCommentModal(true);
+  };
+
+  const handleCommentSubmit = () => {
+    if (enlargedPostIndex !== null && newComment.trim()) {
+      const updatedPosts = [...posts];
+      updatedPosts[enlargedPostIndex].comments.push(newComment);
+      setPosts(updatedPosts);
+      setNewComment("");
+    }
+  };
+
+ 
 
   return (
     <div data-testid="accountContainer" className="profile-page">
@@ -297,18 +399,18 @@ const Account = () => {
             <p>Followers</p>
           </div>
         </div>
-        <h3 className="section-title">Saved Itineraries</h3>
+        <h3 className="section-title">My Shared Itineraries</h3>
         <div className="itinerary-cards">
           {itineraries.map((itinerary: any, index: any) => (
             <div key={index} className="itinerary-card">
               <img
-                src={itinerary.image}
+                src={itinerary.imageUrl}
                 alt={itinerary.name}
                 className="itinerary-image"
               />
               <div className="itinerary-content">
                 <h4>{itinerary.name}</h4>
-                <button className="view-button">View</button>
+                <button onClick={() => handleViewClick(itinerary.name)} className="view-button">View</button>
               </div>
             </div>
           ))}
@@ -323,11 +425,11 @@ const Account = () => {
               Welcome to our Travel Planner! This platform is designed to
               simplify your journey by helping you effortlessly organize your
               trips, discover curated itineraries, and access a wealth of travel
-              resources. Whether you&apos;re planning a weekend getaway or a grand
-              adventure, we&rsquo;ve got you covered. If you need further assistance
-              or personalized guidance, be sure to visit our Help Center, where
-              you&rsquo;ll find FAQs, tips, and support to make your travel experience
-              even better.
+              resources. Whether you&apos;re planning a weekend getaway or a
+              grand adventure, we&rsquo;ve got you covered. If you need further
+              assistance or personalized guidance, be sure to visit our Help
+              Center, where you&rsquo;ll find FAQs, tips, and support to make
+              your travel experience even better.
             </p>
             <button onClick={togglePopup}>Close</button>
           </div>
@@ -377,6 +479,158 @@ const Account = () => {
             </div>
             <button className="close-button" onClick={toggleFollowing}>
               Close
+            </button>
+          </div>
+        </div>
+      )}
+       {/* Posts */}
+      <section className="posts py-6 px-4">
+        <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
+        <button
+          onClick={() => setShowPostModal(true)}
+          className="mt-6 mb-4 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg flex items-center mx-auto"
+        >
+          <FaPlus className="mr-2" /> Add Post
+        </button>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {posts.map((post, index) => (
+            <div
+              key={index}
+              className={`bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer ${
+                enlargedPostIndex === index ? "enlarged" : ""
+              }`}
+              onClick={() => handlePostClick(index)}
+            >
+              <img
+                src={post.imageUrl}
+                alt={post.caption}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <p className="text-md mb-2">{post.caption}</p>
+                <div className="flex justify-between items-center">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLike(index);
+                    }}
+                    className="flex items-center text-red-500"
+                  >
+                    <FaHeart className="mr-1" />
+                    {post.post_likes}
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openCommentModal(index);
+                    }}
+                    className="flex items-center text-blue-500"
+                  >
+                    <FaComment className="mr-1" />
+                    {post?.comments?.length}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {showPostModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4">Add New Post</h2>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleNewPostImageChange}
+              className="block w-full mb-4"
+            />
+            <textarea
+              value={newPostCaption}
+              onChange={(e) => setNewPostCaption(e.target.value)}
+              placeholder="Enter caption"
+              className="block w-full mb-4 p-2 border rounded"
+            />
+            <div className="flex justify-between">
+              <button
+                onClick={handleNewPostSubmit}
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
+              >
+                Submit
+              </button>
+              <button
+                onClick={() => setShowPostModal(false)}
+                className="bg-gray-500 text-white py-2 px-4 rounded-lg shadow-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {enlargedPostIndex !== null && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center"
+          onClick={closeEnlargedPost}
+        >
+          <div
+            className="bg-white p-6 rounded-lg shadow-lg max-w-5xl w-full max-h-[90vh] overflow-auto relative mt-24"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closeEnlargedPost}
+              className="absolute top-2 right-2 text-3xl text-gray-600"
+            >
+              &times;
+            </button>
+            <img
+              src={posts[enlargedPostIndex].imageUrl}
+              alt={posts[enlargedPostIndex].caption}
+              className="w-full h-auto max-h-[60vh] object-contain mb-4"
+            />
+            <p className="text-2xl font-bold mb-3 text-center">
+              {posts[enlargedPostIndex].caption}
+            </p>
+
+            <div className="flex justify-between items-center mb-4">
+              <button
+                onClick={() => handleLike(enlargedPostIndex)}
+                className="flex items-center text-red-500"
+              >
+                <FaHeart className="mr-1 text-2xl" />{" "}
+                {posts[enlargedPostIndex].post_likes}
+              </button>
+              <button
+                onClick={() => {
+                  /* No action needed here */
+                }}
+                className="flex items-center text-blue-500"
+              >
+                <FaComment className="mr-1 text-2xl" />
+                {posts[enlargedPostIndex]?.comments?.length}
+              </button>
+            </div>
+            <div className="mb-4">
+              {posts[enlargedPostIndex]?.comments?.map((comment, index) => (
+                <p key={index} className="border-b border-gray-200 py-2">
+                  {comment}
+                </p>
+              ))}
+            </div>
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+            />
+            <button
+              onClick={handleCommentSubmit}
+              className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
+            >
+              Submit
             </button>
           </div>
         </div>
