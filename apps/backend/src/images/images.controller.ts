@@ -6,7 +6,7 @@ export class ImagesController {
     constructor(private readonly imageservice: ImagesService) {}
 
     @Get()
-    async getImage(@Query('id') id: string) : Promise<string> {
+    async getImage(@Query('id') id: string) : Promise<GetSignedUrlResponse> {
         return await this.imageservice.getPostImage(id);
     }
 
@@ -15,3 +15,8 @@ export class ImagesController {
         return await this.imageservice.uploadImage(body.image_name, body.base64);
     }
 }
+
+interface GetSignedUrlResponse {
+    url: string;
+    expires?: number;
+  }

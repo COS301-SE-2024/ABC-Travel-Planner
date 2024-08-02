@@ -9,7 +9,7 @@ export class ImagesService {
     this.db = firebaseApp.firestore();
   }
 
-  async getPostImage(id: string): Promise<string> {
+  async getPostImage(id: string): Promise<GetSignedUrlResponse> {
     const bucket = this.firebaseApp.storage().bucket();
     
     //Accounting for both .jpg files and .png files
@@ -49,7 +49,7 @@ export class ImagesService {
         expires: expiryDate,
     })
 
-    return url;
+    return { url };
   }
 
   async uploadImage(image_name : string, base64 : string) : Promise<void> {
@@ -77,4 +77,9 @@ export class ImagesService {
     
   //   return id;
   // }
+}
+
+interface GetSignedUrlResponse {
+  url: string;
+  expires?: number;
 }

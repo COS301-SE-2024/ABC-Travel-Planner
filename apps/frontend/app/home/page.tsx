@@ -40,7 +40,8 @@ const allLocations = [
 
 interface Post {
   id: string;
-  image_url: string;
+  image_id?: string;
+  image_url?: string;
   post_title?: string;
   post_description?: string;
   post_likes?: number;
@@ -67,11 +68,21 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(`${process.env.BACKEND_URL}/posts`);
+        // const response = await fetch(`${process.env.BACKEND_URL}/posts`);
+        const response = await fetch(`http://localhost:4000/posts`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data: Post[] = await response.json();
+        
+        data.forEach(async element => {
+          console.log("Image ID: " + element.id)
+          const imageUrl = await fetch(`http://localhost:4000/images?id=${element.id}`)
+          const data = await imageUrl.text();
+          console.log(data)
+          element.image_url = data;
+        });
+        
         console.log(data); // Log the fetched data for debugging
         setPosts(data);
       } catch (error) {
@@ -85,7 +96,9 @@ const Home = () => {
   useEffect(() => {
     const fetchPopularDestinations = async () => {
       try {
-        const response = await fetch(`${process.env.BACKEND_URL}/google-maps/popular-destinations`);
+        // const response = await fetch(`${process.env.BACKEND_URL}/google-maps/popular-destinations`);
+        const response = await fetch(`http://localhost:4000/google-maps/popular-destinations`);
+
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
@@ -152,13 +165,12 @@ const Home = () => {
             {posts.map((post) => (
               <PostCard
                 key={post.id}
-                id={post.id}
                 image_url={post.image_url}
                 post_title={post.post_title || 'Untitled'}
                 post_description={post.post_description || 'No description available.'}
                 post_likes={post.post_likes || 0}
                 timestamp={post.timestamp}
-              />
+                />
             ))}
           </div>
         </div>

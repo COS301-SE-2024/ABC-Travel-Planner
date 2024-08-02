@@ -4,15 +4,14 @@ import { faHeart as filledHeart, faShareAlt, faComment } from '@fortawesome/free
 import { faHeart as unfilledHeart } from '@fortawesome/free-regular-svg-icons';
 
 interface PostCardProps {
-  id: string;
-  image_url: string;
+  image_url?: string;
   post_title: string;
   post_description: string;
   post_likes: number;
   timestamp: number;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ id, image_url, post_title, post_description, post_likes, timestamp }) => {
+const PostCard: React.FC<PostCardProps> = ({ image_url, post_title, post_description, post_likes, timestamp }) => {
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<string[]>([]);
@@ -37,8 +36,6 @@ const PostCard: React.FC<PostCardProps> = ({ id, image_url, post_title, post_des
     }
   };
 
-  console.log(image_url)
-
   return (
     <div className="flex justify-center items-center w-full">
       <div className="w-full justify-center w-full max-w-lg bg-pink-100 rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
@@ -50,7 +47,6 @@ const PostCard: React.FC<PostCardProps> = ({ id, image_url, post_title, post_des
           <button className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full">Follow</button>
         </div>
         <img src={image_url} alt='heloooooo'></img>
-        <p>{id}</p>
         <p className="text-gray-800">{post_description}</p>
         <div className="flex items-center space-x-4">
           <button
