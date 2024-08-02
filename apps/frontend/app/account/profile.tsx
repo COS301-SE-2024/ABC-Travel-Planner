@@ -47,10 +47,12 @@ const Account = () => {
   });
 
   interface Post {
+    id: string;
     imageUrl: string;
     caption: string;
     post_likes: number;
-    comments: string[]; 
+    comments: any[]; 
+    timestamp: string;
   }
 
   const [originalProfileDetails, setOriginalProfileDetails] =
@@ -132,7 +134,6 @@ const Account = () => {
       const postsResponse = await axios.post(`${backendUrl}/posts/getUserPosts`, {
         user_id: userId,
       });
-      
       setPosts(postsResponse.data);
 
 
@@ -252,17 +253,22 @@ const Account = () => {
   const handleNewPostSubmit = async () => {
     
     if (newPostImage || newPostCaption) {
-      const newPost = { imageUrl: newPostImage, caption: newPostCaption, post_likes: 0, comments: [] };
+      
       
       const result = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/create`, {
         user_id: profileDetails.user_id,
-        caption: newPost.caption,
+        caption: newPostCaption,
         
       });
+      const newPost = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/getPost`, {
+        postId: result.data.id, 
+      });
+      
+      
       if(postFile){
         await uploadPostImage(postFile,result.data);
       }
-      setPosts([...posts, newPost]);
+      setPosts([...posts, newPost.data]);
       setNewPostImage("");
       setNewPostCaption("");
       setShowPostModal(false);
@@ -283,7 +289,9 @@ const Account = () => {
   const handleCommentSubmit = () => {
     if (enlargedPostIndex !== null && newComment.trim()) {
       const updatedPosts = [...posts];
-      updatedPosts[enlargedPostIndex].comments.push(newComment);
+      const user_id = Cookie.get("user_id");
+      updatedPosts[enlargedPostIndex].comments.push({comment: newComment,post_id: updatedPosts[enlargedPostIndex].id,user_id: user_id});
+      
       setPosts(updatedPosts);
       setNewComment("");
     }
@@ -616,9 +624,9 @@ const Account = () => {
               </button>
             </div>
             <div className="mb-4">
-              {posts[enlargedPostIndex]?.comments?.map((comment, index) => (
+              {posts[enlargedPostIndex]?.comments?.map((data, index) => (
                 <p key={index} className="border-b border-gray-200 py-2">
-                  {comment}
+                  {data.comment}
                 </p>
               ))}
             </div>

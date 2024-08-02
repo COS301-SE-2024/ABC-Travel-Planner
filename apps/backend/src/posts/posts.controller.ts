@@ -37,4 +37,16 @@ export class PostsController {
     ) {
         return this.postsService.getPosts(body.user_id);
     }
+
+    @Post("getPost")
+    async getPost(
+        @Body()
+        body: {
+            postId: string;
+        }
+    ) {
+        return this.postsService.getPost(body.postId);
+    }
+
+    
 }

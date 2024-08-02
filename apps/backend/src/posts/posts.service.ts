@@ -33,15 +33,45 @@ export class PostsService {
       .collection('Posts')
       .where('user_id', '==', user_id)
       .get();
-    return result.docs.map((doc) => doc.data());
+
+    const postsWithComments = await Promise.all(
+      result.docs.map(async (doc) => {
+        const fetchComments = async () => {
+          const comments = await this.firebaseApp
+            .firestore()
+            .collection('Comments')
+            .where('post_id', '==', doc.id)
+            .get();
+          const temp = comments.docs.map((comment) => comment.data());
+          return {
+            ...doc.data(),
+            comments: temp,
+          };
+        };
+
+        return fetchComments();
+      }),
+    );
+
+    return postsWithComments;
   }
+
   async getPost(postId: string) {
     const result = await this.firebaseApp
       .firestore()
       .collection('Posts')
       .doc(postId)
       .get();
-    return result.data();
+    const fetchComments = async () => {
+      const result = await this.firebaseApp
+        .firestore()
+        .collection('Comments')
+        .where('post_id', '==', postId)
+        .get();
+      return result.docs.map((doc) => doc.data());
+    };
+    const comments = await fetchComments();
+    return { ...result.data(), comments: comments };
   }
 
   async updatePost(postId: string, caption: string) {
