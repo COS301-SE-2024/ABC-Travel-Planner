@@ -19,6 +19,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {
     "@google-cloud/storage": "^7.11.2",
     "@googlemaps/google-maps-services-js": "^3.4.0",
