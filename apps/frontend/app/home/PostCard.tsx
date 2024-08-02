@@ -22,7 +22,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, image_url, post_title, pos
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<Comment>({
-    user_id: '',
+    user_id: 'User1',   //Remember to set to actual user...
     comment_string: ''
   });
 
@@ -60,37 +60,39 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, image_url, post_title, pos
   const handleAddComment = async () => {
       //Add new comment to the backend...
       
-      //Get Current user...
-      const currUser = 'User1';      
+      //Add to db...
+      if (newComment) {
+        //Testing data
+        const dataToAdd = {
+          data: {
+            ...newComment
+          },
+          post_id: post_id
+        }
+
+        console.log("Comment to add: " + newComment)
+
+        const addCommentRes = await fetch(`http://localhost:4000/comments/post/home`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dataToAdd),
+        })
+
+        if (addCommentRes.ok) {
+          //Do something
+          console.log("Comment added :)")
+        }
         
-        //Add to db...
-        if (newComment) {
-          //Testing data
-          const dataToAdd = {
-            user_id : 'User1',
-            post_id : post_id,
-            comment_string : 'Some random comment',
-          }
+        setComments([...comments, newComment]);
 
-          const addCommentRes = await fetch(`http://localhost:4000/comments/post/home`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dataToAdd),
-          })
-
-          if (addCommentRes.ok) {
-            //Do something
-          }
-          
-          setComments([...comments, newComment]);
-          setNewComment({
-            user_id: '',
-            comment_string: ''
-          });
+        //Remember to set the user_id to current user...
+        setNewComment({
+          user_id: 'User1',
+          comment_string: ''
+        });
       }
-
   };
 
   return (
@@ -132,15 +134,17 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, image_url, post_title, pos
             <div className="space-y-2">
               {comments.map((comment, index) => (
                 <div key={index} className="p-2 bg-blue-100 rounded-md text-gray-800 text-sm">
-                  {comment.user_id}: {comment.comment_string}
+                  {/* Remember to change to actual username of currUser... */}
+                  {comment.user_id ?? 'User1'}: {comment.comment_string} 
                 </div>
               ))}
             </div>
+              {/* Remember to change to actual username of currUser... */}
             <div className="mt-4 flex items-center space-x-2">
               <input
-                type="text"
+                type="text" 
                 value={newComment.comment_string}
-                onChange={(e) => setNewComment({ ...newComment, comment_string: e.target.value })}
+                onChange={(e) => setNewComment({user_id: 'User1', comment_string: e.target.value })}
                 placeholder="Add a comment..."
                 className="flex-grow p-2 border rounded-md"
               />

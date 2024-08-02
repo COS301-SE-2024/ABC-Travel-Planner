@@ -134,7 +134,6 @@ const Home = () => {
         console.error('Error fetching popular destinations:', error);
       }
     };
-    
   
     fetchPopularDestinations();
   }, []);
