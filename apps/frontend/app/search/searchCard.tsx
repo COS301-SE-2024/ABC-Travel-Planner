@@ -9,6 +9,16 @@ interface SearchCardProps {
     place: any;
 }
 
+interface Itinerary {
+    shared: boolean;
+    dateCreated: string;
+    user_id: string;
+    imageUrl: string;
+    name: string;
+    location: string;
+    id: string;
+  }
+
 export const getRatingColor = (rating: number) => {
     if (rating >= 4) {
         return 'bg-green-500';
@@ -80,9 +90,22 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const [isNewItineraryModalOpen, setIsNewItineraryModalOpen] = useState(false);
     const [itineraries, setItineraries] = useState<any>([]);
     const [newItinerary, setNewItinerary] = useState({ location: '', tripName: '' });
+    const [selectedItinerary, setSelectedItinerary] = useState('');
+
+    const availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
+    const numRooms = null;
+    let address = place.plusCode ? place.plusCode.compoundCode : 'Unknown Address';
+    const location = extractLocation(address);
+    const addressParts = address.split(',');
+    const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
+    const price = generatePrice(place.id, place.type, location.country);
 
     const handleSelectDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedDate(event.target.value);
+    };
+
+    const handleSelectItinerary = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedItinerary(event.target.value);
     };
 
     const handleAddToItineraryClick = async () => {
@@ -100,6 +123,16 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         
     };
 
+    const handleSaveSelectedClick = async () => {
+        setIsModalOpen(false);
+        const user_id = Cookies.get("user_id");
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        console.log(selectedItinerary);
+        const parsedItem = JSON.parse(selectedItinerary);
+        const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
+            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl});
+    };
+
     const handleSaveNewItinerary = async () => {
         setItineraries([...itineraries, newItinerary.tripName]);
         setIsNewItineraryModalOpen(false);
@@ -110,8 +143,8 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         console.log(JSON.stringify(newI));
         //Now add the item
         const newItemData = JSON.parse(newI.config.data);
-        console.log(JSON.stringify({ itinerary_id: newI.data, location: newItemData.location, name: newItemData.name}));
-        const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ image: place.firstPhotoUrl, itinerary_id: newI.data, location: newItemData.location, name: newItemData.name});
+        const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
+            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl});
     };
 
     function extractLocation(fullString: string) {
@@ -120,20 +153,6 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         const country = parts[parts.length - 1];
         return { city, country };
     }
-
-    const getItineraries = async () => {
-        const user_id = Cookies.get("user_id");
-        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const temp = await axios.post(`${backendUrl}/itinerary/getItineraries`, { user_id: user_id });
-    }
-
-    const availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
-    const numRooms = null;
-    let address = place.plusCode ? place.plusCode.compoundCode : 'Unknown Address';
-    const location = extractLocation(address);
-    const addressParts = address.split(',');
-    const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
-    const price = generatePrice(place.id, place.type, location.country);
 
     return (
         <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
@@ -254,14 +273,15 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         <select
                             className="block appearance-none w-full bg-gray-200 border border-gray-300 rounded-md py-2 px-4 mb-4"
                             defaultValue=""
+                            onChange={handleSelectItinerary}
                         >
                             <option value="" disabled>Select an itinerary</option>
                             {itineraries.map((itinerary: any, index: number) => (
-                                <option key={index} value={itinerary.name}>{itinerary.name}</option>
+                                <option key={index} value={JSON.stringify(itinerary)}>{itinerary.name}</option>
                             ))}
                         </select>
                         <button
-                            onClick={() => setIsModalOpen(false)}
+                            onClick={handleSaveSelectedClick}
                             className="bg-blue-500 text-white rounded-md px-4 py-2 mr-2"
                         >
                             Save to Selected

@@ -9,24 +9,45 @@ export class ItineraryItemsService {
     this.db = firebaseApp.firestore();
   }
 
-  async addItem(image_url: string, itinerary_id: string, location: string, name: string, user_id: string): Promise<void> {
+  async addItem(user_id: string, item_name: string, item_type: string, location: string, itinerary_id: string, destination: string, image_url: string): Promise<void> {
     try {
-      const userRef = this.db.collection('Itinerary-items').doc(user_id);
-      await userRef.set({
-        timestamp: admin.firestore.FieldValue.serverTimestamp(),
-      });
 
-      const subCollectionRef = userRef.collection('Items').doc();
+      const exists = await this.db
+        .collection('Itinerary-items')
+        .doc(user_id)
+        .collection('Items')
+        .where('user_id', '==', user_id)
+        .where('item_name', '==', item_name)
+        .where('item_type', '==', item_type)
+        .where('location', '==', location)
+        .where('itinerary_id', '==', itinerary_id)
+        .where('destination', '==', destination)
+        .where('image_url', '==', image_url)
+        .limit(1)
+        .get()
 
-      await subCollectionRef.set({
-        timestamp: admin.firestore.FieldValue.serverTimestamp(),
-              image_url: image_url,
-              itinerary_id,
-              location,
-              name,
-              user_id,
-      });
+        console.log(exists)
+        console.log(JSON.stringify(exists))
 
+        if (exists.empty) {
+          const userRef = this.db.collection('Itinerary-items').doc(user_id);
+          await userRef.set({
+            timestamp: admin.firestore.FieldValue.serverTimestamp(),
+          });
+    
+          const subCollectionRef = userRef.collection('Items').doc();
+    
+          await subCollectionRef.set({
+                  itinerary_id,
+                  item_name,
+                  item_type,
+                  location,
+                  image_url,
+                  destination,
+                  user_id,
+                  timestamp: admin.firestore.FieldValue.serverTimestamp(),
+          });
+        }
     } 
     catch (error) {
       console.log(error)
@@ -34,11 +55,7 @@ export class ItineraryItemsService {
     } 
   }
 
-  async getItemsbyId(id: number): Promise<any[]> {
-    //Make database call to get user id
-    // ...
-    const user_id = "User1"
-
+  async getItemsbyId(id: number, user_id: string): Promise<any[]> {
     try {
       const data = await this.db
           .collection(`Itinerary-items`)
@@ -56,24 +73,37 @@ export class ItineraryItemsService {
     }
   }
 
-  async deleteItineraryItem(userName: string, id: string) {        
-        const user_name = 'User1';
-        
-        //Logic to delete the item from the db
+  async deleteItineraryItem(user_name: string, image_url: string, itinerary_id: string, timestamp: {_seconds: number, _nanoseconds: number}) : Promise<void> {        
+        user_name = 'User1';
+        console.log("Received timestamp: " + JSON.stringify(timestamp))
         try {
-            const documentRef = this.db.collection('Itinerary-items')
-                                .doc(user_name)
-                                .collection('Items')
-                                .doc(id)
+          //Check if it exists...
+          const userItemsDir = this.db
+                .collection('Itinerary-items')
+                .doc(user_name)
+                .collection('Items')
 
-            const doc = await documentRef.get()
-            if (!doc.exists) {
-                throw new Error('Could not locate record - Deletion unsuccessful')
-            }
-            
-            await documentRef.delete();
+          
+          const userItemsSnapshot = await userItemsDir
+              .where('image_url', '==', image_url)
+              .where('itinerary_id', '==', itinerary_id)
+              .where('timestamp', '==', admin.firestore.Timestamp.fromMillis(timestamp._seconds * 1000 + timestamp._nanoseconds / 1000000))
+              .limit(1)
+              .get()
+
+          if (userItemsSnapshot.empty) {
+            console.log("Could not delete... No matching docs found")
+            throw new Error('Could not delete item - not found')
+          }
+
+          //Deleting item...
+          userItemsSnapshot.forEach((item) => {
+            item.ref.delete();
+            console.log("Document deleted successfully")
+          })
+
         } catch (error) {
-            console.error('Could not delete record: ', error.message)
+            console.error('Could not delete document: ', error.message)
             return error.message
         }
     }
