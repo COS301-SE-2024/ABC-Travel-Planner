@@ -18,7 +18,7 @@ export class CommentsController {
     }
 
     @Post('post/home')
-    async postComment(@Body() body:  {user_id: string, post_id: string, comment_string: string, comment_title: string}) : Promise<void> {
+    async postComment(@Body() body:  {user_id: string, post_id: string, comment_string: string}) : Promise<void> {
         if (!body.user_id) {
             throw new Error('User ID not included in body')
         }
@@ -31,10 +31,6 @@ export class CommentsController {
             throw new Error('Comment String not included in body')
         }
 
-        if (!body.comment_title) {
-            throw new Error('Comment Title not included in body')
-        }
-
-        return await this.commentsService.postComment(body.user_id, body.post_id, body.comment_string, body.comment_title)
+        return await this.commentsService.postComment(body.user_id, body.post_id, body.comment_string)
     }
 }

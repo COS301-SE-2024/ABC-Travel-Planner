@@ -30,14 +30,14 @@ export class CommentsService {
     }
   }
 
-  async postComment(user_id: string, postId: string, commentString: string, commentTitle: string) : Promise<void> {
+  async postComment(user_id: string, postId: string, commentString: string) : Promise<void> {
     try {
       const postCommentRes = await this.db.collection('Comments')
                                     .doc(postId)
                                     .collection('comments')
                                     .add({
                                       comment_string: commentString,
-                                      comment_title: commentTitle,
+                                      post_id: postId,
                                       user_id: user_id
                                     })
 

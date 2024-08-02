@@ -170,6 +170,7 @@ const Home = () => {
             {posts.map((post) => (
               <PostCard
                 key={post.id}
+                post_id={post.id}
                 image_url={post.image_url}
                 post_title={post.post_title || 'Untitled'}
                 post_description={post.post_description || 'No description available.'}

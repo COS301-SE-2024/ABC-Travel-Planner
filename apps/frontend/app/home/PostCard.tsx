@@ -4,6 +4,7 @@ import { faHeart as filledHeart, faShareAlt, faComment } from '@fortawesome/free
 import { faHeart as unfilledHeart } from '@fortawesome/free-regular-svg-icons';
 
 interface PostCardProps {
+  post_id: string;
   image_url?: string;
   post_title: string;
   post_description: string;
@@ -11,11 +12,19 @@ interface PostCardProps {
   timestamp: number;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ image_url, post_title, post_description, post_likes, timestamp }) => {
+interface Comment {
+  user_id: string;
+  comment_string: string;
+}
+
+const PostCard: React.FC<PostCardProps> = ({ post_id, image_url, post_title, post_description, post_likes, timestamp }) => {
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState<string[]>([]);
-  const [newComment, setNewComment] = useState('');
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComment, setNewComment] = useState<Comment>({
+    user_id: '',
+    comment_string: ''
+  });
 
   const handleLike = () => {
     setLiked(!liked);
@@ -25,15 +34,51 @@ const PostCard: React.FC<PostCardProps> = ({ image_url, post_title, post_descrip
     alert('Share functionality coming soon!');
   };
 
-  const handleCommentToggle = () => {
+  const handleCommentToggle = async () => {
     setShowComments(!showComments);
+    
+    //No cache available atm...
+    if (showComments) {
+      const commentRes = await fetch(`http://localhost:4000/comments/${post_id}`)
+      console.log(await commentRes.text());
+
+      // handleAddComment();
+    }
   };
 
-  const handleAddComment = () => {
-    if (newComment.trim()) {
-      setComments([...comments, newComment.trim()]);
-      setNewComment('');
-    }
+  const handleAddComment = async () => {
+      //Add new comment to the backend...
+      //Get Current user...
+      const dataToAdd = {
+        user_id : 'User1',
+        post_id : post_id,
+        comment_string : 'Some random comment',
+      }
+
+      const addCommentRes = await fetch(`http://localhost:4000/comments/post/home`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToAdd),
+      })
+      
+      if (addCommentRes.ok) {
+        const newComment: Comment = {
+          user_id: 'User1',
+          comment_string: 'Some random comment',
+        };
+      
+        setComments([...comments, newComment]);
+        setNewComment({
+          user_id: '',
+          comment_string: ''
+        });
+      }
+
+      if (newComment) {
+        //Add to db...
+      }
   };
 
   return (
@@ -75,15 +120,15 @@ const PostCard: React.FC<PostCardProps> = ({ image_url, post_title, post_descrip
             <div className="space-y-2">
               {comments.map((comment, index) => (
                 <div key={index} className="p-2 bg-blue-100 rounded-md text-gray-800 text-sm">
-                  {comment}
+                  {comment.user_id}: {comment.comment_string}
                 </div>
               ))}
             </div>
             <div className="mt-4 flex items-center space-x-2">
               <input
                 type="text"
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
+                value={newComment.comment_string}
+                onChange={(e) => setNewComment({ ...newComment, comment_string: e.target.value })}
                 placeholder="Add a comment..."
                 className="flex-grow p-2 border rounded-md"
               />
