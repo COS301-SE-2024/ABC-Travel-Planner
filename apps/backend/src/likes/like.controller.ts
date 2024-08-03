@@ -5,9 +5,9 @@ import { LikeService } from './like.service';
 export class LikeController {
     constructor(private readonly likeService: LikeService) {}
 
-    @Get('isLiked/:id')
-    async isLiked(@Param('id') id: string) : Promise<boolean> {
-        return await this.likeService.isLiked(id);
+    @Post('isLiked')
+    async isLiked(@Body() body: {post_id: string, user_id: string}) : Promise<boolean> {
+        return await this.likeService.isLiked(body.post_id, body.user_id);
     }
 
     @Post('unlike')

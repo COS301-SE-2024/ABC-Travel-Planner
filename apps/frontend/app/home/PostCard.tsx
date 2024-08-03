@@ -52,7 +52,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
 
       } catch (error) {
         console.log(error)
-        throw new Error(`Could not unfollow user ${user_id}: ${(error as Error).message}`)
+        throw new Error(`Could not get userName of ${user_id}: ${(error as Error).message}`)
       }
     }
 
@@ -86,17 +86,29 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
 
   const handleLike = async () => {
     try {
-      const isLiked = await fetch(`http://localhost:4000/like/isLiked/${post_id}`)
+      const isLiked = await fetch(`http://localhost:4000/like/isLiked/`, {
+        method: 'POST',
+        headers: {  
+          'Content-Type': 'application/json',
+          //Maybe an Auth header?
+      },  
+        body: JSON.stringify({
+          post_id: post_id,
+          user_id: 'User1'
+        }),
+      });
+
       const isLikedText = await isLiked.text();
-      
+      console.log(isLikedText)
+
       if (isLikedText == "true") {
         try {
           const unLikeRes = await fetch(`http://localhost:4000/like-endpoint/unlike`, {
             method: 'POST',
-            headers: {
+            headers: {  
               'Content-Type': 'application/json',
               //Maybe an Auth header?
-          },
+          },  
             body: JSON.stringify({
               post_id: post_id,
               user_id: user_id
@@ -110,12 +122,10 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
           //   setTrigger(false);
           // }, 4000);
 
-          setLiked(false)
         } catch (error) {
           console.log(error)
           throw new Error(`Could not unlike post: ${(error as Error).message}`)
         }
-  
       } else {
         try {
           const LikeRes = await fetch(`http://localhost:4000/like-endpoint/like`, {
@@ -136,12 +146,14 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
         // setTimeout(() => {
         //   setTrigger(false);
         // }, 4000);
-        setLiked(true);
+        // setLiked(true);
       } catch (error) {
         console.log(error)
         throw new Error(`Could not like post: ${(error as Error).message}`)
       }
     } 
+    
+    setLiked(!liked)
   } catch (error) {
     console.log(error)
     throw new Error(`Could not check if post ${post_id} is liked: ${(error as Error).message}`)
