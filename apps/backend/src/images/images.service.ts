@@ -18,10 +18,10 @@ export class ImagesService {
     let data = fileExists[0];
 
     if (data) {
-      console.log(await file.getSignedUrl({
-        action: 'read',
-        expires: '11-11-2024',
-    }));
+    //   console.log(await file.getSignedUrl({
+    //     action: 'read',
+    //     expires: '11-11-2024',
+    // }));
 
     } else {
       console.log("JPG does not exist!")
@@ -30,10 +30,10 @@ export class ImagesService {
       data = fileExists[0];
 
       if (data) {
-        console.log(await file.getSignedUrl({
-        action: 'read',
-        expires: '11-11-2024',
-      }));     
+      //   console.log(await file.getSignedUrl({
+      //   action: 'read',
+      //   expires: '11-11-2024',
+      // }));     
       
       } else {
         console.log("PNG does not exist!")
@@ -50,7 +50,7 @@ export class ImagesService {
     }
 
     const expiryDate = this.getExpiry();
-    console.log(expiryDate)
+    // console.log(expiryDate)
 
     const [url] = await file.getSignedUrl({
         action: 'read',

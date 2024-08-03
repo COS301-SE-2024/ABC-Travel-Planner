@@ -19,6 +19,16 @@ interface Comment {
   comment_string: string;
 }
 
+interface User {
+  memberSince: string,
+  user_id: string,
+  country: string,
+  name: string, 
+  username: string,
+  email: string,
+  imageUrl: string
+}
+
 const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_title, post_description, post_likes, timestamp }) => {
   const [liked, setLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -26,10 +36,28 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
   const [isFollowing, setIsFollowing] = useState('Follow');
   const [message, setMessage] = useState('');
   const [trigger, setTrigger] = useState(false);
+  const [userName, setUserName] = useState('');
+
   const [newComment, setNewComment] = useState<Comment>({
     user_id: 'User1',   //Remember to set to actual user...
     comment_string: ''
   });
+
+  useEffect(() => {
+    const getUserName = async () => {
+      try {
+        const userNameRes = await fetch(`http://localhost:4000/users/${user_id}`)
+        const userNameText : User[] = await userNameRes.json();
+        setUserName(userNameText[0].username)
+
+      } catch (error) {
+        console.log(error)
+        throw new Error(`Could not unfollow user ${user_id}: ${(error as Error).message}`)
+      }
+    }
+
+    getUserName();
+  }, [])
 
   useEffect(() => {
     const isFollowing = async () => {
@@ -38,9 +66,6 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
         currUser: 'User1',
         otherUser: user_id
       }
-
-      console.log("Post data: " + JSON.stringify(postData))
-
       const isFollowingRes = await fetch(`http://localhost:4000/follow-endpoint/isFollowing`, {
         method: 'POST',
         headers: {
@@ -49,17 +74,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
         },
         body: JSON.stringify(postData)
       })
-
       const following = await isFollowingRes.text()
-      console.log(following);
-
       if (following == "true") {
         console.log("Currently following user, updating frontend")
         setIsFollowing("Following")
       }
-      // else {
-      //   setIsFollowing("Follow")
-      // }
     }
 
     isFollowing()
@@ -94,11 +113,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
   };
 
   const handleAddComment = async () => {
-      //Add new comment to the backend...
-      
-      //Add to db...
       if (newComment) {
-        //Testing data
         const dataToAdd = {
           data: {
             ...newComment
@@ -117,7 +132,6 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
         })
 
         if (addCommentRes.ok) {
-          //Do something
           setMessage('Comment posted')
           setTrigger(true);
           setTimeout(() => {
@@ -148,61 +162,73 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
         'Content-Type': 'application/json',
         //Maybe an Auth header?
       },
-      body: JSON.stringify(followData), // Convert the data to JSON
+      body: JSON.stringify(followData),
     });
 
     const following = await response.text()
 
     if (following == "true") {
-      const unfollowRes = await fetch(`http://localhost:4000/follow-endpoint/unfollow`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          //Maybe an Auth header?
-      },
-        body: JSON.stringify({
-          currUser: 'User1',
-          userToUnfollow: user_id
-        }),
-      });
-      console.log(await unfollowRes.text());
-      setMessage(`${user_id} unfollowed`)
-      setTrigger(true);
-      setTimeout(() => {
-        setTrigger(false);
-      }, 4000);
-      setIsFollowing("Follow");
+      try {
+        const unfollowRes = await fetch(`http://localhost:4000/follow-endpoint/unfollow`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            //Maybe an Auth header?
+        },
+          body: JSON.stringify({
+            currUser: 'User1',
+            userToUnfollow: user_id
+          }),
+        });
+  
+        //Popup message
+        setMessage(`${userName} unfollowed`)
+        setTrigger(true);
+        setTimeout(() => {
+          setTrigger(false);
+        }, 4000);
+        setIsFollowing("Follow");
+      } catch (error) {
+        console.log(error)
+        throw new Error(`Could not unfollow user ${userName}: ${(error as Error).message}`)
+      }
 
     } else {
-      const followRes = await fetch(`http://localhost:4000/follow-endpoint/follow`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          //Maybe an Auth header?
-      },
-        body: JSON.stringify({
-          currUser: 'User1',
-          userToFollow: user_id
-        }),
-      });
-      console.log(await followRes.text());
-      setMessage(`Following ${user_id}`)
-      setTrigger(true);
-      setTimeout(() => {
-        setTrigger(false);
-      }, 4000);
-      setIsFollowing("Following");
+      try {
+        const followRes = await fetch(`http://localhost:4000/follow-endpoint/follow`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            //Maybe an Auth header?
+        },
+          body: JSON.stringify({
+            currUser: 'User1',
+            userToFollow: user_id
+          }),
+        });
+  
+        //Popup message
+        setMessage(`Following ${userName}`)
+        setTrigger(true);
+        setTimeout(() => {
+          setTrigger(false);
+        }, 4000);
+        setIsFollowing("Following");
+        
+      } catch (error) {
+        console.log(error)
+        throw new Error(`Could not follow user ${userName}: ${(error as Error).message}`)
+      }
     }
   }
 
   return (
-    
     <div className="flex justify-center items-center w-full">
       <PopupMessage msg={message} trigger={trigger} />
       <div className="w-full justify-center w-full max-w-lg bg-pink-100 rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
         <div className="flex items-center justify-between w-full">
           <div>
-            <h3 className="text-lg font-bold">{post_title}</h3>
+            <h3 className="text-lg font-bold">{userName}: {post_title}</h3>
             <p className="text-sm text-gray-500">{new Date(timestamp * 1000).toLocaleDateString()}</p>
           </div>
           {/* Check to see if user is following the currPost's user*/}

@@ -26,12 +26,31 @@ export class UsersService {
 
   async getUsers(): Promise<any[]> {
     try {
-      const data = await this.db.collection('Users').orderBy('timestamp', 'desc').get();
+      const data = await this.db
+            .collection('Users')
+            .orderBy('username', 'desc')
+            .get();
+
       return data?.docs?.map(user => user.data()) ?? [];
     } 
     catch (error) {
       console.log(error)
       throw new InternalServerErrorException('Failed to fetch users from the database');
+    }
+  }
+
+  async getUserById(id: string) : Promise<any> {
+    try {
+      const data = await this.db
+            .collection('Users')
+            .where('user_id', '==', id)
+            .get()
+
+      return data?.docs?.map(user => user.data()) ?? 'NOUSERFOUND';
+    } 
+    catch (error) {
+      console.log(error)
+      throw new InternalServerErrorException(`Failed to fetch user ${id} from the database`);
     }
   }
 }
