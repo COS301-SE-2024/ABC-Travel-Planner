@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { FaGoogle, FaAtlas } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import { FaGoogle, FaAtlas, FaHome, FaGlobe, FaPhone, FaStar, FaUsers, FaInfoCircle } from 'react-icons/fa';
 import { addReview, getReviews } from './getReviews';
 import dynamic from 'next/dynamic';
 
@@ -77,19 +78,45 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
           ></iframe>
         </div>
       </div>
-      <div className="attractions-section bg-blue-200 rounded-lg shadow-lg mb-8 p-6" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-      <div className="info-container bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-3xl font-bold mb-4 text-Gray-800">{data.displayName}</h1>
-        <p className="mb-4 text-gray-700">{data.editorialSummary}</p>
-        <div className="info-details space-y-2">
-          <p className="text-gray-600"><strong>Address:</strong> {data.formattedAddress}</p>
-          <p className="text-gray-600"><strong>Website:</strong> <a href={data.websiteUri} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{data.websiteUri}</a></p>
-          <p className="text-gray-600"><strong>Int Phone:</strong> {data.internationalPhoneNumber}</p>
-          <p className="text-gray-600"><strong>Rating:</strong> {data.rating}</p>
-          <p className="text-gray-600"><strong>User rating count:</strong> {data.userRatingCount}</p>
-        </div>
+      <div className="attractions-section bg-blue-200 rounded-lg shadow-lg mb-8 p-6 flex" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+  {/* <!-- Left Side: Name and Summary --> */}
+  <div className="left-side bg-white rounded-lg shadow-md p-6 flex-1">
+    <h1 className="text-3xl font-bold mb-4 text-gray-800">{data.displayName}</h1>
+    <div className="flex items-center text-gray-600">
+        <FaInfoCircle className="mr-2 text-3xl text-gray-600" />
+        <span><strong>Summary:</strong> {data.formattedAddress}</span>
+      </div>
+  </div>
+
+  {/* <!-- Right Side: Additional Info --> */}
+  <div className="right-side bg-white rounded-lg shadow-md p-6 ml-6 flex-1">
+    <div className="info-details space-y-4">
+      <div className="flex items-center text-gray-600">
+        <FaHome className="mr-2 text-gray-600" />
+        <span><strong>Address:</strong> {data.formattedAddress}</span>
+      </div>
+      <div className="flex items-center text-gray-600">
+        <FaGlobe className="mr-2 text-gray-600" />
+        <span><strong>Website:</strong> <a href={data.websiteUri} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{data.websiteUri}</a></span>
+      </div>
+      <div className="flex items-center text-gray-600">
+        <FaPhone className="mr-2 text-gray-600" />
+        <span><strong>Int Phone:</strong> {data.internationalPhoneNumber}</span>
+      </div>
+      <div className="flex items-center text-gray-600">
+        <FaStar className="mr-2 text-yellow-500" />
+        <span><strong>Rating:</strong> {data.rating}</span>
+      </div>
+      <div className="flex items-center text-gray-600">
+        <FaUsers className="mr-2 text-gray-600" />
+        <span><strong>User rating count:</strong> {data.userRatingCount}</span>
       </div>
     </div>
+  </div>
+</div>
+
+
+
 
       <div className="w-full p-4 md:p-8 bg-gray-100">
         {/* Reviews section */}
