@@ -1,40 +1,57 @@
 "use client";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight, FaHeart, FaBookmark } from "react-icons/fa";
 
-const ViewItinerary = ({ params }: { params: { itineraryName: string } }) => {
+const ViewItinerary = ({
+  searchParams,
+}: {
+  searchParams: { itineraryName?: string; itineraryId?: string };
+}) => {
   const router = useRouter();
-  const { itineraryName } = params;
+  const { itineraryName, itineraryId } = searchParams;
+  console.log(itineraryName, itineraryId);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
 
-  const images = [
-    { src: "/images/aquarium.jpg", label: "Dubai Aquarium and Underwater Zoo with Penguin Cove" },
-    { src: "/images/BurjK.jpg", label: "Burj Khalifa: inside the world's tallest building" },
-    { src: "/images/atlantis.jpg", label: "Atlantis Water park" },
-  ];
+  const [images, setImages] = useState<any>([]);
+
+  const fetchItems = async () => {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const response = await axios.post(
+      `${backendUrl}/itinerary/getItineraryItems`,
+      {
+        itinerary_id: itineraryId,
+      }
+    );
+    setImages(response.data);
+  };
 
   const goToNextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const goToPreviousImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    setCurrentImageIndex(
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+    );
   };
 
   const handleLikeClick = () => {
-    setLiked(!liked);
+    setLiked((prev)=>!prev);
     console.log("Liked:", !liked);
   };
 
   const handleBookmarkClick = () => {
-    setBookmarked(!bookmarked);
+    setBookmarked((prev)=>!prev);
     console.log("Bookmarked:", !bookmarked);
   };
-
+  useEffect(() => {
+    fetchItems();
+  }, []);
   return (
     <div className="view-itinerary-page">
       <header className="view-itinerary-header">
@@ -43,43 +60,53 @@ const ViewItinerary = ({ params }: { params: { itineraryName: string } }) => {
         </button>
         <h1>{itineraryName}</h1>
       </header>
-
-      <div className="slider-container">
-      {/* The Trip name and location needs to go here  */}
-        <h2 className="slider-heading">Dubai - December Holiday Trip</h2>  
-        <div className="image-slider">
-          <button onClick={goToPreviousImage} className="slider-button prev">
-            <FaArrowLeft />
-          </button>
-          <div className="slider-content">
-            <div className="image-wrapper">
-              <img
-                src={images[currentImageIndex].src}
-                alt="Itinerary"
-                className="slider-image"
-              />
+      {images.length > 0 && (
+        <div className="slider-container">
+          {/* The Trip name and location needs to go here  */}
+          <h2 className="slider-heading">{itineraryName}</h2>
+          <div className="image-slider">
+            <button onClick={goToPreviousImage} className="slider-button prev">
+              <FaArrowLeft />
+            </button>
+            <div className="slider-content">
+              <div className="image-wrapper">
+                <img
+                  src={images[currentImageIndex].imageUrl}
+                  alt="Itinerary"
+                  className="slider-image"
+                />
+              </div>
+              <p className="image-label">
+                {images[currentImageIndex].item_name}
+              </p>
             </div>
-            <p className="image-label">{images[currentImageIndex].label}</p>
+            <button onClick={goToNextImage} className="slider-button next">
+              <FaArrowRight />
+            </button>
           </div>
-          <button onClick={goToNextImage} className="slider-button next">
-            <FaArrowRight />
-          </button>
-        </div>
 
-        <div className="slider-icons">
-          <FaBookmark
-            className={`icon bookmark-icon ${bookmarked ? "active-bookmarked" : ""}`}
-            title="Bookmark"
-            onClick={handleBookmarkClick}
-          />
-          <FaHeart
-            className={`icon heart-icon ${liked ? "active-liked" : ""}`}
-            title="Like"
-            onClick={handleLikeClick}
-          />
+          <div className="slider-icons">
+            <FaBookmark
+              className={`icon bookmark-icon ${
+                bookmarked ? "active-bookmarked" : ""
+              }`}
+              title="Bookmark"
+              onClick={handleBookmarkClick}
+            />
+            <FaHeart
+              className={`icon heart-icon ${liked ? "active-liked" : ""}`}
+              title="Like"
+              onClick={handleLikeClick}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
+      {images.length === 0 && (
+        <div>
+          <h2>No items found in this itinerary</h2>
+        </div>
+      )}
     </div>
   );
 };

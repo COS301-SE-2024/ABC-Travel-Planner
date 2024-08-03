@@ -69,4 +69,36 @@ export class ItineraryController {
   async getMySharedItineraries(@Body() body: { user_id: string }) {
     return this.itineraryService.getMySharedItineraries(body.user_id);
   }
+
+  @Post('addItineraryItem')
+  async addItineraryItem(
+    @Body()
+    body: {
+      itinerary_id: string;
+      item_name: string;
+      item_type: string;
+      location: string;
+      imageUrl: string;
+      destination: string;
+    },
+  ) {
+    return this.itineraryService.addItineraryItem(body.itinerary_id, body.item_name, body.item_type, body.location, body.imageUrl, body.destination);
+  }
+
+  @Post('getItineraryItems')
+  async getItineraryItems(@Body() body: { itinerary_id: string }) {
+    return this.itineraryService.getItineraryItems(body.itinerary_id);
+  }
+
+  @Post('likeItinerary')
+  async likeItinerary(@Body() body: { itinerary_id: string}) {
+    return this.itineraryService.likeItinerary(body.itinerary_id);
+  }
+
+  @Post('unlikeItinerary')
+  async unlikeItinerary(@Body() body: { itinerary_id: string }) {
+    return this.itineraryService.unlikeItinerary(body.itinerary_id);
+  }
+ 
+  
 }

@@ -1165,20 +1165,20 @@ body {
   transition: color 0.3s;
 }
 
-.icon.bookmark-icon {
-  color: #297ec0; /* Teal color for the bookmark icon */
+.bookmark-icon {
+  color: grey; /* Default color for bookmark icon */
 }
 
-.icon.heart-icon {
-  color: #5d5d5d; /* Gray color for the heart icon */
+.heart-icon {
+  color: grey; /* Default color for heart icon */
 }
 
 .active-bookmarked {
-  color: #fbc02d; /* Golden yellow when bookmarked */
+  color: blue; /* Color when bookmark is active */
 }
 
 .active-liked {
-  color: #e57373; /* Light red when liked */
+  color: red; /* Color when like is active */
 }
 
 .image-label {

@@ -28,6 +28,7 @@ import { useState, useEffect } from "react";
 import Cookie from "js-cookie";
 import getUser from "@/libs/actions/getUser";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Link from "next/link";
 
 const Account = () => {
   const [profileDetails, setProfileDetails] = useState<{
@@ -289,7 +290,7 @@ const Account = () => {
   const handleLike = async (index: number) => {
     const user_id = Cookie.get("user_id");
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    
+
     const res = await axios.post(`${backendUrl}/likes/userLikesPost`, {
       post_id: posts[index].id,
       user_id: user_id,
@@ -472,12 +473,12 @@ const Account = () => {
               />
               <div className="itinerary-content">
                 <h4>{itinerary.name}</h4>
-                <button
-                  onClick={() => handleViewClick(itinerary.name)}
-                  className="view-button"
+                <Link
+                  href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}`}
+                  passHref
                 >
-                  View
-                </button>
+                  <button className="view-button">View</button>
+                </Link>
               </div>
             </div>
           ))}
