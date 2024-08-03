@@ -1,10 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 import { FaGoogle, FaAtlas, FaHome, FaGlobe, FaPhone, FaStar, FaUsers, FaInfoCircle } from 'react-icons/fa';
 import { addReview, getReviews } from './getReviews';
 import dynamic from 'next/dynamic';
-
+import BackButton from '../[locationId]/BackButton';
 interface Review {
   id: number;
   user: string;
@@ -41,9 +41,13 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
   let locationLat = data.locationDetails.latitude;
   let locationLon = data.locationDetails.longitude;
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+  const starRating = Array.from({ length: Math.floor(data.rating) }, (_, i) => i);
 
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
+      <BackButton />
+      <h1 className="text-5xl font-bold mb-4 text-gray-800 text-center">{data.displayName}</h1>
+
       <PhotoGallery photos={data.photos} />
       <div className="info-section grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <div className="google-street-view p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
@@ -81,7 +85,7 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
       <div className="attractions-section bg-blue-200 rounded-lg shadow-lg mb-8 p-6 flex" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
   {/* <!-- Left Side: Name and Summary --> */}
   <div className="left-side bg-white rounded-lg shadow-md p-6 flex-1">
-    <h1 className="text-3xl font-bold mb-4 text-gray-800">{data.displayName}</h1>
+    <h1 className="text-3xl font-bold mb-4 text-gray-800">Need more info ?</h1>
     <div className="flex items-center text-gray-600">
         <FaInfoCircle className="mr-2 text-3xl text-gray-600" />
         <span><strong>Summary:</strong> {data.formattedAddress}</span>
@@ -103,10 +107,13 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
         <FaPhone className="mr-2 text-gray-600" />
         <span><strong>Int Phone:</strong> {data.internationalPhoneNumber}</span>
       </div>
-      <div className="flex items-center text-gray-600">
-        <FaStar className="mr-2 text-yellow-500" />
-        <span><strong>Rating:</strong> {data.rating}</span>
-      </div>
+       <div className="flex items-center text-gray-600">
+              <span className="flex items-center"><strong>Rating:</strong> 
+                {starRating.map((_, index) => (
+                  <FaStar key={index} className="mr-1 text-yellow-500" />
+                ))}
+              </span>
+            </div>
       <div className="flex items-center text-gray-600">
         <FaUsers className="mr-2 text-gray-600" />
         <span><strong>User rating count:</strong> {data.userRatingCount}</span>
