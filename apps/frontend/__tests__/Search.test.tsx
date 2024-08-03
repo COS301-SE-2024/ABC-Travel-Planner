@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import FilterCard from '../app/search/searchCard';
 import { getRatingColor, getPricePlaceholder, generatePrice } from '../app/search/searchCard';
@@ -118,71 +118,7 @@ const place = {
   type: "attractions"
 };
 
-// describe('SearchCard', () => {
-//   beforeEach(() => {
-//     // Clear all instances and calls to constructor and all methods:
-//     jest.clearAllMocks();
-//   });
-//   afterEach(() => {
-//     mockAxios.reset();
-//   });
 
-//   test('renders the SearchCard component and handles modals', async () => {
-//     render(<SearchCard place={place} />);
-//     Cookies.get.mockReturnValue('mocked_user_id');
-
-//     const location = "test-location";
-//     const imageUrl = "https://example.com/test-location.jpg";
-//     getStorage.mockReturnValue({});
-//     ref.mockReturnValue({});
-//     getDownloadURL.mockResolvedValueOnce(imageUrl);
-//     // Simulate clicking "Add to Itinerary"
-//     fireEvent.click(screen.getByText('Add to Itinerary'));
-
-//     // Mock the axios response for itineraries
-//     mockAxios.onPost(`${backendUrl}/itinerary/getItineraries`).reply(200, [
-//       { id: '1', name: 'Itinerary 1', location: 'Location 1' },
-//       { id: '2', name: 'Itinerary 2', location: 'Location 2' },
-//     ]);
-
-//     // Wait for the modal to open and the itineraries to be fetched
-//     //await waitFor(() => expect(screen.getByText('Select or Create an Itinerary')).toBeInTheDocument());
-
-//     // Select an itinerary from the dropdown
-//     // fireEvent.change(screen.getByPlaceholderText('Select an itinerary'), { target: { value: '{"id":"1","name":"Itinerary 1","location":"Location 1"}' } });
-
-//     // // Simulate clicking "Save to Selected"
-//     // fireEvent.click(screen.getByText('Save to Selected'));
-
-//     // // Mock the axios response for saving the itinerary item
-//     // mockAxios.onPost(`${backendUrl}/itinerary-items/add`).reply(200);
-
-//     // // Wait for the modal to close
-//     // await waitFor(() => expect(screen.queryByText('Select or Create an Itinerary')).not.toBeInTheDocument());
-
-//     // // Simulate clicking "Create New Itinerary"
-//     // fireEvent.click(screen.getByText('Add to Itinerary'));
-//     // await waitFor(() => expect(screen.getByText('Select or Create an Itinerary')).toBeInTheDocument());
-//     // fireEvent.click(screen.getByText('Create New Itinerary'));
-
-//     // // Wait for the new itinerary modal to open
-//     // await waitFor(() => expect(screen.getByText('Create New Itinerary')).toBeInTheDocument());
-
-//     // // Fill out the new itinerary form
-//     // fireEvent.change(screen.getByPlaceholderText('Location'), { target: { value: 'New Location' } });
-//     // fireEvent.change(screen.getByPlaceholderText('Trip Name'), { target: { value: 'New Trip' } });
-
-//     // // Simulate clicking "Save New Itinerary"
-//     // fireEvent.click(screen.getByText('Save New Itinerary'));
-
-//     // // Mock the axios response for creating the new itinerary
-//     // mockAxios.onPost(`${backendUrl}/itinerary/create`).reply(200, { config: { data: JSON.stringify({ location: 'New Location', tripName: 'New Trip' }) }, data: '3' });
-//     // mockAxios.onPost(`${backendUrl}/itinerary-items/add`).reply(200);
-
-//     // // Wait for the modal to close
-//     // await waitFor(() => expect(screen.queryByText('Create New Itinerary')).not.toBeInTheDocument());
-//   });
-// });
 
 describe("getItineraryImage", () => {
   beforeEach(() => {
@@ -512,5 +448,71 @@ describe('generatePrice', () => {
   it('calculates price for unknown type in unknown country', () => {
     const price = generatePrice('mno', 'unknown', 'Unknown');
     expect(price).toBeCloseTo(2039, -2);
+  });
+});
+
+describe('SearchCard', () => {
+  beforeEach(() => {
+    // Clear all instances and calls to constructor and all methods:
+    jest.clearAllMocks();
+  });
+
+  it('renders the SearchCard component and handles modals', async () => {
+    render(<SearchCard place={place} />);
+    Cookies.get.mockReturnValue('mocked_user_id');
+
+    const location = "test-location";
+    const imageUrl = "https://example.com/test-location.jpg";
+    getStorage.mockReturnValue({});
+    ref.mockReturnValue({});
+    getDownloadURL.mockResolvedValueOnce(imageUrl);
+
+    mockAxios.onPost(`${backendUrl}/itinerary/getItineraries`).reply(200, [
+      { id: '1', name: 'Itinerary 1', location: 'Location 1', "user_id":"R0mm5MMoNLR0MpBnz1i5IQLgIx42","imageUrl":"https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg" },
+      { id: '2', name: 'Itinerary 2', location: 'Location 2', "user_id":"R0mm5MMoNLR0MpBnz1i5IQLgIx42","imageUrl":"https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg" },
+    ]);
+    // Simulate clicking "Add to Itinerary"
+    fireEvent.click(screen.getByText('Add to Itinerary'));
+
+    // Wait for the modal to open and the itineraries to be fetched
+    await waitFor(() => expect(screen.getByText('Select or Create an Itinerary')).toBeInTheDocument());
+
+    // Select an itinerary from the dropdown
+    fireEvent.click(screen.getByText('Select an itinerary'));
+    //fireEvent.change(screen.getByText('Select an itinerary'), { target: { value: JSON.stringify({ id: '1', name: 'Itinerary 1', location: 'Location 1', "user_id":"R0mm5MMoNLR0MpBnz1i5IQLgIx42","imageUrl":"https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg" }) } });
+
+    const dropdown = screen.getByText('Select an itinerary');
+    fireEvent.click(screen.getByText('Itinerary 1'));
+    // Mock the axios response for saving the itinerary item
+    mockAxios.onPost(`${backendUrl}/itinerary-items/add`).reply(200);
+
+    // Simulate clicking "Save to Selected"
+    fireEvent.click(screen.getByText('Save to Selected'));
+
+    // Wait for the modal to close
+    await waitFor(() => expect(screen.queryByText('Select or Create an Itinerary')).not.toBeInTheDocument());
+
+    // Simulate clicking "Create New Itinerary"
+    fireEvent.click(screen.getByText('Add to Itinerary'));
+    await waitFor(() => expect(screen.getByText('Select or Create an Itinerary')).toBeInTheDocument());
+    fireEvent.click(screen.getByText('Create New Itinerary'));
+
+    // Wait for the new itinerary modal to open
+    await waitFor(() => expect(screen.getByText('Create New Itinerary')).toBeInTheDocument());
+
+    // Fill out the new itinerary form
+    fireEvent.change(screen.getByPlaceholderText('Location'), { target: { value: 'New Location' } });
+    fireEvent.change(screen.getByPlaceholderText('Trip Name'), { target: { value: 'New Trip' } });
+
+    // Mock the axios response for creating the new itinerary
+    mockAxios.onPost(`${backendUrl}/itinerary/create`).reply(200, { config: { data: JSON.stringify({ location: 'New Location', tripName: 'New Trip' }) }, data: '3' });
+    mockAxios.onPost(`${backendUrl}/itinerary-items/add`).reply(200);
+    // Simulate clicking "Save New Itinerary"
+    fireEvent.click(screen.getByText('Save New Itinerary'));
+
+    
+
+    // Wait for the modal to close
+    await waitFor(() => expect(screen.queryByText('Create New Itinerary')).not.toBeInTheDocument());
   });
 });

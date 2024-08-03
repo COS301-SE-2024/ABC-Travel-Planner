@@ -128,7 +128,15 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         const user_id = Cookies.get("user_id");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         console.log(selectedItinerary);
-        const parsedItem = JSON.parse(selectedItinerary);
+        //const parsedItem = JSON.parse(selectedItinerary);
+        let parsedItem;
+        if (selectedItinerary) {
+            parsedItem = JSON.parse(selectedItinerary);
+        } else {
+            // Handle case where selectedItinerary is empty or undefined
+            console.warn("selectedItinerary is not set");
+            parsedItem = {}; // or provide default values
+        }
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
             location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl});
     };
