@@ -16,7 +16,26 @@ interface Place {
     goodForChildren: boolean;
     firstPhotoUrl: string;
     type: string;
-  }
+}
+
+interface DetailedPlace {
+    formattedAddress: string;
+    displayName: string;
+    editorialSummary: string;
+    userRatingCount: number;
+    plusCode: any;
+    id: string;
+    rating: number;
+    accessibilityOptions: any; 
+    paymentOptions: any; 
+    goodForChildren: boolean;
+    photos: any[];
+    reviews: any[];
+    locationDetails: any;
+    internationalPhoneNumber: string;
+    nationalPhoneNumber: string;
+    websiteUri: string;
+}
   
   interface Profile {
     name: string;
@@ -95,7 +114,7 @@ export class SearchService {
                             },
                         },
                     });
-                    console.log(JSON.stringify(detailedPlace[0].types));
+
                     let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
                     const firstPhotoUrl = detailedPlace[0].photos && detailedPlace[0].photos.length > 0 ?
                         this.constructImageUrl(detailedPlace[0].photos[0].name, apiKey as string) :
@@ -122,6 +141,54 @@ export class SearchService {
         } catch (error) {
             console.error(error);
             return [];
+        }
+    }
+
+    async getDetailedPlace(id: string): Promise<DetailedPlace>{
+        try {
+                    let name = `places/${id}`;
+                    const request = {
+                        name,
+                    };
+                
+                    const detailedPlace = await this.placesClient.getPlace(request, {
+                        otherArgs: {
+                            headers: {
+                                'X-Goog-FieldMask': '*'
+                            },
+                        },
+                    });
+                    let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
+                    let photoArr = [];
+                    if(detailedPlace[0].photos && detailedPlace[0].photos.length > 0){
+                        for (let index = 0; index < detailedPlace[0].photos.length; index++) {
+                            let photo = this.constructImageUrl(detailedPlace[0].photos[index].name, apiKey as string);
+                            photoArr.push(photo);
+                        }
+                    }
+
+                    return {
+                        id: detailedPlace[0].id,
+                        reviews: detailedPlace[0].reviews,
+                        locationDetails: detailedPlace[0].location,
+                        internationalPhoneNumber: detailedPlace[0].internationalPhoneNumber,
+                        nationalPhoneNumber: detailedPlace[0].nationalPhoneNumber,
+                        websiteUri: detailedPlace[0].websiteUri,
+                        formattedAddress: detailedPlace[0].formattedAddress,
+                        displayName: detailedPlace[0].displayName ? detailedPlace[0].displayName.text : '',
+                        editorialSummary: detailedPlace[0].editorialSummary ? detailedPlace[0].editorialSummary.text : '',
+                        userRatingCount: detailedPlace[0].userRatingCount,
+                        plusCode: detailedPlace[0].plusCode,
+                        rating: detailedPlace[0].rating,
+                        accessibilityOptions: detailedPlace[0].accessibilityOptions,
+                        paymentOptions: detailedPlace[0].paymentOptions,
+                        goodForChildren: detailedPlace[0].goodForChildren,
+                        photos: photoArr
+                    } as DetailedPlace;
+        
+        } catch (error) {
+            console.error(error);
+            return {} as DetailedPlace;
         }
     }
 

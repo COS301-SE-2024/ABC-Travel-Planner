@@ -9,6 +9,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { SearchModule } from './search/search.module';
 import * as path from 'path';
 import { AuthModule } from './auth/auth.module';
+import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { AuthModule } from './auth/auth.module';
     FirebaseModule, 
     ReviewsModule,
     AuthModule,
-    SearchModule
+    SearchModule,
+    ItineraryItemsModule
   ],
   controllers: [AppController],
   providers: [AppService],
