@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as filledHeart, faShareAlt, faComment } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as unfilledHeart } from '@fortawesome/free-regular-svg-icons';
+import PopupMessage from '../utils/PopupMessage';
 
 interface PostCardProps {
   post_id: string;
@@ -23,11 +24,46 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [isFollowing, setIsFollowing] = useState('Follow');
-
+  const [message, setMessage] = useState('');
+  const [trigger, setTrigger] = useState(false);
   const [newComment, setNewComment] = useState<Comment>({
     user_id: 'User1',   //Remember to set to actual user...
     comment_string: ''
   });
+
+  useEffect(() => {
+    const isFollowing = async () => {
+      //Make this dynamic...
+      const postData = {
+        currUser: 'User1',
+        otherUser: user_id
+      }
+
+      console.log("Post data: " + JSON.stringify(postData))
+
+      const isFollowingRes = await fetch(`http://localhost:4000/follow-endpoint/isFollowing`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+
+        },
+        body: JSON.stringify(postData)
+      })
+
+      const following = await isFollowingRes.text()
+      console.log(following);
+
+      if (following == "true") {
+        console.log("Currently following user, updating frontend")
+        setIsFollowing("Following")
+      }
+      // else {
+      //   setIsFollowing("Follow")
+      // }
+    }
+
+    isFollowing()
+  }, [])
 
   const handleLike = () => {
     setLiked(!liked);
@@ -39,12 +75,10 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
 
   const handleCommentToggle = async () => {
     setShowComments(!showComments);
-    
+
     //No cache available atm...
     if (!showComments) {
       const commentRes = await fetch(`http://localhost:4000/comments/${post_id}`)
-      // console.log(await commentRes.text());
-
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
 
@@ -56,7 +90,6 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
       });
 
       setComments(receivedComments)
-      // handleAddComment();
     }
   };
 
@@ -85,7 +118,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
 
         if (addCommentRes.ok) {
           //Do something
-          console.log("Comment added :)")
+          setMessage('Comment posted')
+          setTrigger(true);
+          setTimeout(() => {
+            setTrigger(false);
+          }, 4000);
         }
         
         setComments([...comments, newComment]);
@@ -129,7 +166,13 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
         }),
       });
       console.log(await unfollowRes.text());
+      setMessage(`${user_id} unfollowed`)
+      setTrigger(true);
+      setTimeout(() => {
+        setTrigger(false);
+      }, 4000);
       setIsFollowing("Follow");
+
     } else {
       const followRes = await fetch(`http://localhost:4000/follow-endpoint/follow`, {
         method: 'POST',
@@ -143,12 +186,19 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
         }),
       });
       console.log(await followRes.text());
+      setMessage(`Following ${user_id}`)
+      setTrigger(true);
+      setTimeout(() => {
+        setTrigger(false);
+      }, 4000);
       setIsFollowing("Following");
     }
   }
 
   return (
+    
     <div className="flex justify-center items-center w-full">
+      <PopupMessage msg={message} trigger={trigger} />
       <div className="w-full justify-center w-full max-w-lg bg-pink-100 rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
         <div className="flex items-center justify-between w-full">
           <div>

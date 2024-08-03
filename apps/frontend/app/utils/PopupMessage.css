@@ -1,0 +1,32 @@
+.popup-message {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    animation: slide-up 0.5s, fade-out 2.5s 0.5s forwards;
+  }
+  
+  @keyframes slide-up {
+    from {
+      bottom: -50px;
+      opacity: 0;
+    }
+    to {
+      bottom: 20px;
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  

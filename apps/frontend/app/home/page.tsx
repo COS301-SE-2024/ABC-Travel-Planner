@@ -178,6 +178,7 @@ const Home = () => {
                 post_likes={post.post_likes || 0}
                 timestamp={post.timestamp}
                 />
+                
             ))}
           </div>
         </div>
