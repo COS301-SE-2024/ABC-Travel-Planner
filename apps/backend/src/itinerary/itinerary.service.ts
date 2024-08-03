@@ -144,4 +144,5 @@ export class ItineraryService {
       .update({ likes: admin.firestore.FieldValue.increment(-1) });
     return result;
   }
+
 }

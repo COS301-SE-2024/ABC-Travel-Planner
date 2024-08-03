@@ -13,6 +13,10 @@ export class SearchController {
   @Get('user')
   async searchUser(@Query('user') user: string): Promise<any> {
     return this.searchService.searchProfile(user);
-    
+  }
+
+  @Get('detailedPlace')
+  async detailedPlaces(@Query('locationId') textQuery: string): Promise<any> {
+    return this.searchService.getDetailedPlace(textQuery);
   }
 }
