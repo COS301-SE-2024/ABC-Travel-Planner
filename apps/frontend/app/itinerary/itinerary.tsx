@@ -55,7 +55,6 @@ const Itinerary = () => {
   };
 
   useEffect(() => {
-    
     fetchItineraries();
   }, []);
 
