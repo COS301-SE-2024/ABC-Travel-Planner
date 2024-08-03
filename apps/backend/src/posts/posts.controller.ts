@@ -48,5 +48,25 @@ export class PostsController {
         return this.postsService.getPost(body.postId);
     }
 
+    @Post("incrementLikes")
+    async incrementLikes(
+        @Body()
+        body: {
+            postId: string;
+        }
+    ) {
+        return this.postsService.increaseLikes(body.postId);
+    }
+
+    @Post("decrementLikes")
+    async decrementLikes(
+        @Body()
+        body: {
+            postId: string;
+        }
+    ) {
+        return this.postsService.decreaseLikes(body.postId);
+    }
+
     
 }

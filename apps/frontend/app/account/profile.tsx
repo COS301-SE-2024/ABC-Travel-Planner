@@ -13,7 +13,7 @@ import {
   FaHeart,
   FaComment,
   FaPlus,
-  FaPaperPlane
+  FaPaperPlane,
 } from "react-icons/fa";
 import app from "@/libs/firebase/firebase";
 import axios from "axios";
@@ -51,7 +51,7 @@ const Account = () => {
     imageUrl: string;
     caption: string;
     post_likes: number;
-    comments: any[]; 
+    comments: any[];
     timestamp: string;
   }
 
@@ -76,7 +76,9 @@ const Account = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [currentPostIndex, setCurrentPostIndex] = useState<number | null>(null);
   const [newComment, setNewComment] = useState("");
-  const [enlargedPostIndex, setEnlargedPostIndex] = useState<number | null>(null);
+  const [enlargedPostIndex, setEnlargedPostIndex] = useState<number | null>(
+    null
+  );
 
   const followers = [
     { username: "follower1", profilePic: "/Images/profile.jpg" },
@@ -126,16 +128,21 @@ const Account = () => {
       await fetchProfileDetails();
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const userId = Cookie.get("user_id");
-      const response = await axios.post(`${backendUrl}/itinerary/getMySharedItineraries`, {
-        user_id: userId,
-      });
+      const response = await axios.post(
+        `${backendUrl}/itinerary/getMySharedItineraries`,
+        {
+          user_id: userId,
+        }
+      );
 
       setItineraries(response.data);
-      const postsResponse = await axios.post(`${backendUrl}/posts/getUserPosts`, {
-        user_id: userId,
-      });
+      const postsResponse = await axios.post(
+        `${backendUrl}/posts/getUserPosts`,
+        {
+          user_id: userId,
+        }
+      );
       setPosts(postsResponse.data);
-
 
       // const result = await getSharedItineraries();
       // setItineraries(result);
@@ -169,14 +176,17 @@ const Account = () => {
     await updateImageURL({ user_id: profileDetails.user_id, imageURL: url });
   };
 
-  const uploadPostImage = async (file: any,post_id: any) => {
+  const uploadPostImage = async (file: any, post_id: any) => {
     const storage = getStorage(app);
     const storageRef = ref(storage, `Posts/${post_id}.jpg`);
     await uploadBytes(storageRef, file);
     const url = await getDownloadURL(storageRef);
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    await axios.post(`${backendUrl}/posts/updateImage`, {postId: post_id,imageUrl: url});
-  }
+    await axios.post(`${backendUrl}/posts/updateImage`, {
+      postId: post_id,
+      imageUrl: url,
+    });
+  };
 
   const handleCancel = () => {
     setProfileDetails(originalProfileDetails); // Revert to original details
@@ -244,60 +254,102 @@ const Account = () => {
   const handleNewPostImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setPostFile(file);  
+      setPostFile(file);
       const imageUrl = URL.createObjectURL(file);
       setNewPostImage(imageUrl);
     }
   };
 
   const handleNewPostSubmit = async () => {
-    
-    if (newPostImage || newPostCaption) {
-      
-      
-      const result = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/create`, {
+    if (!newPostImage || !newPostCaption) {
+      alert("Please provide an image and caption for the post");
+      return;
+    }
+
+    if (newPostImage && newPostCaption) {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      const result = await axios.post(`${backendUrl}/posts/create`, {
         user_id: profileDetails.user_id,
         caption: newPostCaption,
-        
       });
-      const newPost = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/getPost`, {
-        postId: result.data.id, 
-      });
-      
-      
-      if(postFile){
-        await uploadPostImage(postFile,result.data);
+
+      if (postFile) {
+        await uploadPostImage(postFile, result.data);
       }
-      setPosts([...posts, newPost.data]);
+
+      const newPost = await axios.post(`${backendUrl}/posts/getPost`, {
+        postId: result.data,
+      });
+      setPosts([newPost.data, ...posts]);
       setNewPostImage("");
       setNewPostCaption("");
       setShowPostModal(false);
-      
     }
   };
-  const handleLike = (index: number) => {
-    const updatedPosts = [...posts];
-    updatedPosts[index].post_likes += 1;
-    setPosts(updatedPosts);
+  const handleLike = async (index: number) => {
+    const user_id = Cookie.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    
+    const res = await axios.post(`${backendUrl}/likes/userLikesPost`, {
+      post_id: posts[index].id,
+      user_id: user_id,
+    });
+    if (res.data) {
+      await axios.post(`${backendUrl}/posts/decrementLikes`, {
+        postId: posts[index].id,
+      });
+      await axios.post(`${backendUrl}/likes/unlikePost`, {
+        post_id: posts[index].id,
+        user_id: user_id,
+      });
+      const updatedPosts = [...posts];
+      updatedPosts[index].post_likes -= 1;
+      setPosts(updatedPosts);
+    } else {
+      await axios.post(`${backendUrl}/posts/incrementLikes`, {
+        postId: posts[index].id,
+      });
+      await axios.post(`${backendUrl}/likes/likePost`, {
+        post_id: posts[index].id,
+        user_id: user_id,
+      });
+      const updatedPosts = [...posts];
+      updatedPosts[index].post_likes += 1;
+      setPosts(updatedPosts);
+    }
   };
 
-  const openCommentModal = (index: number) => {
-    setCurrentPostIndex(index);
-    setShowCommentModal(true);
-  };
+  // const openCommentModal = (index: number) => {
+  //   setCurrentPostIndex(index);
+  //   setShowCommentModal(true);
+  // };
 
-  const handleCommentSubmit = () => {
+  const handleCommentSubmit = async () => {
     if (enlargedPostIndex !== null && newComment.trim()) {
       const updatedPosts = [...posts];
       const user_id = Cookie.get("user_id");
-      updatedPosts[enlargedPostIndex].comments.push({comment: newComment,post_id: updatedPosts[enlargedPostIndex].id,user_id: user_id});
-      
+      const temp = await getUser(user_id);
+      const u = JSON.parse(temp || "{}");
+
+      updatedPosts[enlargedPostIndex].comments.push({
+        comment: newComment,
+        post_id: updatedPosts[enlargedPostIndex].id,
+        user_id: user_id,
+        username: u.username,
+      });
+
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      await axios.post(`${backendUrl}/comments/create`, {
+        post_id: updatedPosts[enlargedPostIndex].id,
+        comment: newComment,
+        user_id: user_id,
+        username: u.username,
+      });
+
       setPosts(updatedPosts);
       setNewComment("");
     }
   };
-
- 
 
   return (
     <div data-testid="accountContainer" className="profile-page">
@@ -420,7 +472,12 @@ const Account = () => {
               />
               <div className="itinerary-content">
                 <h4>{itinerary.name}</h4>
-                <button onClick={() => handleViewClick(itinerary.name)} className="view-button">View</button>
+                <button
+                  onClick={() => handleViewClick(itinerary.name)}
+                  className="view-button"
+                >
+                  View
+                </button>
               </div>
             </div>
           ))}
@@ -493,7 +550,7 @@ const Account = () => {
           </div>
         </div>
       )}
-       {/* Posts */}
+      {/* Posts */}
       <section className="posts py-6 px-4">
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
@@ -533,7 +590,7 @@ const Account = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      openCommentModal(index);
+                      setEnlargedPostIndex(index);
                     }}
                     className="flex items-center text-blue-500"
                   >
@@ -625,9 +682,10 @@ const Account = () => {
             </div>
             <div className="mb-4">
               {posts[enlargedPostIndex]?.comments?.map((data, index) => (
-                <p key={index} className="border-b border-gray-200 py-2">
-                  {data.comment}
-                </p>
+                <div key={index} className="border-b border-gray-200 py-2">
+                  <p className="font-bold">{data.username}</p>
+                  <p>{data.comment}</p>
+                </div>
               ))}
             </div>
             <textarea

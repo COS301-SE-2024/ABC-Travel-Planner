@@ -32,6 +32,7 @@ export class PostsService {
       .firestore()
       .collection('Posts')
       .where('user_id', '==', user_id)
+      .orderBy('timestamp', 'desc')
       .get();
 
     const postsWithComments = await Promise.all(
@@ -80,6 +81,24 @@ export class PostsService {
       .collection('Posts')
       .doc(postId)
       .update({ caption });
+    return result;
+  }
+
+  async increaseLikes(postId: string) {
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('Posts')
+      .doc(postId)
+      .update({ post_likes: admin.firestore.FieldValue.increment(1) });
+    return result;
+  }
+
+  async decreaseLikes(postId: string) {
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('Posts')
+      .doc(postId)
+      .update({ post_likes: admin.firestore.FieldValue.increment(-1) });
     return result;
   }
 }

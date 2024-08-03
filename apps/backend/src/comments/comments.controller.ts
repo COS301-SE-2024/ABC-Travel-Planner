@@ -13,12 +13,14 @@ export class CommentsController {
             user_id: string;
             post_id: string;
             comment: string;
+            username: string;
         }
     ) {
         return this.commentsService.createComment(
             body.user_id,
             body.post_id,
-            body.comment
+            body.comment,
+            body.username,
         );
     }
 

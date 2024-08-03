@@ -83,7 +83,7 @@ export class SearchService {
 
             const detailedPlaces = await Promise.all(response[0].places.map(async (place: any) => {
                 if (place !== null) {
-                    let name = `places/${place.id}`;
+                    const name = `places/${place.id}`;
                     const request = {
                         name,
                     };
@@ -96,7 +96,7 @@ export class SearchService {
                         },
                     });
                     console.log(JSON.stringify(detailedPlace[0].types));
-                    let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
+                    const apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
                     const firstPhotoUrl = detailedPlace[0].photos && detailedPlace[0].photos.length > 0 ?
                         this.constructImageUrl(detailedPlace[0].photos[0].name, apiKey as string) :
                         this.defaultImageUrl;

@@ -10,7 +10,8 @@ export class CommentsService {
     async createComment(
         user_id: string,
         post_id: string,
-        comment: string
+        comment: string,
+        username: string
     ) {
         const result = await this.firebaseApp
         .firestore()
@@ -19,6 +20,7 @@ export class CommentsService {
             user_id,
             post_id,
             comment,
+            username,
             timestamp: new Date(),
         });
         await this.firebaseApp
