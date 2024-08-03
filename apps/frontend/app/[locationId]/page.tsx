@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { FaGoogle, FaAtlas } from 'react-icons/fa';
 import { addReview, getReviews } from './getReviews';
+import dynamic from 'next/dynamic';
 
 interface Review {
   id: number;
@@ -24,110 +25,92 @@ async function getDetailedData(locationId: any) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
 
+// Dynamically import PhotoGallery component to ensure it's client-side only
+const PhotoGallery = dynamic(() => import('../[locationId]/PhotoGallery'), { ssr: false });
+
 const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { locationId: string } }) => {
   const location_id = params.locationId || 'default_location_id';
   const data = await getDetailedData(location_id);
   let locationLat = data.locationDetails.latitude;
   let locationLon = data.locationDetails.longitude;
-  console.log(locationLat + " " + locationLon);
-  console.log(JSON.stringify(data));
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
-      <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <div className="small-photos flex flex-col gap-4">
-          {Array.isArray(data.photos) && data.photos.length > 0 ? (data.photos.slice(2, 7).map((photo: any) => (
-            <div key={photo}><img src={`${photo}`} alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" /></div>
-              
-            ))) : (
-              <p>No photos available</p>
-            )}
-        </div>
-        <div className="main-photos col-span-2 grid grid-cols-2 md:grid-cols-2 gap-3">
-        {data.photos.slice(0, 2).map((photo: string, index: number) => (
-            <div key={photo} className="main-photo">
-              <Image src={`${photo}`} alt={`Photo ${index + 1}`} width={800} height={800} className="rounded-lg shadow-lg" />
-            </div>
-          ))}
-        </div>
-      </div>
+      <PhotoGallery photos={data.photos} />
       <div className="info-section grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <div className="google-street-view p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <div className="flex items-center mb-4">
             <FaGoogle size={22} className="mr-2" />
-            <h1 className="text-2xl font-semibold">Google Earth View</h1>
+            <h1 className="text-3xl font-bold">Google Street View</h1>
           </div>
           <iframe
-            src="https://earth.google.com/web/@48.8583701,2.2944813,146.72686635a,666.61608691d,35y,222.03759349h,45t,0r/data=Ck8aTRJHCiUweDQ3ZTY2ZTI5NjRlMzRlMmQ6MHg4ZGRjYTllZTM4MGVmN2UwGZ-uSRLfbUhAIb1EBgMZWwJAKgxUb3JyIEVhcnRoIFZpZXcYAiABOgMKATA"
+            src={`https://www.google.com/maps/embed/v1/streetview?key=${apiKey}&location=${locationLat},${locationLon}`}
             width="100%"
             height="400px"
             allowFullScreen
             frameBorder="0"
-            title="Google Earth View"
+            title="Google Street View"
             className="rounded-lg"
           ></iframe>
         </div>
+
         <div className="google-maps-api p-4 bg-white rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <div className="flex items-center mb-4">
             <FaAtlas size={22} className="mr-2" />
-            <h1 className="text-2xl font-semibold">Google Maps</h1>
+            <h1 className="text-3xl font-bold">Google Maps Ariel View</h1>
           </div>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9999022047975!2d2.2944813156743517!3d48.85837007928715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66efef2e091ab%3A0x40b82c3688c9460!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1625840843485!5m2!1sen!2sfr"
+            src={`https://www.google.com/maps/embed/v1/view?key=${apiKey}&center=${locationLat},${locationLon}&zoom=18&maptype=satellite`}
             width="100%"
             height="400px"
             allowFullScreen
             frameBorder="0"
-            title="Google Maps"
+            title="Google Maps Ariel View"
             className="rounded-lg"
           ></iframe>
         </div>
       </div>
-      <div className="attractions-section p-4 bg-white rounded-lg shadow-lg mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <h1 className="text-2xl font-bold mb-4">{data.displayName}</h1>
-        <p className="mb-4">
-          {data.editorialSummary}
-        </p>
-        <p>
-          Address: {data.formattedAddress}
-        </p>
-        <p>
-          Website: {data.websiteUri}
-        </p>
-        <p>
-          Int Phone: {data.internationalPhoneNumber}
-        </p>
-        <p>
-          Rating: {data.rating}
-        </p>
-        <p>
-          User rating count: {data.userRatingCount}
-        </p>
+      <div className="attractions-section bg-blue-200 rounded-lg shadow-lg mb-8 p-6" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+      <div className="info-container bg-white rounded-lg shadow-md p-6">
+        <h1 className="text-3xl font-bold mb-4 text-Gray-800">{data.displayName}</h1>
+        <p className="mb-4 text-gray-700">{data.editorialSummary}</p>
+        <div className="info-details space-y-2">
+          <p className="text-gray-600"><strong>Address:</strong> {data.formattedAddress}</p>
+          <p className="text-gray-600"><strong>Website:</strong> <a href={data.websiteUri} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{data.websiteUri}</a></p>
+          <p className="text-gray-600"><strong>Int Phone:</strong> {data.internationalPhoneNumber}</p>
+          <p className="text-gray-600"><strong>Rating:</strong> {data.rating}</p>
+          <p className="text-gray-600"><strong>User rating count:</strong> {data.userRatingCount}</p>
+        </div>
       </div>
+    </div>
+
       <div className="w-full p-4 md:p-8 bg-gray-100">
         {/* Reviews section */}
-        <div className="reviews-section p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-          <h1 className="text-2xl font-bold mb-4">Reviews</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.reviews.map((review: any) => (
-              <div key={review.id} className="review-card bg-white border border-gray-200 p-4 rounded-lg">
-                <h2 className="text-lg font-semibold">{review.authorAttribution.displayName}</h2>
-                <p className="text-gray-600">{review.originalText.text}</p>
-                <p className="text-gray-600"><b>Posted:</b> {review.relativePublishTimeDescription}</p>
-                <p className="text-gray-600"><b>Rating:</b> {review.rating}</p>
-                <Image src={`${review.authorAttribution.photoUri}`} alt="Photo 1" width={40} height={40} className="rounded-lg shadow-lg" />
-              </div>
-            ))}
+        <div className="reviews-section p-6 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+    <h1 className="text-3xl font-bold mb-6 text-Gray-800">Reviews</h1>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {data.reviews.map((review: any) => (
+        <div key={review.id} className="review-card bg-white border border-gray-200 rounded-lg shadow-md p-4">
+          <div className="flex items-center space-x-4 mb-4">
+            <Image src={`${review.authorAttribution.photoUri}`} alt="Reviewer Photo" width={80} height={80} className="rounded-full border border-gray-300" />
+            <div className="review-details flex-1">
+              <h2 className="text-xl font-semibold mb-1 text-blue-700">{review.authorAttribution.displayName}</h2>
+              <p className="text-gray-600"><strong>Posted:</strong> {review.relativePublishTimeDescription}</p>
+              <p className="text-gray-600"><strong>Rating:</strong> {review.rating}</p>
+            </div>
+          </div>
+          <p className="text-gray-700 leading-relaxed">{review.originalText.text}</p>
+        </div>
+      ))}
           </div>
         </div>
-
 
         {/* Review submission form */}
         <div className="review-form mt-8 p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
