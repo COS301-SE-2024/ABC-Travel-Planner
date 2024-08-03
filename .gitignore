@@ -1,8 +1,9 @@
 #Env files
 .env
 .env.local
+.env.production
 .env.template
-
+*-admin.json
 #tmp files
 .tmp
 *.tmp
@@ -20,3 +21,4 @@ log.txt
 !.vscode/extensions.json
 .history/*
 supabase/.temp/cli-latest
+apps/backend/src/firebase/project-admin.json

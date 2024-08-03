@@ -1,6 +1,6 @@
 describe("View profile info", () => {
     beforeEach(() => {
-      cy.login("kabelomotloung95@gmail.com", "Password#1234");
+      cy.login("kabza@gmail.com", "Password#1234");
     });
     it("should display account page", () => {
       cy.visit("/account");
@@ -15,13 +15,13 @@ describe("View profile info", () => {
     it("Should be able to view account name", () => {
       cy.visit("/account");
       cy.get(`[data-testid="accountName"]`).should("exist");
-      cy.get(`[data-testid="accountName"]`).should("contain", "Kabelo Motloung");
+      cy.get(`[data-testid="accountName"]`).should("contain", "Kabza De Small");
 
     });
     it("Should display correct account email", () => {
       cy.visit("/account");
       cy.get(`[data-testid="accountEmail"]`).should("exist");
-      cy.get(`[data-testid="accountEmail"]`).should("contain", "kabelomotloung95@gmail.com");
+      cy.get(`[data-testid="accountEmail"]`).should("contain", "kabza@gmail.com");
         
     });
 });

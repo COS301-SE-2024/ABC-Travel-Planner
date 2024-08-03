@@ -1,7 +1,9 @@
 import { exec } from 'child_process';
 
 export default function handler(req, res) {
-  exec('cd ./pages/api/ && python3 ./send_message.py', (error, stdout, stderr) => {
+
+  const userEmail = req.query.email
+  exec(`cd ./pages/api/ && python3 ./send_mail.py ${userEmail}`, (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return res.status(500).json({ error: error.message });

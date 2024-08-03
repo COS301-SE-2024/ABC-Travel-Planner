@@ -3,6 +3,7 @@ dist/
 .env
 .env.local
 .env.template
+project-admin.json
 
 #tmp files
 .tmp

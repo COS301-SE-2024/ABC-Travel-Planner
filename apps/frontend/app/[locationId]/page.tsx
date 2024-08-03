@@ -1,6 +1,3 @@
-// app/[locationId]/page.tsx
-"use client"
-
 import React from 'react';
 import Image from 'next/image';
 import { FaGoogle, FaAtlas } from 'react-icons/fa';
@@ -18,53 +15,56 @@ interface TouristPageProps {
   params: { locationId: string };
 }
 
-const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
+async function getDetailedData(locationId: any) {
+  try {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    let url = `${backendUrl}/search/detailedPlace?locationId=${encodeURIComponent(locationId)}`
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { locationId: string } }) => {
   const location_id = params.locationId || 'default_location_id';
-  const [reviews, setReviews] = React.useState<Review[]>([]);
+  const data = await getDetailedData(location_id);
 
-  React.useEffect(() => {
-    const fetchReviews = async () => {
-      const fetchedReviews = await getReviews(location_id);
-      setReviews(fetchedReviews);
-    };
-
-    // Fetch reviews only on the client side
-    fetchReviews();
-  }, [location_id]);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const comment = formData.get('comment') as string;
-    const rating = parseInt(formData.get('rating') as string, 10);
-
-    await addReview(comment, rating);
-
-    // Manually trigger update
-    const updatedReviews = await getReviews(location_id);
-    setReviews(updatedReviews);
-
-    // Clear the form after submission
-    //const form = event.currentTarget;
-    //form.reset();
-  };
+  if (!data || !data.locationDetails) {
+    return (
+      <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
+        <p>Error: Unable to load location details. Please try again later.</p>
+      </div>
+    );
+  }
+  
+  let locationLat = data.locationDetails.latitude;
+  let locationLon = data.locationDetails.longitude;
+  console.log(locationLat + " " + locationLon);
+  console.log(JSON.stringify(data));
 
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
       <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
         <div className="small-photos flex flex-col gap-4">
-          <Image src="/Images/photo1.jpg" alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src="/Images/photo2.jpg" alt="Photo 2" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src="/Images/photo3.jpg" alt="Photo 3" width={200} height={200} className="rounded-lg shadow-lg" />
-          <Image src="/Images/photo4.jpg" alt="Photo 4" width={200} height={200} className="rounded-lg shadow-lg" />
+          {Array.isArray(data.photos) && data.photos.length > 0 ? (data.photos.slice(2, 7).map((photo: any) => (
+            <div key={photo}><img src={`${photo}`} alt="Photo 1" width={200} height={200} className="rounded-lg shadow-lg" /></div>
+              
+            ))) : (
+              <p>No photos available</p>
+            )}
         </div>
         <div className="main-photos col-span-2 grid grid-cols-2 md:grid-cols-2 gap-3">
-          <div className="main-photo">
-            <Image src="/Images/main.jpg" alt="Photo 1" width={800} height={800} className="rounded-lg shadow-lg" />
-          </div>
-          <div className="second-photo">
-            <Image src="/Images/Paris.jpg" alt="Photo 1" width={900} height={900} className="rounded-lg shadow-lg" />
-          </div>
+        {data.photos.slice(0, 2).map((photo: string, index: number) => (
+            <div key={photo} className="main-photo">
+              <Image src={`${photo}`} alt={`Photo ${index + 1}`} width={800} height={800} className="rounded-lg shadow-lg" />
+            </div>
+          ))}
         </div>
       </div>
       <div className="info-section grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
@@ -100,13 +100,24 @@ const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
         </div>
       </div>
       <div className="attractions-section p-4 bg-white rounded-lg shadow-lg mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <h1 className="text-2xl font-bold mb-4">Attractions</h1>
+        <h1 className="text-2xl font-bold mb-4">{data.displayName}</h1>
         <p className="mb-4">
-          Come and discover the Eiffel Tower on the only trip to the top of its kind in Europe, and
-          let pure emotions carry you from the esplanade to the top.
+          {data.editorialSummary}
         </p>
         <p>
-          The Eiffel Tower in the world
+          Address: {data.formattedAddress}
+        </p>
+        <p>
+          Website: {data.websiteUri}
+        </p>
+        <p>
+          Int Phone: {data.internationalPhoneNumber}
+        </p>
+        <p>
+          Rating: {data.rating}
+        </p>
+        <p>
+          User rating count: {data.userRatingCount}
         </p>
       </div>
       <div className="w-full p-4 md:p-8 bg-gray-100">
@@ -114,12 +125,13 @@ const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
         <div className="reviews-section p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <h1 className="text-2xl font-bold mb-4">Reviews</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {reviews.map(review => (
+            {data.reviews.map((review: any) => (
               <div key={review.id} className="review-card bg-white border border-gray-200 p-4 rounded-lg">
-                <h2 className="text-lg font-semibold">{review.user}</h2>
-                <p className="text-gray-600">{review.comment}</p>
-                <p className="text-gray-600">Rating: {review.rating}</p>
-                <p className="text-gray-600">{review.title}</p>
+                <h2 className="text-lg font-semibold">{review.authorAttribution.displayName}</h2>
+                <p className="text-gray-600">{review.originalText.text}</p>
+                <p className="text-gray-600"><b>Posted:</b> {review.relativePublishTimeDescription}</p>
+                <p className="text-gray-600"><b>Rating:</b> {review.rating}</p>
+                <Image src={`${review.authorAttribution.photoUri}`} alt="Photo 1" width={40} height={40} className="rounded-lg shadow-lg" />
               </div>
             ))}
           </div>
@@ -128,7 +140,7 @@ const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
 
         {/* Review submission form */}
         <div className="review-form mt-8 p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-          <form className="mx-auto max-w-md" onSubmit={handleSubmit}>
+          {/* <form className="mx-auto max-w-md" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-bold mb-4 text-center">Post A Review</h1>
             <div className="flex items-start mt-4">
               <label htmlFor="rating" className="block font-semibold text-lg">Rating:</label>
@@ -158,7 +170,7 @@ const TouristPage: React.FC<TouristPageProps> = ({ params }) => {
                 Submit Review
               </button>
             </div>
-          </form>
+          </form> */}
         </div>
       </div>
     </div>

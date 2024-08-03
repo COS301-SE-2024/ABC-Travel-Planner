@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from "react";
 import Confetti from "react-confetti";
+import getUser from "@/libs/actions/getUser";
+import Cookie from "js-cookie"; 
 
 interface ConfirmBookingButtonProps {
   email: string;
@@ -8,7 +10,10 @@ interface ConfirmBookingButtonProps {
 }
 
 const sendEmail = async() => {
-    const res = await fetch('/api/execute');
+    const temp = Cookie.get("user_id");
+    const result = (await getUser(temp));
+    const email = JSON.parse(result || "").email;
+    const res = await fetch('/api/execute?email=' + email);
     const data = await res.json();
     console.log(data)
 }
