@@ -15,6 +15,8 @@ import Cookies from "js-cookie";
 import MockAdapter from 'axios-mock-adapter';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { getItineraryImage } from '../app/itinerary';
+import { createItinerary } from '../app/itinerary';
+import { getItineraries } from '../app/itinerary';
 import SearchCard from '../app/search/searchCard';
 
 jest.mock("firebase/storage", () => ({
@@ -33,7 +35,10 @@ jest.mock("firebase/firestore", () => ({
 }));
 
 jest.mock("@supabase/ssr", () => ({
+  __esModule: true, 
+  default: jest.fn(),
   createServerClient: jest.fn(),
+
 }));
 
 jest.mock("next/headers", () => ({
@@ -43,6 +48,18 @@ jest.mock("next/headers", () => ({
 jest.mock('js-cookie', () => ({
   get: jest.fn(() => 'user_id'),
 }));
+
+// jest.mock("@/libs/supabase/server", () => ({
+//   __esModule: true,
+//   default: jest.fn(),
+//   createSupabaseServerClient: jest.fn(),
+// }));
+
+// jest.mock("'../app/itinerary", () => ({
+//   getItineraryImage: jest.fn(),
+//   createItinerary: jest.fn(),
+//   getItineraries: jest.fn(), // Mock the function
+// }));
 
 const mockAxios = new MockAdapter(axios);
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -514,5 +531,62 @@ describe('SearchCard', () => {
 
     // Wait for the modal to close
     await waitFor(() => expect(screen.queryByText('Create New Itinerary')).not.toBeInTheDocument());
+  });
+});
+
+describe("getItineraries", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should return data if the query is successful", async () => {
+    const mockSupabaseClient = {
+      from: jest.fn().mockReturnThis(),
+      select: jest.fn().mockResolvedValue({
+        data: [{ id: 1, name: 'Test Itinerary' }],
+        error: null,
+      }),
+    };
+
+    const createSupabaseServerClientSpy = jest
+      .spyOn(require('@/libs/supabase/server'), 'default')
+      .mockResolvedValue(mockSupabaseClient);
+
+    const result = await getItineraries();
+
+    expect(createSupabaseServerClientSpy).toHaveBeenCalled();
+    expect(mockSupabaseClient.from).toHaveBeenCalledWith("Itinerary");
+    expect(mockSupabaseClient.select).toHaveBeenCalled();
+    expect(result).toEqual([{ id: 1, name: 'Test Itinerary' }]);
+
+    createSupabaseServerClientSpy.mockRestore();
+  });
+
+  it("should log error and return undefined if the query fails", async () => {
+    const mockSupabaseClient = {
+      from: jest.fn().mockReturnThis(),
+      select: jest.fn().mockResolvedValue({
+        data: null,
+        error: new Error("Query failed"),
+      }),
+    };
+
+    const createSupabaseServerClientSpy = jest
+      .spyOn(require('@/libs/supabase/server'), 'default')
+      .mockResolvedValue(mockSupabaseClient);
+
+    // Use spyOn to mock console.error
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+
+    const result = await getItineraries();
+
+    expect(createSupabaseServerClientSpy).toHaveBeenCalled();
+    expect(mockSupabaseClient.from).toHaveBeenCalledWith("Itinerary");
+    expect(mockSupabaseClient.select).toHaveBeenCalled();
+    expect(consoleErrorSpy).toHaveBeenCalledWith("error", new Error("Query failed"));
+    expect(result).toBeNull();
+
+    createSupabaseServerClientSpy.mockRestore(); // Restore the original function after the test
+    consoleErrorSpy.mockRestore(); 
   });
 });
