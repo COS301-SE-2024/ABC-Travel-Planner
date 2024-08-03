@@ -12,6 +12,7 @@ import { FollowModule } from './follow/follow.module';
 import { GoogleMapsModule } from './google-maps/google-maps.module';
 import { CommentsModule } from './comments/comments.module';
 import { ImagesModule } from './images/images.module';
+import { LikeModule } from './likes/like.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ImagesModule } from './images/images.module';
     FollowModule,
     CommentsModule,
     ImagesModule,
+    LikeModule,
     GoogleMapsModule
   ],
   controllers: [AppController],

@@ -84,9 +84,69 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
     isFollowing()
   }, [])
 
-  const handleLike = () => {
-    setLiked(!liked);
-  };
+  const handleLike = async () => {
+    try {
+      const isLiked = await fetch(`http://localhost:4000/like/isLiked/${post_id}`)
+      const isLikedText = await isLiked.text();
+      
+      if (isLikedText == "true") {
+        try {
+          const unLikeRes = await fetch(`http://localhost:4000/like-endpoint/unlike`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              //Maybe an Auth header?
+          },
+            body: JSON.stringify({
+              post_id: post_id,
+              user_id: user_id
+            }),
+          });
+    
+          //Popup message
+          // setMessage(`Post unliked`)
+          // setTrigger(true);
+          // setTimeout(() => {
+          //   setTrigger(false);
+          // }, 4000);
+
+          setLiked(false)
+        } catch (error) {
+          console.log(error)
+          throw new Error(`Could not unlike post: ${(error as Error).message}`)
+        }
+  
+      } else {
+        try {
+          const LikeRes = await fetch(`http://localhost:4000/like-endpoint/like`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              //Maybe an Auth header?
+          },
+            body: JSON.stringify({
+              post_id: post_id,
+              user_id: user_id
+            }),
+          });
+  
+        //Popup message
+        // setMessage(`Following ${userName}`)
+        // setTrigger(true);
+        // setTimeout(() => {
+        //   setTrigger(false);
+        // }, 4000);
+        setLiked(true);
+      } catch (error) {
+        console.log(error)
+        throw new Error(`Could not like post: ${(error as Error).message}`)
+      }
+    } 
+  } catch (error) {
+    console.log(error)
+    throw new Error(`Could not check if post ${post_id} is liked: ${(error as Error).message}`)
+  }
+}
 
   const handleShare = () => {
     alert('Share functionality coming soon!');
