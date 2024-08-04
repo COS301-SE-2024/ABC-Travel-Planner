@@ -2,28 +2,17 @@
 import {
   FaMapMarkerAlt,
   FaRegCalendarAlt,
-  FaPlane,
-  FaEdit,
-  FaQuestionCircle,
-  FaInfoCircle,
-  FaSignOutAlt,
-  FaBars,
-  FaTimes,
   FaHeart,
   FaComment,
-  FaPlus,
-  FaPaperPlane,
-  FaBookmark,
-  FaUser,
 } from "react-icons/fa";
 
 import { useEffect, useState } from "react";
 import getUser from "@/libs/actions/getUser";
 import axios from "axios";
 import Link from "next/link";
+import Cookie from "js-cookie";
 
 const Profile = () => {
-  
   const [profileDetails, setProfileDetails] = useState<{
     username: string;
     email: string;
@@ -45,24 +34,9 @@ const Profile = () => {
   const [showFollowing, setShowFollowing] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false); // State for follow button
 
-  const followers = [
-    { username: "follower1", profilePic: "/Images/profile.jpg" },
-    { username: "follower2", profilePic: "/Images/profile2.png" },
-    { username: "follower3", profilePic: "/Images/profile.jpg" },
-    { username: "follower4", profilePic: "/Images/profile2.png" },
-    { username: "follower5", profilePic: "/Images/profile.jpg" },
-    { username: "follower6", profilePic: "/Images/profile2.png" },
-    
-  ];
+  const [followers, setFollowers] = useState<any>([]);
 
-  const following = [
-    { username: "following1", profilePic: "/Images/profile.jpg" },
-    { username: "following2", profilePic: "/Images/profile2.png" },
-    { username: "following3", profilePic: "/Images/profile.jpg" },
-    { username: "following4", profilePic: "/Images/profile2.png" },
-    { username: "following5", profilePic: "/Images/profile.jpg" },
-    { username: "following6", profilePic: "/Images/profile2.png" },
-  ];
+  const [following, setFollowing] = useState<any>([]);
 
   interface Post {
     id: string;
@@ -82,7 +56,7 @@ const Profile = () => {
   const fetchProfileDetails = async () => {
     const user_id = window.location.pathname.replace("/profile/", "");
     const r = await getUser(user_id);
-    console.log(r);
+
     const tmp = JSON.parse(r || "");
     setProfileDetails(tmp);
     if (tmp.imageUrl) {
@@ -103,8 +77,23 @@ const Profile = () => {
     setShowFollowers(false);
   };
 
-  const handleFollowButtonClick = () => {
+  const handleFollowButtonClick = async () => {
     setIsFollowing(!isFollowing);
+    const user_id = profileDetails.user_id;
+    const follower_id = Cookie.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const r = await axios.post(`${backendUrl}/follows/following`, {
+      user_id: user_id,
+    });
+    setFollowing(r.data);
+    const f = await axios.post(`${backendUrl}/follows/followers`, {
+      user_id: user_id,
+    });
+    setFollowers(f.data);
+    await axios.post(`${backendUrl}/follows/follow`, {
+      user_id: user_id,
+      follower_id: follower_id,
+    });
   };
 
   const handleCommentSubmit = async () => {
@@ -171,11 +160,11 @@ const Profile = () => {
     async function fetch() {
       await fetchProfileDetails();
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-      const userId = window.location.pathname.replace("/profile/", "");
+      const user_id = window.location.pathname.replace("/profile/", "");
       const response = await axios.post(
         `${backendUrl}/itinerary/getMySharedItineraries`,
         {
-          user_id: userId,
+          user_id: user_id,
         }
       );
 
@@ -183,13 +172,29 @@ const Profile = () => {
       const postsResponse = await axios.post(
         `${backendUrl}/posts/getUserPosts`,
         {
-          user_id: userId,
+          user_id: user_id,
         }
       );
       setPosts(postsResponse.data);
 
-      // const result = await getSharedItineraries();
-      // setItineraries(result);
+      const r = await axios.post(`${backendUrl}/follows/followers`, {
+        user_id: user_id,
+      });
+      setFollowers(r.data);
+      console.log(r.data);
+
+      const f = await axios.post(`${backendUrl}/follows/following`, {
+        user_id: user_id,
+      });
+      setFollowing(f.data);
+
+      const follower_id = Cookie.get("user_id");
+      const res = await axios.post(`${backendUrl}/follows/isFollowing`, {
+        user_id: user_id,
+        follower_id: follower_id,
+      });
+
+      setIsFollowing(res.data);
     }
     fetch();
   }, []);
@@ -220,25 +225,28 @@ const Profile = () => {
               <span>Member Since: {profileDetails.memberSince}</span>
             </div>
           )}
-          {profileDetails.user_id && (
-            <button
-              className={`follow-button ${isFollowing ? "unfollow" : "follow"}`}
-              onClick={handleFollowButtonClick}
-            >
-              {isFollowing ? "Unfollow" : "Follow"}
-            </button>
-          )}
+          {profileDetails.user_id &&
+            profileDetails.user_id !== Cookie.get("user_id") && (
+              <button
+                className={`follow-button ${
+                  isFollowing ? "unfollow" : "follow"
+                }`}
+                onClick={handleFollowButtonClick}
+              >
+                {isFollowing ? "Unfollow" : "Follow"}
+              </button>
+            )}
         </div>
       </header>
 
       <section className="saved-itineraries">
         <div className="profile-stats">
           <div className="following" onClick={toggleFollowing}>
-            <span>24</span>
+            <span>{following?.length}</span>
             <p>Following</p>
           </div>
           <div className="followers" onClick={toggleFollowers}>
-            <span>33</span>
+            <span>{followers?.length}</span>
             <p>Followers</p>
           </div>
         </div>
@@ -270,14 +278,14 @@ const Profile = () => {
           <div className="popup-content" onClick={(e) => e.stopPropagation()}>
             <h3 className="font-bold text-lg">Followers</h3>
             <div className="users-list">
-              {followers.map((follower, index) => (
+              {followers.map((follower: any, index: any) => (
                 <div key={index} className="user-item">
                   <img
-                    src={follower.profilePic}
-                    alt={follower.username}
+                    src={follower?.imageUrl}
+                    alt={follower?.username}
                     className="user-pic"
                   />
-                  <p>{follower.username}</p>
+                  <p>{follower?.username}</p>
                 </div>
               ))}
             </div>
@@ -293,14 +301,14 @@ const Profile = () => {
           <div className="popup-content" onClick={(e) => e.stopPropagation()}>
             <h3 className="font-bold text-lg">Following</h3>
             <div className="users-list">
-              {following.map((user, index) => (
+              {following.map((user: any, index: any) => (
                 <div key={index} className="user-item">
                   <img
-                    src={user.profilePic}
-                    alt={user.username}
+                    src={user?.imageUrl}
+                    alt={user?.username}
                     className="user-pic"
                   />
-                  <p>{user.username}</p>
+                  <p>{user?.username}</p>
                 </div>
               ))}
             </div>

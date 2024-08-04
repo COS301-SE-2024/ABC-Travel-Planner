@@ -180,6 +180,7 @@ const Account = () => {
       setFile(file);
     }
   };
+  
 
   const uploadImage = async (file: any) => {
     const storage = getStorage(app);
@@ -655,6 +656,7 @@ const Account = () => {
                   >
                     <FaComment className="mr-1" />
                     {post?.comments?.length}
+                    
                   </button>
                 </div>
               </div>

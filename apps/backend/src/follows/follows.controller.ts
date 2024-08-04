@@ -6,23 +6,25 @@ export class FollowsController {
     constructor(private followsService: FollowsService) {}
 
     @Post('follow')
-    async followUser(@Body() body: {userId: string, followerId: string}) {
-        return this.followsService.followUser(body.userId, body.followerId);
+    async followUser(@Body() body: {user_id: string, follower_id: string}) {
+        return this.followsService.followUser(body.user_id, body.follower_id);
     }
 
-    @Post('unfollow')
-    async unfollowUser(@Body() body: {userId: string, followerId: string}) {
-        return this.followsService.unfollowUser(body.userId, body.followerId);
-    }
+    
 
     @Post('followers')
-    async getFollowers(@Body() body: {userId: string}) {
-        return this.followsService.getFollowers(body.userId);
+    async getFollowers(@Body() body: {user_id: string}) {
+        return this.followsService.getFollowers(body.user_id);
     }
 
     @Post('following')
-    async getFollowing(@Body() body: {userId: string}) {
-        return this.followsService.getFollowing(body.userId);
+    async getFollowing(@Body() body: {user_id: string}) {
+        return this.followsService.getFollowing(body.user_id);
+    }
+
+    @Post('isFollowing')
+    async isFollowing(@Body() body: {user_id: string, follower_id: string}) {
+        return this.followsService.isFollowing(body.user_id, body.follower_id);
     }
     
     
