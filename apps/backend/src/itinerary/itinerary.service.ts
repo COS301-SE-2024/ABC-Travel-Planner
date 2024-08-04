@@ -168,7 +168,7 @@ export class ItineraryService {
   }
 
   async saveItinerary(itineraryId: string, user_id: string) {
-    const result = await this.firebaseApp.firestore().collection('Saved_Itineraries').add({
+    const result = await this.firebaseApp.firestore().collection('Saved-Itineraries').add({
       itinerary_id: itineraryId,
       user_id,
       timestamp: new Date(),
@@ -177,15 +177,34 @@ export class ItineraryService {
   }
 
   async unsaveItinerary(itineraryId: string, user_id: string) {
-    const result = await this.firebaseApp.firestore().collection('Saved_Itineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
+    const result = await this.firebaseApp.firestore().collection('Saved-Itineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
     const doc = result.docs[0];
-    await this.firebaseApp.firestore().collection('Saved_Itineraries').doc(doc.id).delete();
+    await this.firebaseApp.firestore().collection('Saved-Itineraries').doc(doc.id).delete();
     return doc.id;
   }
 
   async userSavedItinerary(itineraryId: string, user_id: string) {
-    const result = await this.firebaseApp.firestore().collection('Saved_Itineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
+    const result = await this.firebaseApp.firestore().collection('Saved-Itineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
     return result.docs.length > 0;
+  }
+
+  async getSavedItineraries(user_id: string) {
+    const result = await this.firebaseApp.firestore().collection('Saved-Itineraries').where('user_id', '==', user_id).get();
+
+    const arr = await Promise.all(
+      result.docs.map(async (doc) => {
+        const fetchData = async () => {
+          const temp = await this.firebaseApp
+            .firestore()
+            .collection('Itineraries')
+            .doc(doc.data().itinerary_id).get()
+          return temp.data();
+        }
+
+        return fetchData();
+      }),
+    );
+    return arr;
   }
 
 }

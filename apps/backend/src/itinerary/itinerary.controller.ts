@@ -124,4 +124,9 @@ export class ItineraryController {
 
     }
 
+    @Post('getSavedItineraries')
+    async getSavedItineraries(@Body() body: { user_id: string }) {
+        return this.itineraryService.getSavedItineraries(body.user_id);
+    }
+
 }

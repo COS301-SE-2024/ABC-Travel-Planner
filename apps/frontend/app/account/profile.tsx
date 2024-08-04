@@ -14,6 +14,8 @@ import {
   FaComment,
   FaPlus,
   FaPaperPlane,
+  FaBookmark,
+  FaUser,
 } from "react-icons/fa";
 import app from "@/libs/firebase/firebase";
 import axios from "axios";
@@ -29,6 +31,7 @@ import Cookie from "js-cookie";
 import getUser from "@/libs/actions/getUser";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
+import { FaPerson } from "react-icons/fa6";
 
 const Account = () => {
   const [profileDetails, setProfileDetails] = useState<{
@@ -100,6 +103,10 @@ const Account = () => {
   ];
 
   const [itineraries, setItineraries] = useState<any>([]);
+  const [bookmarksOpen, setBookmarksOpen] = useState<boolean>(false);
+  const [savedItineraries, setSavedItineraries] = useState<any>([]);
+
+
 
   const router = useRouter();
 
@@ -144,6 +151,11 @@ const Account = () => {
         }
       );
       setPosts(postsResponse.data);
+
+      const res = await axios.post(`${backendUrl}/itinerary/getSavedItineraries`, {
+        user_id: userId,
+      });
+      setSavedItineraries(res.data);
 
       // const result = await getSharedItineraries();
       // setItineraries(result);
@@ -352,6 +364,12 @@ const Account = () => {
     }
   };
 
+  const [view, setView] = useState('shared');
+
+  const handleViewChange = (view: string) => {
+    setView(view);
+  };
+
   return (
     <div data-testid="accountContainer" className="profile-page">
       <header className="profile-header">
@@ -443,13 +461,14 @@ const Account = () => {
             <button onClick={handleHelpCenter}>
               <FaQuestionCircle /> Help Center
             </button>
+            
             <button onClick={handleSignout}>
               <FaSignOutAlt /> Logout
             </button>
           </div>
         )}
       </header>
-
+      
       <section className="saved-itineraries">
         <h3 className="Following-title">My Following</h3>
         <div className="profile-stats">
@@ -462,8 +481,23 @@ const Account = () => {
             <p>Followers</p>
           </div>
         </div>
-        <h3 className="section-title">My Shared Itineraries</h3>
+        <div className="flex justify-center mb-4 space-x-4">
+        <button
+          onClick={() => handleViewChange('shared')}
+          className={`text-base font-semibold px-4 py-2 border-b-4 ${view === 'shared' ? 'border-blue-500' : 'border-transparent'} focus:outline-none`}
+        >
+          Shared Itineraries
+        </button>
+        <button
+          onClick={() => handleViewChange('bookmarks')}
+          className={`text-base font-semibold px-4 py-2 border-b-4 ${view === 'bookmarks' ? 'border-blue-500' : 'border-transparent'} focus:outline-none`}
+        >
+          Saved Itineraries
+        </button>
+      </div>
+        {view === 'shared' && (
         <div className="itinerary-cards">
+          
           {itineraries.map((itinerary: any, index: any) => (
             <div key={index} className="itinerary-card">
               <img
@@ -474,7 +508,7 @@ const Account = () => {
               <div className="itinerary-content">
                 <h4>{itinerary.name}</h4>
                 <Link
-                  href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}`}
+                  href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=true`}
                   passHref
                 >
                   <button className="view-button">View</button>
@@ -482,7 +516,30 @@ const Account = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div>)}
+        {view === "bookmarks" && (
+        <div className="itinerary-cards">
+          
+          {savedItineraries.map((itinerary: any, index: any) => (
+            <div key={index} className="itinerary-card">
+              <img
+                src={itinerary.imageUrl}
+                alt={itinerary.name}
+                className="itinerary-image"
+              />
+              <div className="itinerary-content">
+                <h4>{itinerary.name}</h4>
+                <Link
+                  href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false`}
+                  passHref
+                >
+                  <button className="view-button">View</button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>)}
+        
       </section>
 
       {showPopup && (
@@ -552,6 +609,7 @@ const Account = () => {
         </div>
       )}
       {/* Posts */}
+      {!bookmarksOpen && (
       <section className="posts py-6 px-4">
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
@@ -603,7 +661,7 @@ const Account = () => {
             </div>
           ))}
         </div>
-      </section>
+      </section>)}
 
       {showPostModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
