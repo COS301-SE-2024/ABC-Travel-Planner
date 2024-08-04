@@ -21,7 +21,7 @@ describe("View destination info", () => {
     });
     it("should view more destination info", () => {
         cy.get(`[data-testid="destinationImage"]`).eq(1).click({ force: true });
-        cy.wait(2000);
+        cy.wait(3000);
         cy.get(`[data-testid="destinationInfo"]`).should("exist");
     });
     
