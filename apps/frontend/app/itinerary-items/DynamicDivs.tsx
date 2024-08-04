@@ -20,82 +20,153 @@ interface ItemData {
     id: number;
     data: ItemData;
   }
-  
+
   interface DynamicDivsProps {
-    image_url: string;
+    id?: string;
+    location?: string;
+    destination?: any;
   }
 
   //Making the component async ensures that it constantly refreshes the whole page on change/useEffect execution
-  const DynamicDivs: React.FC<DynamicDivsProps> = ({ image_url }) => {
+  const DynamicDivs: React.FC<DynamicDivsProps> = ({ id, location, destination }) => {
+    const [uploaded, setUploaded] = useState(false);
     const [divs, setDivs] = useState<DivItem[]>([]);
     const [fetchedData, setFetchedData] = useState<ItemData[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-    // const [initialLoad, setInitialLoad] = useState(true);
     const [fetchCount, setFetchCount] = useState(0);
-    // const user_id = Cookie.get('user_id') 
     
     useEffect(() => {
-        // console.log("Initial Load: " + initialLoad)
-        // if (initialLoad) {
-            // setInitialLoad(false)
-        // } else {
-            const id = JSON.parse(localStorage.getItem('id') as string).id
-            console.log("ID IN DYNAMIC DIV: " + JSON.stringify(id))
-    
-            const fetchItems = async () => {
-                try {
-                    const user_id = 'User1'
-                    const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
-                    
-                    const data: ItemData[] = await response.json();
-                    console.log("Response from server: " + JSON.stringify(data))
-                    
-                    const initialDivs = data.map((dataItem, index) => ({
-                        id: index,
-                        data: dataItem,
-                    }));
-    
-                    initialDivs.forEach((data, index) => {
-                        switch (data.data.item_type) {
-                            case "stays":
-                                data.data.item_type = "A place to stay"
-                                break;
-                            case "attractions":
-                                data.data.item_type = "Attraction"
-                                break;
-                            case "airportTaxis":
-                                data.data.item_type = "Airport Taxi"
-                                break;
-                            case "carRental":
-                                data.data.item_type = "Car Rental"
-                                break;
-                            case "flight": 
-                                data.data.item_type = "Flight"
-                                break;
-    
-                            default:
-                                break;
-                        }
-                    });
-                    setDivs(initialDivs);
-                    setFetchedData(data);
-                    // setInitialLoad(true);
-                } catch (error) {
-                    console.error("Error fetching items:", error);
-                }
-            };
+        if (id) {
+            const itinerary_id = JSON.parse((localStorage.getItem('id') as string)).id
+            console.log(itinerary_id)
 
-            console.log("Fetched Data: " + fetchedData)
-            // console.log("Initial Load: " + initialLoad)
-            
-            //Fetches more than once to ensure data is loaded without overfetching
-            if (fetchCount < 3 || !fetchedData || !divs) {
-                console.log("FETCHING...")
-                fetchItems();
-                setFetchCount(fetchCount + 1);
+            if (itinerary_id) {
+                localStorage.setItem('id', JSON.stringify({id: id, expiry: Date.now() + 60 * 60 * 1000}));
             }
-        // }
-    }, [fetchedData])
+
+        } else {
+            throw new Error('ID for itinerary not included');
+        }
+
+        if (location) {
+            const itinerary_location = JSON.parse((localStorage.getItem('location') as string) ?? []).location
+            console.log(itinerary_location)
+
+            if (itinerary_location) {
+                localStorage.setItem('location', JSON.stringify({location: location, expiry: Date.now() + 60 * 60 * 1000 }));
+            }
+        } else {
+            throw new Error('Location for itinerary not included');
+        }
+
+        console.log("ID IN DYNAMIC DIV: " + JSON.stringify(id))
+        
+        const uploadItem = async () => {
+            if (!uploaded && destination) {
+                const id = localStorage.getItem('id') as string
+                const location = localStorage.getItem('location') as string
+                const objectToUpload = JSON.parse(destination);
+                console.log(objectToUpload);
+
+                const userId = Cookie.get('user_id');   
+                const itemTitle = objectToUpload.Eg?.displayName ?? 'NONAME';
+                const itemType = objectToUpload.type ?? 'NOTYPE';
+                const address = objectToUpload.Eg?.formattedAddress ?? 'DEFAULT ADDRESS'
+                const image_url = objectToUpload.firstPhotoUrl ?? 'PHOTO URL'
+
+                const uploadDetails = {
+                    user_id: userId,
+                    item_name: itemTitle,
+                    item_type: itemType,
+                    location: JSON.parse(location).location,
+                    itinerary_id: JSON.parse(id).id,
+                    destination: address,
+                    image_url
+                }
+                 
+                console.log("Going to upload to db...")
+                console.log(uploadDetails)
+
+                try {
+                    const response = await fetch('http://localhost:4000/itinerary-items/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(uploadDetails)
+                    });
+
+                    console.log("Response from server: ", JSON.stringify(response));
+                    setUploaded(true);
+                } catch (error) {
+                    console.error("Error uploading item:", error);
+                }
+            }
+        }
+
+        const fetchItems = async () => {
+            try {
+                if (destination) {
+                    //Wait until its done uploading...
+                    console.log(`DESTINATION EXISTSSSSSS: ${JSON.stringify(destination)}`)
+                    setTimeout(async () => {
+                        await uploadItem();
+                    }, 4000)
+                }
+
+                console.log("Moving on to fetching...")
+                const user_id = Cookie.get('user_id') ?? 'User1'
+                const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
+                
+                const data: ItemData[] = await response.json();
+                console.log("Response from server: " + JSON.stringify(data))
+                
+                const initialDivs = data.map((dataItem, index) => ({
+                    id: index,
+                    data: dataItem,
+                }));
+
+                initialDivs.forEach((data, index) => {
+                    switch (data.data.item_type) {
+                        case "stays":
+                            data.data.item_type = "A place to stay"
+                            break;
+                        case "attractions":
+                            data.data.item_type = "Attraction"
+                            break;
+                        case "airportTaxis":
+                            data.data.item_type = "Airport Taxi"
+                            break;
+                        case "carRental":
+                            data.data.item_type = "Car Rental"
+                            break;
+                        case "flight": 
+                            data.data.item_type = "Flight"
+                            break;
+
+                        default:
+                            break;
+                    }
+                });
+                setDivs(initialDivs);
+                setFetchedData(data);
+                // setInitialLoad(true);
+            } catch (error) {
+                console.error("Error fetching items:", error);
+            }
+        };
+
+        console.log("Fetched Data: " + fetchedData)
+        
+        //Fetches more than once to ensure data is loaded without overfetching
+        if (fetchCount < 3 || !fetchedData || !divs) {
+            console.log("FETCHING...")
+            fetchItems();
+            uploadItem();
+            setFetchCount(fetchCount + 1);
+        }
+
+    }, [uploaded])
 
     const handleAddDiv = () => {
       console.log("Current divs: " + JSON.stringify(divs))    
@@ -141,7 +212,6 @@ interface ItemData {
     };
   
     const handleModelClose = () => {
-    //   console.log(JSON.stringify(divs))
       setIsOpen(false);
     };
 

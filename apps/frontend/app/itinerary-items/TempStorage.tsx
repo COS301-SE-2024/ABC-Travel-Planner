@@ -77,10 +77,6 @@ const TempStorage: React.FC<TempStorageProps> = ({id, location, destination, Ite
         }
       }
       else if (image_url) {
-        // if (isUploading) return
-        // setIsUploading(true)
-
-        console.log("DESTINATION NOT NULL")
         try {
           uploadItem(Item_Title, Item_Type, destination, image_url)
         } catch (error) {

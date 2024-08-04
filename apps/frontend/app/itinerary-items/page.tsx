@@ -29,20 +29,19 @@ const getCoordinates = async (location: string) => {
 
 const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; location?: string; destination?: any } }) => {
   const { location, id, destination } = searchParams;
+  // let obj
 
-  if (destination) {
-    const obj = JSON.parse(destination)
-    const itemTitle = obj.Fg?.displayName ?? obj.displayName
-    const itemType = obj.type
-    const firstPhotoUrl = obj.firstPhotoUrl
-    const location = obj.Fg?.formattedAddress ?? obj.formattedAddress
-
-    
-  }
+  // if (destination) {
+  //   obj = JSON.parse(destination)
+    // const itemTitle = obj.Fg?.displayName ?? obj.displayName
+    // const itemType = obj.type
+    // const firstPhotoUrl = obj.firstPhotoUrl
+    // const location = obj.Fg?.formattedAddress ?? obj.formattedAddress
+  // }
 
   return (
     <>
-    <TempStorage id={id} location={location} Item_Title={(destination && (JSON.parse(destination).Eg?.displayName ?? JSON.parse(destination).displayName)) ?? null} Item_Type={(destination && JSON.parse(destination).type) ?? null} destination={(destination && (JSON.parse(destination).Eg?.formattedAddress ?? JSON.parse(destination).formattedAddress)) ?? null} image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null}/>
+    {/* <TempStorage id={id} location={location} Item_Title={(destination && (JSON.parse(destination).Eg?.displayName ?? JSON.parse(destination).displayName)) ?? null} Item_Type={(destination && JSON.parse(destination).type) ?? null} destination={(destination && (JSON.parse(destination).Eg?.formattedAddress ?? JSON.parse(destination).formattedAddress)) ?? null} image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null}/> */}
     <div className="relative flex flex-col space-x-1 justify-center items-center">
     <div className="flex flex-col border border-gray-300 rounded-lg p-4 bg-white shadow-md w-[96vw] h-auto iteneraryInfo">
       <h1 className="mb-2 text-2xl font-bold text-gray-800 iteneraryHeader "  style={{ fontSize: '2rem', marginBottom:20 }}>Itinerary Items:</h1>
@@ -73,7 +72,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
 
       <div className="flex justify-center">
         <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800">
-            <DynamicDivs image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null} />
+            <DynamicDivs id={id} location={location} destination={destination} />
         </div>
       </div>
       
