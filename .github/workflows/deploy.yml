@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x' 
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: apps/backend
+
+      - name: Build the app
+        run: npm run build
+        working-directory: apps/backend
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.13.15 
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_BACKEND_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: "apps/backend" 
