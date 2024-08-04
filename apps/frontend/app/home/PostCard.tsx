@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as filledHeart, faShareAlt, faComment } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as unfilledHeart } from '@fortawesome/free-regular-svg-icons';
 import PopupMessage from '../utils/PopupMessage';
+import Cookie from "js-cookie";
 
 interface PostCardProps {
   post_id: string;
@@ -31,17 +32,49 @@ interface User {
 
 const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_title, post_description, post_likes, timestamp }) => {
   const [liked, setLiked] = useState(false);
+  const [numLikes, setNumLikes] = useState(post_likes);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [isFollowing, setIsFollowing] = useState('Follow');
   const [message, setMessage] = useState('');
   const [trigger, setTrigger] = useState(false);
   const [userName, setUserName] = useState('');
+  
+  const curr_user = Cookie.get("user_id") ?? ''
 
   const [newComment, setNewComment] = useState<Comment>({
-    user_id: 'User1',   //Remember to set to actual user...
+    user_id: curr_user,   //Remember to set to actual user...
     comment_string: ''
   });
+
+  useEffect(() => {
+    const getIsLiked = async () => {
+      try {
+        const isLikedRes = await fetch(`http://localhost:4000/like-endpoint/isLiked`, {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify({
+            post_id: post_id,
+            user_id: curr_user
+          })
+        })
+
+        const isLikedText = await isLikedRes.text();
+
+        if (isLikedText == "true") {
+          setLiked(true);
+        }
+
+      } catch (error) {
+        console.log(error)
+        throw new Error(`Could not get userName of ${user_id}: ${(error as Error).message}`)
+      }
+    }
+
+    getIsLiked()
+  }, []);
 
   useEffect(() => {
     const getUserName = async () => {
@@ -85,23 +118,24 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
   }, [])
 
   const handleLike = async () => {
-    try {
-      const isLiked = await fetch(`http://localhost:4000/like/isLiked/`, {
-        method: 'POST',
-        headers: {  
-          'Content-Type': 'application/json',
-          //Maybe an Auth header?
-      },  
-        body: JSON.stringify({
-          post_id: post_id,
-          user_id: 'User1'
-        }),
-      });
+    // try {
+    //   const isLiked = await fetch(`http://localhost:4000/like-endpoint/isLiked/`, {
+    //     method: 'POST',
+    //     headers: {    
+    //       'Content-Type': 'application/json',
+    //       //Maybe an Auth header?
+    //   },     
+    //     body: JSON.stringify({
+    //       post_id: post_id,
+    //       user_id: curr_user   //Test value
+    //     }),
+    //   });
+  
+    //   const isLikedText = await isLiked.text();
+    //   console.log(isLikedText)
 
-      const isLikedText = await isLiked.text();
-      console.log(isLikedText)
-
-      if (isLikedText == "true") {
+      // if (isLikedText == "true") {
+      if (liked) {
         try {
           const unLikeRes = await fetch(`http://localhost:4000/like-endpoint/unlike`, {
             method: 'POST',
@@ -111,22 +145,16 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
           },  
             body: JSON.stringify({
               post_id: post_id,
-              user_id: user_id
+              user_id: curr_user
             }),
           });
-    
-          //Popup message
-          // setMessage(`Post unliked`)
-          // setTrigger(true);
-          // setTimeout(() => {
-          //   setTrigger(false);
-          // }, 4000);
-
+          
+          setNumLikes(numLikes - 1)
         } catch (error) {
           console.log(error)
           throw new Error(`Could not unlike post: ${(error as Error).message}`)
         }
-      } else {
+      } else if (!liked) {
         try {
           const LikeRes = await fetch(`http://localhost:4000/like-endpoint/like`, {
             method: 'POST',
@@ -136,17 +164,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
           },
             body: JSON.stringify({
               post_id: post_id,
-              user_id: user_id
+              user_id: curr_user
             }),
           });
   
-        //Popup message
-        // setMessage(`Following ${userName}`)
-        // setTrigger(true);
-        // setTimeout(() => {
-        //   setTrigger(false);
-        // }, 4000);
-        // setLiked(true);
+        setNumLikes(numLikes + 1)
       } catch (error) {
         console.log(error)
         throw new Error(`Could not like post: ${(error as Error).message}`)
@@ -154,10 +176,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
     } 
     
     setLiked(!liked)
-  } catch (error) {
-    console.log(error)
-    throw new Error(`Could not check if post ${post_id} is liked: ${(error as Error).message}`)
-  }
+    
+  // } catch (error) {
+  //   console.log(error)
+  //   throw new Error(`Could not check if post ${post_id} is liked: ${(error as Error).message}`)
+  // }
 }
 
   const handleShare = () => {
@@ -215,7 +238,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
 
         //Remember to set the user_id to current user...
         setNewComment({
-          user_id: 'User1',
+          user_id: curr_user,
           comment_string: ''
         });
       }
@@ -224,7 +247,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
   const followUser = async () => {
     //Change to dynamic...
     const followData = {
-      currUser: 'User1',
+      currUser: curr_user,
       otherUser: user_id
     }
     
@@ -248,7 +271,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
             //Maybe an Auth header?
         },
           body: JSON.stringify({
-            currUser: 'User1',
+            currUser: curr_user,
             userToUnfollow: user_id
           }),
         });
@@ -264,7 +287,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
         console.log(error)
         throw new Error(`Could not unfollow user ${userName}: ${(error as Error).message}`)
       }
-
+  
     } else {
       try {
         const followRes = await fetch(`http://localhost:4000/follow-endpoint/follow`, {
@@ -274,7 +297,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
             //Maybe an Auth header?
         },
           body: JSON.stringify({
-            currUser: 'User1',
+            currUser: curr_user,
             userToFollow: user_id
           }),
         });
@@ -317,7 +340,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
             onClick={handleLike}
           >
             <FontAwesomeIcon icon={liked ? filledHeart : unfilledHeart} className={liked ? 'text-red-500' : ''} />
-            <span>{post_likes + (liked ? 1 : 0)}</span>
+            <span>{numLikes}</span>
           </button>
           <button
             className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"

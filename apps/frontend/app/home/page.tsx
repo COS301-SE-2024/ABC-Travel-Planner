@@ -4,6 +4,7 @@ import axios from 'axios';
 import DestinationCard from './DestinationCard';
 import PostCard from './PostCard';
 
+
 const popularDestinations = [
   { name: 'France', image: '/Images/france.jpg', city: 'Paris', location_id: '1', description: 'rich history, unique culture, incredible food, and pleasant weather' },
   { name: 'Italy', image: '/Images/italy.jpg', city: 'Rome', location_id: '2', description: 'Italy\'s cities exude a unique charm, distinctive character and attractions' },

@@ -13,12 +13,10 @@ export class LikeService {
     const isLikedRes = await this.db
                               .collection('Likes')
                               .where('post_id', '==', post_id)
-                              .where('liked_by', '==', user_id)
+                              .where('user_id', '==', user_id)
                               .get()
 
-    console.log(isLikedRes)
-    console.log("Data: " + isLikedRes.docs[0].data())
-    return isLikedRes.empty;
+    return !isLikedRes.empty;
   }
 
   async unlike(id: string, user_id: string) : Promise<boolean> {
@@ -42,8 +40,10 @@ export class LikeService {
                     .doc(id)
                     .get()
 
+      console.log(post.exists)
       if (post.exists) {
         const postLikes = post.get('post_likes')
+        console.log("Post likes: " + postLikes)
         try {
           await this.db
                 .collection('Posts')
@@ -51,11 +51,11 @@ export class LikeService {
                 .update({
                   'post_likes' : (postLikes - 1)
                 });
+
         } catch (error) {
           console.log(error)
           throw new Error(`Could not update like count in Posts: ${(error as Error).message}`)
         }
-        
       } else {
         throw new Error("Post does not exist - could not unlike")
       }
@@ -67,14 +67,17 @@ export class LikeService {
   }
 
   async like(id: string, user_id: string) : Promise<boolean> {
-    const likeQuery = await this.db
-                            .collection('Likes')
-                            .add({
-                              id: 'RandomLikeId',
-                              post_id: id,
-                              user_id,
-                              timestamp: admin.firestore.FieldValue.serverTimestamp(),
-                            })
+    const likeRef = this.db
+                        .collection('Likes')
+                        .doc();
+    const likeId = likeRef.id;
+    const likeQuery = await likeRef.set({
+      id: likeId,
+      post_id: id,
+      user_id,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    })
+                            
     if (likeQuery) {
       const post = await this.db
                         .collection('Posts')
