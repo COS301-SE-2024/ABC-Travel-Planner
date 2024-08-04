@@ -103,7 +103,7 @@ const Account = () => {
   ];
 
   const [itineraries, setItineraries] = useState<any>([]);
-  const [bookmarksOpen, setBookmarksOpen] = useState<boolean>(false);
+  
   const [savedItineraries, setSavedItineraries] = useState<any>([]);
 
 
@@ -609,7 +609,7 @@ const Account = () => {
         </div>
       )}
       {/* Posts */}
-      {!bookmarksOpen && (
+      
       <section className="posts py-6 px-4">
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
@@ -661,7 +661,7 @@ const Account = () => {
             </div>
           ))}
         </div>
-      </section>)}
+      </section>
 
       {showPostModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
