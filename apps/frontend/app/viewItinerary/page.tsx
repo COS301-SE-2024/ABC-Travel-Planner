@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight, FaHeart, FaBookmark } from "react-icons/fa";
+import Cookie from "js-cookie";
 
 const ViewItinerary = ({
   searchParams,
@@ -28,6 +29,13 @@ const ViewItinerary = ({
       }
     );
     setImages(response.data);
+
+    const user_id = Cookie.get("user_id");
+    const res = await axios.post(`${backendUrl}/itinerary/userLikesItinerary`, {
+      user_id,
+      itinerary_id: itineraryId,
+    });
+    setLiked(res.data);
   };
 
   const goToNextImage = () => {
@@ -40,9 +48,38 @@ const ViewItinerary = ({
     );
   };
 
-  const handleLikeClick = () => {
+  const handleLikeClick = async() => {
     setLiked((prev)=>!prev);
-    console.log("Liked:", !liked);
+    const user_id = Cookie.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const res = await axios.post(`${backendUrl}/itinerary/userLikesItinerary`, {
+      user_id,
+      itinerary_id: itineraryId,
+    }
+
+    )
+    if(res.data)
+      {
+        await axios.post(
+          `${backendUrl}/itinerary/unlikeItinerary`,
+          {
+            user_id,
+            itinerary_id: itineraryId,
+          }
+        );
+        
+      }
+      else{
+    await axios.post(
+      `${backendUrl}/itinerary/likeItinerary`,
+      {
+        user_id,
+        itinerary_id: itineraryId,
+      }
+    );
+  }
+
+    
   };
 
   const handleBookmarkClick = () => {
