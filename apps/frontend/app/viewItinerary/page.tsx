@@ -3,14 +3,15 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight, FaHeart, FaBookmark } from "react-icons/fa";
+import Cookie from "js-cookie";
 
 const ViewItinerary = ({
   searchParams,
 }: {
-  searchParams: { itineraryName?: string; itineraryId?: string };
+  searchParams: { itineraryName?: string; itineraryId?: string ,myItinerary?:string};
 }) => {
   const router = useRouter();
-  const { itineraryName, itineraryId } = searchParams;
+  const { itineraryName, itineraryId ,myItinerary} = searchParams;
   console.log(itineraryName, itineraryId);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -28,6 +29,19 @@ const ViewItinerary = ({
       }
     );
     setImages(response.data);
+
+    const user_id = Cookie.get("user_id");
+    const res = await axios.post(`${backendUrl}/itinerary/userLikesItinerary`, {
+      user_id,
+      itinerary_id: itineraryId,
+    });
+    setLiked(res.data);
+
+    const res2 = await axios.post(`${backendUrl}/itinerary/userSavedItinerary`, {
+      user_id,
+      itinerary_id: itineraryId,
+    });
+    setBookmarked(res2.data);
   };
 
   const goToNextImage = () => {
@@ -40,14 +54,56 @@ const ViewItinerary = ({
     );
   };
 
-  const handleLikeClick = () => {
+  const handleLikeClick = async() => {
     setLiked((prev)=>!prev);
-    console.log("Liked:", !liked);
+    const user_id = Cookie.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    if(liked)
+      {
+        await axios.post(
+          `${backendUrl}/itinerary/unlikeItinerary`,
+          {
+            user_id,
+            itinerary_id: itineraryId,
+          }
+        );
+        
+      }
+      else{
+    await axios.post(
+      `${backendUrl}/itinerary/likeItinerary`,
+      {
+        user_id,
+        itinerary_id: itineraryId,
+      }
+    );
+  }
+
+    
   };
 
-  const handleBookmarkClick = () => {
+  const handleBookmarkClick = async() => {
     setBookmarked((prev)=>!prev);
-    console.log("Bookmarked:", !bookmarked);
+    const user_id = Cookie.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    
+    if(bookmarked)
+      {
+        await axios.post(
+          `${backendUrl}/itinerary/unsaveItinerary`,
+          {
+            user_id,
+            itinerary_id: itineraryId,
+          }
+        );
+
+      }
+      else{
+        await axios.post(`${backendUrl}/itinerary/saveItinerary`, {
+          user_id,
+          itinerary_id: itineraryId,
+        });
+      }
   };
   useEffect(() => {
     fetchItems();
@@ -86,13 +142,14 @@ const ViewItinerary = ({
           </div>
 
           <div className="slider-icons">
+            {myItinerary === "false" && (
             <FaBookmark
               className={`icon bookmark-icon ${
                 bookmarked ? "active-bookmarked" : ""
               }`}
               title="Bookmark"
               onClick={handleBookmarkClick}
-            />
+            />)}
             <FaHeart
               className={`icon heart-icon ${liked ? "active-liked" : ""}`}
               title="Like"
