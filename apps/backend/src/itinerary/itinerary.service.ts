@@ -127,22 +127,65 @@ export class ItineraryService {
     return result.docs.map((doc) => doc.data());
   }
 
-  async likeItinerary(itineraryId: string) {
+  async likeItinerary(itineraryId: string, user_id: string) {
     const result = await this.firebaseApp
       .firestore()
       .collection('Itineraries')
       .doc(itineraryId)
       .update({ likes: admin.firestore.FieldValue.increment(1) });
+
+    await this.firebaseApp.firestore().collection('likedItineraries').add({
+      itinerary_id: itineraryId,
+      user_id,
+      timestamp: new Date(),
+    });
+      
     return result;
   }
 
-  async unlikeItinerary(itineraryId: string) {
+  async unlikeItinerary(itineraryId: string, user_id: string) {
     const result = await this.firebaseApp
       .firestore()
       .collection('Itineraries')
       .doc(itineraryId)
       .update({ likes: admin.firestore.FieldValue.increment(-1) });
+
+      const result2 = await this.firebaseApp.firestore().collection('likedItineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
+
+      const doc = result2.docs[0];
+      await this.firebaseApp.firestore().collection('likedItineraries').doc(doc.id).delete();
     return result;
+  }
+
+  async userLikesItinerary(itineraryId: string, user_id: string) {
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('likedItineraries')
+      .where('itinerary_id', '==', itineraryId)
+      .where('user_id', '==', user_id)
+      .get();
+    return result.docs.length > 0;
+  }
+
+  async saveItinerary(itineraryId: string, user_id: string) {
+    const result = await this.firebaseApp.firestore().collection('Saved_Itineraries').add({
+      itinerary_id: itineraryId,
+      user_id,
+      timestamp: new Date(),
+    });
+    return result.id;
+  }
+
+  async unsaveItinerary(itineraryId: string, user_id: string) {
+    const result = await this.firebaseApp.firestore().collection('Saved_Itineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
+    const doc = result.docs[0];
+    await this.firebaseApp.firestore().collection('Saved_Itineraries').doc(doc.id).delete();
+    return doc.id;
+  }
+
+  async userSavedItinerary(itineraryId: string, user_id: string) {
+    const result = await this.firebaseApp.firestore().collection('Saved_Itineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
+    return result.docs.length > 0;
   }
 
 }
