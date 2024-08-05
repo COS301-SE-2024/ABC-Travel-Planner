@@ -22,6 +22,49 @@
   color:white;
 }
 
+@keyframes fly-diagonal {
+  from {
+    left: -10%;
+    top: -10%;
+  }
+  to {
+    left: 110%;
+    top: 110%;
+  }
+}
+
+@keyframes move-clouds {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.plane-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  animation: fly-diagonal 15s linear infinite;
+}
+
+.posts-container {
+  position: relative;
+  background: url('/Images/peakpx.jpg') no-repeat center center;
+  background-size: cover;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the animated plane (if needed) */
+.plane-animation {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 100px;
+  /* Remove animation if not needed */
+}
+
+
 
 .container.mx-auto.p-4
 {
