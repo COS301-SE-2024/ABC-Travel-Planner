@@ -170,10 +170,6 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
     setLiked(!liked)
 }
 
-  const handleShare = () => {
-    // alert('Share functionality coming soon!');
-  };
-
   const handleCommentToggle = async () => {
     setShowComments(!showComments);
 
@@ -184,18 +180,21 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
         headers: {
           'Content-Type' : 'application/json'
         },
-        body: JSON.stringify({post_id: post_id})
+        body: JSON.stringify({post_id})
       })
 
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
-      console.log(receivedComments)
+      console.log(midData)
       JSON.parse(midData).map((element: {
         comment: string;
-        id?: string;
+        id: string;
         post_id: string;
         user_id: string;
-        timestamp: number;
+        timestamp: {
+          _seconds: number,
+          _nanoseconds: number
+        };
         username: string;
       }) => {
         receivedComments.push({
@@ -203,11 +202,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           id: element.id,
           user_id: element.user_id,
           post_id: element.post_id,
-          timestamp: element.timestamp,
+          timestamp: element.timestamp._seconds,
           username: element.username
         })
       });
-
+      console.log("Received comments: " + JSON.stringify(receivedComments));
       setComments(receivedComments)
     }
   };
@@ -219,9 +218,9 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
         const u = JSON.parse(temp || "{}");
 
         const dataToAdd = {
-            comment: newComment,
-            post_id: post_id,
-            user_id: user_id,
+            comment: newComment.comment,
+            user_id: newComment.user_id,
+            post_id: newComment.post_id,
             username: u.username,
         }
 
@@ -340,14 +339,14 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             <p className="text-sm text-gray-500">{new Date(timestamp * 1000).toLocaleDateString()}</p>
             <h2 >{post_description}</h2>
           </div>
-          {/* Check to see if user is following the currPost's user*/}
+
           <button 
             className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full"
             onClick={followUser}>{isFollowing}
           </button>
         </div>
         <img src={image_url} alt='heloooooo'></img>
-        {/* <p className="text-gray-800">{post_description}</p> */}
+
         <div className="flex items-center space-x-4">
           <button
             className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"
@@ -356,12 +355,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             <FontAwesomeIcon icon={liked ? filledHeart : unfilledHeart} className={liked ? 'text-red-500' : ''} />
             <span>{numLikes}</span>
           </button>
-          <button
-            className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"
-            onClick={handleShare}
-          >
-            <FontAwesomeIcon icon={faShareAlt} />
-          </button>
+
           <button
             className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"
             onClick={handleCommentToggle}
@@ -375,12 +369,10 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             <div className="space-y-2">
               {comments.map((comment, index) => (
                 <div key={index} className="p-2 bg-blue-100 rounded-md text-gray-800 text-sm">
-                  {/* Remember to change to actual username of currUser... */}
                   {comment.username ?? 'User1'}: {comment.comment} 
                 </div>
               ))}
             </div>
-              {/* Remember to change to actual username of currUser... */}
             <div className="mt-4 flex items-center space-x-2">
               <input
                 type="text" 
