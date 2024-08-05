@@ -526,7 +526,7 @@ const Account = () => {
                 <div className="itinerary-content">
                   <h4>{itinerary.name}</h4>
                   <Link
-                    href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false`}
+                    href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false&prev=${location.pathname}`}
                     passHref
                   >
                     <button className="view-button">View</button>
