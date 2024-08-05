@@ -90,46 +90,42 @@ const Home = () => {
   useEffect(() => {
     const fetchPopularDestinations = async () => {
       try {
-        // const response = await fetch(`${process.env.BACKEND_URL}/google-maps/popular-destinations`);
         const response = await fetch(`http://localhost:4000/google-maps/popular-destinations`);
-
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Full Response:', data); // Log the entire response
+
         const places = data.results;
         if (!places) {
           throw new Error('No places found in response');
         }
-    
+
         const imageDestinations = places.map((place: Place) => {
-          
-          if (place.photos && place.photos.length > 0)
-          {
-            console.log(place.photos[0].photo_reference);
+          if (place.photos && place.photos.length > 0) {
+            const photoReference = place.photos[0].photo_reference;
+            const apikey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
+            console.log(process.env.NEXT_PUBLIC_GOOGLE_API_KEY!)
             return {
-              
-              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
+              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apikey}`, // Replace YOUR_API_KEY with your actual API key
             };
           } else {
             return { image: '/Images/default.jpg' };
           }
         });
-    
-        console.log('Image Destinations:', imageDestinations);
+
         setPopularDestinations(imageDestinations);
       } catch (error) {
         console.error('Error fetching popular destinations:', error);
       }
     };
-  
+
     fetchPopularDestinations();
   }, []);
 
   return (
     <div className="flex flex-row">
-      <div className="w-1/2 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', height: '100vh', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <div className="w-1/2 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <h2 className="text-3xl font-bold mb-4 text-gray-800">Top Destinations for Your Next Holiday</h2>
         <div className="flex flex-col space-y-4">
           {popularDestinations.map((destination, index) => (
@@ -141,18 +137,7 @@ const Home = () => {
       <div className="w-full mt-8 justify-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <div className="flex justify-center flex-col w-3/4 mx-auto">
           <div className="flex justify-center mb-4 mt-4">
-            <button
-              className={`px-4 py-2 ${tab === 'For You' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-tl-md rounded-bl-md transition duration-300 ease-in-out transform hover:scale-105`}
-              onClick={() => setTab('For You')}
-            >
-              For You
-            </button>
-            <button
-              className={`px-4 py-2 ${tab === 'Following' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} rounded-tr-md rounded-br-md transition duration-300 ease-in-out transform hover:scale-105`}
-              onClick={() => setTab('Following')}
-            >
-              Following
-            </button>
+          <h2 className="text-3xl font-bold text-gray-800">Latest Posts</h2>
           </div>
           <div className="flex justify-center items-center flex-wrap space-x-4 space-y-4">
             {posts.map((post) => (
