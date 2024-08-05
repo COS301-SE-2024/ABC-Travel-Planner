@@ -163,7 +163,6 @@ const Booking = () => {
           </div>
         ))}
 
-        {/* Accommodations */}
         {accommodations.map((accommodation) => (
           <div key={accommodation.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
             <Image
