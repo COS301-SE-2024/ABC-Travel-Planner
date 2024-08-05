@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as filledHeart, faShareAlt, faComment } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as unfilledHeart } from '@fortawesome/free-regular-svg-icons';
+import getUser from "@/libs/actions/getUser";
 import PopupMessage from '../utils/PopupMessage';
 import Cookie from "js-cookie";
 
@@ -15,8 +16,12 @@ interface PostCardProps {
 }
 
 interface Comment {
+  comment: string;
+  id?: string;
+  post_id: string;
   user_id: string;
-  comment_string: string;
+  timestamp?: number;
+  username?: string;
 }
 
 interface User {
@@ -42,8 +47,12 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const curr_user = Cookie.get("user_id") ?? ''
 
   const [newComment, setNewComment] = useState<Comment>({
+    comment: '',
+    id: '',
+    post_id: '',
     user_id: curr_user,   
-    comment_string: ''
+    timestamp: 0,
+    username: '',
   });
 
   useEffect(() => {
@@ -95,10 +104,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
     const isFollowing = async () => {
       //Make this dynamic...
       const postData = {
-        currUser: 'User1',
-        otherUser: user_id
+        user_id: user_id,
+        follower_id: Cookie.get('user_id') ?? 'User1'
       }
-      const isFollowingRes = await fetch(`http://localhost:4000/follow-endpoint/isFollowing`, {
+
+      const isFollowingRes = await fetch(`http://localhost:4000/follows/isFollowing`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,23 +127,6 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   }, [])
 
   const handleLike = async () => {
-    // try {
-    //   const isLiked = await fetch(`http://localhost:4000/like-endpoint/isLiked/`, {
-    //     method: 'POST',
-    //     headers: {    
-    //       'Content-Type': 'application/json',
-    //       //Maybe an Auth header?
-    //   },     
-    //     body: JSON.stringify({
-    //       post_id: post_id,
-    //       user_id: curr_user   //Test value
-    //     }),
-    //   });
-  
-    //   const isLikedText = await isLiked.text();
-    //   console.log(isLikedText)
-
-      // if (isLikedText == "true") {
       if (liked) {
         try {
           const unLikeRes = await fetch(`http://localhost:4000/like-endpoint/unlike`, {
@@ -175,15 +168,10 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
     } 
     
     setLiked(!liked)
-    
-  // } catch (error) {
-  //   console.log(error)
-  //   throw new Error(`Could not check if post ${post_id} is liked: ${(error as Error).message}`)
-  // }
 }
 
   const handleShare = () => {
-    alert('Share functionality coming soon!');
+    // alert('Share functionality coming soon!');
   };
 
   const handleCommentToggle = async () => {
@@ -191,14 +179,32 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
 
     //No cache available atm...
     if (!showComments) {
-      const commentRes = await fetch(`http://localhost:4000/comments/${post_id}`)
+      const commentRes = await fetch(`http://localhost:4000/comments/getComments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({post_id: post_id})
+      })
+
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
-
-      JSON.parse(midData).map((element: { comment_string: string; user_id: string; }) => {
+      console.log(receivedComments)
+      JSON.parse(midData).map((element: {
+        comment: string;
+        id?: string;
+        post_id: string;
+        user_id: string;
+        timestamp: number;
+        username: string;
+      }) => {
         receivedComments.push({
-          comment_string: element.comment_string,
-          user_id: element.user_id
+          comment: element.comment,
+          id: element.id,
+          user_id: element.user_id,
+          post_id: element.post_id,
+          timestamp: element.timestamp,
+          username: element.username
         })
       });
 
@@ -207,17 +213,21 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   };
 
   const handleAddComment = async () => {
+    console.log("Adding comment...")
       if (newComment) {
+        const temp = await getUser(user_id);
+        const u = JSON.parse(temp || "{}");
+
         const dataToAdd = {
-          data: {
-            ...newComment
-          },
-          post_id: post_id
+            comment: newComment,
+            post_id: post_id,
+            user_id: user_id,
+            username: u.username,
         }
 
         console.log("Comment to add: " + newComment)
 
-        const addCommentRes = await fetch(`http://localhost:4000/comments/post/home`, {
+        const addCommentRes = await fetch(`http://localhost:4000/comments/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -237,8 +247,12 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
 
         //Remember to set the user_id to current user...
         setNewComment({
-          user_id: curr_user,
-          comment_string: ''
+          comment: '',
+          id: '',
+          post_id: '',
+          user_id: curr_user,   
+          timestamp: 0,
+          username: '',
         });
       }
   };
@@ -246,11 +260,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const followUser = async () => {
     //Change to dynamic...
     const followData = {
-      currUser: curr_user,
-      otherUser: user_id
+      user_id: user_id,
+      follower_id: curr_user
     }
     
-    const response = await fetch(`http://localhost:4000/follow-endpoint/isFollowing`, {
+    const response = await fetch(`http://localhost:4000/follows/isFollowing`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -263,15 +277,15 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
 
     if (following == "true") {
       try {
-        const unfollowRes = await fetch(`http://localhost:4000/follow-endpoint/unfollow`, {
+        const unfollowRes = await fetch(`http://localhost:4000/follows/follow`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             //Maybe an Auth header?
         },
           body: JSON.stringify({
-            currUser: curr_user,
-            userToUnfollow: user_id
+            user_id: user_id,
+            follower_id: curr_user
           }),
         });
   
@@ -280,7 +294,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
         setTrigger(true);
         setTimeout(() => {
           setTrigger(false);
-        }, 4000);
+        }, 5000);
         setIsFollowing("Follow");
       } catch (error) {
         console.log(error)
@@ -289,15 +303,15 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   
     } else {
       try {
-        const followRes = await fetch(`http://localhost:4000/follow-endpoint/follow`, {
+        const followRes = await fetch(`http://localhost:4000/follows/follow`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             //Maybe an Auth header?
         },
           body: JSON.stringify({
-            currUser: curr_user,
-            userToFollow: user_id
+            user_id: user_id,
+            follower_id: curr_user
           }),
         });
   
@@ -306,7 +320,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
         setTrigger(true);
         setTimeout(() => {
           setTrigger(false);
-        }, 4000);
+        }, 5000);
         setIsFollowing("Following");
         
       } catch (error) {
@@ -362,7 +376,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
               {comments.map((comment, index) => (
                 <div key={index} className="p-2 bg-blue-100 rounded-md text-gray-800 text-sm">
                   {/* Remember to change to actual username of currUser... */}
-                  {comment.user_id ?? 'User1'}: {comment.comment_string} 
+                  {comment.username ?? 'User1'}: {comment.comment} 
                 </div>
               ))}
             </div>
@@ -370,8 +384,12 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             <div className="mt-4 flex items-center space-x-2">
               <input
                 type="text" 
-                value={newComment.comment_string}
-                onChange={(e) => setNewComment({user_id: 'User1', comment_string: e.target.value })}
+                value={newComment.comment}
+                onChange={(e) => setNewComment({
+                  post_id,
+                  user_id: Cookie.get('user_id') ?? 'User1',
+                  comment: e.target.value 
+                })}
                 placeholder="Add a comment..."
                 className="flex-grow p-2 border rounded-md"
               />

@@ -8,7 +8,7 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import * as path from 'path';
 import { PostsModule } from './posts/posts.module';
-import { FollowModule } from './follow/follow.module';
+import { FollowsModule } from './follows/follow.module';
 import { GoogleMapsModule } from './google-maps/google-maps.module';
 import { CommentsModule } from './comments/comments.module';
 import { ImagesModule } from './images/images.module';
@@ -25,7 +25,7 @@ import { LikeModule } from './likes/like.module';
     FirebaseModule, 
     ReviewsModule,
     PostsModule,
-    FollowModule,
+    FollowsModule,
     CommentsModule,
     ImagesModule,
     LikeModule,
