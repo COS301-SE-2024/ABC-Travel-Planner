@@ -20,7 +20,7 @@ export class ItineraryService {
         location,
         user_id,
         shared: false,
-        dateCreated: new Date().toISOString().substring(0, 10),
+        dateCreated: new Date(),
         imageUrl,
         likes: 0,
       });
@@ -37,6 +37,7 @@ export class ItineraryService {
       .firestore()
       .collection('Itineraries')
       .where('user_id', '==', user_id)
+      .orderBy('dateCreated', 'desc')
       .get();
     return result.docs.map((doc) => doc.data());
   }
@@ -87,6 +88,7 @@ export class ItineraryService {
       .collection('Itineraries')
       .where('shared', '==', true)
       .where('user_id', '==', user_id)
+      .orderBy('dateCreated', 'desc')
       .get();
     return result.docs.map((doc) => doc.data());
   }
@@ -139,7 +141,7 @@ export class ItineraryService {
       user_id,
       timestamp: new Date(),
     });
-      
+
     return result;
   }
 
@@ -150,10 +152,19 @@ export class ItineraryService {
       .doc(itineraryId)
       .update({ likes: admin.firestore.FieldValue.increment(-1) });
 
-      const result2 = await this.firebaseApp.firestore().collection('likedItineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
+    const result2 = await this.firebaseApp
+      .firestore()
+      .collection('likedItineraries')
+      .where('itinerary_id', '==', itineraryId)
+      .where('user_id', '==', user_id)
+      .get();
 
-      const doc = result2.docs[0];
-      await this.firebaseApp.firestore().collection('likedItineraries').doc(doc.id).delete();
+    const doc = result2.docs[0];
+    await this.firebaseApp
+      .firestore()
+      .collection('likedItineraries')
+      .doc(doc.id)
+      .delete();
     return result;
   }
 
@@ -168,28 +179,49 @@ export class ItineraryService {
   }
 
   async saveItinerary(itineraryId: string, user_id: string) {
-    const result = await this.firebaseApp.firestore().collection('Saved-Itineraries').add({
-      itinerary_id: itineraryId,
-      user_id,
-      timestamp: new Date(),
-    });
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('Saved-Itineraries')
+      .add({
+        itinerary_id: itineraryId,
+        user_id,
+        timestamp: new Date(),
+      });
     return result.id;
   }
 
   async unsaveItinerary(itineraryId: string, user_id: string) {
-    const result = await this.firebaseApp.firestore().collection('Saved-Itineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('Saved-Itineraries')
+      .where('itinerary_id', '==', itineraryId)
+      .where('user_id', '==', user_id)
+      .get();
     const doc = result.docs[0];
-    await this.firebaseApp.firestore().collection('Saved-Itineraries').doc(doc.id).delete();
+    await this.firebaseApp
+      .firestore()
+      .collection('Saved-Itineraries')
+      .doc(doc.id)
+      .delete();
     return doc.id;
   }
 
   async userSavedItinerary(itineraryId: string, user_id: string) {
-    const result = await this.firebaseApp.firestore().collection('Saved-Itineraries').where('itinerary_id', '==', itineraryId).where('user_id', '==', user_id).get();
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('Saved-Itineraries')
+      .where('itinerary_id', '==', itineraryId)
+      .where('user_id', '==', user_id)
+      .get();
     return result.docs.length > 0;
   }
 
   async getSavedItineraries(user_id: string) {
-    const result = await this.firebaseApp.firestore().collection('Saved-Itineraries').where('user_id', '==', user_id).get();
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('Saved-Itineraries')
+      .where('user_id', '==', user_id)
+      .get();
 
     const arr = await Promise.all(
       result.docs.map(async (doc) => {
@@ -197,14 +229,14 @@ export class ItineraryService {
           const temp = await this.firebaseApp
             .firestore()
             .collection('Itineraries')
-            .doc(doc.data().itinerary_id).get()
+            .doc(doc.data().itinerary_id)
+            .get();
           return temp.data();
-        }
+        };
 
         return fetchData();
       }),
     );
     return arr;
   }
-
 }

@@ -42,6 +42,7 @@ export class PostsService {
             .firestore()
             .collection('Comments')
             .where('post_id', '==', doc.id)
+            .orderBy('timestamp', 'asc')
             .get();
           const temp = comments.docs.map((comment) => comment.data());
           return {
@@ -68,6 +69,7 @@ export class PostsService {
         .firestore()
         .collection('Comments')
         .where('post_id', '==', postId)
+        .orderBy('timestamp', 'asc')
         .get();
       return result.docs.map((doc) => doc.data());
     };
