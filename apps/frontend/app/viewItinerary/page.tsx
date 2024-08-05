@@ -8,10 +8,15 @@ import Cookie from "js-cookie";
 const ViewItinerary = ({
   searchParams,
 }: {
-  searchParams: { itineraryName?: string; itineraryId?: string ,myItinerary?:string};
+  searchParams: {
+    itineraryName?: string;
+    itineraryId?: string;
+    myItinerary?: string;
+    prev?: string;
+  };
 }) => {
   const router = useRouter();
-  const { itineraryName, itineraryId ,myItinerary} = searchParams;
+  const { itineraryName, itineraryId, myItinerary,prev } = searchParams;
   console.log(itineraryName, itineraryId);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -37,10 +42,13 @@ const ViewItinerary = ({
     });
     setLiked(res.data);
 
-    const res2 = await axios.post(`${backendUrl}/itinerary/userSavedItinerary`, {
-      user_id,
-      itinerary_id: itineraryId,
-    });
+    const res2 = await axios.post(
+      `${backendUrl}/itinerary/userSavedItinerary`,
+      {
+        user_id,
+        itinerary_id: itineraryId,
+      }
+    );
     setBookmarked(res2.data);
   };
 
@@ -54,56 +62,39 @@ const ViewItinerary = ({
     );
   };
 
-  const handleLikeClick = async() => {
-    setLiked((prev)=>!prev);
+  const handleLikeClick = async () => {
+    setLiked((prev) => !prev);
     const user_id = Cookie.get("user_id");
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    if(liked)
-      {
-        await axios.post(
-          `${backendUrl}/itinerary/unlikeItinerary`,
-          {
-            user_id,
-            itinerary_id: itineraryId,
-          }
-        );
-        
-      }
-      else{
-    await axios.post(
-      `${backendUrl}/itinerary/likeItinerary`,
-      {
+    if (liked) {
+      await axios.post(`${backendUrl}/itinerary/unlikeItinerary`, {
         user_id,
         itinerary_id: itineraryId,
-      }
-    );
-  }
-
-    
+      });
+    } else {
+      await axios.post(`${backendUrl}/itinerary/likeItinerary`, {
+        user_id,
+        itinerary_id: itineraryId,
+      });
+    }
   };
 
-  const handleBookmarkClick = async() => {
-    setBookmarked((prev)=>!prev);
+  const handleBookmarkClick = async () => {
+    setBookmarked((prev) => !prev);
     const user_id = Cookie.get("user_id");
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    
-    if(bookmarked)
-      {
-        await axios.post(
-          `${backendUrl}/itinerary/unsaveItinerary`,
-          {
-            user_id,
-            itinerary_id: itineraryId,
-          }
-        );
 
-      }
-      else{
-        await axios.post(`${backendUrl}/itinerary/saveItinerary`, {
-          user_id,
-          itinerary_id: itineraryId,
-        });
-      }
+    if (bookmarked) {
+      await axios.post(`${backendUrl}/itinerary/unsaveItinerary`, {
+        user_id,
+        itinerary_id: itineraryId,
+      });
+    } else {
+      await axios.post(`${backendUrl}/itinerary/saveItinerary`, {
+        user_id,
+        itinerary_id: itineraryId,
+      });
+    }
   };
   useEffect(() => {
     fetchItems();
@@ -111,7 +102,14 @@ const ViewItinerary = ({
   return (
     <div className="view-itinerary-page">
       <header className="view-itinerary-header">
-        <button onClick={() => router.push("/account")} className="back-button">
+        <button
+          onClick={() => {
+           
+            console.log(prev);
+            router.push(prev||"");
+          }}
+          className="back-button"
+        >
           <FaArrowLeft /> Back
         </button>
         <h1>{itineraryName}</h1>
@@ -143,13 +141,14 @@ const ViewItinerary = ({
 
           <div className="slider-icons">
             {myItinerary === "false" && (
-            <FaBookmark
-              className={`icon bookmark-icon ${
-                bookmarked ? "active-bookmarked" : ""
-              }`}
-              title="Bookmark"
-              onClick={handleBookmarkClick}
-            />)}
+              <FaBookmark
+                className={`icon bookmark-icon ${
+                  bookmarked ? "active-bookmarked" : ""
+                }`}
+                title="Bookmark"
+                onClick={handleBookmarkClick}
+              />
+            )}
             <FaHeart
               className={`icon heart-icon ${liked ? "active-liked" : ""}`}
               title="Like"
