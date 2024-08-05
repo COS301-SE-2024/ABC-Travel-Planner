@@ -192,51 +192,53 @@ export class SearchService {
         }
     }
 
+    // async searchProfile(user: string): Promise<Profile[]> {
+    //     const usersSnapshot = await this.db.collection('Users').get();
+    //     const users: Profile[] = [];
+    //     const lowerCaseUser = user.toLowerCase();
+    
+    //     usersSnapshot.forEach(doc => {
+    //         const data = doc.data();
+    //         const name = data.name.toLowerCase();
+    //         const username = data.username.toLowerCase();
+    
+    //         if (name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) {
+    //             users.push({
+    //                 name: data.name,
+    //                 username: data.username,
+    //                 id: data.user_id,
+    //                 imageUrl: data.imageUrl
+    //             } as Profile);
+    //         }
+    //     });
+    
+    //     return users;
+    // }
+    
     async searchProfile(user: string): Promise<Profile[]> {
-        const nameQuery = this.db.collection('Users')
-            .where('name', '>=', user)
-            .where('name', '<=', user + '\uf8ff')
-            .orderBy('name')
-            .startAt(user)
-            .endAt(user + '\uf8ff');
+        const usersSnapshot = await this.db.collection('Users').get();
+        const lowerCaseUser = user.toLowerCase();
         
-        const usernameQuery = this.db.collection('Users')
-            .where('username', '>=', user)
-            .where('username', '<=', user + '\uf8ff')
-            .orderBy('username')
-            .startAt(user)
-            .endAt(user + '\uf8ff');
-    
-        const [nameResults, usernameResults] = await Promise.all([nameQuery.get(), usernameQuery.get()]);
-    
-        const users: Profile[] = [];
-        const seen = new Set();
-    
-        nameResults.forEach(doc => {
-            if (!seen.has(doc.id)) {
-                users.push({
-                    name: doc.data().name,
-                    username: doc.data().username,
-                    id: doc.data().user_id,
-                    imageUrl: doc.data().imageUrl
-                } as Profile);
-                seen.add(doc.id);
+        const usersPromises = usersSnapshot.docs.map(async doc => {
+            const data = doc.data();
+            const name = data.name.toLowerCase();
+            const username = data.username.toLowerCase();
+            
+            if (name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) {
+                return {
+                    name: data.name,
+                    username: data.username,
+                    id: data.user_id,
+                    imageUrl: data.imageUrl
+                } as Profile;
             }
         });
     
-        usernameResults.forEach(doc => {
-            if (!seen.has(doc.id)) {
-                users.push({
-                    name: doc.data().name,
-                    username: doc.data().username,
-                    id: doc.data().user_id,
-                    imageUrl: doc.data().imageUrl
-                } as Profile);
-                seen.add(doc.id);
-            }
-        });
+        const usersResults = await Promise.all(usersPromises);
+        const users = usersResults.filter(user => user !== undefined);
     
         return users;
     }
+    
     
 }
