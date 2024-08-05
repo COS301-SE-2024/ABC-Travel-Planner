@@ -82,18 +82,16 @@ const Profile = () => {
     const user_id = profileDetails.user_id;
     const follower_id = Cookie.get("user_id");
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    const r = await axios.post(`${backendUrl}/follows/following`, {
-      user_id: user_id,
-    });
-    setFollowing(r.data);
-    const f = await axios.post(`${backendUrl}/follows/followers`, {
-      user_id: user_id,
-    });
-    setFollowers(f.data);
+
     await axios.post(`${backendUrl}/follows/follow`, {
       user_id: user_id,
       follower_id: follower_id,
     });
+
+    const f = await axios.post(`${backendUrl}/follows/followers`, {
+      user_id: user_id,
+    });
+    setFollowers(f.data);
   };
 
   const handleCommentSubmit = async () => {
