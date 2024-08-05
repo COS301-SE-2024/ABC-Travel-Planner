@@ -40,15 +40,15 @@ const allLocations = [
 ];
 
 interface Post {
+  caption: string;
   id: string;
-  user_id: string;
-  image_id?: string;
-  image_url?: string;
-  post_title?: string;
-  post_description?: string;
+  imageUrl: string;
   post_likes?: number;
-  location_id?: string;
   timestamp: number;
+  user_id: string;
+  // post_title?: string;
+  // post_description?: string;
+  // location_id?: string;
 }
 
 interface Place {
@@ -77,20 +77,7 @@ const Home = () => {
         }
         const data: Post[] = await response.json();
         
-        //Images...
-        data.forEach(async element => {
-          console.log("Image ID: " + element.id)
-          const imageUrl = await fetch(`http://localhost:4000/images?id=${element.id}`)
-          const data = await imageUrl.text();
-
-          //Check for png & jpg's
-          if (JSON.parse(data).url) {
-            element.image_url = JSON.parse(data).url;
-          } else element.image_url = data;
-
-        });
-        
-        console.log(data); // Log the fetched data for debugging
+        console.log("Post data: " + JSON.stringify(data)); // Log the fetched data for debugging
         setPosts(data);
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -173,9 +160,8 @@ const Home = () => {
                 key={post.id}
                 post_id={post.id}
                 user_id={post.user_id}
-                image_url={post.image_url}
-                post_title={post.post_title || 'Untitled'}
-                post_description={post.post_description || 'No description available.'}
+                image_url={post.imageUrl}
+                post_description={post.caption || 'No description available.'}
                 post_likes={post.post_likes || 0}
                 timestamp={post.timestamp}
                 />

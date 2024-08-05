@@ -3,25 +3,19 @@ import * as admin from 'firebase-admin';
 
 interface refinedData {
   id: string,
-  image_url?: string;
-  post_title: string,
   user_id: string,
-  user_name?: string,
+  caption: string,
+  imageUrl: string,
   post_likes: number,
-  post_description: string,
-  location_id: string,
   timestamp: number,
 }
 
 interface rawData {
   id: string,
-  image_url: string,
-  post_title: string,
-  user_name: string,
   user_id: string,
+  caption: string,
+  imageUrl: string,
   post_likes: number,
-  post_description: string,
-  location_id: string,
   timestamp: {
     _seconds: number,
     _nanoseconds: number
@@ -57,7 +51,7 @@ export class PostsService {
     try {
       const addRes = await this.db.collection('Posts').add({
         user_id, 
-        image_url: image_url ?? 'gs://abctravelplanner.appspot.com/Posts/default.jpg',
+        image_url: image_url,
         location_id: location_id ?? 'NULL',
         post_description,
         post_likes: 0,
@@ -109,14 +103,11 @@ export class PostsService {
 
       const newData: refinedData[] = posts.map((item: rawData) => ({
           id: item.id,
-          image_url: item.image_url,
-          post_title: item.post_title,
-          user_name: item.user_name,
           user_id: item.user_id,
+          caption: item.caption,
+          imageUrl: item.imageUrl,
           post_likes: item.post_likes,
-          post_description: item.post_description,
-          location_id: item.location_id,
-          timestamp: item.timestamp._seconds
+          timestamp: item.timestamp._seconds,
         }));
 
       return this.randomizeFeed(newData) ?? [];

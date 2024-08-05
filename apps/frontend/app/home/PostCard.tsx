@@ -9,7 +9,6 @@ interface PostCardProps {
   post_id: string;
   user_id: string;
   image_url?: string;
-  post_title: string;
   post_description: string;
   post_likes: number;
   timestamp: number;
@@ -30,7 +29,7 @@ interface User {
   imageUrl: string
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_title, post_description, post_likes, timestamp }) => {
+const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_description, post_likes, timestamp }) => {
   const [liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(post_likes);
   const [showComments, setShowComments] = useState(false);
@@ -323,8 +322,9 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
       <div className="w-full justify-center w-full max-w-lg bg-pink-100 rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
         <div className="flex items-center justify-between w-full">
           <div>
-            <h3 className="text-lg font-bold">{userName}: {post_title}</h3>
+            <h3 className="text-lg font-bold">{userName}</h3>
             <p className="text-sm text-gray-500">{new Date(timestamp * 1000).toLocaleDateString()}</p>
+            <h2 >{post_description}</h2>
           </div>
           {/* Check to see if user is following the currPost's user*/}
           <button 
@@ -333,7 +333,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_t
           </button>
         </div>
         <img src={image_url} alt='heloooooo'></img>
-        <p className="text-gray-800">{post_description}</p>
+        {/* <p className="text-gray-800">{post_description}</p> */}
         <div className="flex items-center space-x-4">
           <button
             className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"
