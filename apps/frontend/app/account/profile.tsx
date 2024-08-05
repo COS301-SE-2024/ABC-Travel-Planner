@@ -84,29 +84,13 @@ const Account = () => {
     null
   );
 
-  const followers = [
-    { username: "follower1", profilePic: "/Images/profile.jpg" },
-    { username: "follower2", profilePic: "/Images/profile2.png" },
-    { username: "follower3", profilePic: "/Images/profile.jpg" },
-    { username: "follower4", profilePic: "/Images/profile2.png" },
-    { username: "follower5", profilePic: "/Images/profile.jpg" },
-    { username: "follower6", profilePic: "/Images/profile2.png" },
-  ];
+  const [followers, setFollowers] = useState<any>([]);
 
-  const following = [
-    { username: "following1", profilePic: "/Images/profile.jpg" },
-    { username: "following2", profilePic: "/Images/profile2.png" },
-    { username: "following3", profilePic: "/Images/profile.jpg" },
-    { username: "following4", profilePic: "/Images/profile2.png" },
-    { username: "following5", profilePic: "/Images/profile.jpg" },
-    { username: "following6", profilePic: "/Images/profile2.png" },
-  ];
+  const [following, setFollowing] = useState<any>([]);
 
   const [itineraries, setItineraries] = useState<any>([]);
-  const [bookmarksOpen, setBookmarksOpen] = useState<boolean>(false);
+
   const [savedItineraries, setSavedItineraries] = useState<any>([]);
-
-
 
   const router = useRouter();
 
@@ -152,13 +136,22 @@ const Account = () => {
       );
       setPosts(postsResponse.data);
 
-      const res = await axios.post(`${backendUrl}/itinerary/getSavedItineraries`, {
-        user_id: userId,
-      });
+      const res = await axios.post(
+        `${backendUrl}/itinerary/getSavedItineraries`,
+        {
+          user_id: userId,
+        }
+      );
       setSavedItineraries(res.data);
 
-      // const result = await getSharedItineraries();
-      // setItineraries(result);
+      const f = await axios.post(`${backendUrl}/follows/following`, {
+        user_id: userId,
+      });
+      setFollowing(f.data);
+      const r = await axios.post(`${backendUrl}/follows/followers`, {
+        user_id: userId,
+      });
+      setFollowers(r.data);
     }
     fetch();
   }, []);
@@ -364,7 +357,7 @@ const Account = () => {
     }
   };
 
-  const [view, setView] = useState('shared');
+  const [view, setView] = useState("shared");
 
   const handleViewChange = (view: string) => {
     setView(view);
@@ -461,85 +454,88 @@ const Account = () => {
             <button onClick={handleHelpCenter}>
               <FaQuestionCircle /> Help Center
             </button>
-            
+
             <button onClick={handleSignout}>
               <FaSignOutAlt /> Logout
             </button>
           </div>
         )}
       </header>
-      
+
       <section className="saved-itineraries">
         <h3 className="Following-title">My Following</h3>
         <div className="profile-stats">
           <div className="following" onClick={toggleFollowing}>
-            <span>24</span>
+            <span>{following?.length}</span>
             <p>Following</p>
           </div>
           <div className="followers" onClick={toggleFollowers}>
-            <span>33</span>
+            <span>{followers?.length}</span>
             <p>Followers</p>
           </div>
         </div>
         <div className="flex justify-center mb-4 space-x-4">
-        <button
-          onClick={() => handleViewChange('shared')}
-          className={`text-base font-semibold px-4 py-2 border-b-4 ${view === 'shared' ? 'border-blue-500' : 'border-transparent'} focus:outline-none`}
-        >
-          Shared Itineraries
-        </button>
-        <button
-          onClick={() => handleViewChange('bookmarks')}
-          className={`text-base font-semibold px-4 py-2 border-b-4 ${view === 'bookmarks' ? 'border-blue-500' : 'border-transparent'} focus:outline-none`}
-        >
-          Saved Itineraries
-        </button>
-      </div>
-        {view === 'shared' && (
-        <div className="itinerary-cards">
-          
-          {itineraries.map((itinerary: any, index: any) => (
-            <div key={index} className="itinerary-card">
-              <img
-                src={itinerary.imageUrl}
-                alt={itinerary.name}
-                className="itinerary-image"
-              />
-              <div className="itinerary-content">
-                <h4>{itinerary.name}</h4>
-                <Link
-                  href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=true`}
-                  passHref
-                >
-                  <button className="view-button">View</button>
-                </Link>
+          <button
+            onClick={() => handleViewChange("shared")}
+            className={`text-base font-semibold px-4 py-2 border-b-4 ${
+              view === "shared" ? "border-blue-500" : "border-transparent"
+            } focus:outline-none`}
+          >
+            Shared Itineraries
+          </button>
+          <button
+            onClick={() => handleViewChange("bookmarks")}
+            className={`text-base font-semibold px-4 py-2 border-b-4 ${
+              view === "bookmarks" ? "border-blue-500" : "border-transparent"
+            } focus:outline-none`}
+          >
+            Saved Itineraries
+          </button>
+        </div>
+        {view === "shared" && (
+          <div className="itinerary-cards">
+            {itineraries.map((itinerary: any, index: any) => (
+              <div key={index} className="itinerary-card">
+                <img
+                  src={itinerary.imageUrl}
+                  alt={itinerary.name}
+                  className="itinerary-image"
+                />
+                <div className="itinerary-content">
+                  <h4>{itinerary.name}</h4>
+                  <Link
+                    href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=true&prev=${location.pathname}`}
+                    passHref
+                  >
+                    <button className="view-button">View</button>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>)}
+            ))}
+          </div>
+        )}
         {view === "bookmarks" && (
-        <div className="itinerary-cards">
-          
-          {savedItineraries.map((itinerary: any, index: any) => (
-            <div key={index} className="itinerary-card">
-              <img
-                src={itinerary.imageUrl}
-                alt={itinerary.name}
-                className="itinerary-image"
-              />
-              <div className="itinerary-content">
-                <h4>{itinerary.name}</h4>
-                <Link
-                  href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false`}
-                  passHref
-                >
-                  <button className="view-button">View</button>
-                </Link>
+          <div className="itinerary-cards">
+            {savedItineraries.map((itinerary: any, index: any) => (
+              <div key={index} className="itinerary-card">
+                <img
+                  src={itinerary.imageUrl}
+                  alt={itinerary.name}
+                  className="itinerary-image"
+                />
+                <div className="itinerary-content">
+                  <h4>{itinerary.name}</h4>
+                  <Link
+                    href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false`}
+                    passHref
+                  >
+                    <button className="view-button">View</button>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>)}
-        
+            ))}
+          </div>
+        )}
       </section>
 
       {showPopup && (
@@ -567,10 +563,10 @@ const Account = () => {
             <h3 className="font-bold text-lg">Followers</h3>
 
             <div className="users-list">
-              {followers.map((follower, index) => (
+              {followers.map((follower: any, index: any) => (
                 <div key={index} className="user-item">
                   <img
-                    src={follower.profilePic}
+                    src={follower.imageUrl}
                     alt={follower.username}
                     className="user-pic"
                   />
@@ -591,10 +587,10 @@ const Account = () => {
             <h3 className="font-bold text-lg">Following</h3>
 
             <div className="users-list">
-              {following.map((user, index) => (
+              {following.map((user: any, index: any) => (
                 <div key={index} className="user-item">
                   <img
-                    src={user.profilePic}
+                    src={user.imageUrl}
                     alt={user.username}
                     className="user-pic"
                   />
@@ -609,7 +605,7 @@ const Account = () => {
         </div>
       )}
       {/* Posts */}
-      {!bookmarksOpen && (
+
       <section className="posts py-6 px-4">
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
@@ -661,7 +657,7 @@ const Account = () => {
             </div>
           ))}
         </div>
-      </section>)}
+      </section>
 
       {showPostModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">

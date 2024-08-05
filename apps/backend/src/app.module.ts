@@ -15,6 +15,7 @@ import { CommentsModule } from './comments/comments.module';
 import { LikesModule } from './likes/likes.module';
 
 import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
+import { FollowsModule } from './follows/follows.module';
 
 
 @Module({
@@ -32,7 +33,8 @@ import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
     PostsModule,
     CommentsModule,
     LikesModule,
-    ItineraryItemsModule
+    ItineraryItemsModule,
+    FollowsModule
   ],
   controllers: [AppController],
   providers: [AppService],
