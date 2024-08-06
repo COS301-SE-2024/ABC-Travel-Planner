@@ -62,6 +62,8 @@ export class ImagesService {
 
   async uploadImage(image_name : string, base64 : string) : Promise<void> {
     //Upload logic...
+    console.log(image_name);
+    console.log(base64);
   }
 
   getExpiry() : string {

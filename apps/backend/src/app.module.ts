@@ -9,7 +9,7 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { SearchModule } from './search/search.module';
 import * as path from 'path';
 import { PostsModule } from './posts/posts.module';
-import { FollowsModule } from './follows/follow.module';
+import { FollowsModule } from './follows/follows.module';
 import { GoogleMapsModule } from './google-maps/google-maps.module';
 import { CommentsModule } from './comments/comments.module';
 import { ImagesModule } from './images/images.module';

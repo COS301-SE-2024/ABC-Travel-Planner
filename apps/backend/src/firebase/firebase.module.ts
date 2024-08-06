@@ -1,8 +1,7 @@
-import { ConfigModule, ConfigService } from "@nestjs/config"
+import { ConfigModule } from "@nestjs/config"
 import { Module, Global } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import * as dotenv from 'dotenv';
-import fs from 'fs';
 import * as path from 'path';
 
 const firebaseProvider = {

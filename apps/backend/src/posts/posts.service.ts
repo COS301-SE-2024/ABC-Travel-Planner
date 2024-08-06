@@ -135,7 +135,6 @@ export class PostsService {
   async getPostsFeed(): Promise<any[]> {
     try {
       let data
-      let posts: any
         
       //Get LIMIT_SIZE posts at a time...
       if (this.lastPostId === '') {
@@ -154,7 +153,7 @@ export class PostsService {
                           .get();
       }
 
-      posts = data.docs.map(post => ({
+      const posts = data.docs.map(post => ({
         id: post.id,
         ...post.data(),
       }));
