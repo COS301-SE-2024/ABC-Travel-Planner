@@ -1,5 +1,5 @@
 import { Controller, Post,Body } from "@nestjs/common";
-import { FollowsService } from "./follow.service";
+import { FollowsService } from "./follows.service";
 
 @Controller('follows')
 export class FollowsController {
@@ -9,6 +9,8 @@ export class FollowsController {
     async followUser(@Body() body: {user_id: string, follower_id: string}) {
         return this.followsService.followUser(body.user_id, body.follower_id);
     }
+
+    
 
     @Post('followers')
     async getFollowers(@Body() body: {user_id: string}) {
@@ -24,4 +26,6 @@ export class FollowsController {
     async isFollowing(@Body() body: {user_id: string, follower_id: string}) {
         return this.followsService.isFollowing(body.user_id, body.follower_id);
     }
+    
+    
 }

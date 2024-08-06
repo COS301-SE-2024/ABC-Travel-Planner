@@ -1,41 +1,80 @@
-import { Controller, Get, Post, Body, InternalServerErrorException, Param, BadRequestException } from '@nestjs/common';
-import { PostsService } from '../posts/posts.service';
+import { Controller, Post, Get, Body } from "@nestjs/common";
+import { PostsService } from "./posts.service";
 
-@Controller('posts')
+@Controller("posts")
 export class PostsController {
-    constructor(private readonly postService: PostsService) {}
-
-    @Post()
-    async addPost(@Body() body: { user_id: string, image_url: string, location_id: string, post_description: string, post_title: string }): Promise<void> {
-        try {
-            await this.postService.addPost(body.user_id, body.image_url, body.location_id, body.post_description, body.post_title);
-        } 
-        catch (error) {
-            throw new InternalServerErrorException(error.message)
+    constructor(private postsService: PostsService) {}
+    @Post("create")
+    async createPost(
+        @Body()
+        body: {
+            user_id: string;
+            caption: string;
         }
+    ) {
+        return this.postsService.createPost(
+            body.user_id,
+            body.caption,
+        );
+    }
+    @Post("updateImage")
+    async updatePostImage(
+        @Body()
+        body: {
+            postId: string;
+            imageUrl: string;
+        }
+    ) {
+        return this.postsService.updatePostImage(body.postId, body.imageUrl);
+    }
+
+    @Post("getUserPosts")
+    async getPosts(
+        @Body()
+        body: {
+            user_id: string;
+        }
+    ) {
+        return this.postsService.getPosts(body.user_id);
     }
 
     @Get()
-    async getPosts(): Promise<any[]> {
+    async getPostsFeed(): Promise<any[]> {
         try {
-            return await this.postService.getPosts();
+            return await this.postsService.getPostsFeed();
         } 
         catch (error) {
-            throw new InternalServerErrorException(error.message);
+            throw new Error(error.message);
         }
     }
 
-    @Get(':id')
-    async getPostsById(@Param('id') id: string): Promise<any[]> {
-        if (!id || id == '') {
-            throw new BadRequestException('no id specified in the request')
+    @Post("getPost")
+    async getPost(
+        @Body()
+        body: {
+            postId: string;
         }
+    ) {
+        return this.postsService.getPost(body.postId);
+    }
 
-        try {
-            return await this.postService.getPostsById(id);
-        } 
-        catch (error) {
-            throw new InternalServerErrorException(error.message);
+    @Post("incrementLikes")
+    async incrementLikes(
+        @Body()
+        body: {
+            postId: string;
         }
+    ) {
+        return this.postsService.increaseLikes(body.postId);
+    }
+
+    @Post("decrementLikes")
+    async decrementLikes(
+        @Body()
+        body: {
+            postId: string;
+        }
+    ) {
+        return this.postsService.decreaseLikes(body.postId);
     }
 }

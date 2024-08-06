@@ -1,0 +1,55 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x' 
+
+      - name: Install backend dependencies
+        run: npm install
+        working-directory: apps/backend
+
+      - name: Build the backend app
+        run: npm run build
+        working-directory: apps/backend
+
+      - name: Deploy backend to Heroku
+        uses: akhileshns/heroku-deploy@v3.13.15 
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_BACKEND_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: "apps/backend" 
+          buildpack: "https://github.com/heroku/heroku-buildpack-nodejs.git"
+
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: apps/frontend
+
+      - name: Build the frontend app
+        run: npm run build
+        working-directory: apps/frontend
+
+      - name: Deploy frontend to Heroku
+        uses: akhileshns/heroku-deploy@v3.13.15 
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_FRONTEND_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: "apps/frontend" 
+          buildpack: "https://github.com/heroku/heroku-buildpack-nodejs.git"

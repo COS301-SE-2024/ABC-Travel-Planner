@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { PostsController } from './posts.controller';
-import { PostsService } from './posts.service';
-import { FirebaseModule } from 'src/firebase/firebase.module';
+import { Module } from "@nestjs/common";
+import { PostsController } from "./posts.controller";
+import { PostsService } from "./posts.service";
+import { FirebaseModule } from "src/firebase/firebase.module";
 
 @Module({
-    imports: [FirebaseModule],
+    imports:[FirebaseModule],
     controllers: [PostsController],
-    providers: [PostsService],
+    providers: [PostsService]
 })
 export class PostsModule {}

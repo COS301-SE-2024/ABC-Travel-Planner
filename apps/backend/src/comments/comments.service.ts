@@ -23,7 +23,6 @@ export class CommentsService {
             username,
             timestamp: new Date(),
         });
-        
         await this.firebaseApp
         .firestore()
         .collection("Comments")
@@ -67,4 +66,4 @@ export class CommentsService {
         .delete();
         return result;
     }
-  }
+  } 

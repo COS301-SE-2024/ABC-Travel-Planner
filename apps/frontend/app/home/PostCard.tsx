@@ -58,14 +58,25 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   useEffect(() => {
     const getIsLiked = async () => {
       try {
-        const isLikedRes = await fetch(`http://localhost:4000/like-endpoint/isLiked`, {
+        const temp = await getUser(curr_user);
+        const u = JSON.parse(temp || "{}");
+        setNewComment({
+          comment: '',
+          id: '',
+          post_id: post_id,
+          user_id: curr_user,   
+          timestamp: 0,
+          username: u.username,
+        })
+        
+        const isLikedRes = await fetch(`http://localhost:4000/likes/userLikesPost`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json'
           },
           body: JSON.stringify({
-            post_id: post_id,
-            user_id: curr_user
+            user_id: curr_user,
+            post_id: post_id
           })
         })
 
@@ -105,7 +116,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
       //Make this dynamic...
       const postData = {
         user_id: user_id,
-        follower_id: Cookie.get('user_id') ?? 'User1'
+        follower_id: Cookie.get('user_id')
       }
 
       const isFollowingRes = await fetch(`http://localhost:4000/follows/isFollowing`, {
@@ -129,7 +140,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const handleLike = async () => {
       if (liked) {
         try {
-          const unLikeRes = await fetch(`http://localhost:4000/like-endpoint/unlike`, {
+          const unLikeRes = await fetch(`http://localhost:4000/likes/unlikePost`, {
             method: 'POST',
             headers: {  
               'Content-Type': 'application/json',
@@ -140,15 +151,36 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
               user_id: curr_user
             }),
           });
-          
-          setNumLikes(numLikes - 1)
+
+          if (unLikeRes) {
+            const decrementLikeRes = await fetch(`http://localhost:4000/posts/decrementLikes`, {
+              method: 'POST',
+              headers: {
+                'Content-Type' : 'application/json'
+              },
+              body: JSON.stringify({
+                postId: post_id
+              })
+            })
+            
+            if (decrementLikeRes) {
+              setNumLikes(numLikes - 1)
+            }
+          } else {
+            setMessage(`Could not like post...`)
+            setTrigger(true);
+            setTimeout(() => {
+              setTrigger(false);
+            }, 4000);
+            throw new Error('unlikePost endpoint not functioning')
+          }
         } catch (error) {
           console.log(error)
           throw new Error(`Could not unlike post: ${(error as Error).message}`)
         }
       } else if (!liked) {
         try {
-          const LikeRes = await fetch(`http://localhost:4000/like-endpoint/like`, {
+          const LikeRes = await fetch(`http://localhost:4000/likes/likePost`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -159,14 +191,34 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
               user_id: curr_user
             }),
           });
-  
-        setNumLikes(numLikes + 1)
+
+          if (LikeRes) {
+            const incrementLikeRes = await fetch(`http://localhost:4000/posts/incrementLikes`, {
+              method: 'POST',
+              headers: {
+                'Content-Type' : 'application/json'
+              },
+              body: JSON.stringify({
+                postId: post_id
+              })
+            })
+
+            if (incrementLikeRes) {
+              setNumLikes(numLikes + 1)
+            }
+          } else {
+              setMessage(`Could not like post...`)
+              setTrigger(true);
+              setTimeout(() => {
+                setTrigger(false);
+              }, 4000);
+              throw new Error('unlikePost endpoint not functioning')
+            }
       } catch (error) {
         console.log(error)
         throw new Error(`Could not like post: ${(error as Error).message}`)
       }
     } 
-    
     setLiked(!liked)
 }
 
@@ -214,17 +266,18 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const handleAddComment = async () => {
     console.log("Adding comment...")
       if (newComment) {
-        const temp = await getUser(user_id);
+        const temp = await getUser(curr_user);
         const u = JSON.parse(temp || "{}");
-
+        console.log(JSON.stringify(u))
+        
         const dataToAdd = {
             comment: newComment.comment,
-            user_id: newComment.user_id,
+            user_id: curr_user,
             post_id: newComment.post_id,
             username: u.username,
         }
 
-        console.log("Comment to add: " + newComment)
+        console.log("Comment to add: " + JSON.stringify(newComment))
 
         const addCommentRes = await fetch(`http://localhost:4000/comments/create`, {
           method: 'POST',
@@ -244,14 +297,13 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
         
         setComments([...comments, newComment]);
 
-        //Remember to set the user_id to current user...
         setNewComment({
           comment: '',
           id: '',
           post_id: '',
           user_id: curr_user,   
           timestamp: 0,
-          username: '',
+          username: u.username,
         });
       }
   };
@@ -369,7 +421,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             <div className="space-y-2">
               {comments.map((comment, index) => (
                 <div key={index} className="p-2 bg-blue-100 rounded-md text-gray-800 text-sm">
-                  {comment.username ?? 'User1'}: {comment.comment} 
+                  {comment?.username}: {comment.comment} 
                 </div>
               ))}
             </div>
@@ -379,8 +431,9 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
                 value={newComment.comment}
                 onChange={(e) => setNewComment({
                   post_id,
-                  user_id: Cookie.get('user_id') ?? 'User1',
-                  comment: e.target.value 
+                  user_id: Cookie.get('user_id') || '',
+                  comment: e.target.value,
+                  username: newComment.username
                 })}
                 placeholder="Add a comment..."
                 className="flex-grow p-2 border rounded-md"
