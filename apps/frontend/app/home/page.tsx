@@ -1,7 +1,8 @@
-"use client"
-import React from 'react';
+"use client";
+import React, { useState, useEffect } from 'react'; 
+import axios from 'axios';
 import DestinationCard from './DestinationCard';
-import useCountrySelection from './useCountrySelection';
+import PostCard from './PostCard'; 
 
 const popularDestinations = [
   { name: 'France', image: '/Images/france.jpg', city: 'Paris', location_id: '1', description: 'rich history, unique culture, incredible food, and pleasant weather' },
@@ -37,41 +38,120 @@ const allLocations = [
   { name: 'Champs Elysées / Arc of Triumph', city: 'Paris', image: '/Images/arc-of-triumph.jpeg', location_id: '18', description: 'One of the most famous streets in the world, and the Arc of Triumph, a symbol of French national pride.' },
 ];
 
+interface Post {
+  caption: string; 
+  id: string;
+  imageUrl: string;
+  post_likes?: number;
+  timestamp: number;
+  user_id: string;
+  // post_title?: string;
+  // post_description?: string;
+  // location_id?: string;
+}
+
+interface Place {
+  name: string;
+  photos?: {
+    photo_reference: string;
+  }[];
+  formatted_address: string;
+  place_id: string;
+  types: string[];
+}
+
 
 const Home = () => {
-  const { filteredLocations, handleCountryChange } = useCountrySelection(allLocations);
+  const [tab, setTab] = useState('For You');
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [popularDestinations, setPopularDestinations] = useState<{ image: string }[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try { 
+        // const response = await fetch(`${process.env.BACKEND_URL}/posts`);
+        const response = await fetch(`http://localhost:4000/posts`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data: Post[] = await response.json();
+        
+        console.log("Post data: " + JSON.stringify(data)); // Log the fetched data for debugging
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    const fetchPopularDestinations = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/google-maps/popular-destinations`);
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        const data = await response.json();
+
+        const places = data.results;
+        if (!places) {
+          throw new Error('No places found in response');
+        }
+
+        const imageDestinations = places.map((place: Place) => {
+          if (place.photos && place.photos.length > 0) {
+            const photoReference = place.photos[0].photo_reference;
+            const apikey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
+            console.log(process.env.NEXT_PUBLIC_GOOGLE_API_KEY!)
+            return {
+              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apikey}`, // Replace YOUR_API_KEY with your actual API key
+            };
+          } else {
+            return { image: '/Images/default.jpg' };
+          }
+        });
+
+        setPopularDestinations(imageDestinations);
+      } catch (error) {
+        console.error('Error fetching popular destinations:', error);
+      }
+    };
+
+    fetchPopularDestinations();
+  }, []);
 
   return (
-    <div className="flex flex-col" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
-      <div className="w-full mt-8" style={{ marginTop: '40px', padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-        <div className="flex justify-end mb-4">
-          <select className="bg-blue-600 text-white font-bold py-2 px-4 rounded" onChange={handleCountryChange}>
-            <option value="" disabled selected>Select a country</option>
-            {popularDestinations.map((location, index) => (
-              <option key={index} value={location.city}>
-                {location.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <h2 className="text-3xl font-bold mb-4 text-gray-800">Top destinations for your next holiday</h2>
-        <div className="flex overflow-x-auto pb-4" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
+    <div className="flex flex-row">
+      <div className="w-1/2 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <h2 className="text-3xl font-bold mb-4 text-gray-800">Top Destinations for Your Next Holiday</h2>
+        <div className="flex flex-col space-y-4">
           {popularDestinations.map((destination, index) => (
-            <div key={index} className="w-64 flex-shrink-0 mr-4" style={{ backgroundColor: 'white', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }}>
-              <DestinationCard destination={destination} />
-            </div>
+            <img key={index} src={destination.image} alt={`Destination ${index}`} className="rounded-lg shadow-md" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
           ))}
         </div>
       </div>
-      <div className="my-8"></div> {/* Space between containers */}
-      <div className="w-full mt-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px' }}>
-        <h2 className="text-3xl font-bold my-4 text-gray-800">More to explore</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2" style={{ maxHeight: '500px', overflowY: 'scroll', scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
-          {filteredLocations.map((destination, index) => (
-            <div key={index}>
-              <DestinationCard destination={destination} />
-            </div>
-          ))}
+
+      <div className="w-full mt-8 justify-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <div className="flex justify-center flex-col w-3/4 mx-auto">
+          <div className="flex justify-center mb-4 mt-4">
+          <h2 className="text-3xl font-bold text-gray-800">Latest Posts</h2>
+          </div>
+          <div className="flex justify-center items-center flex-wrap gap-4">
+            {posts.map((post) => (
+              <PostCard
+                key={post.id} 
+                post_id={post.id}
+                user_id={post.user_id}
+                image_url={post.imageUrl}
+                post_description={post.caption || 'No description available.'}
+                post_likes={post.post_likes || 0}
+                timestamp={post.timestamp}
+                />
+                
+            ))}
+          </div>
         </div>
       </div>
     </div>
