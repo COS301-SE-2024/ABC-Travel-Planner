@@ -8,15 +8,14 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { SearchModule } from './search/search.module';
 import * as path from 'path';
-import { AuthModule } from './auth/auth.module';
-
 import { PostsModule } from './posts/posts.module';
-import { CommentsModule } from './comments/comments.module';
-import { LikesModule } from './likes/likes.module';
-
-import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
 import { FollowsModule } from './follows/follows.module';
-
+import { GoogleMapsModule } from './google-maps/google-maps.module';
+import { CommentsModule } from './comments/comments.module';
+import { ImagesModule } from './images/images.module';
+import { LikesModule } from './likes/likes.module';
+import { AuthModule } from './auth/auth.module';
+import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
 
 @Module({
   imports: [
@@ -29,12 +28,14 @@ import { FollowsModule } from './follows/follows.module';
     FirebaseModule, 
     ReviewsModule,
     AuthModule,
-    SearchModule,
     PostsModule,
+    FollowsModule,
     CommentsModule,
+    ImagesModule,
     LikesModule,
     ItineraryItemsModule,
-    FollowsModule
+    SearchModule,
+    GoogleMapsModule
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -42,4 +43,3 @@ import { FollowsModule } from './follows/follows.module';
 export class AppModule {
   constructor() {}
 }
-
