@@ -76,7 +76,7 @@ const Home = () => {
           throw new Error('Network response was not ok');
         }
         const data: Post[] = await response.json();
-        
+
         console.log("Post data: " + JSON.stringify(data)); // Log the fetched data for debugging
         setPosts(data);
       } catch (error) {
@@ -124,20 +124,30 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex flex-row">
-      <div className="w-1/2 mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', overflowY: 'auto', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-        <h2 className="text-3xl font-bold mb-4 text-gray-800">Top Destinations for Your Next Holiday</h2>
-        <div className="flex flex-col space-y-4">
-          {popularDestinations.map((destination, index) => (
-            <img key={index} src={destination.image} alt={`Destination ${index}`} className="rounded-lg shadow-md" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
-          ))}
-        </div>
+    <div className="w-full mt-8" style={{ padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <div className="flex flex-row overflow-x-auto w-full custom-scrollbar" style={{ gap: '16px', padding: '10px 0' }}>
+        {popularDestinations.map((destination, index) => (
+          <div key={index} style={{ flex: '1 0 auto', position: 'relative', width: '120px', height: '120px' }}>
+            <img
+              src={destination.image}
+              alt={`Destination ${index}`}
+              className="rounded-full shadow-md"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                borderRadius: '50%',
+                border: '5px solid',
+                borderColor: 'rgba(255, 0, 150, 0.7) rgba(0, 255, 255, 0.7) rgba(255, 255, 0, 0.7) rgba(0, 255, 0, 0.7)'
+              }}
+            />
+          </div>
+        ))}
       </div>
-
       <div className="w-full mt-8 justify-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <div className="flex justify-center flex-col w-3/4 mx-auto">
           <div className="flex justify-center mb-4 mt-4">
-          <h2 className="text-3xl font-bold text-gray-800">Latest Posts</h2>
+            <h2 className="text-3xl font-bold text-gray-800">Latest Posts</h2>
           </div>
           <div className="flex justify-center items-center flex-wrap gap-4">
             {posts.map((post) => (
@@ -149,8 +159,7 @@ const Home = () => {
                 post_description={post.caption || 'No description available.'}
                 post_likes={post.post_likes || 0}
                 timestamp={post.timestamp}
-                />
-                
+              />
             ))}
           </div>
         </div>

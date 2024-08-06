@@ -64,7 +64,18 @@
   /* Remove animation if not needed */
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
 
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.5);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.7);
+}
 
 .container.mx-auto.p-4
 {
