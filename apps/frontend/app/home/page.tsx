@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import DestinationCard from './DestinationCard';
+//import DestinationCard from './DestinationCard';
 import PostCard from './PostCard';
 
 
@@ -107,7 +107,7 @@ const Home = () => {
             const apikey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
             console.log(process.env.NEXT_PUBLIC_GOOGLE_API_KEY!)
             return {
-              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apikey}`, // Replace YOUR_API_KEY with your actual API key
+              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apikey}`,
             };
           } else {
             return { image: '/Images/default.jpg' };

@@ -1,4 +1,4 @@
-import Link from "next/link";
+/*import Link from "next/link";
 
 interface Destination {
   city: string;
@@ -25,4 +25,4 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
   );
 };
 
-export default DestinationCard;
+export default DestinationCard;*/

@@ -7,6 +7,12 @@ export class GoogleMapsController {
 
   @Get('popular-destinations')
   async getPopularDestinations(): Promise<any> {
-    return this.googleMapsService.fetchPopularDestinations();
+    try {
+      const destinations = await this.googleMapsService.fetchPopularDestinations();
+      return destinations;
+    } catch (error) {
+      console.error('Error fetching popular destinations:', error);
+      throw error;
+    }
   }
 }
