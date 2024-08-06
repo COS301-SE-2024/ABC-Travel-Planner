@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-//const { PlacesClient } = require('@googlemaps/places').v1;
 import { ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import { PlacesClient } from '@googlemaps/places';
