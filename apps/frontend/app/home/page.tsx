@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react'; 
-import axios from 'axios';
-import DestinationCard from './DestinationCard';
 import PostCard from './PostCard'; 
 
 const popularDestinations = [
@@ -70,7 +68,7 @@ const Home = () => {
     const fetchPosts = async () => {
       try { 
         // const response = await fetch(`${process.env.BACKEND_URL}/posts`);
-        const response = await fetch(`http://localhost:4000/posts`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -89,7 +87,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPopularDestinations = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/google-maps/popular-destinations`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/google-maps/popular-destinations`);
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
