@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UserIcon, GlobeAltIcon, KeyIcon, HomeIcon, CheckIcon} from '@heroicons/react/24/outline';
 import { FaUser, FaSearch, FaVolumeMute, FaBan, FaHeart, FaCommentAlt, FaFileAlt,FaTimes } from 'react-icons/fa';
+import axios from 'axios';
+import Cookie from 'js-cookie';
 
 const countries = [
   { name: 'USA', value: 'usa' },
@@ -62,6 +64,43 @@ const countries = [
       prev.includes(country) ? prev.filter((c) => c !== country) : [...prev, country]
     );
   };
+
+  const [likesCount, setLikesCount] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
+  
+    
+  
+    useEffect(() => {
+      async function getLikesCount() {
+        try {
+            const userId = Cookie.get('user_id');
+            console.log(userId);
+            
+          const count = await fetchLikesCount(userId || "");
+         
+          setLikesCount(count);
+        } catch (error: any) {
+          setError(error.message);
+        }
+      }
+  
+      
+     getLikesCount();
+      
+    }, []);
+  
+    
+  
+  async function fetchLikesCount(userId: string): Promise<number> {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getLikesCount`,{userId});
+    console.log(response);
+    if (!response.data) {
+      throw new Error('Failed to fetch likes count');
+    }
+    return response.data;
+  }
+
+
 
   const handleSaveCountries = () => {
     if (selectedCountries.length > 3) {
@@ -253,7 +292,7 @@ const countries = [
       <div className="space-y-6">
         <div className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg shadow-sm">
           <FaHeart className="w-8 h-8 text-red-600" />
-          <span className="text-xl font-medium text-gray-800">Posts Liked: <span className="font-bold">34</span></span>
+          <span className="text-xl font-medium text-gray-800">Posts Liked: <span className="font-bold">{likesCount}</span></span>
         </div>
         <div className="flex items-center space-x-4 p-4 bg-green-50 rounded-lg shadow-sm">
           <FaCommentAlt className="w-8 h-8 text-blue-600" />
