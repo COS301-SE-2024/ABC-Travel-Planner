@@ -6,8 +6,8 @@ import { throwError } from 'rxjs';
 
 @Injectable()
 export class GoogleMapsService {
-  private readonly apiKey = process.env.NEST_PUBLIC_GOOGLE_API_KEY;
-
+  private readonly apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+  
   constructor(private readonly httpService: HttpService) {}
 
   async fetchPopularDestinations(): Promise<any> {

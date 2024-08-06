@@ -10,8 +10,6 @@ export class FollowsController {
         return this.followsService.followUser(body.user_id, body.follower_id);
     }
 
-    
-
     @Post('followers')
     async getFollowers(@Body() body: {user_id: string}) {
         return this.followsService.getFollowers(body.user_id);
