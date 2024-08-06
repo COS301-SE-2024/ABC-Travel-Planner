@@ -43,12 +43,8 @@ export class ItineraryCreatorService {
         `Unique accommodations for ${reason} in ${country} considering ${interests}`
       ],
       attractions: [
-        `Must-see attractions in ${country} centered on ${interests}`,
-        `Top tourist spotsin ${country} centered on ${interests}`,
-        `Hidden gems in ${country} focusing on ${interests}`,
-        `Popular ${interests} attractions in ${country}`,
+        `Top ${interests} tourist spots in ${country}`,
         `${interests} activities in ${country}`,
-        `Family-friendly ${interests} attractions in ${country}`,
         `Top ${interests} destinations in ${country}`
       ],
       carRentals: [
