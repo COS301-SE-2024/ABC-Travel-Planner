@@ -9,4 +9,9 @@ export class ActivityController {
   async getLikesCount(@Body() body: {userId: string}) {
     return this.activityService.countLikesByUser(body.userId);
   }
+
+  @Post('getCommentsCount')
+  async getCommentsCount(@Body() body: { userId: string }) {
+    return this.activityService.countCommentsByUser(body.userId);
+  }
 }

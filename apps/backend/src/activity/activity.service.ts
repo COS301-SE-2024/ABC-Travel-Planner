@@ -15,4 +15,10 @@ export class ActivityService {
     const snapshot = await likesCollection.where('user_id', '==', userId).get();
     return snapshot.size;
   }
+
+  async countCommentsByUser(userId: string) {
+    const commentsCollection = this.firebaseApp.firestore().collection('Comments');
+    const snapshot = await commentsCollection.where('user_id', '==', userId).get();
+    return snapshot.size;
+  }
 }
