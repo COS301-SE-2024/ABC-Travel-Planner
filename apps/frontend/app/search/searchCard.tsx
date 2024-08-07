@@ -144,8 +144,10 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
             console.warn("selectedItinerary is not set");
             parsedItem = {}; // or provide default values
         }
+        console.log(JSON.stringify({ user_id: user_id, item_name: place.displayName, item_type: place.type, 
+            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates}));
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: price, dates: selectedDates});
+            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates});
     };
 
     const handleSaveNewItinerary = async () => {
@@ -159,7 +161,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         //Now add the item
         const newItemData = JSON.parse(newI.config.data);
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: price, dates: selectedDates});
+            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates});
     };
 
     function extractLocation(fullString: string) {
@@ -282,7 +284,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         </div>
                         <div className="text-right">
                             <Link href={`/${place.id}`} passHref>
-                                <p className="text-3xl text-blue-500 font-semibold">ZAR {price}</p>
+                                <p className="text-3xl text-blue-500 font-semibold">ZAR {place.price}</p>
                                 <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
                                 <p className="text-gray-600 text-lg">Free cancellation</p>
                             </Link>

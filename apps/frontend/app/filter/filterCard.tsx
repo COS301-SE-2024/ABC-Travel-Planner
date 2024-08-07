@@ -108,8 +108,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
                 location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
                 destination: JSON.stringify(place),
-                price: price,
-                dates: selectedDates.length == 0 ? [] : JSON.stringify(selectedDates)
+                dates: selectedDates.length == 0 ? JSON.stringify([]) : JSON.stringify(selectedDates)
 
               },
             }}
@@ -133,8 +132,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
               location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
               destination: JSON.stringify(place),
-              price: price,
-              dates: selectedDates.length == 0 ? [] : JSON.stringify(selectedDates)
+              dates: selectedDates.length == 0 ? JSON.stringify([]) : JSON.stringify(selectedDates)
             },
           }}
           className="w-1/3"
@@ -153,8 +151,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
                 location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
                 destination: JSON.stringify(place),
-                price: price,
-                dates: selectedDates.length == 0 ? [] : JSON.stringify(selectedDates)
+                dates: selectedDates.length == 0 ? JSON.stringify([]) : JSON.stringify(selectedDates)
               },
             }}
           >
@@ -239,7 +236,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
     )}
             </div>
             <div className="text-right">
-              <p className="text-3xl text-blue-500 font-semibold">ZAR {price}</p>
+              <p className="text-3xl text-blue-500 font-semibold">ZAR {place.price}</p>
               <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
               <p className="text-blue-500 text-sm">Tax and rates included</p>
             </div>

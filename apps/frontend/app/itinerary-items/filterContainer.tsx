@@ -17,7 +17,7 @@ const FilterContainer = () => {
     // const id = 25;//sample 
     const id = localStorage.getItem('id') as string
     const actualId = JSON.parse(id).id
-    console.log(actualId)
+    //console.log(actualId)
 
     const handleSearch = async () => {
         router.push(`/filter?id=${actualId}&topic=${selectedTopic}&term=${searchInputRef.current?.value}`);

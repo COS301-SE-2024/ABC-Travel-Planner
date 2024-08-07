@@ -9,17 +9,18 @@ export interface Place {
   plusCode: any;
   id: string;
   rating: number;
-  accessibilityOptions: any; 
-  paymentOptions: any; 
+  accessibilityOptions: any;
+  paymentOptions: any;
   goodForChildren: boolean;
   firstPhotoUrl: string;
   type: string;
+  price: number;
 }
 
 @Injectable()
 export class ItineraryCreatorService {
 
-  constructor(private readonly searchService: SearchService){
+  constructor(private readonly searchService: SearchService) {
 
   }
 
@@ -87,7 +88,7 @@ export class ItineraryCreatorService {
     const categories: (keyof typeof searchStrings)[] = ['stays', 'attractions', 'carRentals', 'airportTaxis'];
     const places = {
       stays: [] as Place[],
-      attractions: []as Place[],
+      attractions: [] as Place[],
       carRentals: [] as Place[],
       airportTaxis: [] as Place[]
 
@@ -119,5 +120,5 @@ export class ItineraryCreatorService {
       airportTaxis: selectTopTwo(places.airportTaxis),
     };
   }
-  
+
 }

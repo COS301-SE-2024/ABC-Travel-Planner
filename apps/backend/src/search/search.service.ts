@@ -15,6 +15,7 @@ interface Place {
     goodForChildren: boolean;
     firstPhotoUrl: string;
     type: string;
+    price: number;
 }
 
 interface DetailedPlace {
@@ -120,6 +121,8 @@ export class SearchService {
                         this.constructImageUrl(detailedPlace[0].photos[0].name, apiKey as string) :
                         this.defaultImageUrl;
 
+                        let address = detailedPlace[0].plusCode ? detailedPlace[0].plusCode.compoundCode : 'Unknown Address';
+                        const location = this.extractLocation(address);
                     return {
                         formattedAddress: detailedPlace[0].formattedAddress,
                         displayName: detailedPlace[0].displayName ? detailedPlace[0].displayName.text : '',
@@ -132,7 +135,8 @@ export class SearchService {
                         paymentOptions: detailedPlace[0].paymentOptions,
                         goodForChildren: detailedPlace[0].goodForChildren,
                         firstPhotoUrl: firstPhotoUrl,
-                        type: type
+                        type: type,
+                        price: this.generatePrice(detailedPlace[0].id, type, location.country)
                     } as Place;
                 }
 
@@ -143,6 +147,53 @@ export class SearchService {
             return [];
         }
     }
+
+    extractLocation(fullString: string) {
+        const parts = fullString.split(/,|\s+/);
+        const city = parts.slice(1, -1).join(' ');
+        const country = parts[parts.length - 1];
+        return { city, country };
+    }
+
+    generatePrice(id: string, type: string, country: string) {
+        let basePrice;
+        switch (type) {
+          case 'stays':
+            basePrice = 100;
+            break;
+          case 'attractions':
+            basePrice = 50;
+            break;
+          case 'carRental':
+            basePrice = 70;
+            break;
+          case 'airportTaxis':
+            basePrice = 40;
+            break;
+          default:
+            basePrice = 100;
+        }
+    
+        let countryMultiplier;
+        switch (country) {
+          case 'Africa':
+            countryMultiplier = 1;
+            break;
+          case 'USA':
+            countryMultiplier = 1.2;
+            break;
+          case 'UK':
+            countryMultiplier = 1.3;
+            break;
+          default:
+            countryMultiplier = 1.1;
+        }
+    
+        const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const randomMultiplier = 1 + (seed % 100) / 1000;
+    
+        return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
+      };
 
     async getDetailedPlace(id: string): Promise<DetailedPlace>{
         try {
