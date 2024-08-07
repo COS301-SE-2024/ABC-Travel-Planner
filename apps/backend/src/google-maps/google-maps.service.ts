@@ -13,7 +13,7 @@ export class GoogleMapsService {
   async fetchPopularDestinations(): Promise<any> {
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json`;
     const params = {
-      query: 'popular tourist attractions worldwide',
+      query: 'popular tourist attractions europe,asia,africa and america',
       key: this.apiKey,
     };
 
