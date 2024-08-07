@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 //import DestinationCard from './DestinationCard';
 import PostCard from './PostCard';
+import Link from 'next/link';
 
 
 const popularDestinations = [
@@ -65,7 +66,7 @@ interface Place {
 const Home = () => {
   const [tab, setTab] = useState('For You');
   const [posts, setPosts] = useState<Post[]>([]);
-  const [popularDestinations, setPopularDestinations] = useState<{ image: string }[]>([]);
+  const [popularDestinations, setPopularDestinations] = useState<{ image: string , place_id : string}[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -95,7 +96,7 @@ const Home = () => {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
         const data = await response.json();
-
+        console.log(data);
         const places = data.results;
         if (!places) {
           throw new Error('No places found in response');
@@ -105,14 +106,16 @@ const Home = () => {
           if (place.photos && place.photos.length > 0) {
             const photoReference = place.photos[0].photo_reference;
             const apikey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
-            console.log(process.env.NEXT_PUBLIC_GOOGLE_API_KEY!)
+            console.log("Googles maps placce id "+place.place_id)
             return {
               image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apikey}`,
+              place_id: place.place_id,
             };
           } else {
             return { image: '/Images/default.jpg' };
           }
         });
+
 
         setPopularDestinations(imageDestinations);
       } catch (error) {
@@ -128,6 +131,7 @@ const Home = () => {
       <div className="flex flex-row overflow-x-auto w-full custom-scrollbar" style={{ gap: '16px', padding: '10px 0' }}>
         {popularDestinations.map((destination, index) => (
           <div key={index} style={{ flex: '1 0 auto', position: 'relative', width: '120px', height: '120px' }}>
+            <Link href={`/${destination.place_id}`} passHref>
             <img
               src={destination.image}
               alt={`Destination ${index}`}
@@ -141,6 +145,7 @@ const Home = () => {
                 borderColor: 'rgba(255, 0, 150, 0.7) rgba(0, 255, 255, 0.7) rgba(255, 255, 0, 0.7) rgba(0, 255, 0, 0.7)'
               }}
             />
+            </Link>
           </div>
         ))}
       </div>
