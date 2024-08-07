@@ -145,7 +145,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
             parsedItem = {}; // or provide default values
         }
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl});
+            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: price, dates: selectedDates});
     };
 
     const handleSaveNewItinerary = async () => {
@@ -159,7 +159,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         //Now add the item
         const newItemData = JSON.parse(newI.config.data);
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl});
+            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: price, dates: selectedDates});
     };
 
     function extractLocation(fullString: string) {

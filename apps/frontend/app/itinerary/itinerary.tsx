@@ -243,7 +243,7 @@ const Itinerary = () => {
                     className="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green                     focus:border-green-500 block w-full p-2.5"
                   />
                 </div>
-                <div className="mb-4">
+                {/* <div className="mb-4">
                   <label htmlFor="attractions" className="block text-sm font-medium text-gray-700">Attractions:</label>
                   <input
                     type="text"
@@ -253,7 +253,7 @@ const Itinerary = () => {
                     required
                     className="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                   />
-                </div>
+                </div> */}
                 <div className="mb-4 flex items-center">
                 <input
                   type="checkbox"

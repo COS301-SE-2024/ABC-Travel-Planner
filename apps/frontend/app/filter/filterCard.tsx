@@ -108,6 +108,9 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
                 location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
                 destination: JSON.stringify(place),
+                price: price,
+                dates: selectedDates.length == 0 ? [] : JSON.stringify(selectedDates)
+
               },
             }}
           >
@@ -130,6 +133,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
               location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
               destination: JSON.stringify(place),
+              price: price,
+              dates: selectedDates.length == 0 ? [] : JSON.stringify(selectedDates)
             },
           }}
           className="w-1/3"
@@ -148,6 +153,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
                 location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
                 destination: JSON.stringify(place),
+                price: price,
+                dates: selectedDates.length == 0 ? [] : JSON.stringify(selectedDates)
               },
             }}
           >

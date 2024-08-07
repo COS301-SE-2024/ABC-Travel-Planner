@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { stringify } from 'querystring';
 import { SearchService } from 'src/search/search.service';
 
-interface Place {
+export interface Place {
   formattedAddress: string;
   displayName: string;
   editorialSummary: string;
@@ -90,11 +89,7 @@ export class ItineraryCreatorService {
       stays: [] as Place[],
       attractions: []as Place[],
       carRentals: [] as Place[],
-      airportTaxis: [] as Place[],
-      staysString: searchStrings['stays'],
-      attractionString: searchStrings['attractions'],
-      carRentalsString: searchStrings['carRentals'],
-      airportTaxiString: searchStrings['airportTaxis']
+      airportTaxis: [] as Place[]
 
     };
 
@@ -109,5 +104,20 @@ export class ItineraryCreatorService {
     return places;
   }
 
+  async selectBestOptions(places: { stays: Place[]; attractions: Place[]; carRentals: Place[]; airportTaxis: Place[] }): Promise<{ stays: Place[]; attractions: Place[]; carRentals: Place[]; airportTaxis: Place[] }> {
+    const selectTopTwo = (array: Place[]): Place[] => {
+      // Sort by rating first, then by userRatingCount
+      return array
+        .sort((a, b) => b.rating - a.rating || b.userRatingCount - a.userRatingCount)
+        .slice(0, 2);
+    };
+
+    return {
+      stays: selectTopTwo(places.stays),
+      attractions: selectTopTwo(places.attractions),
+      carRentals: selectTopTwo(places.carRentals),
+      airportTaxis: selectTopTwo(places.airportTaxis),
+    };
+  }
   
 }
