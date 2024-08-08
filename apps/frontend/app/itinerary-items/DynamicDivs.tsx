@@ -68,10 +68,8 @@ interface ItemData {
 
         const fetchItems = async () => {
             try {
-                console.log("Moving on to fetching...")
                 const user_id = Cookie.get('user_id') ?? 'User1'
                 const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
-                
                 const data: ItemData[] = await response.json();
                 console.log("Response from server: " + JSON.stringify(data))
                 
@@ -111,7 +109,6 @@ interface ItemData {
 
         //Fetches more than once to ensure data is loaded without overfetching
         if (fetchCount < 3 || !fetchedData || !divs) {
-            console.log("FETCHING...")
             fetchItems();
             setFetchCount(fetchCount + 1);
         }

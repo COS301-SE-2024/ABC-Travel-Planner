@@ -22,7 +22,6 @@ const Filter = () => {
 
   const fetchPlaceDetails = async (placeId: string) => {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-    console.log(apiKey);
     const url = `https://places.googleapis.com/v1/places/${placeId}`;
     const fieldMask = 'id,displayName,photos';
 
