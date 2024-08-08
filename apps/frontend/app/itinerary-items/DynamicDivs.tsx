@@ -4,6 +4,7 @@ import { Button } from '@nextui-org/react';
 import SearchModal from "./SearchModal"
 import "./modal.css"
 import Cookie from 'js-cookie'
+import PopupMessage from '../utils/PopupMessage';
 
 interface ItemData {
     item_name: string;
@@ -35,6 +36,9 @@ interface ItemData {
     const [isOpen, setIsOpen] = useState(false);
     const [fetchCount, setFetchCount] = useState(0);
     const [isClicked, setIsClicked] = useState(false);
+    const [canRemove, setCanRemove] = useState(true);
+    const [trigger, setTrigger] = useState(false);
+    const [message, setMessage] = useState("");
     
     useEffect(() => {
         if (id) {
@@ -106,7 +110,7 @@ interface ItemData {
         };
 
         //Fetches more than once to ensure data is loaded without overfetching
-        if (fetchCount < 2 || !fetchedData || !divs) {
+        if (fetchCount < 3 || !fetchedData || !divs) {
             console.log("FETCHING...")
             fetchItems();
             setFetchCount(fetchCount + 1);
@@ -125,42 +129,59 @@ interface ItemData {
     };
 
     const handleRemoveDiv = async (id: number) => {
-    console.log(`Removing DIV ${id} from: ${divs[id]?.data?.itinerary_id}`)
-    const image_url = divs[id].data.image_url
-    const itinerary_id = divs[id].data.itinerary_id
-    const timestamp = divs[id].data.timestamp
+        if (canRemove) {
+            setCanRemove(false);
+            console.log(`Removing DIV ${id} from: ${divs[id]?.data?.itinerary_id}`)
+            const image_url = divs[id].data.image_url
+            const itinerary_id = divs[id].data.itinerary_id
+            const timestamp = divs[id].data.timestamp
 
-    //Remember to get the user token and send it to backend...
-      try {
-        const user_name = 'User1';
-        const response = await fetch('http://localhost:4000/itinerary-items/delete', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            //   Authorization: `Bearer ${idToken}`,
-            },
-            body: JSON.stringify({ user_name, image_url, itinerary_id, timestamp }),
-          })
-        
-        //Div ids still need to be updated after deletion...
-        setDivs(divs.filter(divItem => divItem.id !== id));
-        
-        //CODE TO CHANGE DIV's IDs... 
-        for (let index = id+1; index < divs.length; index++) {
-            divs[index].id--;
-            if (divs[index].id < 0) {
-                divs[index].id = 0;
+            //Remember to get the user token and send it to backend...
+            try {
+                const user_name = Cookie.get('user_id') ?? 'User1';
+                const response = await fetch('http://localhost:4000/itinerary-items/delete', {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    //   Authorization: `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify({ user_name, image_url, itinerary_id, timestamp }),
+                })
+                
+                //Div ids still need to be updated after deletion...
+                setDivs(divs.filter(divItem => divItem.id !== id));
+                
+                //CODE TO CHANGE DIV's IDs... 
+                for (let index = id+1; index < divs.length; index++) {
+                    divs[index].id--;
+                    if (divs[index].id < 0) {
+                        divs[index].id = 0;
+                    }
+                }
+
+                //Popup Messages to inform user of deletion
+                setMessage(`Item removed!`);
+                setTrigger(true);
+                setTimeout(() => {
+                    setCanRemove(true);
+                    setTrigger(false);
+                }, 1500);
+
+            } catch (error) {
+                console.error("Could not remove item: ", error)
             }
-        }
-
-      } catch (error) {
-        console.error("Could not remove item: ", error)
+      } else {
+        console.error("Cannot remove item -- waiting for delay to reset");
       }
     };
   
     const handleModelClose = () => {
       setIsOpen(false);
     };
+
+    const truncateTitle = (title: string) => {
+        return title.length > 55 ? title.substring(0,55) + '...' : title;
+    }
 
     return (
         <>
@@ -172,7 +193,7 @@ interface ItemData {
                     </a>
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{divItem?.data?.item_name}</h2>
+                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{truncateTitle(divItem?.data?.item_name)}</h2>
                         </a>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem?.data?.item_type}</p>
                     </div>
@@ -189,6 +210,7 @@ interface ItemData {
             </div>
         ))}
             <SearchModal handleAddDiv={ handleModelClose }/>
+            <PopupMessage msg={message} trigger={trigger} />
         </>
     );
 };
