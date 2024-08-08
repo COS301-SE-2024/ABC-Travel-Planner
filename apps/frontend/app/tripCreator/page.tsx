@@ -1,73 +1,69 @@
 "use client"
-import React from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useSearchParams,useRouter } from "next/navigation";
+
+export interface Place {
+  formattedAddress: string;
+  displayName: string;
+  editorialSummary: string;
+  userRatingCount: number;
+  plusCode: any;
+  id: string;
+  rating: number;
+  accessibilityOptions: any;
+  paymentOptions: any;
+  goodForChildren: boolean;
+  firstPhotoUrl: string;
+  type: string;
+  price: number;
+}
 
 const TripComponent: React.FC = () => {
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const country = searchParams?.get('country');
+  const reason = searchParams?.get('reason');
+  const interest = searchParams?.get('interests');
+  const wantCarRental = searchParams?.get('wantCarRental') as string;
+  useEffect(() => {
+    if(initialLoading){
+      setInitialLoading(false);
+    }else{
+      const generalSearch = async (country: string, interest: string, reason: string ) => {
+        try {
+          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+          const response = await fetch(`${backendUrl}/itinerary-creator/itinerary?country=${encodeURIComponent(country)}&reason=${encodeURIComponent(reason)}&interests=${encodeURIComponent(interest)}&wantCarRental=${encodeURIComponent(wantCarRental)}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          if (data.places) {
+            setSearchResults(data.places);
+            console.log(JSON.stringify(data));
+          } else {
+            setSearchResults([]);
+          }
+          setLoading(false);
+  
+          return data;
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+  
+      if (country && interest && reason) {
+        setLoading(true);
+        generalSearch(country, interest, reason);
+      }
+    }
+  }, [initialLoading]);
 
 const router = useRouter();
-  const itineraryItems = [
-    {
-      name: "Attraction 1",
-      image: "/Images/attraction1.jpg",
-      summary: "A brief description of the attraction.",
-      price: "$50",
-      address: "123 Attraction St, City, Country",
-    },
-    {
-      name: "Hotel 2",
-      image: "/Images/hotel1.jpg",
-      summary: "A brief description of the hotel.",
-      price: "$150/night",
-      address: "456 Hotel Blvd, City, Country",
-    },
-    {
-      name: "Airport Taxi 1",
-      image: "/Images/taxi.jpg",
-      summary: "Convenient airport taxi service.",
-      price: "$30",
-      address: "Airport, City, Country",
-    },
-    {
-      name: "Restaurant 1",
-      image: "/Images/rest1.jpg",
-      summary: "A brief description of the restaurant.",
-      price: "$40",
-      address: "789 Restaurant Rd, City, Country",
-    },
-    {
-      name: "Attraction 2",
-      image: "/Images/attraction2.jpg",
-      summary: "A brief description of the attraction.",
-      price: "$50",
-      address: "123 Attraction St, City, Country",
-    },
-    {
-      name: "Hotel 2",
-      image: "/Images/hotel1.jpg",
-      summary: "A brief description of the hotel.",
-      price: "$150/night",
-      address: "456 Hotel Blvd, City, Country",
-    },
-    {
-      name: "Airport Taxi 2",
-      image: "/Images/taxi2.jpeg",
-      summary: "Convenient airport taxi service.",
-      price: "$30",
-      address: "Airport, City, Country",
-    },
-    {
-      name: "Restaurant 2",
-      image: "/Images/rest2.jpg",
-      summary: "A brief description of the restaurant.",
-      price: "$40",
-      address: "789 Restaurant Rd, City, Country",
-    },
-    // Add more items as needed
-  ];
 
-  const handleMoreInfo = (item: typeof itineraryItems[0]) => {
-    alert(`More info about ${item.name}`);
-    // Add logic to navigate or show more details about the clicked item
+  const handleMoreInfo = (item: Place) => {
+    router.push(`/${item.id}`);
   };
 
   const sendToItineraryPage = () => {
@@ -87,10 +83,10 @@ const router = useRouter();
         style={{ backgroundColor: "rgba(173, 216, 230, 0.5)" }}
       >
         <h2 className="text-3xl font-bold text-center mb-6">
-          Your Generated Trip to USA
+          Your Generated Trip to {country}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {itineraryItems.map((item, index) => (
+          {searchResults.map((item : Place, index: any) => (
             <div
               key={index}
               onClick={() => handleMoreInfo(item)}
@@ -98,14 +94,14 @@ const router = useRouter();
             >
               <img
                 className="w-full h-32 object-cover"
-                src={item.image}
-                alt={item.name}
+                src={item.firstPhotoUrl}
+                alt={item.displayName}
               />
               <div className="p-4 text-center">
-                <h3 className="text-xl font-semibold">{item.name}</h3>
-                <p className="text-gray-600">{item.summary}</p>
+                <h3 className="text-xl font-semibold">{item.displayName}</h3>
+                <p className="text-gray-600">{item.editorialSummary}</p>
                 <p className="text-gray-800 mt-2 font-medium">{item.price}</p>
-                <p className="text-gray-600">{item.address}</p>
+                <p className="text-gray-600">{item.formattedAddress}</p>
               </div>
             </div>
           ))}

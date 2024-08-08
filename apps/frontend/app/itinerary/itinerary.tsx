@@ -14,7 +14,7 @@ const Itinerary = () => {
   //Trip creator
   const [showTripCreatorModal, setShowTripCreatorModal] = useState(false);
   const [country, setCountry] = useState("");
-  const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
+  const [selectedReasons, setSelectedReasons] = useState<string>("");
   const [interests, setInterests] = useState("");
   const [attractions, setAttractions] = useState("");
   const [carRental, setCarRental] = useState(false);
@@ -24,7 +24,7 @@ const Itinerary = () => {
   const closeTripCreatorModal = () => {
     setShowTripCreatorModal(false);
     setCountry("");
-    setSelectedReasons([])
+    setSelectedReasons("")
     setInterests("");
     setAttractions("");
     setTripGenerated(false);
@@ -39,9 +39,7 @@ const Itinerary = () => {
   };
 
   const handleToggleReason = (reason: string) => {
-    setSelectedReasons((prev) =>
-      prev.includes(reason) ? prev.filter((r) => r !== reason) : [...prev, reason]
-    );
+    setSelectedReasons(reason);
   };
   const openModal = () => setShowModal(true);
   const closeModal = () => {
@@ -222,7 +220,7 @@ const Itinerary = () => {
                         key={reasonOption}
                         onClick={() => handleToggleReason(reasonOption)}
                         className={`mr-2 mb-2 px-4 py-2 text-sm font-medium rounded-full ${
-                          selectedReasons.includes(reasonOption) ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"
+                          selectedReasons === reasonOption ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"
                         } hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500`}
                       >
                         {reasonOption}
@@ -243,17 +241,6 @@ const Itinerary = () => {
                     className="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green                     focus:border-green-500 block w-full p-2.5"
                   />
                 </div>
-                {/* <div className="mb-4">
-                  <label htmlFor="attractions" className="block text-sm font-medium text-gray-700">Attractions:</label>
-                  <input
-                    type="text"
-                    id="attractions"
-                    value={attractions}
-                    onChange={(e) => setAttractions(e.target.value)}
-                    required
-                    className="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                  />
-                </div> */}
                 <div className="mb-4 flex items-center">
                 <input
                   type="checkbox"
@@ -273,10 +260,10 @@ const Itinerary = () => {
                     href={{
                       pathname: '/tripCreator',
                       query: {
-                        country,
-                        selectedReasons: JSON.stringify(selectedReasons),
-                        interests,
-                        attractions,
+                        country: country,
+                        reason: selectedReasons,
+                        interests: interests,
+                        wantCarRental: carRental,
                       },
                     }}
                   >

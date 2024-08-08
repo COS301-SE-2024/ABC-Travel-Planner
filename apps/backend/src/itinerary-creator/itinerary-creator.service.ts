@@ -17,9 +17,19 @@ export interface Place {
   price: number;
 }
 
+type Places = {
+  stays: Place[];
+  attractions: Place[];
+  carRentals: Place[];
+  airportTaxis: Place[];
+};
+
 @Injectable()
 export class ItineraryCreatorService {
-
+  private country: string;
+  private reason: string;
+  private interests: string;
+  private wantCarRental: boolean;
   constructor(private readonly searchService: SearchService) {
 
   }
@@ -28,7 +38,13 @@ export class ItineraryCreatorService {
     country: string,
     reason: string,
     interests: string,
+    wantCarRental: boolean
   ): Promise<{ stays: string; attractions: string; carRentals: string; airportTaxis: string }> {
+    this.country = country;
+    this.reason = reason;
+    this.interests = interests;
+    this.wantCarRental = wantCarRental;
+   
     const searchStrings = {
       stays: [
         `Best hotels for ${reason} in ${country} with ${interests}`,
@@ -80,7 +96,7 @@ export class ItineraryCreatorService {
       stays: getRandomItem(searchStrings.stays),
       attractions: getRandomItem(searchStrings.attractions),
       carRentals: getRandomItem(searchStrings.carRentals),
-      airportTaxis: getRandomItem(searchStrings.airportTaxis),
+      airportTaxis: getRandomItem(searchStrings.airportTaxis)
     };
   }
 
@@ -93,11 +109,17 @@ export class ItineraryCreatorService {
       airportTaxis: [] as Place[]
 
     };
-
+    console.log(searchStrings['attractions']);
+    console.log("want car rental " + this.wantCarRental);
     const promises = categories.map(async (category) => {
-      const searchString = searchStrings[category];
-      const response = await this.searchService.searchPlaces(searchString, category);
-      places[category] = response;
+      if (category === "carRentals" && !this.wantCarRental) {
+        console.log('returns');
+        return;  // Skip car rentals if the user doesn't want it
+    }
+        const searchString = searchStrings[category];
+        const response = await this.searchService.searchPlaces(searchString, category);
+        places[category] = response;
+      
     });
 
     await Promise.all(promises);
@@ -105,20 +127,30 @@ export class ItineraryCreatorService {
     return places;
   }
 
-  async selectBestOptions(places: { stays: Place[]; attractions: Place[]; carRentals: Place[]; airportTaxis: Place[] }): Promise<{ stays: Place[]; attractions: Place[]; carRentals: Place[]; airportTaxis: Place[] }> {
-    const selectTopTwo = (array: Place[]): Place[] => {
-      // Sort by rating first, then by userRatingCount
-      return array
-        .sort((a, b) => b.rating - a.rating || b.userRatingCount - a.userRatingCount)
-        .slice(0, 2);
+  async selectBestOptions(places: Places): Promise<{ places: Place[]; country: string }> {
+    const combinedPlaces = [
+      ...places.stays.map(place => ({ ...place, type: 'stays' })),
+      ...places.attractions.map(place => ({ ...place, type: 'attractions' })),
+      ...(this.wantCarRental ? places.carRentals.map(place => ({ ...place, type: 'carRentals' })) : []),
+      ...places.airportTaxis.map(place => ({ ...place, type: 'airportTaxis' }))
+    ];
+  
+    const sortedPlaces = combinedPlaces.sort((a, b) => b.rating - a.rating || b.userRatingCount - a.userRatingCount);
+  
+    const selectTopTwo = (type: string): Place[] => {
+      return sortedPlaces.filter(place => place.type === type).slice(0, 2);
     };
-
+  
+    const selectedPlaces = [
+      ...selectTopTwo('stays'),
+      ...selectTopTwo('attractions'),
+      ...(this.wantCarRental ? selectTopTwo('carRentals') : []),
+      ...selectTopTwo('airportTaxis'),
+    ];
+  
     return {
-      stays: selectTopTwo(places.stays),
-      attractions: selectTopTwo(places.attractions),
-      carRentals: selectTopTwo(places.carRentals),
-      airportTaxis: selectTopTwo(places.airportTaxis),
+      places: selectedPlaces,
+      country: this.country,
     };
   }
-
 }
