@@ -34,86 +34,36 @@ interface ItemData {
     const [fetchedData, setFetchedData] = useState<ItemData[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const [fetchCount, setFetchCount] = useState(0);
+    const [isClicked, setIsClicked] = useState(false);
     
     useEffect(() => {
         if (id) {
-            const itinerary_id = JSON.parse((localStorage.getItem('id') as string)).id
-            console.log(itinerary_id)
-
-            if (itinerary_id) {
-                localStorage.setItem('id', JSON.stringify({id: id, expiry: Date.now() + 60 * 60 * 1000}));
+            if (localStorage.getItem(id) === null) {
+                localStorage.setItem('id', JSON.stringify({
+                    id: id, 
+                    expiry: Date.now() + 60 * 60 * 1000
+                }));
             }
-
         } else {
             throw new Error('ID for itinerary not included');
         }
 
         if (location) {
-            const itinerary_location = JSON.parse((localStorage.getItem('location') as string) ?? []).location
-            console.log(itinerary_location)
-
-            if (itinerary_location) {
-                localStorage.setItem('location', JSON.stringify({location: location, expiry: Date.now() + 60 * 60 * 1000 }));
+            if (localStorage.getItem(location) === null) {
+                localStorage.setItem('location', JSON.stringify({
+                    location: location,
+                    expiry: Date.now() + 60 * 60 * 1000
+                }));
             }
+
+            const itinerary_location = location;
+            console.log(itinerary_location)
         } else {
             throw new Error('Location for itinerary not included');
         }
 
-        console.log("ID IN DYNAMIC DIV: " + JSON.stringify(id))
-        
-        const uploadItem = async () => {
-            if (!uploaded && destination) {
-                const id = localStorage.getItem('id') as string
-                const location = localStorage.getItem('location') as string
-                const objectToUpload = JSON.parse(destination);
-                console.log(objectToUpload);
-
-                const userId = Cookie.get('user_id');   
-                const itemTitle = objectToUpload.Eg?.displayName ?? 'NONAME';
-                const itemType = objectToUpload.type ?? 'NOTYPE';
-                const address = objectToUpload.Eg?.formattedAddress ?? 'DEFAULT ADDRESS'
-                const image_url = objectToUpload.firstPhotoUrl ?? 'PHOTO URL'
-
-                const uploadDetails = {
-                    user_id: userId,
-                    item_name: itemTitle,
-                    item_type: itemType,
-                    location: JSON.parse(location).location,
-                    itinerary_id: JSON.parse(id).id,
-                    destination: address,
-                    image_url
-                }
-                 
-                console.log("Going to upload to db...")
-                console.log(uploadDetails)
-
-                try {
-                    const response = await fetch('http://localhost:4000/itinerary-items/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(uploadDetails)
-                    });
-
-                    console.log("Response from server: ", JSON.stringify(response));
-                    setUploaded(true);
-                } catch (error) {
-                    console.error("Error uploading item:", error);
-                }
-            }
-        }
-
         const fetchItems = async () => {
             try {
-                if (destination) {
-                    //Wait until its done uploading...
-                    console.log(`DESTINATION EXISTSSSSSS: ${JSON.stringify(destination)}`)
-                    setTimeout(async () => {
-                        await uploadItem();
-                    }, 4000)
-                }
-
                 console.log("Moving on to fetching...")
                 const user_id = Cookie.get('user_id') ?? 'User1'
                 const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
@@ -150,19 +100,15 @@ interface ItemData {
                 });
                 setDivs(initialDivs);
                 setFetchedData(data);
-                // setInitialLoad(true);
             } catch (error) {
                 console.error("Error fetching items:", error);
             }
         };
 
-        console.log("Fetched Data: " + fetchedData)
-        
         //Fetches more than once to ensure data is loaded without overfetching
-        if (fetchCount < 3 || !fetchedData || !divs) {
+        if (fetchCount < 2 || !fetchedData || !divs) {
             console.log("FETCHING...")
             fetchItems();
-            uploadItem();
             setFetchCount(fetchCount + 1);
         }
 
@@ -184,7 +130,6 @@ interface ItemData {
     const itinerary_id = divs[id].data.itinerary_id
     const timestamp = divs[id].data.timestamp
 
-
     //Remember to get the user token and send it to backend...
       try {
         const user_name = 'User1';
@@ -197,13 +142,15 @@ interface ItemData {
             body: JSON.stringify({ user_name, image_url, itinerary_id, timestamp }),
           })
         
-        console.log(response)
         //Div ids still need to be updated after deletion...
         setDivs(divs.filter(divItem => divItem.id !== id));
         
         //CODE TO CHANGE DIV's IDs... 
         for (let index = id+1; index < divs.length; index++) {
             divs[index].id--;
+            if (divs[index].id < 0) {
+                divs[index].id = 0;
+            }
         }
 
       } catch (error) {
@@ -233,7 +180,7 @@ interface ItemData {
 
                 <Button 
                     className="absolute top-2 right-2 text-gray-800 hover:text-gray-700 focus:outline-none closeButton" 
-                    onClick={() => handleRemoveDiv(divItem.id)}
+                    onClick={() => handleRemoveDiv(divItem.id)} disabled={isClicked}
                 >
                     <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />

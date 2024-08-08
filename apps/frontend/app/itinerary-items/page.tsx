@@ -31,13 +31,9 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
   const { location, id, destination } = searchParams;
   // let obj
 
-  // if (destination) {
-  //   obj = JSON.parse(destination)
-    // const itemTitle = obj.Fg?.displayName ?? obj.displayName
-    // const itemType = obj.type
-    // const firstPhotoUrl = obj.firstPhotoUrl
-    // const location = obj.Fg?.formattedAddress ?? obj.formattedAddress
-  // }
+  if (destination) {
+    
+  }
 
   return (
     <>

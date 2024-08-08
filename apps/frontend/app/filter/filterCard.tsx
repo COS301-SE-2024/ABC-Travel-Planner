@@ -1,6 +1,7 @@
 "use client";
 import Link from 'next/link';
 import React, { useState } from 'react';
+import Cookie from 'js-cookie';
 
 interface FilterCardProps {
   place: any;
@@ -73,9 +74,55 @@ export const generatePrice = (id: string, type: string, country: string) => {
 
 const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const [selectedDate, setSelectedDate] = useState('');
+  const [uploaded, setUploaded] = useState(false);
   const handleSelectDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDate(event.target.value);
   };
+
+  const uploadItem = async () => {
+    const destination = place;
+    console.log("TYPE: " + typeof destination);
+
+    if (!uploaded && destination) {
+        const id = JSON.parse(localStorage.getItem('id') as string).id;
+        const location = JSON.parse(localStorage.getItem('location') as string).location;
+        const objectToUpload = place;
+
+        const userId = Cookie.get('user_id') ?? 'User1';   
+        const itemTitle = objectToUpload.Eg?.displayName ?? 'NONAME';
+        const itemType = objectToUpload.type ?? 'NOTYPE';
+        const address = objectToUpload.Eg?.formattedAddress ?? 'DEFAULT ADDRESS'
+        const image_url = objectToUpload.firstPhotoUrl ?? 'PHOTO URL'
+  
+        const uploadDetails = {
+            user_id: userId,
+            item_name: itemTitle,
+            item_type: itemType,
+            location,
+            itinerary_id: id,
+            destination: address,
+            image_url
+        }
+         
+        console.log("Going to upload to db...")
+        console.log(uploadDetails)
+  
+        try {
+            const response = await fetch('http://localhost:4000/itinerary-items/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(uploadDetails)
+            });
+  
+            console.log("Response from server: ", JSON.stringify(response));
+            setUploaded(true);
+        } catch (error) {
+            console.error("Error uploading item:", error);
+        }
+    }
+  }
 
   function extractLocation(fullString: string) {
     const parts = fullString.split(/,|\s+/);
@@ -98,7 +145,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   return (
     <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-120">
       <div className="flex justify-between">
-        <div className="w-1/2 pr-4">
+        <div className="w-1/2 pr-4" onClick={uploadItem}>
           <Link
             href={{
               pathname: '/itinerary-items',
