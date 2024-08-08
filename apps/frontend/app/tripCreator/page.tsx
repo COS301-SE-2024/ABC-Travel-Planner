@@ -10,6 +10,8 @@ import {
   FaGlobe,
   FaPlane,
 } from "react-icons/fa";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export interface Place {
   formattedAddress: string;
@@ -32,6 +34,8 @@ const TripComponent: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [showCalendar, setShowCalendar] = useState<{[key: string]: boolean}>({});
+  const [selectedDates, setSelectedDates] = useState<{[key: string]: Date[]}>({});
 
   const searchParams = useSearchParams();
   const country = searchParams?.get("country");
@@ -85,10 +89,6 @@ const TripComponent: React.FC = () => {
 
   const router = useRouter();
 
-  const handleMoreInfo = (item: Place) => {
-    router.push(`/${item.id}`);
-  };
-
   const sendToItineraryPage = () => {
     alert("Navigating to the itinerary page...");
     // Add logic to navigate to the itinerary page
@@ -108,23 +108,44 @@ const TripComponent: React.FC = () => {
         return (
           (selectedCategory === "attractions" && item.type === "attractions") ||
           (selectedCategory === "stays" && item.type === "stays") ||
-          (selectedCategory === "carRentals" && item.type === "carRentals")
+          (selectedCategory === "carRentals" && item.type === "carRentals")||
+          (selectedCategory === "airportTaxis" && item.type === "airportTaxis")
         );
       });
 
+  const toggleCalendar = (id: string) => {
+    setShowCalendar(prevState => ({
+      ...prevState,
+      [id]: !prevState[id]
+    }));
+  };
+
+  const handleDateChange = (id: string, date: Date | Date[] | null) => {
+    if (date) {
+      const validDates = Array.isArray(date) ? date.filter(d => d !== null) as Date[] : [date];
+      setSelectedDates(prevDates => ({
+        ...prevDates,
+        [id]: validDates
+      }));
+    }
+  };
+
+  const formatDates = (dates: Date[] | undefined) => {
+    if (dates && dates.length > 0) {
+      return dates.map(date => {
+        if (date instanceof Date && !isNaN(date.getTime())) {
+          return date.toLocaleDateString();
+        }
+        return "";
+      }).join(" - ");
+    }
+    return "No dates selected";
+  };
+
   return (
-    <div
-      style={{
-        marginTop: "40px",
-        padding: "20px",
-        backgroundColor: "rgba(173, 216, 230, 0.5)",
-      }}
-    >
+    <div className="mt-10 p-5 bg-blue-200">
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-        <div
-          className="relative p-8 rounded-lg shadow-xl"
-          style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
-        >
+        <div className="relative p-8 rounded-lg shadow-xl bg-white bg-opacity-90">
           <h2 className="text-4xl font-bold text-center mb-6 text-blue-700 flex items-center justify-center">
             Your Trip to {country}
             <FaPlane className="text-blue-700 ml-2 mr-2" />
@@ -156,6 +177,12 @@ const TripComponent: React.FC = () => {
             >
               Car Rentals
             </button>
+            <button
+              onClick={() => setSelectedCategory("airportTaxis")}
+              className={`px-4 py-2 rounded-lg mx-2 ${selectedCategory === "airportTaxis" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}
+            >
+              Airport Taxis
+            </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
@@ -163,15 +190,14 @@ const TripComponent: React.FC = () => {
               filteredResults.map((item: Place, index: any) => (
                 <div
                   key={index}
-                  onClick={() => handleMoreInfo(item)}
-                  className="relative flex flex-col items-center bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl"
+                  className="relative flex flex-col bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl"
                 >
                   <div
                     className="absolute inset-0 rounded-lg border-4"
                     style={{
                       borderImage: "linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet) 1",
-                      borderRadius: "12px", // Rounded corners for the border
-                      pointerEvents: "none", // Make sure this div doesn't capture any clicks
+                      borderRadius: "12px",
+                      pointerEvents: "none",
                     }}
                   />
                   <img
@@ -179,7 +205,7 @@ const TripComponent: React.FC = () => {
                     src={item.firstPhotoUrl}
                     alt={item.displayName}
                   />
-                  <div className="p-4 text-center">
+                  <div className="flex flex-col p-4 text-center flex-1">
                     <h3 className="text-2xl font-semibold text-blue-600">
                       {item.displayName}
                     </h3>
@@ -194,29 +220,68 @@ const TripComponent: React.FC = () => {
                     </div>
                     <div className="flex justify-center items-center mt-2">
                       <FaMapMarkerAlt className="text-red-600 mr-1" />
-                      <p className="text-gray-600">{item.formattedAddress}</p>
+                      <p className="text-gray-800 font-medium">{item.formattedAddress}</p>
+                    </div>
+
+                    {/* Content wrapper */}
+                    <div className="flex flex-col flex-1 justify-between">
+                      <div className="flex-grow">
+                        {/* Content above the button */}
+                      </div>
+                      <div className="flex justify-center mb-4">
+                        <button
+                          onClick={() => toggleCalendar(item.id)}
+                          className="px-4 py-2 bg-blue-500 text-white rounded-full flex items-center"
+                        >
+                          Select Dates
+                        </button>
+                      </div>
+                      {showCalendar[item.id] && (
+                        <div className="absolute bottom-0 left-0 right-0 bg-white p-4 rounded-b-lg border-t-2 border-gray-300 shadow-lg">
+                          <DatePicker
+                            selected={selectedDates[item.id]?.[0] || null}
+                            onChange={(date) => handleDateChange(item.id, date)}
+                            startDate={selectedDates[item.id]?.[0]}
+                            endDate={selectedDates[item.id]?.[1]}
+                            selectsRange
+                            inline
+                          />
+                          <div className="text-center mt-2">
+                            <p>{formatDates(selectedDates[item.id])}</p>
+                            <button
+                              onClick={() => toggleCalendar(item.id)}
+                              className="mt-2 px-4 py-2 bg-green-500 text-white rounded-full"
+                            >
+                              Done
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-center text-gray-600">No results found</p>
+              <div className="col-span-full text-center text-lg text-gray-700">
+                No results found
+              </div>
             )}
           </div>
-          <div className="absolute bottom-4 right-4 flex space-x-4">
+
+          <div className="flex justify-center">
             <button
               onClick={goBackToItinerary}
-              className="flex items-center bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-colors"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center"
             >
               <FaArrowLeft className="mr-2" />
-              Back to Itinerary
+              Go Back
             </button>
             <button
               onClick={sendToItineraryPage}
-              className="flex items-center bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition-colors"
+              className="ml-4 px-4 py-2 bg-green-600 text-white rounded-lg flex items-center"
             >
               <FaSave className="mr-2" />
-              Save Itinerary
+              Save
             </button>
           </div>
         </div>
