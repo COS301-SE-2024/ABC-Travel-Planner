@@ -190,7 +190,7 @@ const TripComponent: React.FC = () => {
                     </div>
                     <div className="flex justify-center items-center mt-2">
                       <FaMoneyBill className="text-green-600 mr-1" />
-                      <p className="text-gray-800 font-medium">${item.price}</p>
+                      <p className="text-gray-800 font-medium">R{item.price}</p>
                     </div>
                     <div className="flex justify-center items-center mt-2">
                       <FaMapMarkerAlt className="text-red-600 mr-1" />

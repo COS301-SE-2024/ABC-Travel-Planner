@@ -109,10 +109,9 @@ export class ItineraryCreatorService {
       airportTaxis: [] as Place[]
 
     };
-    console.log(searchStrings['attractions']);
-    console.log("want car rental " + this.wantCarRental);
+
     const promises = categories.map(async (category) => {
-      if (category === "carRentals" && !this.wantCarRental) {
+      if (category == "carRentals" && !this.wantCarRental) {
         console.log('returns');
         return;  // Skip car rentals if the user doesn't want it
     }
@@ -123,6 +122,7 @@ export class ItineraryCreatorService {
     });
 
     await Promise.all(promises);
+    
 
     return places;
   }
@@ -140,7 +140,7 @@ export class ItineraryCreatorService {
     const selectTopTwo = (type: string): Place[] => {
       return sortedPlaces.filter(place => place.type === type).slice(0, 2);
     };
-  
+
     const selectedPlaces = [
       ...selectTopTwo('stays'),
       ...selectTopTwo('attractions'),
