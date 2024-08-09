@@ -24,7 +24,10 @@ interface Place {
 }
 
 
+
+
 const Home = () => {
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [popularDestinations, setPopularDestinations] = useState<{ image: string, place_id: string }[]>([]);
   const [backgroundImage, setBackgroundImage] = useState<string>('');

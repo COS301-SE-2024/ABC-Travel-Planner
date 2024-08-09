@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-//const { PlacesClient } = require('@googlemaps/places').v1;
 import { ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import { PlacesClient } from '@googlemaps/places';
@@ -11,11 +10,12 @@ interface Place {
     plusCode: any;
     id: string;
     rating: number;
-    accessibilityOptions: any; 
-    paymentOptions: any; 
+    accessibilityOptions: any;
+    paymentOptions: any;
     goodForChildren: boolean;
     firstPhotoUrl: string;
     type: string;
+    price: number;
 }
 
 interface DetailedPlace {
@@ -26,8 +26,8 @@ interface DetailedPlace {
     plusCode: any;
     id: string;
     rating: number;
-    accessibilityOptions: any; 
-    paymentOptions: any; 
+    accessibilityOptions: any;
+    paymentOptions: any;
     goodForChildren: boolean;
     photos: any[];
     reviews: any[];
@@ -36,13 +36,13 @@ interface DetailedPlace {
     nationalPhoneNumber: string;
     websiteUri: string;
 }
-  
-  interface Profile {
+
+interface Profile {
     name: string;
     username: string;
     id: string;
     imageUrl: string;
-  }
+}
 
 @Injectable()
 export class SearchService {
@@ -106,7 +106,7 @@ export class SearchService {
                     const request = {
                         name,
                     };
-                
+
                     const detailedPlace = await this.placesClient.getPlace(request, {
                         otherArgs: {
                             headers: {
@@ -115,12 +115,17 @@ export class SearchService {
                         },
                     });
 
+                    if (this.isCountry(detailedPlace[0])) {
+                        return null;
+                    }
 
                     const apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
                     const firstPhotoUrl = detailedPlace[0].photos && detailedPlace[0].photos.length > 0 ?
                         this.constructImageUrl(detailedPlace[0].photos[0].name, apiKey as string) :
                         this.defaultImageUrl;
 
+                    let address = detailedPlace[0].plusCode ? detailedPlace[0].plusCode.compoundCode : 'Unknown Address';
+                    const location = this.extractLocation(address);
                     return {
                         formattedAddress: detailedPlace[0].formattedAddress,
                         displayName: detailedPlace[0].displayName ? detailedPlace[0].displayName.text : '',
@@ -133,60 +138,117 @@ export class SearchService {
                         paymentOptions: detailedPlace[0].paymentOptions,
                         goodForChildren: detailedPlace[0].goodForChildren,
                         firstPhotoUrl: firstPhotoUrl,
-                        type: type
+                        type: type,
+                        price: this.generatePrice(detailedPlace[0].id, type, location.country)
                     } as Place;
                 }
 
             }));
-            return detailedPlaces;
+            const filteredPlaces = detailedPlaces.filter((place: Place | null) => place !== null);
+
+            return filteredPlaces;
         } catch (error) {
             console.error(error);
             return [];
         }
     }
 
-    async getDetailedPlace(id: string): Promise<DetailedPlace>{
-        try {
-                    const name = `places/${id}`;
-                    const request = {
-                        name,
-                    };
-                
-                    const detailedPlace = await this.placesClient.getPlace(request, {
-                        otherArgs: {
-                            headers: {
-                                'X-Goog-FieldMask': '*'
-                            },
-                        },
-                    });
-                    const apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
-                    const photoArr = [];
-                    if(detailedPlace[0].photos && detailedPlace[0].photos.length > 0){
-                        for (let index = 0; index < detailedPlace[0].photos.length; index++) {
-                            const photo = this.constructImageUrl(detailedPlace[0].photos[index].name, apiKey as string);
-                            photoArr.push(photo);
-                        }
-                    }
+    private isCountry(place: any): boolean {
+        // console.log(!place.formattedAddress.includes(',') )
+        // console.log(place.rating === 0)
+        // console.log( place.displayName == place.formattedAddress)
+        return !place.formattedAddress.includes(',') && place.rating === 0;
+    }
 
-                    return {
-                        id: detailedPlace[0].id,
-                        reviews: detailedPlace[0].reviews,
-                        locationDetails: detailedPlace[0].location,
-                        internationalPhoneNumber: detailedPlace[0].internationalPhoneNumber,
-                        nationalPhoneNumber: detailedPlace[0].nationalPhoneNumber,
-                        websiteUri: detailedPlace[0].websiteUri,
-                        formattedAddress: detailedPlace[0].formattedAddress,
-                        displayName: detailedPlace[0].displayName ? detailedPlace[0].displayName.text : '',
-                        editorialSummary: detailedPlace[0].editorialSummary ? detailedPlace[0].editorialSummary.text : '',
-                        userRatingCount: detailedPlace[0].userRatingCount,
-                        plusCode: detailedPlace[0].plusCode,
-                        rating: detailedPlace[0].rating,
-                        accessibilityOptions: detailedPlace[0].accessibilityOptions,
-                        paymentOptions: detailedPlace[0].paymentOptions,
-                        goodForChildren: detailedPlace[0].goodForChildren,
-                        photos: photoArr
-                    } as DetailedPlace;
-        
+    extractLocation(fullString: string) {
+        const parts = fullString.split(/,|\s+/);
+        const city = parts.slice(1, -1).join(' ');
+        const country = parts[parts.length - 1];
+        return { city, country };
+    }
+
+    generatePrice(id: string, type: string, country: string) {
+        let basePrice;
+        switch (type) {
+            case 'stays':
+                basePrice = 100;
+                break;
+            case 'attractions':
+                basePrice = 50;
+                break;
+            case 'carRental':
+                basePrice = 70;
+                break;
+            case 'airportTaxis':
+                basePrice = 40;
+                break;
+            default:
+                basePrice = 100;
+        }
+
+        let countryMultiplier;
+        switch (country) {
+            case 'Africa':
+                countryMultiplier = 1;
+                break;
+            case 'USA':
+                countryMultiplier = 1.2;
+                break;
+            case 'UK':
+                countryMultiplier = 1.3;
+                break;
+            default:
+                countryMultiplier = 1.1;
+        }
+
+        const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const randomMultiplier = 1 + (seed % 100) / 1000;
+
+        return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
+    };
+
+    async getDetailedPlace(id: string): Promise<DetailedPlace> {
+        try {
+            let name = `places/${id}`;
+            const request = {
+                name,
+            };
+
+            const detailedPlace = await this.placesClient.getPlace(request, {
+                otherArgs: {
+                    headers: {
+                        'X-Goog-FieldMask': '*'
+                    },
+                },
+            });
+            let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
+            let photoArr = [];
+            if (detailedPlace[0].photos && detailedPlace[0].photos.length > 0) {
+                for (let index = 0; index < detailedPlace[0].photos.length; index++) {
+                    let photo = this.constructImageUrl(detailedPlace[0].photos[index].name, apiKey as string);
+                    photoArr.push(photo);
+                }
+            }
+
+            return {
+                id: detailedPlace[0].id,
+                reviews: detailedPlace[0].reviews,
+                locationDetails: detailedPlace[0].location,
+                internationalPhoneNumber: detailedPlace[0].internationalPhoneNumber,
+                nationalPhoneNumber: detailedPlace[0].nationalPhoneNumber,
+                websiteUri: detailedPlace[0].websiteUri,
+                formattedAddress: detailedPlace[0].formattedAddress,
+                displayName: detailedPlace[0].displayName ? detailedPlace[0].displayName.text : '',
+                editorialSummary: detailedPlace[0].editorialSummary ? detailedPlace[0].editorialSummary.text : '',
+                userRatingCount: detailedPlace[0].userRatingCount,
+                plusCode: detailedPlace[0].plusCode,
+                rating: detailedPlace[0].rating,
+                accessibilityOptions: detailedPlace[0].accessibilityOptions,
+                paymentOptions: detailedPlace[0].paymentOptions,
+                goodForChildren: detailedPlace[0].goodForChildren,
+                photos: photoArr
+            } as DetailedPlace;
+
         } catch (error) {
             console.error(error);
             return {} as DetailedPlace;
@@ -197,12 +259,12 @@ export class SearchService {
     //     const usersSnapshot = await this.db.collection('Users').get();
     //     const users: Profile[] = [];
     //     const lowerCaseUser = user.toLowerCase();
-    
+
     //     usersSnapshot.forEach(doc => {
     //         const data = doc.data();
     //         const name = data.name.toLowerCase();
     //         const username = data.username.toLowerCase();
-    
+
     //         if (name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) {
     //             users.push({
     //                 name: data.name,
@@ -212,19 +274,19 @@ export class SearchService {
     //             } as Profile);
     //         }
     //     });
-    
+
     //     return users;
     // }
-    
+
     async searchProfile(user: string): Promise<Profile[]> {
         const usersSnapshot = await this.db.collection('Users').get();
         const lowerCaseUser = user.toLowerCase();
-        
+
         const usersPromises = usersSnapshot.docs.map(async doc => {
             const data = doc.data();
             const name = data.name.toLowerCase();
             const username = data.username.toLowerCase();
-            
+
             if (name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) {
                 return {
                     name: data.name,
@@ -234,12 +296,12 @@ export class SearchService {
                 } as Profile;
             }
         });
-    
+
         const usersResults = await Promise.all(usersPromises);
         const users = usersResults.filter(user => user !== undefined);
-    
+
         return users;
     }
-    
-    
+
+
 }

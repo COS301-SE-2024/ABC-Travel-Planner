@@ -153,6 +153,7 @@ const Account = () => {
       });
       setFollowers(r.data);
     }
+    localStorage.removeItem('searchResults');
     fetch();
   }, []);
 
