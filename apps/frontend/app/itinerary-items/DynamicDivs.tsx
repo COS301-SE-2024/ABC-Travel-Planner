@@ -5,6 +5,7 @@ import SearchModal from "./SearchModal"
 import "./modal.css"
 import Cookie from 'js-cookie'
 import PopupMessage from '../utils/PopupMessage';
+import { truncateTitle } from '../utils/functions/TruncateTitle';
 
 interface ItemData {
     item_name: string;
@@ -28,9 +29,7 @@ interface ItemData {
     destination?: any;
   }
  
-  export const truncateTitle = (title: string) => {
-    return title.length > 55 ? title.substring(0,55) + '...' : title;
-  }
+
 
   //Making the component async ensures that it constantly refreshes the whole page on change/useEffect execution
   const DynamicDivs: React.FC<DynamicDivsProps> = ({ id, location, destination }) => {
@@ -190,7 +189,7 @@ interface ItemData {
                     </a>
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{truncateTitle(divItem?.data?.item_name)}</h2>
+                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
                         </a>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem?.data?.item_type}</p>
                     </div>

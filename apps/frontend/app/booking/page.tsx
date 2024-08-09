@@ -2,7 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import dynamic from "next/dynamic"; // Import dynamic for client-side component loading
 import Cookie from "js-cookie";
-import { truncateTitle } from "../itinerary-items/DynamicDivs";
+import { truncateTitle } from "../utils/functions/TruncateTitle";
+import moment from 'moment';
 
 interface Item {
   id: number;
@@ -20,14 +21,49 @@ interface Item {
 const ConfirmBookingButton = dynamic(() => import('./ConfirmBookingButton'), {
   ssr: false, // Ensure the component is not server-side rendered
 });
+
+const checkType = (type: string) => {
+  switch (type) {
+    case "attractions":
+      return "Attraction"
+  
+    case "flights":
+      return "Flight"
+    
+    case "stays":
+      return "A place to stay"
+    
+    case "car rental":
+      return "Car rental"
+
+    case "airport taxi":
+      return "Airport taxi"
+
+    default:
+      return "TYPE"
+  }
+}
+
+function formatDate(date: number) {
+  return moment.unix(date).format('D MMM YYYY: HH:mm');
+}
+
+
+
 const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
   const curr_user = Cookie.get('user_id') ?? 'User1';
   const { id } = searchParams;
+  let totalCost = 0;
 
   const convertToRand = (usd: number): number => {
     const exchangeRate = 18; // 1 USD = 18 ZAR
     return usd * exchangeRate;
   };
+
+  const updateTotal = (price: number)  => {
+    totalCost += price;
+    return price?.toFixed(2) ?? 0;
+  }
 
   const calculateTotal = (items: Item[]): number => {
     return items.reduce((total, item) => total + convertToRand(item.price), 0);
@@ -170,8 +206,9 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
       </Head>
       <h1 className="text-2xl font-bold mb-4 text-center">Book Your Trip</h1>
 
-
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        
+       {/* Item cards */}
        {data.map((item: any, index: number) => (
           <div key={item.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
             <Image
@@ -179,85 +216,26 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
               alt={item.item_name}
               width={400}
               height={300}
+              style={{ maxHeight: '190px', maxWidth: '345x' }} 
               className="rounded mb-4"
             />
             <div className="font-bold">
-              <h2>{truncateTitle(item.item_name)}</h2>
-              <p>{item.item_type}</p>
+              <h2>{truncateTitle(item.item_name, 30)}</h2>
+              <p>{checkType(item.item_type)}</p>
               <p>Address: {item.destination}</p>
-              {/* <p>Date: {item.date}</p> */}
-              <p>Time: {new Date(item.timestamp._seconds * 1000).toString()}</p>
-              {/* <p className="text-right">R{convertToRand(flight.price).toFixed(2)}</p> */}
+              <p>Date: {item.date ?? 'RANDOM DATE'}</p>
+              <p>Time added: {formatDate(item.timestamp._seconds)}</p>
+              <p className="text-right">R{updateTotal(item.price)}</p>
             </div>
           </div>
-        ))}
-       
-        {/* Flights */}
-        {/* {flights.map((flight) => (
-          <div key={flight.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-            <Image
-              src={flight.image}
-              alt={flight.name}
-              width={300}
-              height={200}
-              className="rounded mb-4"
-            />
-            <div className="font-bold">
-              <p>{flight.name}</p>
-              <p>{flight.details}</p>
-              <p>Date: {flight.date}</p>
-              <p>Time: {flight.time}</p>
-              <p className="text-right">R{convertToRand(flight.price).toFixed(2)}</p>
-            </div>
-          </div>
-        ))} */}
-
-        {/* Accommodations */}
-        {/* {accommodations.map((accommodation) => (
-          <div key={accommodation.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-            <Image
-              src={accommodation.image}
-              alt={accommodation.name}
-              width={300}
-              height={200}
-              className="rounded mb-4"
-            />
-            <div className="font-bold">
-              <p>{accommodation.name}</p>
-              <p>{accommodation.details}</p>
-              <p>Check-in: {accommodation.checkIn}</p>
-              <p>Check-out: {accommodation.checkOut}</p>
-              <p className="text-right">R{convertToRand(accommodation.price).toFixed(2)}</p>
-            </div>
-          </div>
-        ))} */}
-
-        {/* Activities */}
-        {/* {activities.map((activity) => (
-          <div key={activity.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-            <Image
-              src={activity.image}
-              alt={activity.name}
-              width={300}
-              height={200}
-              className="rounded mb-4"
-            />
-            <div className="font-bold">
-              <p>{activity.name}</p>
-              <p>{activity.details}</p>
-              <p>Date: {activity.date}</p>
-              <p>Time: {activity.time}</p>
-              <p className="text-right">R{convertToRand(activity.price).toFixed(2)}</p>
-            </div>
-          </div>
-        ))} */}
+        ))}       
       </div>
 
       {/* Total Card with Confirm Booking Button */}
       <div className="flex justify-center mt-4">
         <div className="w-full max-w-4xl bg-blue-300 rounded-lg shadow-lg p-6 relative text-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <h2 className="text-xl font-bold mb-4">Total: </h2>
-          <p className="font-bold mb-4">R{finalTotal.toFixed(2)}</p>
+          <p className="font-bold mb-4">R{totalCost.toFixed(2) ?? 0}</p>
           <div className="mt-4">
             <ConfirmBookingButton /> {/* Render the client-side component here */}
           </div>

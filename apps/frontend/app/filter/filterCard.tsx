@@ -104,11 +104,15 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         const itemType = objectToUpload.type ?? 'NOTYPE';
         const address = objectToUpload.Eg?.formattedAddress ?? 'DEFAULT ADDRESS'
         const image_url = objectToUpload.firstPhotoUrl ?? 'PHOTO URL'
-  
+        const price = objectToUpload.price;
+        const dates = objectToUpload.dates;
+
         const uploadDetails = {
             user_id: userId,
             item_name: itemTitle,
             item_type: itemType,
+            price,
+            date: dates,
             location,
             itinerary_id: id,
             destination: address,
