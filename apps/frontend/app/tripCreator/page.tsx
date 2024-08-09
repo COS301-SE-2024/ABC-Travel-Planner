@@ -38,8 +38,9 @@ const TripComponent: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [showCalendar, setShowCalendar] = useState<{ [key: string]: boolean }>({});
-  const [selectedDates, setSelectedDates] = useState<{ [key: string]: Date[] }>({});
+  const [showCalendar, setShowCalendar] = useState<{[key: string]: boolean}>({});
+  const [selectedDates, setSelectedDates] = useState<{[key: string]: Date[]}>({});
+  const [showModal, setShowModal] = useState(false);
 
   const searchParams = useSearchParams();
   const country = searchParams?.get("country");
@@ -108,6 +109,10 @@ const TripComponent: React.FC = () => {
     await Promise.all(promise);
   };
 
+  const handleMoreInfo = (item: Place) => {
+    router.push(`/${item.id}`);
+  };
+
   function extractLocation(fullString: string) {
     const parts = fullString.split(/,|\s+/);
     const city = parts.slice(1, -1).join(' ');
@@ -116,10 +121,16 @@ const TripComponent: React.FC = () => {
   }
 
   const goBackToItinerary = () => {
-    alert(
-      "Are you sure you want to go back to the itinerary page? The generated itinerary will be lost."
-    );
+    setShowModal(true);
+  };
+
+  const confirmGoBack = () => {
+    setShowModal(false);
     router.push("/itinerary");
+  };
+
+  const cancelGoBack = () => {
+    setShowModal(false);
   };
 
   // Filter results based on the selected category
@@ -239,6 +250,7 @@ const TripComponent: React.FC = () => {
                 <div
                   key={index}
                   className="relative flex flex-col bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl"
+                  onClick={() => handleMoreInfo(item)}
                 >
                   <div
                     className="absolute inset-0 rounded-lg border-4"
@@ -268,70 +280,84 @@ const TripComponent: React.FC = () => {
                     </div>
                     <div className="flex justify-center items-center mt-2">
                       <FaMapMarkerAlt className="text-red-600 mr-1" />
-                      <p className="text-gray-800 font-medium">{item.formattedAddress}</p>
+                      <p className="text-gray-800">{item.formattedAddress}</p>
                     </div>
-
-                    {/* Content wrapper */}
-                    <div className="flex flex-col flex-1 justify-between">
-                      <div className="flex-grow">
-                        {/* Content above the button */}
-                      </div>
-                      <div className="flex justify-center mb-4">
-                        <button
-                          onClick={() => toggleCalendar(item.id)}
-                          className="px-4 py-2 bg-blue-500 text-white rounded-full flex items-center"
-                        >
-                          Select Dates
-                        </button>
-                      </div>
+                    <div className="mt-4">
+                      <button
+                        className="bg-blue-500 text-white rounded-lg py-2 px-4 focus:outline-none"
+                        onClick={() => toggleCalendar(item.id)}
+                      >
+                        Select Dates
+                      </button>
                       {showCalendar[item.id] && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-white p-4 rounded-b-lg border-t-2 border-gray-300 shadow-lg">
+                        <div className="mt-4">
                           <DatePicker
                             selected={selectedDates[item.id]?.[0] || null}
                             onChange={(date) => handleDateChange(item.id, date)}
                             startDate={selectedDates[item.id]?.[0]}
-                            endDate={selectedDates[item.id]?.[1]}
+                            endDate={selectedDates[item.id]?.[selectedDates[item.id]?.length - 1]}
                             selectsRange
                             inline
+                            className="border border-blue-300 rounded-lg p-2"
                           />
-                          <div className="text-center mt-2">
-                            <p>{formatDates(selectedDates[item.id])}</p>
-                            <button
-                              onClick={() => toggleCalendar(item.id)}
-                              className="mt-2 px-4 py-2 bg-green-500 text-white rounded-full"
-                            >
-                              Done
-                            </button>
-                          </div>
+                          <button
+                            className="bg-green-500 text-white rounded-lg py-2 px-4 mt-2"
+                            onClick={() => toggleCalendar(item.id)}
+                          >
+                            Done
+                          </button>
                         </div>
                       )}
+                    </div>
+                    <div className="mt-4 text-gray-800">
+                      {formatDates(selectedDates[item.id])}
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="col-span-full text-center text-lg text-gray-700">
-                No results found
-              </div>
+              <p className="text-gray-600">Results loading...</p>
             )}
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-between">
             <button
+              className="bg-blue-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center"
               onClick={goBackToItinerary}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center"
             >
-              <FaArrowLeft className="mr-2" />
-              Go Back
+              <FaArrowLeft className="mr-2" /> Go Back
             </button>
             <button
+              className="bg-green-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center"
               onClick={sendToItineraryPage}
-              className="ml-4 px-4 py-2 bg-green-600 text-white rounded-lg flex items-center"
             >
-              <FaSave className="mr-2" />
-              Save
+              <FaSave className="mr-2" /> Save Trip
             </button>
           </div>
+
+          {showModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h3 className="text-xl font-semibold mb-4">
+                  Are you sure you want to go back? Your changes will not be saved.
+                </h3>
+                <div className="flex justify-end">
+                  <button
+                    className="bg-gray-500 text-white rounded-lg py-2 px-4 mr-2 focus:outline-none"
+                    onClick={cancelGoBack}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="bg-red-500 text-white rounded-lg py-2 px-4 focus:outline-none"
+                    onClick={confirmGoBack}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

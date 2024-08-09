@@ -1,21 +1,25 @@
-
 'use client';
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { FaArrowLeft } from 'react-icons/fa';
 
-const BackButton: React.FC = () => {
+interface BackButtonProps {
+  destination: string;
+  label: string;
+}
+
+const BackButton: React.FC<BackButtonProps> = ({ destination, label }) => {
   const router = useRouter();
 
   const handleBack = () => {
-    router.push('/search'); // Navigate to the search page
+    router.push(destination);
   };
 
   return (
-    <button onClick={handleBack} className="flex items-center text-blue-600 hover:text-blue-800 mb-4">
+    <button onClick={handleBack} className="flex items-center text-blue-600 hover:text-blue-800 mb-4 bg-blue-100 p-2 rounded-md shadow-md hover:bg-blue-200 transition-all">
       <FaArrowLeft className="mr-2" />
-      Back to Search
+      {label}
     </button>
   );
 };
