@@ -27,6 +27,10 @@ interface ItemData {
     location?: string;
     destination?: any;
   }
+ 
+  export const truncateTitle = (title: string) => {
+    return title.length > 55 ? title.substring(0,55) + '...' : title;
+  }
 
   //Making the component async ensures that it constantly refreshes the whole page on change/useEffect execution
   const DynamicDivs: React.FC<DynamicDivsProps> = ({ id, location, destination }) => {
@@ -175,10 +179,6 @@ interface ItemData {
     const handleModelClose = () => {
       setIsOpen(false);
     };
-
-    const truncateTitle = (title: string) => {
-        return title.length > 55 ? title.substring(0,55) + '...' : title;
-    }
 
     return (
         <>

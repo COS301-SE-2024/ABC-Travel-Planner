@@ -33,9 +33,8 @@ export class ItineraryItemsController {
     }
 
     @Get(':id/:user')
-    async getItemsById(@Param('id') id: number, @Param('user') user: string): Promise<any[]> {
+    async getItemsById(@Param('id') id: string, @Param('user') user: string): Promise<any[]> {
         try {
-            console.log("REACHED BACKEND!!!");
             return await this.itineraryItemsService.getItemsbyId(id, user);
         } 
         catch (error) {
