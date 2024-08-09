@@ -4,6 +4,9 @@ import Link from 'next/link';
 import axios from "axios";
 import Cookies from "js-cookie";
 import { getItineraryImage } from '../itinerary';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 interface SearchCardProps {
     place: any;
@@ -85,7 +88,8 @@ export const generatePrice = (id: string, type: string, country: string) => {
 };
 
 const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
-    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+    const [showCalendar, setShowCalendar] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isNewItineraryModalOpen, setIsNewItineraryModalOpen] = useState(false);
     const [itineraries, setItineraries] = useState<any>([]);
@@ -99,10 +103,6 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const addressParts = address.split(',');
     const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
     const price = generatePrice(place.id, place.type, location.country);
-
-    const handleSelectDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedDate(event.target.value);
-    };
 
     const handleSelectItinerary = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedItinerary(event.target.value);
@@ -137,8 +137,10 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
             console.warn("selectedItinerary is not set");
             parsedItem = {}; // or provide default values
         }
+        console.log(JSON.stringify({ user_id: user_id, item_name: place.displayName, item_type: place.type, 
+            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates}));
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl});
+            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates});
     };
 
     const handleSaveNewItinerary = async () => {
@@ -152,7 +154,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         //Now add the item
         const newItemData = JSON.parse(newI.config.data);
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl});
+            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates});
     };
 
     function extractLocation(fullString: string) {
@@ -216,49 +218,66 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         )}
                     </Link>
                     <div className="mt-4 flex justify-between items-end">
-                        <div className="flex items-center space-x-4">
-                            <div className="relative inline-block">
-                                <select
-                                    className="block appearance-none bg-white border border-gray-300 rounded-md shadow-sm py-3 px-20 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-lg"
-                                    value={selectedDate}
-                                    onChange={handleSelectDate}
-                                >
-                                    <option value="">Select a date</option>
-                                    {availableDates.map((date: any) => (
-                                        <option
-                                            key={date}
-                                            value={date}
-                                            className="text-lg hover:bg-gray-100"
-                                        >
-                                            {date}
-                                        </option>
-                                    ))}
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg
-                                        className="w-4 h-4 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                </div>
-                            </div>
-                            {selectedDate && (
-                                <div className="block appearance-none bg-white rounded-md py-3 px-6 mt-1">
-                                    <p className="text-gray-400 text-xl font-semibold">
-                                        Selected Date: {selectedDate}
-                                    </p>
-                                </div>
-                            )}
+                    <div className="mt-4 flex flex-col items-start space-y-4">
+    <button
+        onClick={() => setShowCalendar(!showCalendar)}
+        className="bg-blue-500 text-white rounded-md px-4 py-2"
+    >
+        Select Dates
+    </button>
+
+    {showCalendar && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white rounded-lg p-4 w-80 shadow-lg">
+                <DatePicker
+                    selected={null}
+                    onChange={(date) => {
+                        if (date) {
+                            setSelectedDates((prevDates) => {
+                                const isAlreadySelected = prevDates.some(
+                                    (d) => d.getTime() === date.getTime()
+                                );
+                                if (isAlreadySelected) {
+                                    return prevDates.filter(
+                                        (d) => d.getTime() !== date.getTime()
+                                    );
+                                } else {
+                                    return [...prevDates, date];
+                                }
+                            });
+                        }
+                    }}
+                    inline
+                    highlightDates={selectedDates}
+                    isClearable={false}
+                    dateFormat="yyyy-MM-dd"
+                    placeholderText="Select dates"
+                    className="block w-full bg-white border border-gray-300 rounded-md shadow-sm text-lg"
+                />
+                <button
+                    onClick={() => setShowCalendar(false)}
+                    className="bg-blue-500 text-white rounded-md px-4 py-2 mt-4 w-full"
+                >
+                    Done
+                </button>
+            </div>
+        </div>
+    )}
+
+    {selectedDates.length > 0 && (
+        <div className="bg-white rounded-md py-3 px-4 mt-1 shadow-sm">
+            {selectedDates.map((date, index) => (
+                <p key={index} className="text-blue-400 text-xl font-semibold">
+                    Selected Date: {date.toLocaleDateString()}
+                </p>
+            ))}
+        </div>
+    )}
+                       
                         </div>
                         <div className="text-right">
                             <Link href={`/${place.id}`} passHref>
-                                <p className="text-3xl text-blue-500 font-semibold">ZAR {price}</p>
+                                <p className="text-3xl text-blue-500 font-semibold">ZAR {place.price}</p>
                                 <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
                                 <p className="text-gray-600 text-lg">Free cancellation</p>
                             </Link>

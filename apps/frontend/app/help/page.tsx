@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaEnvelope, FaPhone, FaQuestionCircle, FaVideo, FaPlane } from 'react-icons/fa';
+import ClearLocalStorage from './clearLocalStorage';
 
 const Help = () => {
   // Mock data for FAQs
@@ -71,7 +72,7 @@ const Help = () => {
           ></iframe>
         </div>
       </div>
-
+      <ClearLocalStorage />
 
     </div>
   );
