@@ -13,6 +13,9 @@ import { GoogleMapsModule } from './google-maps/google-maps.module';
 import { CommentsModule } from './comments/comments.module';
 import { ImagesModule } from './images/images.module';
 import { LikeModule } from './likes/like.module';
+import { SearchModule } from './search/search.module';
+//import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
+//import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -29,7 +32,9 @@ import { LikeModule } from './likes/like.module';
     CommentsModule,
     ImagesModule,
     LikeModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    SearchModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
