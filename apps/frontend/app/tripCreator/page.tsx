@@ -38,8 +38,8 @@ const TripComponent: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [showCalendar, setShowCalendar] = useState<{[key: string]: boolean}>({});
-  const [selectedDates, setSelectedDates] = useState<{[key: string]: Date[]}>({});
+  const [showCalendar, setShowCalendar] = useState<{ [key: string]: boolean }>({});
+  const [selectedDates, setSelectedDates] = useState<{ [key: string]: Date[] }>({});
   const [showModal, setShowModal] = useState(false);
 
   const searchParams = useSearchParams();
@@ -67,7 +67,7 @@ const TripComponent: React.FC = () => {
               reason
             )}&interests=${encodeURIComponent(
               interest
-            )}&wantCarRental=${encodeURIComponent(wantCarRental)}`
+            )}&wantCarRental=${encodeURIComponent(wantCarRental.toString())}`
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -103,8 +103,10 @@ const TripComponent: React.FC = () => {
     const promise = searchResults.map(async (item) => {
       let address = item.plusCode ? item.plusCode.compoundCode : 'Unknown Address';
       const location = extractLocation(address);
-      const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: item.displayName, item_type: item.type, 
-        location: location.country, itinerary_id: newI.data, destination: item.formattedAddress, image_url: item.firstPhotoUrl, price: item.price, dates: item.dates});
+      const newItem = await axios.post(`${backendUrl}/itinerary-items/add`, {
+        user_id: user_id, item_name: item.displayName, item_type: item.type,
+        location: location.country, itinerary_id: newI.data, destination: item.formattedAddress, image_url: item.firstPhotoUrl, price: item.price, dates: item.dates
+      });
     });
     await Promise.all(promise);
   };
@@ -187,7 +189,7 @@ const TripComponent: React.FC = () => {
 
     console.log(JSON.stringify(searchResults));
   };
-  
+
 
 
   const formatDates = (dates: Date[] | undefined) => {

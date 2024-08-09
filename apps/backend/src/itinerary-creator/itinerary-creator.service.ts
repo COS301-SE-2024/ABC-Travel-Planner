@@ -65,28 +65,23 @@ export class ItineraryCreatorService {
         `${interests} in ${country}`
       ],
       carRentals: [
-        `Best car rental services for ${reason} in ${country} catering to ${interests}`,
-        `Affordable car rentals for ${reason} in ${country} with ${interests}`,
-        `Luxury car rentals for ${reason} in ${country} focusing on ${interests}`,
-        `Family-friendly car rentals for ${reason} in ${country} with ${interests}`,
-        `Car rental deals for ${reason} in ${country} considering ${interests}`,
-        `Eco-friendly car rentals for ${reason} in ${country} with ${interests}`,
-        `Reliable car rental agencies for ${reason} in ${country} for ${interests}`,
-        `Convenient car rentals for ${reason} in ${country} with ${interests}`,
-        `Best-rated car rentals for ${reason} in ${country} focused on ${interests}`,
-        `Long-term car rentals for ${reason} in ${country} with ${interests}`
+        `Best car rental services in ${country}`,
+        `Affordable car rentals in ${country}`,
+        `Luxury car rentals in ${country}`,
+        `Family-friendly car rentals for ${reason} in ${country}`,
+        `Eco-friendly car rentals in ${country}`,
+        `Reliable car rental agencies in ${country}`,
+        `Convenient car rentals in ${country}`,
+        `Best-rated car rentals in ${country}`
       ],
       airportTaxis: [
-        `Reliable airport taxis for ${reason} in ${country}`,
-        `Affordable airport taxis for ${reason} in ${country}`,
+        `Reliable airport taxis in ${country}`,
+        `Affordable airport taxis in ${country}`,
         `Luxury airport taxi services for ${reason} in ${country}`,
         `Family-friendly airport taxis for ${reason} in ${country}`,
-        `Eco-friendly airport taxis for ${reason} in ${country}`,
-        `Best-rated airport taxis for ${reason} in ${country}`,
-        `Airport taxi deals for ${reason} in ${country}`,
-        `24/7 airport taxis for ${reason} in ${country}`,
-        `Airport taxis with great amenities for ${reason}`,
-        `Convenient airport taxis for ${reason} in ${country}`
+        `Best-rated airport taxis in ${country}`,
+        `24/7 airport taxis in ${country}`,
+        `Convenient airport taxis in ${country}`
       ]
     };
 
