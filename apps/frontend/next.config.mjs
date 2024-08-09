@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: [
+    domains: [ 
+      'rgfpdfcxkoepvqtmtxir.supabase.co',
       'places.googleapis.com'
     ],
   },

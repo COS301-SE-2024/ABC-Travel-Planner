@@ -4,6 +4,7 @@ import dynamic from "next/dynamic"; // Import dynamic for client-side component 
 import Cookie from "js-cookie";
 import { truncateTitle } from "../utils/functions/TruncateTitle";
 import moment from 'moment';
+import axios from 'axios';
 
 interface Item {
   id: number;
@@ -51,7 +52,8 @@ function formatDate(date: number) {
 
 
 const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
-  const curr_user = Cookie.get('user_id') ?? 'User1';
+  const curr_user = Cookie.get('user_id');
+  console.log("Current user: " + curr_user);
   const { id } = searchParams;
   let totalCost = 0;
 
@@ -170,18 +172,15 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
 
   const fetchItems = async() => {
     console.log("Reached fetch function");
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/itinerary-items/${id}/${curr_user}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type' : 'application/json'
-        }
-      }
-    );
-
-    console.log(res.status, ":", res.headers);
-    const data = await res.json();
-    console.log("RESPONSE FROM SERVER: " + JSON.stringify(data));
-    return data;
+    try {
+      const response = await axios.get(`http://localhost:4000/itinerary-items/${id}/${curr_user}`);
+      console.log(response.data); // Handle the response data
+      console.log("RESPONSE FROM SERVER: " + JSON.stringify(response.data));
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching data:', error); // Handle the error
+      return [];
+    }
   }
 
   const flightTotal = calculateTotal(flights);
@@ -197,7 +196,7 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
   console.log("ID found: " + id);
   console.log("Curr_User: " + curr_user);
   console.log("Backend URL: " + process.env.NEXT_PUBLIC_BACKEND_URL);
-  const data = await fetchItems();
+  const data: any[] = await fetchItems();
   
   return (
     <div className="container mx-auto p-4 relative">
@@ -209,7 +208,7 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         
        {/* Item cards */}
-       {data.map((item: any, index: number) => (
+      {data?.map((item: any, index: number) => (
           <div key={item.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
             <Image
               src={item.image_url}
@@ -265,3 +264,7 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
 };
 
 export default Booking;
+
+function then(arg0: (response: any) => void) {
+  throw new Error("Function not implemented.");
+}
