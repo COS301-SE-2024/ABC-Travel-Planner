@@ -5,7 +5,6 @@ import Cookie from 'js-cookie';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
-
 interface FilterCardProps {
   place: any;
 }

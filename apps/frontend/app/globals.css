@@ -1356,3 +1356,21 @@ body {
 .submit-comment-button:hover {
   background-color: #0056b3;
 }
+
+/* NEW HOME STYLING */
+
+@keyframes gentlePulse {
+  0% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.75;
+  }
+}
+
+.gentle-pulse {
+  animation: gentlePulse 2s infinite;
+}
