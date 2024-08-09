@@ -187,6 +187,7 @@ const TripComponent: React.FC = () => {
 
     console.log(JSON.stringify(searchResults));
   };
+  
 
 
   const formatDates = (dates: Date[] | undefined) => {
