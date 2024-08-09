@@ -8,4 +8,9 @@ export class AuthService {
         const result =  await this.firebaseApp.auth().updateUser(user_id, { email });
         return result;
     }
+
+    async changePassword(password: string, user_id: string) {
+        const result = await this.firebaseApp.auth().updateUser(user_id, { password });
+        return result;
+    }
 }

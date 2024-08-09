@@ -16,4 +16,15 @@ export class AuthController {
             throw new InternalServerErrorException(error.message)
         }
     }
+
+    @Post('ChangePassword')
+    async changePassword(@Body() body: { password: string , user_id: string}) {
+        try {
+            const result = await this.authService.changePassword(body.password, body.user_id);
+            return result;
+        } 
+        catch (error) {
+            throw new InternalServerErrorException(error.message)
+        }
+    }
 }
