@@ -213,7 +213,7 @@ const TripComponent: React.FC = () => {
             <FaPlane className="text-blue-700 ml-2 mr-2" />
             <FaGlobe className="text-blue-700 mr-2" />
           </h2>
-
+  
           <div className="flex justify-center mb-6">
             <button
               onClick={() => setSelectedCategory("all")}
@@ -246,7 +246,7 @@ const TripComponent: React.FC = () => {
               Airport Taxis
             </button>
           </div>
-
+  
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
             {filteredResults.length > 0 ? (
               filteredResults.map((item: Place, index: any) => (
@@ -285,35 +285,49 @@ const TripComponent: React.FC = () => {
                       <FaMapMarkerAlt className="text-red-600 mr-1" />
                       <p className="text-gray-800">{item.formattedAddress}</p>
                     </div>
-                    <div className="mt-4">
-                      <button
-                        className="bg-blue-500 text-white rounded-lg py-2 px-4 focus:outline-none"
-                        onClick={() => toggleCalendar(item.id)}
-                      >
-                        Select Dates
-                      </button>
+
+                    <div className="flex flex-col flex-1 justify-between">
+                      <div className="flex-grow">
+                        {/* Content above the button */}
+                      </div>
+                      <div className="flex justify-center mb-4">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleCalendar(item.id);
+                          }}
+                          className="px-4 py-2 bg-blue-500 text-white rounded-full flex items-center"
+                        >
+                          Select Dates
+                        </button>
+                      </div>
                       {showCalendar[item.id] && (
-                        <div className="mt-4">
+                        <div
+                          className="absolute bottom-0 left-0 right-0 bg-white p-4 rounded-b-lg border-t-2 border-gray-300 shadow-lg"
+                          onClick={(e) => e.stopPropagation()} // Prevents the calendar click from propagating
+                        >
                           <DatePicker
                             selected={selectedDates[item.id]?.[0] || null}
                             onChange={(date) => handleDateChange(item.id, date)}
                             startDate={selectedDates[item.id]?.[0]}
-                            endDate={selectedDates[item.id]?.[selectedDates[item.id]?.length - 1]}
+                            endDate={selectedDates[item.id]?.[1]}
                             selectsRange
                             inline
-                            className="border border-blue-300 rounded-lg p-2"
                           />
-                          <button
-                            className="bg-green-500 text-white rounded-lg py-2 px-4 mt-2"
-                            onClick={() => toggleCalendar(item.id)}
-                          >
-                            Done
-                          </button>
+                          <div className="text-center mt-2">
+                            <p>{formatDates(selectedDates[item.id])}</p>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleCalendar(item.id);
+                              }}
+                              className="mt-2 px-4 py-2 bg-green-500 text-white rounded-full"
+                            >
+                              Done
+                            </button>
+                          </div>
                         </div>
                       )}
-                    </div>
-                    <div className="mt-4 text-gray-800">
-                      {formatDates(selectedDates[item.id])}
                     </div>
                   </div>
                 </div>
@@ -322,10 +336,10 @@ const TripComponent: React.FC = () => {
               <p className="text-gray-600">Results loading...</p>
             )}
           </div>
-
-          <div className="flex justify-between">
+  
+          <div className="flex justify-center">
             <button
-              className="bg-blue-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center"
+              className="bg-blue-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center mr-2"
               onClick={goBackToItinerary}
             >
               <FaArrowLeft className="mr-2" /> Go Back
@@ -337,7 +351,7 @@ const TripComponent: React.FC = () => {
               <FaSave className="mr-2" /> Save Trip
             </button>
           </div>
-
+  
           {showModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
               <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -346,13 +360,13 @@ const TripComponent: React.FC = () => {
                 </h3>
                 <div className="flex justify-end">
                   <button
-                    className="bg-gray-500 text-white rounded-lg py-2 px-4 mr-2 focus:outline-none"
+                    className="bg-gray-500 text-white rounded-lg py-2 px-4 mr-2"
                     onClick={cancelGoBack}
                   >
                     Cancel
                   </button>
                   <button
-                    className="bg-red-500 text-white rounded-lg py-2 px-4 focus:outline-none"
+                    className="bg-red-500 text-white rounded-lg py-2 px-4"
                     onClick={confirmGoBack}
                   >
                     Confirm
@@ -365,6 +379,7 @@ const TripComponent: React.FC = () => {
       </div>
     </div>
   );
+  
 };
 
 export default TripComponent;
