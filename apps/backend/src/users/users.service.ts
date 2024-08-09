@@ -34,4 +34,5 @@ export class UsersService {
       throw new InternalServerErrorException('Failed to fetch users from the database');
     }
   }
+
 }

@@ -119,7 +119,7 @@ export class SearchService {
                         return null;
                     }
 
-                    let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
+                    const apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
                     const firstPhotoUrl = detailedPlace[0].photos && detailedPlace[0].photos.length > 0 ?
                         this.constructImageUrl(detailedPlace[0].photos[0].name, apiKey as string) :
                         this.defaultImageUrl;

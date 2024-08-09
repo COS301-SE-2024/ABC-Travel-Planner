@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Cookie from "js-cookie";
 import getUser from "@/libs/actions/getUser";
+import { MdSettings } from "react-icons/md";
 
 export const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -13,7 +14,6 @@ export const Navbar = () => {
     setActive(!active);
   };
 
-  
   useEffect(() => {
     async function fetch() {
       const user_id = Cookie.get("user_id");
@@ -92,18 +92,23 @@ export const Navbar = () => {
                 Help ?
               </div>
             </Link>
+            <Link href="/settings">
+              <div className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800">
+                <MdSettings className="w-6 h-6" />
+              </div>
+            </Link>
             {/* image for profile */}
             {profileUrl && (
-            <div className="flex items-center justify-center">
-              <Image
-                src={profileUrl}
-                alt="Avatar"
-                width={32}
-                height={32}
-                style={{minHeight: "32px", minWidth: "32px"}}
-                className="ml-2 rounded-full border border-white overflow-hidden"
-              />
-            </div>
+              <div className="flex items-center justify-center">
+                <Image
+                  src={profileUrl}
+                  alt="Avatar"
+                  width={32}
+                  height={32}
+                  style={{ minHeight: "32px", minWidth: "32px" }}
+                  className="ml-2 rounded-full border border-white overflow-hidden"
+                />
+              </div>
             )}
           </div>
         </div>
