@@ -1,6 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { getItineraryImage } from '../itinerary';
 import {
   FaMapMarkerAlt,
   FaStar,
@@ -25,8 +28,9 @@ export interface Place {
   paymentOptions: any;
   goodForChildren: boolean;
   firstPhotoUrl: string;
-  type: string; 
+  type: string;
   price: number;
+  dates?: any
 }
 
 const TripComponent: React.FC = () => {
@@ -34,8 +38,8 @@ const TripComponent: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [showCalendar, setShowCalendar] = useState<{[key: string]: boolean}>({});
-  const [selectedDates, setSelectedDates] = useState<{[key: string]: Date[]}>({});
+  const [showCalendar, setShowCalendar] = useState<{ [key: string]: boolean }>({});
+  const [selectedDates, setSelectedDates] = useState<{ [key: string]: Date[] }>({});
 
   const searchParams = useSearchParams();
   const country = searchParams?.get("country");
@@ -89,10 +93,27 @@ const TripComponent: React.FC = () => {
 
   const router = useRouter();
 
-  const sendToItineraryPage = () => {
-    alert("Navigating to the itinerary page...");
-    // Add logic to navigate to the itinerary page
+  const sendToItineraryPage = async () => {
+
+    const user_id = Cookies.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const image = await getItineraryImage(country as string);
+    const newI = await axios.post(`${backendUrl}/itinerary/create`, { name: `Your Generated Trip to ${country}`, location: country, user_id: user_id, imageUrl: image });
+    const promise = searchResults.map(async (item) => {
+      let address = item.plusCode ? item.plusCode.compoundCode : 'Unknown Address';
+      const location = extractLocation(address);
+      const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: item.displayName, item_type: item.type, 
+        location: location.country, itinerary_id: newI.data, destination: item.formattedAddress, image_url: item.firstPhotoUrl, price: item.price, dates: item.dates});
+    });
+    await Promise.all(promise);
   };
+
+  function extractLocation(fullString: string) {
+    const parts = fullString.split(/,|\s+/);
+    const city = parts.slice(1, -1).join(' ');
+    const country = parts[parts.length - 1];
+    return { city, country };
+  }
 
   const goBackToItinerary = () => {
     alert(
@@ -105,13 +126,13 @@ const TripComponent: React.FC = () => {
   const filteredResults = selectedCategory === "all"
     ? searchResults
     : searchResults.filter(item => {
-        return (
-          (selectedCategory === "attractions" && item.type === "attractions") ||
-          (selectedCategory === "stays" && item.type === "stays") ||
-          (selectedCategory === "carRentals" && item.type === "carRentals")||
-          (selectedCategory === "airportTaxis" && item.type === "airportTaxis")
-        );
-      });
+      return (
+        (selectedCategory === "attractions" && item.type === "attractions") ||
+        (selectedCategory === "stays" && item.type === "stays") ||
+        (selectedCategory === "carRentals" && item.type === "carRentals") ||
+        (selectedCategory === "airportTaxis" && item.type === "airportTaxis")
+      );
+    });
 
   const toggleCalendar = (id: string) => {
     setShowCalendar(prevState => ({
@@ -120,15 +141,42 @@ const TripComponent: React.FC = () => {
     }));
   };
 
-  const handleDateChange = (id: string, date: Date | Date[] | null) => {
-    if (date) {
-      const validDates = Array.isArray(date) ? date.filter(d => d !== null) as Date[] : [date];
+  const handleDateChange = (id: string, dates: [Date | null, Date | null] | Date | null) => {
+    if (Array.isArray(dates)) {
+      const [start, end] = dates;
+      const validDates = [start, end].filter(date => date !== null) as Date[];
+      const formattedDates = validDates.map(date => new Date(date.toISOString().slice(0, 10)));
+
       setSelectedDates(prevDates => ({
         ...prevDates,
-        [id]: validDates
+        [id]: formattedDates
       }));
+
+      // Update the corresponding item in searchResults with the formatted dates
+      setSearchResults(prevResults =>
+        prevResults.map(item =>
+          item.id === id ? { ...item, dates: formattedDates } : item
+        )
+      );
+    } else if (dates instanceof Date) {
+      const formattedDate = new Date(dates.toISOString().slice(0, 10));
+
+      setSelectedDates(prevDates => ({
+        ...prevDates,
+        [id]: [formattedDate]
+      }));
+
+      // Update the corresponding item in searchResults with the formatted date
+      setSearchResults(prevResults =>
+        prevResults.map(item =>
+          item.id === id ? { ...item, dates: [formattedDate] } : item
+        )
+      );
     }
+
+    console.log(JSON.stringify(searchResults));
   };
+
 
   const formatDates = (dates: Date[] | undefined) => {
     if (dates && dates.length > 0) {

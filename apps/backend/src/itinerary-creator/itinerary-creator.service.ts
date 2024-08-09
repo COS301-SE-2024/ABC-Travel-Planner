@@ -60,8 +60,9 @@ export class ItineraryCreatorService {
       ],
       attractions: [
         `Top ${interests} tourist spots in ${country}`,
-        `${interests} activities in ${country}`,
-        `Top ${interests} destinations in ${country}`
+        `Top ${interests} activities in ${country}`,
+        `Top ${interests} destinations in ${country}`,
+        `${interests} in ${country}`
       ],
       carRentals: [
         `Best car rental services for ${reason} in ${country} catering to ${interests}`,
@@ -76,16 +77,16 @@ export class ItineraryCreatorService {
         `Long-term car rentals for ${reason} in ${country} with ${interests}`
       ],
       airportTaxis: [
-        `Reliable airport taxis for ${reason} in ${country} considering ${interests}`,
-        `Affordable airport taxis for ${reason} in ${country} with ${interests}`,
-        `Luxury airport taxi services for ${reason} in ${country} focusing on ${interests}`,
-        `Family-friendly airport taxis for ${reason} in ${country} with ${interests}`,
-        `Eco-friendly airport taxis for ${reason} in ${country} with ${interests}`,
-        `Best-rated airport taxis for ${reason} in ${country} centered on ${interests}`,
-        `Airport taxi deals for ${reason} in ${country} considering ${interests}`,
-        `24/7 airport taxis for ${reason} in ${country} with ${interests}`,
-        `Airport taxis with great amenities for ${reason} in ${country} focusing on ${interests}`,
-        `Convenient airport taxis for ${reason} in ${country} with ${interests}`
+        `Reliable airport taxis for ${reason} in ${country}`,
+        `Affordable airport taxis for ${reason} in ${country}`,
+        `Luxury airport taxi services for ${reason} in ${country}`,
+        `Family-friendly airport taxis for ${reason} in ${country}`,
+        `Eco-friendly airport taxis for ${reason} in ${country}`,
+        `Best-rated airport taxis for ${reason} in ${country}`,
+        `Airport taxi deals for ${reason} in ${country}`,
+        `24/7 airport taxis for ${reason} in ${country}`,
+        `Airport taxis with great amenities for ${reason}`,
+        `Convenient airport taxis for ${reason} in ${country}`
       ]
     };
 
@@ -109,6 +110,7 @@ export class ItineraryCreatorService {
       airportTaxis: [] as Place[]
 
     };
+    console.log(searchStrings);
 
     const promises = categories.map(async (category) => {
       if (category == "carRentals" && !this.wantCarRental) {
