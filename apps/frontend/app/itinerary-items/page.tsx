@@ -1,9 +1,7 @@
-import { Input, Button, Link } from "@nextui-org/react";
+import { Button} from "@nextui-org/react";
+import Link from 'next/link';
 import React from "react";
-import SearchModal from "./SearchModal";
 import BookMarkComponent from "./BookMarkComponent";
-import TempStorage from "./TempStorage"
-import createSupabaseServerClient from '../../libs/supabase/server';
 import "./modal.css";
 import DynamicDivs from "./DynamicDivs";
 
@@ -29,11 +27,6 @@ const getCoordinates = async (location: string) => {
 
 const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; location?: string; destination?: any } }) => {
   const { location, id, destination } = searchParams;
-  // let obj
-
-  if (destination) {
-    
-  }
 
   return (
     <>
@@ -74,11 +67,11 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
       
       <div className='mt-10 w-100 h-10'>
         <div className="absolute bottom-4 right-4 px-4">
-          <Link href='/booking'>
-            <Button className="border-2 border-black-500 rounded-md doneButton bg-blue-700">
-              Done
-            </Button>
-          </Link>
+        <Link href={`/booking?id=${id}`}>
+          <Button className="border-2 border-black-500 rounded-md doneButton bg-blue-700">
+            Done
+          </Button>
+        </Link>
         </div>
 
         <div className="absolute bottom-4 left-4 px-8 justify-center items-center">

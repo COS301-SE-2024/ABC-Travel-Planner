@@ -1,7 +1,8 @@
-// page.tsx
 import Head from "next/head";
 import Image from "next/image";
 import dynamic from "next/dynamic"; // Import dynamic for client-side component loading
+import Cookie from "js-cookie";
+import { useSearchParams } from 'next/navigation';
 
 interface Item {
   id: number;
@@ -19,8 +20,10 @@ interface Item {
 const ConfirmBookingButton = dynamic(() => import('./ConfirmBookingButton'), {
   ssr: false, // Ensure the component is not server-side rendered
 });
+const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
+  const curr_user = Cookie.get('user_id') ?? 'User1';
+  const { id } = searchParams;
 
-const Booking = () => {
   const convertToRand = (usd: number): number => {
     const exchangeRate = 18; // 1 USD = 18 ZAR
     return usd * exchangeRate;
@@ -129,11 +132,27 @@ const Booking = () => {
     },
   ];
 
+  const fetchItems = async() => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/itinerary-items/${id}/${curr_user}`);
+    const data = await res.json();
+    console.log("RESPONSE FROM SERVER: " + JSON.stringify(data));
+  }
+
   const flightTotal = calculateTotal(flights);
   const accommodationTotal = calculateTotal(accommodations);
   const activityTotal = calculateTotal(activities);
   const finalTotal = flightTotal + accommodationTotal + activityTotal;
+  let curr_id = id ?? '54' // JSON.parse(localStorage.getItem('id') as string).id;
+  
+  if (!curr_id) {
+    curr_id = 'NOIDFOUND'
+  }
 
+  console.log("ID found: " + id);
+  console.log("Curr_User: " + curr_user);
+  console.log("Backend URL: " + process.env.NEXT_PUBLIC_BACKEND_URL);
+  fetchItems();
+  
   return (
     <div className="container mx-auto p-4 relative">
       <Head>
