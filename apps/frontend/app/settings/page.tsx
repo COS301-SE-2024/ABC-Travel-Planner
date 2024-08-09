@@ -21,11 +21,38 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 const countries = [
-  { name: "USA", value: "usa" },
-  { name: "France", value: "france" },
-  { name: "Japan", value: "japan" },
-  { name: "Brazil", value: "brazil" },
+  { name: "Argentina", value: "argentina" },
   { name: "Australia", value: "australia" },
+  { name: "Brazil", value: "brazil" },
+  { name: "Canada", value: "canada" },
+  { name: "China", value: "china" },
+  { name: "Egypt", value: "egypt" },
+  { name: "France", value: "france" },
+  { name: "Germany", value: "germany" },
+  { name: "Ghana", value: "ghana" },
+  { name: "Greece", value: "greece" },
+  { name: "India", value: "india" },
+  { name: "Indonesia", value: "indonesia" },
+  { name: "Italy", value: "italy" },
+  { name: "Japan", value: "japan" },
+  { name: "Kenya", value: "kenya" },
+  { name: "Malaysia", value: "malaysia" },
+  { name: "Mexico", value: "mexico" },
+  { name: "Morocco", value: "morocco" },
+  { name: "Netherlands", value: "netherlands" },
+  { name: "New Zealand", value: "new_zealand" },
+  { name: "Nigeria", value: "nigeria" },
+  { name: "Russia", value: "russia" },
+  { name: "South Africa", value: "south_africa" },
+  { name: "South Korea", value: "south_korea" },
+  { name: "Spain", value: "spain" },
+  { name: "Switzerland", value: "switzerland" },
+  { name: "Tanzania", value: "tanzania" },
+  { name: "Thailand", value: "thailand" },
+  { name: "Tunisia", value: "tunisia" },
+  { name: "Turkey", value: "turkey" },
+  { name: "United Kingdom", value: "uk" },
+  { name: "USA", value: "usa" },
 ];
 
 const SettingsPage: React.FC = () => {
@@ -87,11 +114,17 @@ const SettingsPage: React.FC = () => {
   );
 
   const handleCountrySelectItinerary = (country: string) => {
-    setSelectedCountries((prev) =>
-      prev.includes(country)
-        ? prev.filter((c) => c !== country)
-        : [...prev, country]
-    );
+    if (selectedCountries.length < 3) {
+      setSelectedCountries((prev) =>
+        prev.includes(country)
+          ? prev.filter((c) => c !== country)
+          : [...prev, country]
+      );
+    } else if (selectedCountries.includes(country)) {
+      setSelectedCountries((prev) => prev.filter((c) => c !== country));
+    } else {
+      alert("You can select up to 3 countries only.");
+    }
   };
 
   const [likesCount, setLikesCount] = useState<number>(0);
@@ -156,12 +189,21 @@ const SettingsPage: React.FC = () => {
     return response.data;
   }
 
-  const handleSaveCountries = () => {
-    if (selectedCountries.length > 3) {
-      alert("You can select up to 3 countries only.");
+  const handleSaveCountries = async () => {
+    if (selectedCountries.length !== 3) {
+      alert("Please select 3 countries");
       return;
     }
+
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/itinerary/changeFavouriteCountries`,
+      {
+        countries: selectedCountries,
+        user_id: Cookie.get("user_id"),
+      }
+    );
     setShowCountryModal(false);
+    setSelectedCountries([]);
   };
 
   const handleSharingModeChange = (mode: "private" | "public") => {
@@ -202,7 +244,7 @@ const SettingsPage: React.FC = () => {
     user.username.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleSaveSharingMode = async() => {
+  const handleSaveSharingMode = async () => {
     // Add logic for saving sharing mode
     const userId = Cookie.get("user_id");
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -210,8 +252,8 @@ const SettingsPage: React.FC = () => {
       sharingMode: sharingMode,
       user_id: userId,
     });
-    setShowSharingModal(false)
-  }
+    setShowSharingModal(false);
+  };
 
   const handleDisableAccount = () => {
     // Implement account disable functionality
@@ -466,7 +508,7 @@ const SettingsPage: React.FC = () => {
             {/* Country Selection Modal */}
             {showCountryModal && (
               <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+                <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
                   <button
                     className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
                     onClick={() => setShowCountryModal(false)}
@@ -489,7 +531,7 @@ const SettingsPage: React.FC = () => {
                   <h2 className="text-2xl font-semibold mb-4 text-center">
                     Select Top 3 Countries
                   </h2>
-                  <div className="space-y-2">
+                  <div className="p-2 space-y-2 max-h-[50vh] overflow-y-auto">
                     {countries.map((country) => (
                       <div
                         key={country.value}

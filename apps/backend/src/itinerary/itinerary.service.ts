@@ -239,4 +239,16 @@ export class ItineraryService {
     );
     return arr;
   }
+
+  async changeFavouriteCountries(user_id: string, countries: string[]) {
+    const filteredCountries = countries.filter(
+      (country) => country !== undefined,
+    );
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('Favourite-Countries')
+      .doc(user_id)
+      .set({ favouriteCountries: filteredCountries });
+    return result;
+  }
 }
