@@ -202,6 +202,17 @@ const SettingsPage: React.FC = () => {
     user.username.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleSaveSharingMode = async() => {
+    // Add logic for saving sharing mode
+    const userId = Cookie.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const res = await axios.post(`${backendUrl}/auth/ChangeSharingMode`, {
+      sharingMode: sharingMode,
+      user_id: userId,
+    });
+    setShowSharingModal(false)
+  }
+
   const handleDisableAccount = () => {
     // Implement account disable functionality
   };
@@ -585,7 +596,7 @@ const SettingsPage: React.FC = () => {
                   <div className="flex justify-center mt-4">
                     <button
                       className="bg-blue-500 text-white px-4 py-2 rounded"
-                      onClick={() => setShowSharingModal(false)}
+                      onClick={handleSaveSharingMode}
                     >
                       Save
                     </button>

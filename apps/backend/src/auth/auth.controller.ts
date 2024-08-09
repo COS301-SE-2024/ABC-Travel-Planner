@@ -27,4 +27,15 @@ export class AuthController {
             throw new InternalServerErrorException(error.message)
         }
     }
+
+    @Post('ChangeSharingMode')
+    async changeSharingMode(@Body() body: { sharingMode: string , user_id: string}) {
+        try {
+            const result = await this.authService.changeSharingMode(body.sharingMode, body.user_id);
+            return result;
+        } 
+        catch (error) {
+            throw new InternalServerErrorException(error.message)
+        }
+    }
 }
