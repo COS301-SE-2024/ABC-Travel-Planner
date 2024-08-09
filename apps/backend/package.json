@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@firebase/storage": "^0.12.6",
+    "@googlemaps/places": "^1.6.0",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^10.3.10",
     "@nestjs/config": "^3.2.3",

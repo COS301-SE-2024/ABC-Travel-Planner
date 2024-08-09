@@ -39,8 +39,9 @@ const PhotoGallery = dynamic(() => import('../[locationId]/PhotoGallery'), { ssr
 
 const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { locationId: string } }) => {
   const location_id = params.locationId || 'default_location_id';
+  console.log("PlaceID: " + location_id);
   const data = await getDetailedData(location_id);
-  console.log("Places id check datad : "+data);
+  console.log("Places id check data : "+data);
   if (!data || !data.locationDetails) {
     return (
       <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
