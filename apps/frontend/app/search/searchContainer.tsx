@@ -14,6 +14,11 @@ const SearchContainer = () => {
     const defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
     const [loading, setLoading] = useState(false);
     const [searchInitiated, setSearchInitiated] = useState(false);
+
+    useEffect(() => {
+        localStorage.removeItem('searchResults');
+    }, []);
+    
     const handleTopicSelect = (topic: string) => {
         setSelectedTopic(topic);
         setSearchResults([]);

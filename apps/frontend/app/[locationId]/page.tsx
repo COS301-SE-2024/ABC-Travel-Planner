@@ -54,8 +54,7 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
 
   return (
     <div className="w-full p-4 md:p-8 bg-gray-100" data-testid="destinationInfo">
-      <BackButton destination="/search" label="Back to Search" />
-      <BackButton destination="/tripCreator" label="Back to Itinerary" />
+      <BackButton destination="/search" label="Back" />
       <h1 className="text-5xl font-bold mb-4 text-gray-800 text-center">{data.displayName}</h1>
 
       <PhotoGallery photos={data.photos} />

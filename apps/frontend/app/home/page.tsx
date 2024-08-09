@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import DestinationCard from './DestinationCard';
 import useCountrySelection from './useCountrySelection';
 
@@ -38,9 +38,13 @@ const allLocations = [
 ];
 
 
+
 const Home = () => {
   const { filteredLocations, handleCountryChange } = useCountrySelection(allLocations);
-
+  useEffect(() => {
+    localStorage.removeItem('searchResults');
+  }, []);
+  
   return (
     <div className="flex flex-col" style={{ paddingBottom: '20px', marginBottom: '20px' }}>
       <div className="w-full mt-8" style={{ marginTop: '40px', padding: '20px', backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>

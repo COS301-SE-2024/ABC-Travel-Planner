@@ -83,6 +83,7 @@ const Itinerary = () => {
   };
 
   useEffect(() => {
+    localStorage.removeItem('searchResults');
     fetchItineraries();
   }, []);
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { getItineraryImage } from '../itinerary';
@@ -46,8 +46,9 @@ const TripComponent: React.FC = () => {
   const country = searchParams?.get("country");
   const reason = searchParams?.get("reason");
   const interest = searchParams?.get("interests");
-  const wantCarRental = searchParams?.get("wantCarRental") === 'true';
+  const router = useRouter();
 
+  
   useEffect(() => {
     if (initialLoading) {
       setInitialLoading(false);
@@ -74,6 +75,7 @@ const TripComponent: React.FC = () => {
           const data = await response.json();
           if (data.places) {
             setSearchResults(data.places);
+            localStorage.setItem("searchResults", JSON.stringify(data.places));
             console.log("Fetched places:", JSON.stringify(data.places));
           } else {
             setSearchResults([]);
@@ -84,6 +86,14 @@ const TripComponent: React.FC = () => {
         }
       };
 
+      const storedResults = localStorage.getItem("searchResults");
+      if (storedResults) {
+        const parsedResults = JSON.parse(storedResults);
+          setSearchResults(parsedResults);
+          setLoading(false);
+          return;
+        
+      }
       if (country && interest && reason) {
         setLoading(true);
         generalSearch(country, interest, reason);
@@ -91,7 +101,7 @@ const TripComponent: React.FC = () => {
     }
   }, [initialLoading]);
 
-  const router = useRouter();
+  
 
   const sendToItineraryPage = async () => {
 
@@ -108,6 +118,7 @@ const TripComponent: React.FC = () => {
       });
     });
     await Promise.all(promise);
+    router.push("/itinerary");
   };
 
   const handleMoreInfo = (item: Place) => {
@@ -127,6 +138,7 @@ const TripComponent: React.FC = () => {
 
   const confirmGoBack = () => {
     setShowModal(false);
+    localStorage.removeItem("searchResults");
     router.push("/itinerary");
   };
 
