@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd apps/${{ matrix.folder }}
-          npm install
+          npm ci
 
       - name: Run ESLint
         run: |

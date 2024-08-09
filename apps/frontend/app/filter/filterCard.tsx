@@ -37,35 +37,35 @@ export const getPricePlaceholder = (type: string) => {
 export const generatePrice = (id: string, type: string, country: string) => {
   let basePrice;
   switch (type) {
-      case 'stays':
-          basePrice = 100;
-          break;
-      case 'attractions':
-          basePrice = 50;
-          break;
-      case 'carRental':
-          basePrice = 70;
-          break;
-      case 'airportTaxis':
-          basePrice = 40;
-          break;
-      default:
-          basePrice = 100;
+    case 'stays':
+      basePrice = 100;
+      break;
+    case 'attractions':
+      basePrice = 50;
+      break;
+    case 'carRental':
+      basePrice = 70;
+      break;
+    case 'airportTaxis':
+      basePrice = 40;
+      break;
+    default:
+      basePrice = 100;
   }
 
   let countryMultiplier;
   switch (country) {
-      case 'Africa':
-          countryMultiplier = 1;
-          break;
-      case 'USA':
-          countryMultiplier = 1.2;
-          break;
-      case 'UK':
-          countryMultiplier = 1.3;
-          break;
-      default:
-          countryMultiplier = 1.1;
+    case 'Africa':
+      countryMultiplier = 1;
+      break;
+    case 'USA':
+      countryMultiplier = 1.2;
+      break;
+    case 'UK':
+      countryMultiplier = 1.3;
+      break;
+    default:
+      countryMultiplier = 1.1;
   }
 
   const seed = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -157,7 +157,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
 
   let availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
   const numRooms = null;
-  let address = place.Eg.plusCode?.compoundCode || 'Unknown Address';
+  let address = place.plusCode ? place.plusCode.compoundCode : 'Unknown Address';
   const location = extractLocation(address);
   const addressParts = address.split(',');
 

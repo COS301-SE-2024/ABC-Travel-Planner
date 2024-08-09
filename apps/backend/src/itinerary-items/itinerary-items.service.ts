@@ -55,7 +55,7 @@ export class ItineraryItemsService {
     } 
   }
 
-  async getItemsbyId(id: string, user_id: string): Promise<any[]> {
+  async getItemsbyId(id: number, user_id: string): Promise<any[]> {
     try {
       const data = await this.db
           .collection(`Itinerary-items`)
@@ -65,7 +65,7 @@ export class ItineraryItemsService {
           .orderBy('timestamp', 'desc')
           .get();
 
-      return data?.docs?.map(item => item.data());
+      return data?.docs?.map(item => item.data()) ?? [];
     } 
     catch (error) {
       console.log(error)

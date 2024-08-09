@@ -6,6 +6,20 @@ import { getRatingColor, getPricePlaceholder, generatePrice } from '../app/filte
 
 const place = {
     id: "ChIJyR2OqEB-lR4RRfBDzOLMzZM",
+    accessibilityOptions: null,
+  displayName: "Hennops Hiking Trail & Mtb Trail",
+  formattedAddress: "R511, Pretoria, 0001, South Africa",
+  paymentOptions: null,
+  plusCode: {
+    compoundCode: "6X3Q+52 Pretoria, South Africa",
+    globalCode: "5G696X3Q+52"
+  },
+  priceLevel: null,
+  rating: 4.6,
+  userRatingCount: 4484,
+  websiteURI: "http://www.hennopstrails.co.za/",
+  editorialSummary: "Picturesque hiking, biking & offroad trails on farmland with picnic & BBQ areas & swimming pools.",
+  goodForChildren: true,
     Fg: {
       id: "ChIJyR2OqEB-lR4RRfBDzOLMzZM",
       accessibilityOptions: null,

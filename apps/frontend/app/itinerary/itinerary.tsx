@@ -2,13 +2,16 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import ItineraryComponent from "./itineraryComponent";
-import { createItinerary,getItineraries } from ".";
+import { createItinerary,getItineraries, getItineraryImage } from ".";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Itinerary = () => {
   const [itineraries, setItineraries] = useState<any>([]); 
   const [showModal, setShowModal] = useState(false);
   const [itineraryName, setItineraryName] = useState("");
   const [location, setLocation] = useState("");
+
 
   const openModal = () => setShowModal(true);
   const closeModal = () => {
@@ -18,10 +21,12 @@ const Itinerary = () => {
   };
 
   const handleAddItinerary = async (e: any) => {
-    
     e.preventDefault();
+    const user_id = Cookies.get("user_id");
+    const imageUrl = await getItineraryImage(location);
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    await axios.post(`${backendUrl}/itinerary/create`,{name: itineraryName,location,user_id,imageUrl});
     
-    const data = await createItinerary(itineraryName, location);
     fetchItineraries();
     
 
@@ -29,16 +34,20 @@ const Itinerary = () => {
   };
 
   const fetchItineraries = async () => {
-    const temp = await getItineraries();
-    const itineraries = temp?.map((itinerary) => {
+    const user_id = Cookies.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const temp = await axios.post(`${backendUrl}/itinerary/getItineraries`,{user_id: user_id});
+    
+    const itineraries = temp?.data?.map((itinerary: any) => {
       return (
         <ItineraryComponent
           key={itinerary.id}
           id={itinerary.id}
           name={itinerary.name}
           location={itinerary.location}
-          image={itinerary.image}
+          image={itinerary.imageUrl}
           fetchItineraries={fetchItineraries}
+          shared={itinerary.shared}
         />
       );
     });

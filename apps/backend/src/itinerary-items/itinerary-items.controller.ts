@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, InternalServerErrorException, BadRequestException, Param, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, InternalServerErrorException, Param, Res, HttpStatus } from '@nestjs/common';
 import { ItineraryItemsService } from './itinerary-items.service';
 import { Response } from 'express'
 
@@ -33,7 +33,7 @@ export class ItineraryItemsController {
     }
 
     @Get(':id/:user')
-    async getItemsById(@Param('id') id: string, @Param('user') user: string): Promise<any[]> {
+    async getItemsById(@Param('id') id: number, @Param('user') user: string): Promise<any[]> {
         try {
             return await this.itineraryItemsService.getItemsbyId(id, user);
         } 
