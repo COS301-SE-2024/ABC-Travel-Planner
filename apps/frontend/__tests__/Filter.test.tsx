@@ -141,6 +141,10 @@ describe('FilterCard Component', () => {
     expect(dateToSelect).toBeInTheDocument();
     fireEvent.click(dateToSelect);
 
+    const secondDate = screen.getByLabelText(/Choose Friday, August 2nd, 2024/i);
+    expect(secondDate).toBeInTheDocument();
+    fireEvent.click(secondDate);
+
     // Close the DatePicker
     const doneButton = screen.getByText(/Done/i);
     fireEvent.click(doneButton);
@@ -148,6 +152,9 @@ describe('FilterCard Component', () => {
     // Verify the selected date
     const selectedDateElement = screen.getByText(/Selected Date: 8\/1\/2024/i); // Adjust based on the actual date format
     expect(selectedDateElement).toBeInTheDocument();
+
+    const selectedDateElement2 = screen.getByText(/Selected Date: 8\/2\/2024/i); 
+    expect(selectedDateElement2).toBeInTheDocument();
 });
 
 
