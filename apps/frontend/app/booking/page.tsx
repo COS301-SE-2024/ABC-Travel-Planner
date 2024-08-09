@@ -219,13 +219,32 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
               style={{ maxHeight: '190px', maxWidth: '345x' }} 
               className="rounded mb-4"
             />
-            <div className="font-bold">
-              <h2>{truncateTitle(item.item_name, 30)}</h2>
-              <p>{checkType(item.item_type)}</p>
-              <p>Address: {item.destination}</p>
-              <p>Date: {item.date ?? 'RANDOM DATE'}</p>
-              <p>Time added: {formatDate(item.timestamp._seconds)}</p>
-              <p className="text-right">R{updateTotal(item.price)}</p>
+            <div className="font-medium">
+              <div className="font-bold text-lg">
+                <h1>{truncateTitle(item.item_name, 30)}</h1>
+              </div>
+
+              <div className="flex justify-between mb-1">
+                <div className="font-bold text-left">Type:</div>
+                <div className="text-right">{checkType(item.item_type)}</div>
+              </div>
+
+              <div className="flex justify-between mb-1">
+                <div className="font-bold text-left">Address:</div>
+                <div className="text-right">{item.destination}</div>
+              </div>
+
+              <div className="flex justify-between mb-1">
+                <div className="font-bold text-left">Date:</div>
+                <div className="text-right">{formatDate(item.timestamp._seconds)}</div>
+              </div>
+
+              <div className="flex justify-between mb-1">
+                <div className="font-bold text-left">Time added:</div>
+                <div className="text-right">{}</div>
+              </div>
+
+              <h1 className="text-lg text-right ">R{updateTotal(item.price ?? 0)}</h1>
             </div>
           </div>
         ))}       
