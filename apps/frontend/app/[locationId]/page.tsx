@@ -150,7 +150,7 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
               <p className="text-gray-600"><strong>Rating:</strong> {review.rating}</p>
             </div>
           </div>
-          <p className="text-gray-700 leading-relaxed">{review.originalText.text}</p>
+          <p className="text-gray-700 leading-relaxed">{review.originalText ? review.originalText.text: ''}</p>
         </div>
       ))}
           </div>

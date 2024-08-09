@@ -29,7 +29,7 @@ export class ItineraryCreatorService {
   private country: string;
   private reason: string;
   private interests: string;
-  private wantCarRental: boolean;
+
   constructor(private readonly searchService: SearchService) {
 
   }
@@ -37,13 +37,11 @@ export class ItineraryCreatorService {
   async generateItineraryStrings(
     country: string,
     reason: string,
-    interests: string,
-    wantCarRental: boolean
+    interests: string
   ): Promise<{ stays: string; attractions: string; carRentals: string; airportTaxis: string }> {
     this.country = country;
     this.reason = reason;
     this.interests = interests;
-    this.wantCarRental = wantCarRental;
    
     const searchStrings = {
       stays: [
@@ -79,7 +77,7 @@ export class ItineraryCreatorService {
         `Affordable airport taxis in ${country}`,
         `Luxury airport taxi services for ${reason} in ${country}`,
         `Family-friendly airport taxis for ${reason} in ${country}`,
-        `Best-rated airport taxis in ${country}`,
+        `Best-rated airport taxi's in ${country}`,
         `24/7 airport taxis in ${country}`,
         `Convenient airport taxis in ${country}`
       ]
@@ -108,10 +106,6 @@ export class ItineraryCreatorService {
     console.log(searchStrings);
 
     const promises = categories.map(async (category) => {
-      if (category == "carRentals" && !this.wantCarRental) {
-        console.log('returns');
-        return;  // Skip car rentals if the user doesn't want it
-    }
         const searchString = searchStrings[category];
         const response = await this.searchService.searchPlaces(searchString, category);
         places[category] = response;
@@ -128,7 +122,7 @@ export class ItineraryCreatorService {
     const combinedPlaces = [
       ...places.stays.map(place => ({ ...place, type: 'stays' })),
       ...places.attractions.map(place => ({ ...place, type: 'attractions' })),
-      ...(this.wantCarRental ? places.carRentals.map(place => ({ ...place, type: 'carRentals' })) : []),
+      ...places.carRentals.map(place => ({ ...place, type: 'carRentals' })),
       ...places.airportTaxis.map(place => ({ ...place, type: 'airportTaxis' }))
     ];
   
@@ -141,7 +135,7 @@ export class ItineraryCreatorService {
     const selectedPlaces = [
       ...selectTopTwo('stays'),
       ...selectTopTwo('attractions'),
-      ...(this.wantCarRental ? selectTopTwo('carRentals') : []),
+      ...selectTopTwo('carRentals'),
       ...selectTopTwo('airportTaxis'),
     ];
   

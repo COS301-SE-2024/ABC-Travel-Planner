@@ -56,7 +56,6 @@ const TripComponent: React.FC = () => {
         country: string,
         interest: string,
         reason: string,
-        wantCarRental: boolean
       ) => {
         try {
           const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -67,7 +66,7 @@ const TripComponent: React.FC = () => {
               reason
             )}&interests=${encodeURIComponent(
               interest
-            )}&wantCarRental=${encodeURIComponent(wantCarRental.toString())}`
+            )}`
           );
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -87,7 +86,7 @@ const TripComponent: React.FC = () => {
 
       if (country && interest && reason) {
         setLoading(true);
-        generalSearch(country, interest, reason, wantCarRental);
+        generalSearch(country, interest, reason);
       }
     }
   }, [initialLoading]);

@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import ItineraryComponent from "./itineraryComponent";
-import { createItinerary,getItineraries, getItineraryImage } from ".";
+import { createItinerary, getItineraries, getItineraryImage } from ".";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Link from 'next/link';
 const Itinerary = () => {
-  const [itineraries, setItineraries] = useState<any>([]); 
+  const [itineraries, setItineraries] = useState<any>([]);
   const [showModal, setShowModal] = useState(false);
   const [itineraryName, setItineraryName] = useState("");
   const [location, setLocation] = useState("");
@@ -33,8 +33,8 @@ const Itinerary = () => {
   const handleCreateTrip = async (e: any) => {
     e.preventDefault();
     setTripGenerated(true);
-    console.log("Trip generated:", true); 
-    
+    console.log("Trip generated:", true);
+
     closeTripCreatorModal();
   };
 
@@ -53,10 +53,10 @@ const Itinerary = () => {
     const user_id = Cookies.get("user_id");
     const imageUrl = await getItineraryImage(location);
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    await axios.post(`${backendUrl}/itinerary/create`,{name: itineraryName,location,user_id,imageUrl});
-    
+    await axios.post(`${backendUrl}/itinerary/create`, { name: itineraryName, location, user_id, imageUrl });
+
     fetchItineraries();
-    
+
 
     closeModal();
   };
@@ -64,8 +64,8 @@ const Itinerary = () => {
   const fetchItineraries = async () => {
     const user_id = Cookies.get("user_id");
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    const temp = await axios.post(`${backendUrl}/itinerary/getItineraries`,{user_id: user_id});
-    
+    const temp = await axios.post(`${backendUrl}/itinerary/getItineraries`, { user_id: user_id });
+
     const itineraries = temp?.data?.map((itinerary: any) => {
       return (
         <ItineraryComponent
@@ -92,7 +92,7 @@ const Itinerary = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 data-testid="itinerariesTitle" className="text-4xl font-bold text-gray-800">My Itineraries</h1>
           <div className="flex space-x-2">
-          <button
+            <button
               data-testid="addItineraryButton"
               aria-label="Add Itinerary"
               onClick={openModal}
@@ -101,15 +101,15 @@ const Itinerary = () => {
               <FaPlus className="mr-2" />
               Add Itinerary
             </button>
-          <button
+            <button
               aria-label="AI Trip Creator"
               onClick={openTripCreatorModal}
               className="flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 ml-2"
             >
               <FaPlus className="mr-2" />
-               Itinerary Creator
+              Itinerary Creator
             </button>
-            </div>
+          </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {itineraries}
@@ -219,14 +219,13 @@ const Itinerary = () => {
                       <button
                         key={reasonOption}
                         onClick={() => handleToggleReason(reasonOption)}
-                        className={`mr-2 mb-2 px-4 py-2 text-sm font-medium rounded-full ${
-                          selectedReasons === reasonOption ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"
-                        } hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500`}
+                        className={`mr-2 mb-2 px-4 py-2 text-sm font-medium rounded-full ${selectedReasons === reasonOption ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"
+                          } hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500`}
                       >
                         {reasonOption}
                       </button>
                     ))}
-                  
+
                   </div>
                 </div>
 
@@ -241,18 +240,6 @@ const Itinerary = () => {
                     className="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green                     focus:border-green-500 block w-full p-2.5"
                   />
                 </div>
-                <div className="mb-4 flex items-center">
-                <input
-                  type="checkbox"
-                  id="carRental"
-                  checked={carRental}
-                  onChange={(e) => setCarRental(e.target.checked)}
-                  className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                />
-                <label htmlFor="carRental" className="ml-2 text-sm font-medium text-gray-700">
-                  Include Car Rental
-                </label>
-              </div>
 
                 <div className="flex justify-end">
                   <button type="button" onClick={closeTripCreatorModal} className="px-4 py-2 mr-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500">Cancel</button>
@@ -263,7 +250,6 @@ const Itinerary = () => {
                         country: country,
                         reason: selectedReasons,
                         interests: interests,
-                        wantCarRental: carRental,
                       },
                     }}
                   >

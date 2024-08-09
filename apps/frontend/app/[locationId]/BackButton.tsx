@@ -13,7 +13,7 @@ const BackButton: React.FC<BackButtonProps> = ({ destination, label }) => {
   const router = useRouter();
 
   const handleBack = () => {
-    router.push(destination);
+    router.back();
   };
 
   return (

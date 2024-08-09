@@ -11,9 +11,8 @@ export class ItineraryCreatorController {
     @Query('country') country: string,
     @Query('reason') reason: string,
     @Query('interests') interests: string,
-    @Query('wantCarRental') wantCarRental: boolean,
   ) {
-    const searchStrings = await this.itineraryCreatorService.generateItineraryStrings(country, reason, interests, wantCarRental);
+    const searchStrings = await this.itineraryCreatorService.generateItineraryStrings(country, reason, interests);
     const places = await this.itineraryCreatorService.getPlacesFromGoogleMaps(searchStrings);
     const bestOptions = await this.itineraryCreatorService.selectBestOptions(places);
     return bestOptions;
