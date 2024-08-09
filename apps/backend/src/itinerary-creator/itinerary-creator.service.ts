@@ -58,8 +58,7 @@ export class ItineraryCreatorService {
       ],
       attractions: [
         `Top ${interests} tourist spots in ${country}`,
-        `Top ${interests} activities in ${country}`,
-        `Top ${interests} destinations in ${country}`,
+        `Top ${interests} in ${country}`,
         `${interests} in ${country}`
       ],
       carRentals: [

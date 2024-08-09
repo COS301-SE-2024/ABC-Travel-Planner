@@ -48,7 +48,7 @@ const TripComponent: React.FC = () => {
   const interest = searchParams?.get("interests");
   const router = useRouter();
 
-  
+
   useEffect(() => {
     if (initialLoading) {
       setInitialLoading(false);
@@ -89,10 +89,10 @@ const TripComponent: React.FC = () => {
       const storedResults = localStorage.getItem("searchResults");
       if (storedResults) {
         const parsedResults = JSON.parse(storedResults);
-          setSearchResults(parsedResults);
-          setLoading(false);
-          return;
-        
+        setSearchResults(parsedResults);
+        setLoading(false);
+        return;
+
       }
       if (country && interest && reason) {
         setLoading(true);
@@ -101,7 +101,7 @@ const TripComponent: React.FC = () => {
     }
   }, [initialLoading]);
 
-  
+
 
   const sendToItineraryPage = async () => {
 
@@ -224,7 +224,7 @@ const TripComponent: React.FC = () => {
             <FaPlane className="text-blue-700 ml-2 mr-2" />
             <FaGlobe className="text-blue-700 mr-2" />
           </h2>
-  
+
           <div className="flex justify-center mb-6">
             <button
               onClick={() => setSelectedCategory("all")}
@@ -257,9 +257,11 @@ const TripComponent: React.FC = () => {
               Airport Taxis
             </button>
           </div>
-  
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
-            {filteredResults.length > 0 ? (
+            {loading ? (
+              <p className="text-gray-600">Results loading...</p>
+            ) : (
               filteredResults.map((item: Place, index: any) => (
                 <div
                   key={index}
@@ -343,11 +345,10 @@ const TripComponent: React.FC = () => {
                   </div>
                 </div>
               ))
-            ) : (
-              <p className="text-gray-600">Results loading...</p>
+              
             )}
           </div>
-  
+
           <div className="flex justify-center">
             <button
               className="bg-blue-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center mr-2"
@@ -362,7 +363,7 @@ const TripComponent: React.FC = () => {
               <FaSave className="mr-2" /> Save Trip
             </button>
           </div>
-  
+
           {showModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
               <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -390,7 +391,7 @@ const TripComponent: React.FC = () => {
       </div>
     </div>
   );
-  
+
 };
 
 export default TripComponent;
