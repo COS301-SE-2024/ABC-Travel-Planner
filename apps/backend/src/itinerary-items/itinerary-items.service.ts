@@ -9,7 +9,7 @@ export class ItineraryItemsService {
     this.db = firebaseApp.firestore();
   }
 
-  async addItem(user_id: string, item_name: string, item_type: string, location: string, itinerary_id: string, destination: string, image_url: string): Promise<void> {
+  async addItem(user_id: string, item_name: string, item_type: string, location: string, itinerary_id: string, destination: string, image_url: string, date: Date[], price: string): Promise<void> {
     try {
 
       const exists = await this.db
@@ -45,6 +45,8 @@ export class ItineraryItemsService {
                   image_url,
                   destination,
                   user_id,
+                  price,
+                  date,
                   timestamp: admin.firestore.FieldValue.serverTimestamp(),
           });
         }

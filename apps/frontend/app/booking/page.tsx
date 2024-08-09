@@ -1,10 +1,12 @@
+"use server"
 import Head from "next/head";
 import Image from "next/image";
 import dynamic from "next/dynamic"; // Import dynamic for client-side component loading
-import Cookie from "js-cookie";
+import { cookies } from 'next/headers'
 import { truncateTitle } from "../utils/functions/TruncateTitle";
 import moment from 'moment';
 import axios from 'axios';
+import { format, parseISO } from 'date-fns';
 
 interface Item {
   id: number;
@@ -49,10 +51,11 @@ function formatDate(date: number) {
   return moment.unix(date).format('D MMM YYYY: HH:mm');
 }
 
+const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
+  const cookieStore = cookies()
+  const cookie = cookieStore.get('user_id')
 
-
-const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
-  const curr_user = Cookie.get('user_id');
+  const curr_user = cookie?.value;
   console.log("Current user: " + curr_user);
   const { id } = searchParams;
   let totalCost = 0;
@@ -183,6 +186,28 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
     }
   }
 
+  function formatDateGroup(dates: string[]): string {
+    if (dates.length === 0) return '';
+  
+    const parsedDates = dates.map(d => parseISO(d));
+    parsedDates.sort((a, b) => a.getTime() - b.getTime());
+  
+    const groups: { [key: string]: number[] } = {};
+  
+    parsedDates.forEach(date => {
+      const key = format(date, 'MMMM yyyy');
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(date.getDate());
+    });
+  
+    return Object.entries(groups)
+      .map(([monthYear, days]) => {
+        const uniqueDays = [...new Set(days)].sort((a, b) => a - b);
+        return `${uniqueDays.join(', ')} ${monthYear}`;
+      })
+      .join('; ');
+  }
+
   const flightTotal = calculateTotal(flights);
   const accommodationTotal = calculateTotal(accommodations);
   const activityTotal = calculateTotal(activities);
@@ -235,12 +260,12 @@ const Booking = async ({ searchParams }: { searchParams: { id?: any; } }) => {
 
               <div className="flex justify-between mb-1">
                 <div className="font-bold text-left">Date:</div>
-                <div className="text-right">{formatDate(item.timestamp._seconds)}</div>
+                {<div className="text-right">{formatDateGroup(item.date)}</div>}
               </div>
 
               <div className="flex justify-between mb-1">
                 <div className="font-bold text-left">Time added:</div>
-                <div className="text-right">{}</div>
+                <div className="text-right">{formatDate(item.timestamp._seconds)}</div>
               </div>
 
               <h1 className="text-lg text-right ">R{updateTotal(item.price ?? 0)}</h1>

@@ -10,7 +10,9 @@ export class ItineraryItemsController {
     async addItem(@Body() body: { 
             user_id: string, 
             item_name: string, 
-            item_type: string, 
+            item_type: string,
+            price: string,
+            date: Date[], 
             location: string, 
             itinerary_id: string, 
             destination: string, 
@@ -18,8 +20,8 @@ export class ItineraryItemsController {
         },
         @Res() res: Response): Promise<void> {
         try {
-            if (body.user_id && body.item_name && body.item_type && body.location && body.itinerary_id && body.destination && body.image_url ) {
-                const result = await this.itineraryItemsService.addItem(body.user_id, body.item_name, body.item_type, body.location, body.itinerary_id, body.destination, body.image_url);
+            if (body.user_id && body.item_name && body.item_type && body.location && body.itinerary_id && body.destination && body.image_url && body.date && body.price) {
+                const result = await this.itineraryItemsService.addItem(body.user_id, body.item_name, body.item_type, body.location, body.itinerary_id, body.destination, body.image_url, body.date, body.price);
                 res.status(HttpStatus.CREATED).json(result);
             }
             else {
