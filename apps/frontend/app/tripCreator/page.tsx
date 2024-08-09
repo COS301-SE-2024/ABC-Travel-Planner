@@ -131,15 +131,23 @@ const TripComponent: React.FC = () => {
     }));
   };
 
-  const handleDateChange = (id: string, date: Date | Date[] | null) => {
+  const handleDateChange = (id: string, date: Date[] | null) => {
     if (date) {
-      const validDates = Array.isArray(date) ? date.filter(d => d !== null) as Date[] : [date];
+      // Filter out null values from the date array
+      const validDates = date.filter(d => d !== null) as Date[];
       setSelectedDates(prevDates => ({
         ...prevDates,
         [id]: validDates
       }));
+    } else {
+      // Handle the case where no dates are selected
+      setSelectedDates(prevDates => ({
+        ...prevDates,
+        [id]: []
+      }));
     }
   };
+  
 
   const formatDates = (dates: Date[] | undefined) => {
     if (dates && dates.length > 0) {
