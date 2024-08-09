@@ -26,6 +26,7 @@
     "@google-cloud/storage": "^7.11.2",
     "@googlemaps/google-maps-services-js": "^3.4.0",
     "@googlemaps/places": "^1.6.0",
+    "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.0.0",
