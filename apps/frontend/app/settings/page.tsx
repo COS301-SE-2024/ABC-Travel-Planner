@@ -77,12 +77,22 @@ const SettingsPage: React.FC = () => {
   };
 
   //Theme
-  const [selectedTheme, setSelectedTheme] = useState<string | null>(localStorage.getItem('selectedTheme') || null);
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); //default dark mode
+  const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // default dark mode
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Safe to use localStorage
+      const storedTheme = localStorage.getItem('selectedTheme');
+      setSelectedTheme(storedTheme || null);
+    }
+  }, []);
 
   const handleThemeSelect = (themeValue: string | null) => {
     setSelectedTheme(themeValue);
-    localStorage.setItem('selectedTheme', themeValue || ''); // Save to localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedTheme', themeValue || ''); // Save to localStorage
+    }
     console.log('Selected Theme:', themeValue); // Log the selected theme
     setShowModal(false);
   };
