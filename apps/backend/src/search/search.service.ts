@@ -116,7 +116,7 @@ export class SearchService {
                     });
 
 
-                    let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
+                    const apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
                     const firstPhotoUrl = detailedPlace[0].photos && detailedPlace[0].photos.length > 0 ?
                         this.constructImageUrl(detailedPlace[0].photos[0].name, apiKey as string) :
                         this.defaultImageUrl;
@@ -147,7 +147,7 @@ export class SearchService {
 
     async getDetailedPlace(id: string): Promise<DetailedPlace>{
         try {
-                    let name = `places/${id}`;
+                    const name = `places/${id}`;
                     const request = {
                         name,
                     };
@@ -159,11 +159,11 @@ export class SearchService {
                             },
                         },
                     });
-                    let apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
-                    let photoArr = [];
+                    const apiKey: string = this.configService.get<string>('NEST_PUBLIC_GOOGLE_API_KEY')!;
+                    const photoArr = [];
                     if(detailedPlace[0].photos && detailedPlace[0].photos.length > 0){
                         for (let index = 0; index < detailedPlace[0].photos.length; index++) {
-                            let photo = this.constructImageUrl(detailedPlace[0].photos[index].name, apiKey as string);
+                            const photo = this.constructImageUrl(detailedPlace[0].photos[index].name, apiKey as string);
                             photoArr.push(photo);
                         }
                     }
