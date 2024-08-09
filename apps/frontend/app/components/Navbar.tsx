@@ -5,6 +5,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
+import { MdSettings } from 'react-icons/md';
 
 export const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -57,11 +58,6 @@ export const Navbar = () => {
           } w-full lg:inline-flex lg:flex-grow lg:w-auto`}
         >
           <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto'>
-            <Link href=''>
-              <span className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800' onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-                        {theme === 'light' ? 'Dark' : 'Light'} Mode
-              </span>
-            </Link>
             <Link href='/home'>
               <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'> 
                 Home
@@ -88,6 +84,11 @@ export const Navbar = () => {
                 Help ?
               </div>
             </Link>
+            <Link href='/settings'>
+              <div className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800'>
+                <MdSettings className='w-6 h-6' />
+              </div>
+            </Link>
             {/* image for profile */}
             <div className='flex items-center justify-center'>
             <Image
@@ -108,4 +109,3 @@ export const Navbar = () => {
     </>
   );
 };
-

@@ -331,71 +331,68 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
 
   return (
     <div className="flex justify-center items-center w-full">
-      <PopupMessage msg={message} trigger={trigger} />
-      <div className="w-full justify-center w-full max-w-2xl bg-pink-100 rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
-        <div className="flex items-center justify-between w-full">
-          <div>
-            <h3 className="text-lg font-bold">{userName}</h3>
-            <p className="text-sm text-gray-500">{new Date(timestamp * 1000).toLocaleDateString()}</p>
-            <h2 >{post_description}</h2>
-          </div>
-
-          <button 
-            className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full"
-            onClick={followUser}>{isFollowing}
-          </button>
-        </div>
-        <img src={image_url} alt='heloooooo'></img>
-
-        <div className="flex items-center space-x-4">
-          <button
-            className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"
-            onClick={handleLike}
-          >
-            <FontAwesomeIcon icon={liked ? filledHeart : unfilledHeart} className={liked ? 'text-red-500' : ''} />
-            <span>{numLikes}</span>
-          </button>
-
-          <button
-            className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"
-            onClick={handleCommentToggle}
-          >
-            <FontAwesomeIcon icon={faComment} />
-          </button>
-        </div>
-
-        {showComments && (
-          <div className="w-full mt-4">
-            <div className="space-y-2">
-              {comments.map((comment, index) => (
-                <div key={index} className="p-2 bg-blue-100 rounded-md text-gray-800 text-sm">
-                  {comment.username ?? 'User1'}: {comment.comment} 
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 flex items-center space-x-2">
-              <input
-                type="text" 
-                value={newComment.comment}
-                onChange={(e) => setNewComment({
-                  post_id,
-                  user_id: Cookie.get('user_id') ?? 'User1',
-                  comment: e.target.value 
-                })}
-                placeholder="Add a comment..."
-                className="flex-grow p-2 border rounded-md"
-              />
-              <button
-                onClick={handleAddComment}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-              >
-                Add
-              </button>
-            </div>
-          </div>
-        )}
+  <PopupMessage msg={message} trigger={trigger} />
+  <div className="w-full justify-center w-full max-w-3xl bg-white rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left"> {/* Increased max-width, padding, and spacing */}
+    <div className="flex items-center justify-between w-full">
+      <div>
+        <h3 className="text-lg font-bold">{userName}</h3>
+        <p className="text-sm text-gray-500">{new Date(timestamp * 1000).toLocaleDateString()}</p>
+        <h2 className="text-base">{post_description}</h2> {/* Added a class for font size */}
       </div>
+      <button 
+        className="bg-blue-200 text-black font-bold py-2 px-4 rounded-full"  /* Increased padding */
+        onClick={followUser}>{isFollowing}
+      </button>
     </div>
+    <img src={image_url} alt='Post Image' className="w-full rounded-md shadow-sm" /> {/* Added width, border-radius, and shadow */}
+    <div className="flex items-center space-x-4">
+      <button
+        className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"
+        onClick={handleLike}
+      >
+        <FontAwesomeIcon icon={liked ? filledHeart : unfilledHeart} className={liked ? 'text-red-500' : ''} />
+        <span>{numLikes}</span>
+      </button>
+      <button
+        className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none"
+        onClick={handleCommentToggle}
+      >
+        <FontAwesomeIcon icon={faComment} />
+      </button>
+    </div>
+    {showComments && (
+      <div className="w-full mt-4">
+        <div className="space-y-2">
+          {comments.map((comment, index) => (
+            <div key={index} className="p-2 bg-blue-100 rounded-md text-gray-800 text-sm">
+              {comment.username ?? 'User1'}: {comment.comment} 
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 flex items-center space-x-2">
+          <input
+            type="text" 
+            value={newComment.comment}
+            onChange={(e) => setNewComment({
+              post_id,
+              user_id: Cookie.get('user_id') ?? 'User1',
+              comment: e.target.value 
+            })}
+            placeholder="Add a comment..."
+            className="flex-grow p-2 border rounded-md"
+          />
+          <button
+            onClick={handleAddComment}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+
   );
 };
 

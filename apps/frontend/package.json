@@ -17,6 +17,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@heroicons/react": "^2.1.5",
     "@nextui-org/dropdown": "^2.1.25",
     "@nextui-org/react": "^2.4.1",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
