@@ -104,13 +104,6 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
     const price = generatePrice(place.id, place.type, location.country);
 
-    const handleSelectDates = (dates: (Date | null)[]) => {
-        setSelectedDates(dates.filter((date) => date !== null) as Date[]);
-        setShowCalendar(false);
-    };
-    
-    
-
     const handleSelectItinerary = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedItinerary(event.target.value);
     };

@@ -75,10 +75,10 @@ export const generatePrice = (id: string, type: string, country: string) => {
 const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
     const [showCalendar, setShowCalendar] = useState(false);
-    const handleSelectDates = (dates: (Date | null)[]) => {
-      setSelectedDates(dates.filter((date) => date !== null) as Date[]);
-      setShowCalendar(false);
-  };
+  //   const handleSelectDates = (dates: (Date | null)[]) => {
+  //     setSelectedDates(dates.filter((date) => date !== null) as Date[]);
+  //     setShowCalendar(false);
+  // };
   function extractLocation(fullString: string) {
     const parts = fullString.split(/,|\s+/);
 
