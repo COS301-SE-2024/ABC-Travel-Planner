@@ -35,7 +35,7 @@ jest.mock("firebase/firestore", () => ({
 }));
 
 jest.mock("@supabase/ssr", () => ({
-  __esModule: true, 
+  __esModule: true,
   default: jest.fn(),
   createServerClient: jest.fn(),
 
@@ -395,9 +395,26 @@ describe('SearchCard Component', () => {
 
   test('selects a date', () => {
     render(<FilterCard place={place} />);
-    const selectElement = screen.getByRole('combobox');
-    fireEvent.change(selectElement, { target: { value: '2024-06-01' } });
-    const selectedDateElement = screen.getByText(/Selected Date: 2024-06-01/i);
+
+    // Open the DatePicker
+    const selectButton = screen.getByText(/Select Dates/i);
+    fireEvent.click(selectButton);
+
+    // Wait for the DatePicker to appear
+    const datePicker = screen.getByRole('dialog'); // Ensure this role is correct
+    expect(datePicker).toBeInTheDocument();
+
+    // Select the date by aria-label
+    const dateToSelect = screen.getByLabelText(/Choose Thursday, August 1st, 2024/i);
+    expect(dateToSelect).toBeInTheDocument();
+    fireEvent.click(dateToSelect);
+
+    // Close the DatePicker
+    const doneButton = screen.getByText(/Done/i);
+    fireEvent.click(doneButton);
+
+    // Verify the selected date
+    const selectedDateElement = screen.getByText(/Selected Date: 8\/1\/2024/i); // Adjust based on the actual date format
     expect(selectedDateElement).toBeInTheDocument();
   });
 });
@@ -485,8 +502,8 @@ describe('SearchCard', () => {
     getDownloadURL.mockResolvedValueOnce(imageUrl);
 
     mockAxios.onPost(`${backendUrl}/itinerary/getItineraries`).reply(200, [
-      { id: '1', name: 'Itinerary 1', location: 'Location 1', "user_id":"R0mm5MMoNLR0MpBnz1i5IQLgIx42","imageUrl":"https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg" },
-      { id: '2', name: 'Itinerary 2', location: 'Location 2', "user_id":"R0mm5MMoNLR0MpBnz1i5IQLgIx42","imageUrl":"https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg" },
+      { id: '1', name: 'Itinerary 1', location: 'Location 1', "user_id": "R0mm5MMoNLR0MpBnz1i5IQLgIx42", "imageUrl": "https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg" },
+      { id: '2', name: 'Itinerary 2', location: 'Location 2', "user_id": "R0mm5MMoNLR0MpBnz1i5IQLgIx42", "imageUrl": "https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg" },
     ]);
     // Simulate clicking "Add to Itinerary"
     fireEvent.click(screen.getByText('Add to Itinerary'));
@@ -527,7 +544,7 @@ describe('SearchCard', () => {
     // Simulate clicking "Save New Itinerary"
     fireEvent.click(screen.getByText('Save New Itinerary'));
 
-    
+
 
     // Wait for the modal to close
     await waitFor(() => expect(screen.queryByText('Create New Itinerary')).not.toBeInTheDocument());
@@ -587,6 +604,6 @@ describe("getItineraries", () => {
     expect(result).toBeNull();
 
     createSupabaseServerClientSpy.mockRestore(); // Restore the original function after the test
-    consoleErrorSpy.mockRestore(); 
+    consoleErrorSpy.mockRestore();
   });
 });
