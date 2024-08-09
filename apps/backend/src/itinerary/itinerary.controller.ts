@@ -82,7 +82,14 @@ export class ItineraryController {
       destination: string;
     },
   ) {
-    return this.itineraryService.addItineraryItem(body.itinerary_id, body.item_name, body.item_type, body.location, body.imageUrl, body.destination);
+    return this.itineraryService.addItineraryItem(
+      body.itinerary_id,
+      body.item_name,
+      body.item_type,
+      body.location,
+      body.imageUrl,
+      body.destination,
+    );
   }
 
   @Post('getItineraryItems')
@@ -91,42 +98,67 @@ export class ItineraryController {
   }
 
   @Post('likeItinerary')
-  async likeItinerary(@Body() body: { itinerary_id: string, user_id: string }) {
+  async likeItinerary(@Body() body: { itinerary_id: string; user_id: string }) {
     return this.itineraryService.likeItinerary(body.itinerary_id, body.user_id);
   }
 
   @Post('unlikeItinerary')
-  async unlikeItinerary(@Body() body: { itinerary_id: string , user_id: string }) {
-    return this.itineraryService.unlikeItinerary(body.itinerary_id, body.user_id);
+  async unlikeItinerary(
+    @Body() body: { itinerary_id: string; user_id: string },
+  ) {
+    return this.itineraryService.unlikeItinerary(
+      body.itinerary_id,
+      body.user_id,
+    );
   }
 
-    @Post('userLikesItinerary')
-    async userLikesItinerary(@Body() body: { itinerary_id: string , user_id: string }) {
-        return this.itineraryService.userLikesItinerary(body.itinerary_id, body.user_id);
+  @Post('userLikesItinerary')
+  async userLikesItinerary(
+    @Body() body: { itinerary_id: string; user_id: string },
+  ) {
+    return this.itineraryService.userLikesItinerary(
+      body.itinerary_id,
+      body.user_id,
+    );
+  }
 
-    }
+  @Post('saveItinerary')
+  async saveItinerary(@Body() body: { itinerary_id: string; user_id: string }) {
+    return this.itineraryService.saveItinerary(body.itinerary_id, body.user_id);
+  }
 
+  @Post('unsaveItinerary')
+  async unsaveItinerary(
+    @Body() body: { itinerary_id: string; user_id: string },
+  ) {
+    return this.itineraryService.unsaveItinerary(
+      body.itinerary_id,
+      body.user_id,
+    );
+  }
 
-    @Post('saveItinerary')
-    async saveItinerary(@Body() body: { itinerary_id: string , user_id: string }) {
-        return this.itineraryService.saveItinerary(body.itinerary_id, body.user_id);
+  @Post('userSavedItinerary')
+  async userSavedItinerary(
+    @Body() body: { itinerary_id: string; user_id: string },
+  ) {
+    return this.itineraryService.userSavedItinerary(
+      body.itinerary_id,
+      body.user_id,
+    );
+  }
 
-    }
+  @Post('getSavedItineraries')
+  async getSavedItineraries(@Body() body: { user_id: string }) {
+    return this.itineraryService.getSavedItineraries(body.user_id);
+  }
 
-    @Post('unsaveItinerary')
-    async unsaveItinerary(@Body() body: { itinerary_id: string , user_id: string }) {
-        return this.itineraryService.unsaveItinerary(body.itinerary_id, body.user_id);
-    }
-
-    @Post('userSavedItinerary')
-    async userSavedItinerary(@Body() body: { itinerary_id: string , user_id: string }) {
-        return this.itineraryService.userSavedItinerary(body.itinerary_id, body.user_id);
-
-    }
-
-    @Post('getSavedItineraries')
-    async getSavedItineraries(@Body() body: { user_id: string }) {
-        return this.itineraryService.getSavedItineraries(body.user_id);
-    }
-
+  @Post('changeFavouriteCountries')
+  async setFavouriteCountries(
+    @Body() body: { user_id: string; countries: string[] },
+  ) {
+    return this.itineraryService.changeFavouriteCountries(
+      body.user_id,
+      body.countries,
+    );
+  }
 }
