@@ -14,4 +14,9 @@ export class ActivityController {
   async getCommentsCount(@Body() body: { userId: string }) {
     return this.activityService.countCommentsByUser(body.userId);
   }
+
+  @Post('getPostsCount')
+  async getPostsCount(@Body() body: { userId: string }) {
+    return this.activityService.countPostsByUser(body.userId);
+  }
 }

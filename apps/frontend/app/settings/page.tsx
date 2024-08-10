@@ -156,6 +156,7 @@ const SettingsPage: React.FC = () => {
 
   const [likesCount, setLikesCount] = useState<number>(0);
   const [commentsCount, setCommentsCount] = useState<number>(0);
+  const [postsCount, setPostsCount] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -174,7 +175,8 @@ const SettingsPage: React.FC = () => {
     getLikesCount();
   }, []);
 
-  /*useEffect(() => {
+
+  useEffect(() => {
     async function getCommentsCount() {
       try {
         const userId = Cookie.get('user_id');
@@ -182,14 +184,32 @@ const SettingsPage: React.FC = () => {
 
         const count = await fetchCommentsCount(userId || "");
 
-        setLikesCount(count);
+        setCommentsCount(count);
       } catch (error: any) {
         setError(error.message);
       }
     }
 
     getCommentsCount();
-  }, []);*/
+  }, []);
+
+  useEffect(() => {
+    async function getPostsCount() {
+      try {
+        const userId = Cookie.get('user_id');
+        console.log(userId);
+
+        const count = await fetchPostsCount(userId || "");
+
+        setPostsCount(count);
+      } catch (error: any) {
+        setError(error.message);
+      }
+    }
+
+    getPostsCount();
+  }, []);
+
 
   async function fetchLikesCount(userId: string): Promise<number> {
     const response = await axios.post(
@@ -212,6 +232,16 @@ const SettingsPage: React.FC = () => {
     console.log(response);
     if (!response.data) {
       throw new Error("Failed to fetch comments count");
+    }
+    return response.data;
+  }
+
+  async function fetchPostsCount(userId: string): Promise<number> {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getPostsCount`, { userId });
+    console.log("Data is :" + response.data);
+    console.log(response);
+    if (!response.data) {
+      throw new Error('Failed to fetch posts count');
     }
     return response.data;
   }
@@ -449,6 +479,7 @@ const SettingsPage: React.FC = () => {
                       <span className="text-xl font-medium text-gray-800">
                         Posts Created: <span className="font-bold">5</span>
                       </span>
+                      <span className="text-xl font-medium text-gray-800">Posts Created: <span className="font-bold">{postsCount}</span></span>
                     </div>
                   </div>
                   <div className="flex justify-center mt-8">
