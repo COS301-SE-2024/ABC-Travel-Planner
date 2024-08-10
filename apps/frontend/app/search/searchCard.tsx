@@ -109,8 +109,6 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         setShowCalendar(false);
     };
     
-    
-
     const handleSelectItinerary = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedItinerary(event.target.value);
     };

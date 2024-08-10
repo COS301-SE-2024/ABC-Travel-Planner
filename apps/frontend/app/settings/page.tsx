@@ -55,6 +55,20 @@ const countries = [
   { name: "USA", value: "usa" },
 ];
 
+const themes = [
+  { value: 'beach', name: 'Beach Vibes' },
+  { value: 'luxury', name: 'Luxury Experience' },
+  { value: 'adventure', name: 'Adventure' },
+  { value: 'cultural', name: 'Cultural Exploration' },
+  { value: 'nature', name: 'Nature Escape' },
+  { value: 'city', name: 'City Life' },
+  { value: 'romantic', name: 'Romantic Getaway' },
+  { value: 'family', name: 'Family Fun' },
+  { value: 'wellness', name: 'Wellness Retreat' },
+  { value: 'historical', name: 'Historical Journey' },
+  { value: 'none', name: 'None' },
+];
+
 const SettingsPage: React.FC = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -63,13 +77,26 @@ const SettingsPage: React.FC = () => {
   };
 
   //Theme
-  const [selectedCountry, setSelectedCountry] = useState<string>("usa"); // Default theme
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); //default dark mode
+  const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // default dark mode
 
-  const handleCountrySelect = (country: string) => {
-    setSelectedCountry(country);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Safe to use localStorage
+      const storedTheme = localStorage.getItem('selectedTheme');
+      setSelectedTheme(storedTheme || null);
+    }
+  }, []);
+
+  const handleThemeSelect = (themeValue: string | null) => {
+    setSelectedTheme(themeValue);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedTheme', themeValue || ''); // Save to localStorage
+    }
+    console.log('Selected Theme:', themeValue); // Log the selected theme
     setShowModal(false);
   };
+  
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -733,105 +760,67 @@ const SettingsPage: React.FC = () => {
           </section>
           {/* User Theme Section */}
           <section className="bg-white p-6 rounded-lg shadow-md">
-            <h2
-              className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
-              onClick={() => setShowModal(true)}
-            >
-              <HomeIcon className="w-6 h-6 text-purple-500" />
-              <span>User Theme</span>
-            </h2>
-            <div>
-              <h3 className="text-xl font-semibold">Selected Country</h3>
-              <p className="text-gray-700">
-                {countries.find((country) => country.value === selectedCountry)
-                  ?.name || "None"}
-              </p>
-            </div>
-            <div className="flex items-center mt-4 space-x-4">
-              <span className="text-xl">Light</span>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={isDarkMode}
-                  onChange={toggleTheme}
-                  className="sr-only"
-                />
-                <div
-                  className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
-                    isDarkMode ? "bg-blue-600" : "bg-gray-300"
-                  }`}
-                >
-                  <div
-                    className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${
-                      isDarkMode ? "translate-x-5" : "translate-x-1"
-                    }`}
-                  />
-                </div>
-                <span className="ml-2 text-xl">Dark</span>
-              </label>
-            </div>
-          </section>
+  <h2
+    className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
+    onClick={() => setShowModal(true)}
+  >
+    <HomeIcon className="w-6 h-6 text-purple-500" />
+    <span>User Theme</span>
+  </h2>
+  <div>
+    <h3 className="text-xl font-semibold">Selected Theme</h3>
+    <p className="text-gray-700">{themes.find(theme => theme.value === selectedTheme)?.name || 'None'}</p>
+  </div>
+  <div className="flex items-center mt-4 space-x-4">
+    <span className="text-xl">Light</span>
+    <label className="relative inline-flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        checked={isDarkMode}
+        onChange={toggleTheme}
+        className="sr-only"
+      />
+      <div className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${isDarkMode ? 'bg-blue-600' : 'bg-gray-300'}`}>
+        <div className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${isDarkMode ? 'translate-x-5' : 'translate-x-1'}`} />
+      </div>
+      <span className="ml-2 text-xl">Dark</span>
+    </label>
+  </div>
+</section>
 
-          {/* Country Theme Modal */}
-          {showModal && (
-            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-              <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
-                <button
-                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-                  onClick={() => setShowModal(false)}
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    ></path>
-                  </svg>
-                </button>
-                <h2 className="text-2xl font-semibold mb-4 text-center">
-                  Select Country
-                </h2>
-                <div className="space-y-2">
-                  {countries.map((country) => (
-                    <div
-                      key={country.value}
-                      className={`p-4 cursor-pointer rounded-lg border-2 ${
-                        selectedCountry === country.value
-                          ? "border-blue-500 bg-blue-100"
-                          : "border-gray-300"
-                      } hover:bg-blue-50`}
-                      onClick={() => handleCountrySelect(country.value)}
-                    >
-                      <span className="text-lg">{country.name}</span>
-                      {selectedCountry === country.value && (
-                        <svg
-                          className="w-6 h-6 inline-block text-blue-500 float-right"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+{/* Theme Modal */}
+{showModal && (
+  <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
+      <button
+        className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+        onClick={() => setShowModal(false)}
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      <h2 className="text-2xl font-semibold mb-4 text-center">Select Theme</h2>
+      <div className="space-y-2">
+        {themes.map((theme) => (
+          <div
+            key={theme.value}
+            className={`p-4 cursor-pointer rounded-lg border-2 ${selectedTheme === theme.value ? 'border-blue-500 bg-blue-100' : 'border-gray-300'} hover:bg-blue-50`}
+            onClick={() => handleThemeSelect(theme.value)}
+          >
+            <span className="text-lg">{theme.name}</span>
+            {selectedTheme === theme.value && (
+              <svg className="w-6 h-6 inline-block text-blue-500 float-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
         </div>
       </div>
     </div>

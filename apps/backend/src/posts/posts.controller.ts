@@ -1,4 +1,4 @@
-import { Controller, Post,Body } from "@nestjs/common";
+import { Controller, Post, Get, Body } from "@nestjs/common";
 import { PostsService } from "./posts.service";
 
 @Controller("posts")
@@ -38,6 +38,16 @@ export class PostsController {
         return this.postsService.getPosts(body.user_id);
     }
 
+    @Get()
+    async getPostsFeed(): Promise<any[]> {
+        try {
+            return await this.postsService.getPostsFeed();
+        } 
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
     @Post("getPost")
     async getPost(
         @Body()
@@ -67,6 +77,4 @@ export class PostsController {
     ) {
         return this.postsService.decreaseLikes(body.postId);
     }
-
-    
 }

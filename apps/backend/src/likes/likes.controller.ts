@@ -5,7 +5,6 @@ import { LikesService } from "./likes.service";
 export class LikesController {
     constructor(private likesService: LikesService) {}
 
-
     @Post("likePost")
     async likePost(
         @Body()
