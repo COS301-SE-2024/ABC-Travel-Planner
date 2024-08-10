@@ -54,7 +54,7 @@ function formatDate(date: number) {
 const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   const cookieStore = cookies()
   const cookie = cookieStore.get('user_id')
-
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const curr_user = cookie?.value;
   console.log("Current user: " + curr_user);
   const { id } = searchParams;
@@ -176,7 +176,7 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   const fetchItems = async() => {
     console.log("Reached fetch function");
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/itinerary-items/${id}/${curr_user}`);
+      const response = await axios.get(`${backendUrl}/itinerary-items/${id}/${curr_user}`);
       console.log(response.data); // Handle the response data
       console.log("RESPONSE FROM SERVER: " + JSON.stringify(response.data));
       return response.data;
@@ -212,15 +212,12 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   const accommodationTotal = calculateTotal(accommodations);
   const activityTotal = calculateTotal(activities);
   const finalTotal = flightTotal + accommodationTotal + activityTotal;
-  let curr_id = id ?? '54' // JSON.parse(localStorage.getItem('id') as string).id;
+  let curr_id = id ?? '' // JSON.parse(localStorage.getItem('id') as string).id;
   
   if (!curr_id) {
     curr_id = 'NOIDFOUND'
   }
 
-  console.log("ID found: " + id);
-  console.log("Curr_User: " + curr_user);
-  console.log("Backend URL: " + process.env.NEXT_PUBLIC_BACKEND_URL);
   const data: any[] = await fetchItems();
   
   return (
