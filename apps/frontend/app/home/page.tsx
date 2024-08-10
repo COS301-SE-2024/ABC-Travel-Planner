@@ -33,7 +33,8 @@ const Home = () => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
   const [defaultBackground, setDefaultBackground] = useState<string>('');
   const [headerTextColor, setHeaderTextColor] = useState<string>('text-blue-1000'); // Default color
-  const backendUrl = process.env.PUBLIC_NEXT_BACKEND_URL;
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  console.log(backendUrl);
 
   useEffect(() => {
     const theme = localStorage.getItem('selectedTheme') || 'none';

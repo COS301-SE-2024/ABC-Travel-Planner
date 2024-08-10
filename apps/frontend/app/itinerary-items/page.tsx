@@ -30,7 +30,6 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
 
   return (
     <>
-    {/* <TempStorage id={id} location={location} Item_Title={(destination && (JSON.parse(destination).Eg?.displayName ?? JSON.parse(destination).displayName)) ?? null} Item_Type={(destination && JSON.parse(destination).type) ?? null} destination={(destination && (JSON.parse(destination).Eg?.formattedAddress ?? JSON.parse(destination).formattedAddress)) ?? null} image_url={(destination && JSON.parse(destination).firstPhotoUrl) ?? null}/> */}
     <div className="relative flex flex-col space-x-1 justify-center items-center">
     <div className="flex flex-col border border-gray-300 rounded-lg p-4 bg-white shadow-md w-[96vw] h-auto iteneraryInfo">
       <h1 className="mb-2 text-2xl font-bold text-gray-800 iteneraryHeader "  style={{ fontSize: '2rem', marginBottom:20 }}>Itinerary Items:</h1>

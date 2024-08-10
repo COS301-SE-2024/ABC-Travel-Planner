@@ -46,7 +46,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const [userName, setUserName] = useState('');
   
   const curr_user = Cookie.get("user_id") ?? ''
-  const backendUrl = process.env.PUBLIC_NEXT_BACKEND_URL
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: '',
@@ -392,11 +392,12 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             <p className="text-sm text-gray-500">{new Date(timestamp * 1000).toLocaleDateString()}</p>
             <h2 >{post_description}</h2>
           </div>
-
+        {curr_user != user_id &&
           <button 
             className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full"
             onClick={followUser}>{isFollowing}
           </button>
+          }
         </div>
         <img src={image_url} alt='heloooooo'></img>
 
