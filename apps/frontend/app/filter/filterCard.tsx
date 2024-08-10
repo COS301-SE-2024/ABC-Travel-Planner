@@ -1,8 +1,10 @@
 "use client";
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Cookie from 'js-cookie';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useRouter } from 'next/navigation';
 interface FilterCardProps {
   place: any;
 }
@@ -72,9 +74,109 @@ export const generatePrice = (id: string, type: string, country: string) => {
   return Math.round(basePrice * countryMultiplier * randomMultiplier * 18); // Assuming 1 USD = 18 ZAR
 };
 
+  const overlayStyle: React.CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  };
+
+  const spinnerStyle: React.CSSProperties = {
+    width: '50px',
+    height: '50px',
+    border: '8px solid white',
+    borderTop: '8px solid blue',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+  };
+
+  const spinnerAnimation = `
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }`;
+
 const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
-    const [showCalendar, setShowCalendar] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [doneLoading, setDoneLoading] = useState(false);
+  const router = useRouter();
+  
+  useEffect(() => {
+    const loadingScreen = async () => {
+        await new Promise(resolve => setTimeout(resolve, 2800));
+        setDoneLoading(true);
+      };
+  
+    loadingScreen();
+    }, [doneLoading]);
+  
+  const uploadItem = async () => {
+    const destination = place;
+    console.log("TYPE: " + typeof destination);
+  
+    if (!uploaded && destination) {
+        const id = JSON.parse(localStorage.getItem('id') as string).id;
+        const location = JSON.parse(localStorage.getItem('location') as string).location;
+        const objectToUpload = place;
+        console.log("object: " + JSON.stringify(objectToUpload));
+
+        const userId = Cookie.get('user_id') ?? 'User1';   
+        const itemTitle = objectToUpload.displayName ?? 'NONAME';
+        const itemType = objectToUpload.type ?? 'NOTYPE';
+        const address = objectToUpload.formattedAddress ?? 'DEFAULT ADDRESS'
+        const image_url = objectToUpload.firstPhotoUrl ?? 'PHOTO URL'
+        const price = objectToUpload.price;
+        const dates = selectedDates;
+  
+        const uploadDetails = {
+            user_id: userId,
+            item_name: itemTitle,
+            item_type: itemType,
+            price: price,
+            date: dates,
+            location,
+            itinerary_id: id,
+            destination: address,
+            image_url
+        }
+         
+        console.log("Going to upload to db...")
+        console.log(uploadDetails)
+        
+        try {
+          setIsUploading(true);
+          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+          const response = await fetch(`${backendUrl}/itinerary-items/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(uploadDetails)
+            });
+  
+            console.log("Response from server: ", JSON.stringify(response));
+            const id =  JSON.parse(localStorage.getItem('id') as string)?.id ?? 0
+            const location = JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default'
+            const destination =  JSON.stringify(place)
+            const dates =  selectedDates.length == 0 ? JSON.stringify([]) : JSON.stringify(selectedDates)
+            setIsUploading(false);
+            router.push(`/itinerary-items?id=${id}&location=${location}&destination=${destination}&dates=${dates}`)
+
+        } catch (error) {
+            console.error("Error uploading item:", error);
+        }
+    }
+  }
+
   //   const handleSelectDates = (dates: (Date | null)[]) => {
   //     setSelectedDates(dates.filter((date) => date !== null) as Date[]);
   //     setShowCalendar(false);
@@ -98,23 +200,28 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const price = generatePrice(place.id, place.type, location.country);
 
   return (
-    <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-120">
+    <><div>
+      {!doneLoading && (
+        <div style={overlayStyle}>
+          <div style={spinnerStyle}></div>
+        </div>
+      )}
+    </div>
+
+    <div>
+    {isUploading && (
+        <div style={overlayStyle}>
+          <div style={spinnerStyle}></div>
+        </div>
+      )}
+    </div>
+
+    <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-120" >
       <div className="flex justify-between">
         <div className="w-1/2 pr-4">
-          <Link
-            href={{
-              pathname: '/itinerary-items',
-              query: {
-                id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
-                location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
-                destination: JSON.stringify(place),
-                dates: selectedDates.length == 0 ? JSON.stringify([]) : JSON.stringify(selectedDates)
-
-              },
-            }}
-          >
+          <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
             <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
-          </Link>
+          </div>
           <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
         </div>
         <div className="text-right">
@@ -125,7 +232,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         </div>
       </div>
       <div className='flex flex-row justify-start items-start mt-4'>
-        <Link
+        <Link onClick={uploadItem}
           href={{
             pathname: '/itinerary-items',
             query: {
@@ -144,7 +251,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           />
         </Link>
         <div className="w-2/3 pl-4 overflow-hidden">
-          <Link
+          <Link onClick={uploadItem}
             href={{
               pathname: '/itinerary-items',
               query: {
@@ -243,7 +350,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 

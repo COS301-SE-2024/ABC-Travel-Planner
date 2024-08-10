@@ -3,6 +3,13 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import FilterCard from '../app/filter/filterCard';
 import { getRatingColor, getPricePlaceholder, generatePrice } from '../app/filter/filterCard'
+import * as navigation from 'next/navigation'
+import { useRouter } from 'next/navigation';
+
+jest.mock('next/navigation', () => ({
+  ...jest.requireActual('next/navigation'),
+  useRouter: jest.fn(),
+}));
 
 const place = {
   id: "ChIJyR2OqEB-lR4RRfBDzOLMzZM",
@@ -76,6 +83,14 @@ const place = {
 };
 
 describe('FilterCard Component', () => {
+  beforeEach(() => {
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    }));
+  });
+
   test('renders the title', () => {
     render(<FilterCard place={place} />);
     const titleElement = screen.getByText(/Hennops Hiking Trail & Mtb Trail/i);

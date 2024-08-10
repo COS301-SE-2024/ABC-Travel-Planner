@@ -7,7 +7,6 @@ import { getItineraryImage } from '../itinerary';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-
 interface SearchCardProps {
     place: any;
 }
@@ -90,6 +89,7 @@ export const generatePrice = (id: string, type: string, country: string) => {
 const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const [selectedDates, setSelectedDates] = useState<Date[]>([]);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [selectedDate, setSelectedDate] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isNewItineraryModalOpen, setIsNewItineraryModalOpen] = useState(false);
     const [itineraries, setItineraries] = useState<any>([]);
@@ -104,6 +104,11 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
     const price = generatePrice(place.id, place.type, location.country);
 
+    const handleSelectDates = (dates: (Date | null)[]) => {
+        setSelectedDates(dates.filter((date) => date !== null) as Date[]);
+        setShowCalendar(false);
+    };
+    
     const handleSelectItinerary = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedItinerary(event.target.value);
     };

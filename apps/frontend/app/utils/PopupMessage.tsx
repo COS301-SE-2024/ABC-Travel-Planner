@@ -9,7 +9,7 @@ const PopupMessage = ({msg, trigger}: {msg: string, trigger: boolean}) => {
             setShow(true);
             setTimeout(() => {
                 setShow(false);
-            }, 4000);
+            }, 2000);
         }
     }, [trigger]);
 

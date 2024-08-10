@@ -18,7 +18,6 @@ import { FollowsModule } from './follows/follows.module';
 import { ItineraryCreatorModule } from './itinerary-creator/itinerary-creator.module';
 import { ActivityModule } from './activity/activity.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,6 +25,7 @@ import { ActivityModule } from './activity/activity.module';
       isGlobal: true, // Makes ConfigModule globally available
     }),
     ItineraryModule, 
+    ItineraryItemsModule,
     UsersModule, 
     FirebaseModule, 
     ReviewsModule,

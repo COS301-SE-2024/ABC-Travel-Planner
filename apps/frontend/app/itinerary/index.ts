@@ -1,8 +1,7 @@
 "use server";
-import createSupabaseServerClient from "@/libs/supabase/server";
-import { getStorage,ref,getDownloadURL } from "firebase/storage";
 import app from "@/libs/firebase/firebase";
-
+import createSupabaseServerClient from "@/libs/supabase/server";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
 const createItinerary = async (itineraryName: string, location: string) => {
   const supabase = await createSupabaseServerClient();
@@ -17,8 +16,7 @@ const createItinerary = async (itineraryName: string, location: string) => {
   return data;
 };
 
-
-const getItineraryImage = async (location: string) => {
+export const getItineraryImage = async (location: string) => {
   const storage = getStorage(app);
   const imageRef = ref(storage, `locations/${location.toLowerCase()}.jpg`);
   try{
@@ -71,4 +69,4 @@ const deleteItinerary = async (id: any) => {
   return data;
 };
 
-export { createItinerary, getItineraries, updateItinerary, deleteItinerary, getItineraryImage };
+export { createItinerary, getItineraries, updateItinerary, deleteItinerary };

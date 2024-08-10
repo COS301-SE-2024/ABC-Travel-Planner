@@ -33,6 +33,8 @@ const Home = () => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
   const [defaultBackground, setDefaultBackground] = useState<string>('');
   const [headerTextColor, setHeaderTextColor] = useState<string>('text-blue-1000'); // Default color
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  console.log(backendUrl);
 
   useEffect(() => {
     const theme = localStorage.getItem('selectedTheme') || 'none';
@@ -65,7 +67,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/posts`);
+        const response = await fetch(`${backendUrl}/posts`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -83,7 +85,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPopularDestinations = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/google-maps/popular-destinations`);
+        const response = await fetch(`${backendUrl}/google-maps/popular-destinations`);
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }

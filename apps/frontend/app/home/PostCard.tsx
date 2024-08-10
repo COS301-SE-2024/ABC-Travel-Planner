@@ -46,6 +46,8 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const [userName, setUserName] = useState('');
   
   const curr_user = Cookie.get("user_id") ?? ''
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+  console.log(backendUrl)
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: '',
@@ -69,8 +71,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           timestamp: 0,
           username: u.username,
         })
-        
-        const isLikedRes = await fetch(`http://localhost:4000/likes/userLikesPost`, {
+        const isLikedRes = await fetch(`${backendUrl}/likes/userLikesPost`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json'
@@ -99,7 +100,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   useEffect(() => {
     const getUserName = async () => {
       try {
-        const userNameRes = await fetch(`http://localhost:4000/users/${user_id}`)
+        const userNameRes = await fetch(`${backendUrl}/users/${user_id}`)
         const userNameText : User[] = await userNameRes.json();
         setUserName(userNameText[0].username)
 
@@ -120,7 +121,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
         follower_id: Cookie.get('user_id')
       }
 
-      const isFollowingRes = await fetch(`http://localhost:4000/follows/isFollowing`, {
+      const isFollowingRes = await fetch(`${backendUrl}/follows/isFollowing`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -141,7 +142,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const handleLike = async () => {
       if (liked) {
         try {
-          const unLikeRes = await fetch(`http://localhost:4000/likes/unlikePost`, {
+          const unLikeRes = await fetch(`${backendUrl}/likes/unlikePost`, {
             method: 'POST',
             headers: {  
               'Content-Type': 'application/json',
@@ -154,7 +155,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           });
 
           if (unLikeRes) {
-            const decrementLikeRes = await fetch(`http://localhost:4000/posts/decrementLikes`, {
+            const decrementLikeRes = await fetch(`${backendUrl}/posts/decrementLikes`, {
               method: 'POST',
               headers: {
                 'Content-Type' : 'application/json'
@@ -181,7 +182,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
         }
       } else if (!liked) {
         try {
-          const LikeRes = await fetch(`http://localhost:4000/likes/likePost`, {
+          const LikeRes = await fetch(`${backendUrl}/likes/likePost`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -194,7 +195,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           });
 
           if (LikeRes) {
-            const incrementLikeRes = await fetch(`http://localhost:4000/posts/incrementLikes`, {
+            const incrementLikeRes = await fetch(`${backendUrl}/posts/incrementLikes`, {
               method: 'POST',
               headers: {
                 'Content-Type' : 'application/json'
@@ -228,7 +229,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
 
     //No cache available atm...
     if (!showComments) {
-      const commentRes = await fetch(`http://localhost:4000/comments/getComments`, {
+      const commentRes = await fetch(`${backendUrl}/comments/getComments`, {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json'
@@ -280,7 +281,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
 
         console.log("Comment to add: " + JSON.stringify(newComment))
 
-        const addCommentRes = await fetch(`http://localhost:4000/comments/create`, {
+        const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -316,7 +317,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
       follower_id: curr_user
     }
     
-    const response = await fetch(`http://localhost:4000/follows/isFollowing`, {
+    const response = await fetch(`${backendUrl}/follows/isFollowing`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -329,7 +330,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
 
     if (following == "true") {
       try {
-        const unfollowRes = await fetch(`http://localhost:4000/follows/follow`, {
+        const unfollowRes = await fetch(`${backendUrl}/follows/follow`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -355,7 +356,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   
     } else {
       try {
-        const followRes = await fetch(`http://localhost:4000/follows/follow`, {
+        const followRes = await fetch(`${backendUrl}/follows/follow`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -392,11 +393,12 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             <p className="text-sm text-gray-500">{new Date(timestamp * 1000).toLocaleDateString()}</p>
             <h2 >{post_description}</h2>
           </div>
-
+        {curr_user != user_id &&
           <button 
             className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full"
             onClick={followUser}>{isFollowing}
           </button>
+          }
         </div>
         <img src={image_url} alt='heloooooo'></img>
 

@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const details = req.body;
-    console.log("REAAAACCHHHEEEED DATABASE");
+    console.log("INSERTION - REAAAACCHHHEEEED DATABASE");
 
     try {
         const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
