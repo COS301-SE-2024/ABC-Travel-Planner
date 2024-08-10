@@ -47,6 +47,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   
   const curr_user = Cookie.get("user_id") ?? ''
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+  console.log(backendUrl)
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: '',
