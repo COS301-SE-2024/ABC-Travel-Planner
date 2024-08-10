@@ -176,7 +176,7 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   const fetchItems = async() => {
     console.log("Reached fetch function");
     try {
-      const response = await axios.get(`http://localhost:4000/itinerary-items/${id}/${curr_user}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/itinerary-items/${id}/${curr_user}`);
       console.log(response.data); // Handle the response data
       console.log("RESPONSE FROM SERVER: " + JSON.stringify(response.data));
       return response.data;

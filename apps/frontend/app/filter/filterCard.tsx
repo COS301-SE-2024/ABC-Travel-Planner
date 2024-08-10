@@ -155,7 +155,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         
         try {
           setIsUploading(true);
-          const response = await fetch('http://localhost:4000/itinerary-items/add', {
+          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+          const response = await fetch(`${backendUrl}/itinerary-items/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -72,7 +72,8 @@ interface ItemData {
         const fetchItems = async () => {
             try {
                 const user_id = Cookie.get('user_id') ?? 'User1'
-                const response = await fetch(`http://localhost:4000/itinerary-items/${id}/${user_id}`);
+                const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+                const response = await fetch(`${backendUrl}/itinerary-items/${id}/${user_id}`);
                 const data: ItemData[] = await response.json();
                 console.log("Response from server: " + JSON.stringify(data))
                 
@@ -139,7 +140,8 @@ interface ItemData {
             //Remember to get the user token and send it to backend...
             try {
                 const user_name = Cookie.get('user_id') ?? 'User1';
-                const response = await fetch('http://localhost:4000/itinerary-items/delete', {
+                const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+                const response = await fetch(`${backendUrl}/itinerary-items/delete`, {
                     method: 'POST',
                     headers: {
                     'Content-Type': 'application/json',
