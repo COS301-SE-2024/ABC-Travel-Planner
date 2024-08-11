@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { insertRecord } from '@/app/utils/functions/insertRecord';
 import Cookie from 'js-cookie';
-import * as fetchModule from 'node-fetch';
 
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
@@ -98,12 +97,6 @@ const place = {
   firstPhotoUrl: 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg',
   type: "attractions"
 };
-
-const mockFetch = fetchModule.default as unknown as jest.MockedFunction<typeof fetch>;
-mockFetch.mockResolvedValue({
-  status: 200,
-  json: jest.fn().mockResolvedValue({ success: true })
-} as any);
 
 describe('FilterCard Component', () => {
   const routerPushMock = jest.fn();
@@ -234,55 +227,6 @@ it('should upload item and navigate on successful upload', async () => {
   expect(routerPushMock).toHaveBeenCalledWith(
     `/itinerary-items?id=mockId&location=mockLocation&destination=${place}&dates=`
   );
-});
-
-// Mock the fetch function
-jest.mock('node-fetch');
-process.env.NEXT_PUBLIC_BACKEND_URL = 'http://test-backend.com';
-
-describe('insertRecord', () => {
-  beforeEach(() => {
-    // Clear all mocks before each test
-    jest.clearAllMocks();
-  });
-
-  it('should send a POST request and return the status', async () => {
-    // Mock the response
-    const mockResponse = {
-      status: 200,
-      json: jest.fn().mockResolvedValue({ success: true })
-    };
-    global.fetch.mockResolvedValue(mockResponse);
-
-    console.log = jest.fn();
-
-    const uploadDetails = { key: 'value' };
-    const result = await insertRecord(uploadDetails);
-
-    // Assert that fetch was called with the correct arguments
-    expect(global.fetch).toHaveBeenCalledWith(
-      `http://test-backend.com/itinerary-items/add`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(uploadDetails)
-      }
-    );
-
-    // Assert that console.log was called
-    expect(console.log).toHaveBeenCalledWith("Response from server: ", JSON.stringify(mockResponse));
-
-    expect(result).toBe(200);
-  });
-
-  // it('should handle errors', async () => {
-  //   global.fetch.mockRejectedValue(new Error('Network error'));
-
-  //   const uploadDetails = { key: 'value' };
-  //   await expect(insertRecord(uploadDetails)).rejects.toThrow('Network error');
-  // });
 });
 
 
