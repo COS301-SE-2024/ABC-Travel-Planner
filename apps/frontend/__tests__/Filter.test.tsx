@@ -1,15 +1,32 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, act, screen, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import FilterCard from '../app/filter/filterCard';
 import { getRatingColor, getPricePlaceholder, generatePrice } from '../app/filter/filterCard'
 import * as navigation from 'next/navigation'
 import { useRouter } from 'next/navigation';
+import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
+import { insertRecord } from '@/app/utils/functions/insertRecord';
+import Cookie from 'js-cookie';
+import nock from 'nock';
 
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
   useRouter: jest.fn(),
 }));
+
+jest.mock("firebase/firestore", () => ({
+  getFirestore: jest.fn(),
+  collection: jest.fn(),
+  doc: jest.fn(),
+  setDoc: jest.fn(),
+}));
+
+jest.mock('js-cookie', () => ({
+  get: jest.fn(),
+}));
+
+jest.mock('@/app/utils/functions/insertRecord');
 
 const place = {
   id: "ChIJyR2OqEB-lR4RRfBDzOLMzZM",
@@ -83,12 +100,27 @@ const place = {
 };
 
 describe('FilterCard Component', () => {
+  const routerPushMock = jest.fn();
   beforeEach(() => {
     (useRouter as jest.Mock).mockImplementation(() => ({
       push: jest.fn(),
       replace: jest.fn(),
       prefetch: jest.fn(),
     }));
+
+    (useRouter as jest.Mock).mockReturnValue({
+      push: routerPushMock,
+    });
+
+
+    global.localStorage.setItem('id', JSON.stringify({ id: 'mockId' }));
+    global.localStorage.setItem('location', JSON.stringify({ location: 'mockLocation' }));
+
+    (Cookie.get as jest.Mock).mockReturnValue('mockUserId');
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   test('renders the title', () => {
@@ -168,9 +200,48 @@ describe('FilterCard Component', () => {
     const selectedDateElement = screen.getByText(/Selected Date: 8\/1\/2024/i); // Adjust based on the actual date format
     expect(selectedDateElement).toBeInTheDocument();
 
-    const selectedDateElement2 = screen.getByText(/Selected Date: 8\/2\/2024/i); 
+    const selectedDateElement2 = screen.getByText(/Selected Date: 8\/2\/2024/i);
     expect(selectedDateElement2).toBeInTheDocument();
-});
+  });
+
+  it('should upload item and navigate on successful upload', async () => {
+    (insertRecord as jest.Mock).mockResolvedValue(200);
+
+    render(<FilterCard place={place} />);
+
+    const uploadButton = screen.getByText(place.displayName); // Adjust the button selector as per your component
+
+    fireEvent.click(uploadButton);
+
+    await waitFor(() => expect(insertRecord).toHaveBeenCalledWith({
+      user_id: 'mockUserId',
+      item_name: place.displayName,
+      item_type: place.type,
+      price: undefined, // Add the correct price if it's available in the place object
+      date: [], // Adjust this to match the selected dates state
+      location: 'mockLocation',
+      itinerary_id: 'mockId',
+      destination: place.formattedAddress,
+      image_url: place.firstPhotoUrl,
+    }));
+
+    const result = await insertRecord({
+      user_id: 'mockUserId',
+      item_name: place.displayName,
+      item_type: place.type,
+      price: undefined,
+      date: [],
+      location: 'mockLocation',
+      itinerary_id: 'mockId',
+      destination: place.formattedAddress,
+      image_url: place.firstPhotoUrl,
+    });
+    expect(result).toBe(200);
+
+    expect(routerPushMock).toHaveBeenCalledWith(
+      `/itinerary-items?id=mockId&location=mockLocation&destination=${place}&dates=`
+    );
+  });
 
 
 });
@@ -239,4 +310,40 @@ describe('generatePrice', () => {
     const price = generatePrice('mno', 'unknown', 'Unknown');
     expect(price).toBeCloseTo(2039, -2);
   });
+});
+
+describe('insertRecord', () => {
+  beforeEach(() => {
+    nock.cleanAll();
+    process.env.NEXT_PUBLIC_BACKEND_URL = 'https://example.com';
+  });
+
+  it('should make a POST request and return the response status', async () => {
+    nock('https://example.com')
+      .post('/itinerary-items/add', {
+        user_id: 'mockUserId',
+        item_name: 'Mock Item',
+        item_type: 'attraction',
+        date: [],
+        location: 'mockLocation',
+        itinerary_id: 'mockId',
+        destination: 'mockDestination',
+        image_url: 'mockImageUrl',
+      })
+      .reply(200);
+
+    const result = await insertRecord({
+      user_id: 'mockUserId',
+      item_name: 'Mock Item',
+      item_type: 'attraction',
+      date: [],
+      location: 'mockLocation',
+      itinerary_id: 'mockId',
+      destination: 'mockDestination',
+      image_url: 'mockImageUrl',
+    });
+
+    expect(result).toBe(200);
+  });
+
 });

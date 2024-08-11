@@ -5,6 +5,8 @@ import Cookie from 'js-cookie';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
+import { insertRecord } from '../utils/functions/insertRecord';
+
 interface FilterCardProps {
   place: any;
 }
@@ -153,34 +155,17 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         console.log(uploadDetails)
         
         try {
-          setIsUploading(true);
-          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
-          const response = await fetch(`${backendUrl}/itinerary-items/add`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(uploadDetails)
-            });
-  
-            console.log("Response from server: ", JSON.stringify(response));
-            const id =  JSON.parse(localStorage.getItem('id') as string)?.id ?? 0
-            const location = JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default'
-            const destination =  JSON.stringify(place)
-            const dates =  selectedDates.length == 0 ? JSON.stringify([]) : JSON.stringify(selectedDates)
+            setIsUploading(true);
+            await insertRecord(uploadDetails);
             setIsUploading(false);
             router.push(`/itinerary-items?id=${id}&location=${location}&destination=${destination}&dates=${dates}`)
-
+            // return response.status;
         } catch (error) {
             console.error("Error uploading item:", error);
         }
     }
   }
 
-  //   const handleSelectDates = (dates: (Date | null)[]) => {
-  //     setSelectedDates(dates.filter((date) => date !== null) as Date[]);
-  //     setShowCalendar(false);
-  // };
   function extractLocation(fullString: string) {
     const parts = fullString.split(/,|\s+/);
 
@@ -232,36 +217,15 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         </div>
       </div>
       <div className='flex flex-row justify-start items-start mt-4'>
-        <Link onClick={uploadItem}
-          href={{
-            pathname: '/itinerary-items',
-            query: {
-              id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
-              location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
-              destination: JSON.stringify(place),
-              dates: selectedDates.length == 0 ? JSON.stringify([]) : JSON.stringify(selectedDates)
-            },
-          }}
-          className="w-1/3"
-        >
+        <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
           <img
             src={`${place.firstPhotoUrl}`}
             alt={place.displayName}
             className="rounded-lg object-cover cursor-pointer"
           />
-        </Link>
+        </div>
         <div className="w-2/3 pl-4 overflow-hidden">
-          <Link onClick={uploadItem}
-            href={{
-              pathname: '/itinerary-items',
-              query: {
-                id: JSON.parse(localStorage.getItem('id') as string)?.id ?? 0,
-                location: JSON.parse(localStorage.getItem('location') as string)?.location ?? 'default',
-                destination: JSON.stringify(place),
-                dates: selectedDates.length == 0 ? JSON.stringify([]) : JSON.stringify(selectedDates)
-              },
-            }}
-          >
+          <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
             {place.goodForChildren && (
               <div className="mt-2">
                 <div className="inline-block bg-green-500 text-white text-sm font-bold rounded-full px-3 py-1">
@@ -269,6 +233,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 </div>
               </div>
             )}
+          </div>
             <p className="text-gray-800 mt-4">{place.editorialSummary ? place.editorialSummary : ""}</p>
             {place.paymentOptions?.acceptsCreditCards && (
               <div className="mt-2 flex items-center text-green-600 text-sm">
@@ -283,8 +248,6 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 {`Only ${numRooms} rooms available at this price`}
               </div>
             )}
-          </Link>
-
           <div className="mt-4 flex justify-between items-end">
           <div className="mt-4 flex flex-col items-start space-y-4">
     <button
