@@ -33,7 +33,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
     <div className="relative flex flex-col space-x-1 justify-center items-center">
     <div className="flex flex-col border border-gray-300 rounded-lg p-4 bg-white shadow-md w-[96vw] h-auto iteneraryInfo">
       <h1 className="mb-2 text-2xl font-bold text-gray-800 iteneraryHeader "  style={{ fontSize: '2rem', marginBottom:20 }}>Itinerary Items:</h1>
-      <div className="shadow-md p-4 rounded-lg bg-gray-200" style ={{backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
+      {/* <div className="shadow-md p-4 rounded-lg bg-gray-200" style ={{backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
       <form >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
@@ -56,7 +56,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
           </div>
         </div>
       </form>
-      </div>
+      </div> */}
 
       <div className="flex justify-center">
         <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800">

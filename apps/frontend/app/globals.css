@@ -197,6 +197,7 @@ body {
 .search-icon {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .search-bar-container {
@@ -1373,4 +1374,12 @@ body {
 
 .gentle-pulse {
   animation: gentlePulse 2s infinite;
+}
+
+/* filter search */
+.filter-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
