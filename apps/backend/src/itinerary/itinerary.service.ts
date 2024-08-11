@@ -251,4 +251,13 @@ export class ItineraryService {
       .set({ favouriteCountries: filteredCountries });
     return result;
   }
+
+  async getItineraryOwner(itineraryId: string) {
+    const result = await this.firebaseApp
+      .firestore()
+      .collection('Itineraries')
+      .doc(itineraryId)
+      .get();
+    return result?.data()?.user_id;
+  }
 }
