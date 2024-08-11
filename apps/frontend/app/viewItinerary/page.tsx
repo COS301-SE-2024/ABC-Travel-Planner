@@ -146,7 +146,7 @@ const ViewItinerary = ({
                     {images[currentImageIndex].item_name}
                   </p>
                   <div className="flex items-center mt-2">
-                    <FaLocationPin className="text-red-500 mr-2" />
+                    <FaLocationPin className="text-gray-600 mr-2" />
                     <p className="text-gray-600">
                       {images[currentImageIndex].destination}
                     </p>
@@ -157,12 +157,14 @@ const ViewItinerary = ({
                       Price: R{images[currentImageIndex].price}
                     </p>
                   </div>
+                  {images[currentImageIndex].date.length !==0 && (
                   <div className="flex items-center mt-2">
                     <FaCalendarAlt className="text-blue-500 mr-2" />
                     <p className="text-gray-600">
-                      {/* Date: {images[currentImageIndex].date} */}
+                      Date: {images[currentImageIndex].date.length === 1 ? images[currentImageIndex].date[0].substring(0,10): images[currentImageIndex].date[0].substring(0,10) + "  -  " + images[currentImageIndex].date[images[currentImageIndex].date.length - 1].substring(0,10)} 
                     </p>
                   </div>
+                  )}
                 </div>
               </div>
               <button
