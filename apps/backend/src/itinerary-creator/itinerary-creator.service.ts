@@ -45,15 +45,14 @@ export class ItineraryCreatorService {
    
     const searchStrings = {
       stays: [
-        `Best hotels for ${reason} in ${country} with ${interests}`,
-        `Top-rated accommodations for ${reason} in ${country} focusing on ${interests}`,
-        `Affordable stays for ${reason} in ${country} with interest in ${interests}`,
-        `Luxury hotels for ${reason} in ${country} catering to ${interests}`,
-        `Boutique hotels for ${reason} in ${country} near ${interests}`,
+        `Best hotels in ${country}`,
+        `Top-rated accommodations in ${country}`,
+        `Affordable stays in ${country}`,
+        `Luxury hotels in ${country} catering to ${interests}`,
+        `Hotels for ${reason} in ${country} near ${interests}`,
         `Family-friendly hotels for ${reason} in ${country} with ${interests}`,
-        `Hotels with great amenities for ${reason} in ${country} focused on ${interests}`,
-        `Budget hotels for ${reason} in ${country} with ${interests}`,
-        `Eco-friendly stays for ${reason} in ${country} related to ${interests}`,
+        `Hotels with great amenities for ${reason} in ${country}`,
+        `Budget hotels for ${reason} in ${country}`,
         `Unique accommodations for ${reason} in ${country} considering ${interests}`
       ],
       attractions: [

@@ -33,6 +33,34 @@ export interface Place {
   dates?: any
 }
 
+const overlayStyle: React.CSSProperties = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 1000,
+};
+
+const spinnerStyle: React.CSSProperties = {
+  width: '50px',
+  height: '50px',
+  border: '8px solid white',
+  borderTop: '8px solid blue',
+  borderRadius: '50%',
+  animation: 'spin 1s linear infinite',
+};
+
+const spinnerAnimation = `
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}`;
+
 const TripComponent: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Place[]>([]);
   const [loading, setLoading] = useState(false);
@@ -41,7 +69,7 @@ const TripComponent: React.FC = () => {
   const [showCalendar, setShowCalendar] = useState<{ [key: string]: boolean }>({});
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: Date[] }>({});
   const [showModal, setShowModal] = useState(false);
-
+  const [itineraryLoading, setItineraryLoading] = useState(false);
   const searchParams = useSearchParams();
   const country = searchParams?.get("country");
   const reason = searchParams?.get("reason");
@@ -104,7 +132,7 @@ const TripComponent: React.FC = () => {
 
 
   const sendToItineraryPage = async () => {
-
+    setItineraryLoading(true);
     const user_id = Cookies.get("user_id");
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     const image = await getItineraryImage(country as string);
@@ -112,12 +140,14 @@ const TripComponent: React.FC = () => {
     const promise = searchResults.map(async (item) => {
       let address = item.plusCode ? item.plusCode.compoundCode : 'Unknown Address';
       const location = extractLocation(address);
+      const dates = item.dates && item.dates.length > 0 ? item.dates : [];
       const newItem = await axios.post(`${backendUrl}/itinerary-items/add`, {
         user_id: user_id, item_name: item.displayName, item_type: item.type,
-        location: location.country, itinerary_id: newI.data, destination: item.formattedAddress, image_url: item.firstPhotoUrl, price: item.price, dates: item.dates
+        location: location.country, itinerary_id: newI.data, destination: item.formattedAddress, image_url: item.firstPhotoUrl, price: item.price, date: dates
       });
     });
     await Promise.all(promise);
+    setItineraryLoading(false);
     router.push("/itinerary");
   };
 
@@ -387,6 +417,13 @@ const TripComponent: React.FC = () => {
               </div>
             </div>
           )}
+          <div>
+      {itineraryLoading && (
+        <div style={overlayStyle}>
+          <div style={spinnerStyle}></div>
+        </div>
+      )}
+    </div>
         </div>
       </div>
     </div>
