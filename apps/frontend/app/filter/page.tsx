@@ -16,6 +16,240 @@ const Filter = () => {
 
   const topic = searchParams?.get('topic');
   const searchTerm = searchParams?.get('term');
+  const defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
+  const constructImageUrl = (photoName: string, apiKey: string, maxHeight = 400, maxWidth = 500) => {
+    return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=${maxHeight}&maxWidthPx=${maxWidth}&key=${apiKey}`;
+  };
+
+
+  const fetchPlaceDetails = async (placeId: string) => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+    const url = `https://places.googleapis.com/v1/places/${placeId}`;
+    const fieldMask = 'id,displayName,photos';
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-Goog-Api-Key': `${apiKey}`,
+      'X-Goog-FieldMask': fieldMask,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: headers,
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+      throw error;
+    }
+  };
+
+  const handleSearchStays = async (destination: string) => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+    const loader = new Loader({
+      apiKey: `${apiKey}`,
+      version: "weekly",
+    });
+
+    loader.load().then(async () => {
+      const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+      const request = {
+        textQuery: destination,
+        fields: ['accessibilityOptions', 'id', 'displayName', 'formattedAddress', 'paymentOptions', 'plusCode', 'priceLevel', 'rating', 'types', 'userRatingCount', 'websiteURI', 'editorialSummary', 'isGoodForChildren'],
+        includedType: 'lodging',
+        // locationBias: { lat: 37.4161493, lng: -122.0812166 },
+        // isOpenNow: true,
+        // language: 'en-US',
+        maxResultCount: 15,
+        // minRating: 3.2,
+        // region: 'us',
+        // useStrictTypeFiltering: false,
+      };
+
+      const { places } = await Place.searchByText(request);
+      setSearchResults(places);
+      if (places.length) {
+        const detailedPlaces = await Promise.all(places.map(async (place) => {
+          const detailedPlace = await fetchPlaceDetails(place.id);
+          
+          const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+            defaultImageUrl;
+          console.log('First Photo URL:', firstPhotoUrl);
+
+          return {
+            ...place,
+            photos: detailedPlace.photos,
+            firstPhotoUrl: firstPhotoUrl,
+            type: "stays"
+          };
+        }));
+
+        setSearchResults(detailedPlaces);
+        console.log('Detailed Places:', detailedPlaces);
+      } else {
+        setSearchResults([]);
+      }
+      setLoading(false);
+    });
+  };
+
+  const handleSearchAttractions = async (destination: string) => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+    const loader = new Loader({
+      apiKey: `${apiKey}`,
+      version: "weekly",
+    });
+
+    loader.load().then(async () => {
+      const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+      const request = {
+        textQuery: destination,
+        fields: ['accessibilityOptions', 'id', 'displayName', 'formattedAddress', 'paymentOptions', 'plusCode', 'priceLevel', 'rating', 'types', 'userRatingCount', 'websiteURI', 'editorialSummary', 'isGoodForChildren'],
+        //includedType: 'restaurant',
+        // locationBias: { lat: 37.4161493, lng: -122.0812166 },
+        // isOpenNow: true,
+        // language: 'en-US',
+        maxResultCount: 15,
+        // minRating: 3.2,
+        // region: 'us',
+        // useStrictTypeFiltering: false,
+      };
+
+      const { places } = await Place.searchByText(request);
+      setSearchResults(places);
+      if (places.length) {
+        const detailedPlaces = await Promise.all(places.map(async (place) => {
+          const detailedPlace = await fetchPlaceDetails(place.id);
+
+          const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+            defaultImageUrl;
+          console.log('First Photo URL:', firstPhotoUrl);
+
+          return {
+            ...place,
+            photos: detailedPlace.photos,
+            firstPhotoUrl: firstPhotoUrl,
+            type: "attractions"
+          };
+        }));
+
+        setSearchResults(detailedPlaces);
+        console.log('Detailed Places:', detailedPlaces);
+      } else {
+        setSearchResults([]);
+      }
+      setLoading(false);
+    });
+  };
+
+  const handleSearchCarRentals = async (destination: string) => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+    const loader = new Loader({
+      apiKey: `${apiKey}`,
+      version: "weekly",
+    });
+
+    loader.load().then(async () => {
+      const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+      const request = {
+        textQuery: destination,
+        fields: ['accessibilityOptions', 'id', 'displayName', 'formattedAddress', 'paymentOptions', 'plusCode', 'priceLevel', 'rating', 'types', 'userRatingCount', 'websiteURI', 'editorialSummary', 'isGoodForChildren'],
+        includedType: 'car_rental',
+        // locationBias: { lat: 37.4161493, lng: -122.0812166 },
+        // isOpenNow: true,
+        // language: 'en-US',
+        maxResultCount: 15,
+        // minRating: 3.2,
+        // region: 'us',
+        useStrictTypeFiltering: false,
+      };
+
+      const { places } = await Place.searchByText(request);
+      setSearchResults(places);
+      if (places.length) {
+        const detailedPlaces = await Promise.all(places.map(async (place) => {
+          const detailedPlace = await fetchPlaceDetails(place.id);
+
+          const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+            defaultImageUrl;
+          console.log('First Photo URL:', firstPhotoUrl);
+
+          return {
+            ...place,
+            photos: detailedPlace.photos,
+            firstPhotoUrl: firstPhotoUrl,
+            type: "carRental"
+          };
+        }));
+
+        setSearchResults(detailedPlaces);
+        console.log('Detailed Places:', detailedPlaces);
+      } else {
+        setSearchResults([]);
+      }
+      setLoading(false);
+    });
+  };
+
+  const handleSearchAirportTaxis = async (destination: string) => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+    const loader = new Loader({
+      apiKey: `${apiKey}`,
+      version: "weekly",
+    });
+
+    loader.load().then(async () => {
+      const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+      const request = {
+        textQuery: destination,
+        fields: ['accessibilityOptions', 'id', 'displayName', 'formattedAddress', 'paymentOptions', 'plusCode', 'priceLevel', 'rating', 'types', 'userRatingCount', 'websiteURI', 'editorialSummary', 'isGoodForChildren'],
+        //includedType: 'taxi_stand',
+        // locationBias: { lat: 37.4161493, lng: -122.0812166 },
+        // isOpenNow: true,
+        // language: 'en-US',
+        maxResultCount: 15,
+        // minRating: 3.2,
+        // region: 'us',
+        // useStrictTypeFiltering: false,
+      };
+
+      const { places } = await Place.searchByText(request);
+      setSearchResults(places);
+      if (places.length) {
+        const detailedPlaces = await Promise.all(places.map(async (place) => {
+          const detailedPlace = await fetchPlaceDetails(place.id);
+
+          const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
+            constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
+            defaultImageUrl;
+          console.log('First Photo URL:', firstPhotoUrl);
+
+          return {
+            ...place,
+            photos: detailedPlace.photos,
+            firstPhotoUrl: firstPhotoUrl,
+            type: "airportTaxis"
+          };
+        }));
+
+        setSearchResults(detailedPlaces);
+        console.log('Detailed Places:', detailedPlaces);
+      } else {
+        setSearchResults([]);
+      }
+      setLoading(false);
+    });
+  };
 
   useEffect(() => {
     const generalSearch = async (searchT: string, t: string) => {
@@ -39,6 +273,7 @@ const Filter = () => {
         console.error('Error fetching data:', error);
       }
     }
+  
 
     if (searchTerm && topic) {
       setLoading(true);

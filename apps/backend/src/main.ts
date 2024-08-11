@@ -11,10 +11,12 @@ async function bootstrap() {
     const decodedCredentials = Buffer.from(base64Credentials, 'base64').toString('utf8');
     fs.writeFileSync('/tmp/google-credentials.json', decodedCredentials);
     process.env.GOOGLE_APPLICATION_CREDENTIALS = '/tmp/google-credentials.json';
+    console.log("CREDS: " + process.env.GOOGLE_APPLICATOIN_CREDENTIALS)
   }
+  
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['http://localhost:3000', 'https://abctravelplanner-8a6f6247b848.herokuapp.com'], 
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'https://abctravelplanner-8a6f6247b848.herokuapp.com'], 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });

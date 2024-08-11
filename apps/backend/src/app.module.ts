@@ -9,14 +9,14 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { SearchModule } from './search/search.module';
 import * as path from 'path';
 import { AuthModule } from './auth/auth.module';
-
+import { GoogleMapsModule } from './google-maps/google-maps.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { LikesModule } from './likes/likes.module';
-
 import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
 import { FollowsModule } from './follows/follows.module';
-
+import { ItineraryCreatorModule } from './itinerary-creator/itinerary-creator.module';
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
@@ -25,6 +25,7 @@ import { FollowsModule } from './follows/follows.module';
       isGlobal: true, // Makes ConfigModule globally available
     }),
     ItineraryModule, 
+    ItineraryItemsModule,
     UsersModule, 
     FirebaseModule, 
     ReviewsModule,
@@ -34,7 +35,10 @@ import { FollowsModule } from './follows/follows.module';
     CommentsModule,
     LikesModule,
     ItineraryItemsModule,
-    FollowsModule
+    FollowsModule,
+    ItineraryCreatorModule,
+    ActivityModule,
+    GoogleMapsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

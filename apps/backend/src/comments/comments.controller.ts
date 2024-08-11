@@ -2,7 +2,6 @@ import { Controller } from "@nestjs/common";
 import { CommentsService } from "./comments.service";
 import {Post, Body} from "@nestjs/common";
 
-
 @Controller("comments")
 export class CommentsController {
     constructor(private commentsService: CommentsService) {}
@@ -64,6 +63,4 @@ export class CommentsController {
     ) {
         return this.commentsService.deleteComment(body.commentId);
     }
-
-
 }

@@ -1,7 +1,12 @@
-// page.tsx
+"use server"
 import Head from "next/head";
 import Image from "next/image";
 import dynamic from "next/dynamic"; // Import dynamic for client-side component loading
+import { cookies } from 'next/headers'
+import { truncateTitle } from "../utils/functions/TruncateTitle";
+import moment from 'moment';
+import axios from 'axios';
+import { format, parseISO } from 'date-fns';
 
 interface Item {
   id: number;
@@ -20,11 +25,50 @@ const ConfirmBookingButton = dynamic(() => import('./ConfirmBookingButton'), {
   ssr: false, // Ensure the component is not server-side rendered
 });
 
-const Booking = () => {
+const checkType = (type: string) => {
+  switch (type) {
+    case "attractions":
+      return "Attraction"
+  
+    case "flights":
+      return "Flight"
+    
+    case "stays":
+      return "A place to stay"
+    
+    case "car rental":
+      return "Car rental"
+
+    case "airport taxi":
+      return "Airport taxi"
+
+    default:
+      return "TYPE"
+  }
+}
+
+function formatDate(date: number) {
+  return moment.unix(date).format('D MMM YYYY: HH:mm');
+}
+
+const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
+  const cookieStore = cookies()
+  const cookie = cookieStore.get('user_id')
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const curr_user = cookie?.value;
+  console.log("Current user: " + curr_user);
+  const { id } = searchParams;
+  let totalCost = 0;
+
   const convertToRand = (usd: number): number => {
     const exchangeRate = 18; // 1 USD = 18 ZAR
     return usd * exchangeRate;
   };
+
+  const updateTotal = (price: number)  => {
+    totalCost += price;
+    return price?.toFixed(2) ?? 0;
+  }
 
   const calculateTotal = (items: Item[]): number => {
     return items.reduce((total, item) => total + convertToRand(item.price), 0);
@@ -129,11 +173,53 @@ const Booking = () => {
     },
   ];
 
+  const fetchItems = async() => {
+    console.log("Reached fetch function");
+    try {
+      const response = await axios.get(`${backendUrl}/itinerary-items/${id}/${curr_user}`);
+      console.log(response.data); // Handle the response data
+      console.log("RESPONSE FROM SERVER: " + JSON.stringify(response.data));
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching data:', error); // Handle the error
+      return [];
+    }
+  }
+
+  function formatDateGroup(dates: string[]): string {
+    if (dates.length === 0) return '';
+  
+    const parsedDates = dates.map(d => parseISO(d));
+    parsedDates.sort((a, b) => a.getTime() - b.getTime());
+  
+    const groups: { [key: string]: number[] } = {};
+  
+    parsedDates.forEach(date => {
+      const key = format(date, 'MMMM yyyy');
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(date.getDate());
+    });
+  
+    return Object.entries(groups)
+      .map(([monthYear, days]) => {
+        const uniqueDays = [...new Set(days)].sort((a, b) => a - b);
+        return `${uniqueDays.join(', ')} ${monthYear}`;
+      })
+      .join('; ');
+  }
+
   const flightTotal = calculateTotal(flights);
   const accommodationTotal = calculateTotal(accommodations);
   const activityTotal = calculateTotal(activities);
   const finalTotal = flightTotal + accommodationTotal + activityTotal;
+  let curr_id = id ?? '' // JSON.parse(localStorage.getItem('id') as string).id;
+  
+  if (!curr_id) {
+    curr_id = 'NOIDFOUND'
+  }
 
+  const data: any[] = await fetchItems();
+  
   return (
     <div className="container mx-auto p-4 relative">
       <Head>
@@ -141,74 +227,55 @@ const Booking = () => {
       </Head>
       <h1 className="text-2xl font-bold mb-4 text-center">Book Your Trip</h1>
 
-
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-        {/* Flights */}
-        {flights.map((flight) => (
-          <div key={flight.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+        
+       {/* Item cards */}
+      {data?.map((item: any, index: number) => (
+          <div key={item.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
             <Image
-              src={flight.image}
-              alt={flight.name}
-              width={300}
-              height={200}
+              src={item.image_url}
+              alt={item.item_name}
+              width={400}
+              height={300}
+              style={{ maxHeight: '190px', maxWidth: '345x' }} 
               className="rounded mb-4"
             />
-            <div className="font-bold">
-              <p>{flight.name}</p>
-              <p>{flight.details}</p>
-              <p>Date: {flight.date}</p>
-              <p>Time: {flight.time}</p>
-              <p className="text-right">R{convertToRand(flight.price).toFixed(2)}</p>
-            </div>
-          </div>
-        ))}
+            <div className="font-medium">
+              <div className="font-bold text-lg">
+                <h1>{truncateTitle(item.item_name, 30)}</h1>
+              </div>
 
-        {/* Accommodations */}
-        {accommodations.map((accommodation) => (
-          <div key={accommodation.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-            <Image
-              src={accommodation.image}
-              alt={accommodation.name}
-              width={300}
-              height={200}
-              className="rounded mb-4"
-            />
-            <div className="font-bold">
-              <p>{accommodation.name}</p>
-              <p>{accommodation.details}</p>
-              <p>Check-in: {accommodation.checkIn}</p>
-              <p>Check-out: {accommodation.checkOut}</p>
-              <p className="text-right">R{convertToRand(accommodation.price).toFixed(2)}</p>
-            </div>
-          </div>
-        ))}
+              <div className="flex justify-between mb-1">
+                <div className="font-bold text-left">Type:</div>
+                <div className="text-right">{checkType(item.item_type)}</div>
+              </div>
 
-        {/* Activities */}
-        {activities.map((activity) => (
-          <div key={activity.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-            <Image
-              src={activity.image}
-              alt={activity.name}
-              width={300}
-              height={200}
-              className="rounded mb-4"
-            />
-            <div className="font-bold">
-              <p>{activity.name}</p>
-              <p>{activity.details}</p>
-              <p>Date: {activity.date}</p>
-              <p>Time: {activity.time}</p>
-              <p className="text-right">R{convertToRand(activity.price).toFixed(2)}</p>
+              <div className="flex justify-between mb-1">
+                <div className="font-bold text-left">Address:</div>
+                <div className="text-right">{item.destination}</div>
+              </div>
+
+              <div className="flex justify-between mb-1">
+                <div className="font-bold text-left">Date:</div>
+                {<div className="text-right">{formatDateGroup(item.date)}</div>}
+              </div>
+
+              <div className="flex justify-between mb-1">
+                <div className="font-bold text-left">Time added:</div>
+                <div className="text-right">{formatDate(item.timestamp._seconds)}</div>
+              </div>
+
+              <h1 className="text-lg text-right ">R{updateTotal(item.price ?? 0)}</h1>
             </div>
           </div>
-        ))}
+        ))}       
       </div>
 
       {/* Total Card with Confirm Booking Button */}
       <div className="flex justify-center mt-4">
         <div className="w-full max-w-4xl bg-blue-300 rounded-lg shadow-lg p-6 relative text-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <h2 className="text-xl font-bold mb-4">Total: </h2>
-          <p className="font-bold mb-4">R{finalTotal.toFixed(2)}</p>
+          <p className="font-bold mb-4">R{totalCost.toFixed(2) ?? 0}</p>
           <div className="mt-4">
             <ConfirmBookingButton /> {/* Render the client-side component here */}
           </div>
@@ -219,3 +286,7 @@ const Booking = () => {
 };
 
 export default Booking;
+
+function then(arg0: (response: any) => void) {
+  throw new Error("Function not implemented.");
+}

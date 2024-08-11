@@ -8,4 +8,14 @@ export class AuthService {
         const result =  await this.firebaseApp.auth().updateUser(user_id, { email });
         return result;
     }
+
+    async changePassword(password: string, user_id: string) {
+        const result = await this.firebaseApp.auth().updateUser(user_id, { password });
+        return result;
+    }
+
+    async changeSharingMode(sharingMode: string, user_id: string) {
+        const result = await this.firebaseApp.firestore().collection('Users').doc(user_id).update({ sharingMode });
+        return result;
+    }
 }

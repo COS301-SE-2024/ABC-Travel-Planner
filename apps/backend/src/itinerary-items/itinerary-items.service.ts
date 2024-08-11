@@ -9,7 +9,7 @@ export class ItineraryItemsService {
     this.db = firebaseApp.firestore();
   }
 
-  async addItem(user_id: string, item_name: string, item_type: string, location: string, itinerary_id: string, destination: string, image_url: string): Promise<void> {
+  async addItem(user_id: string, item_name: string, item_type: string, location: string, itinerary_id: string, destination: string, image_url: string, date: Date[], price: string): Promise<void> {
     try {
 
       const exists = await this.db
@@ -45,6 +45,8 @@ export class ItineraryItemsService {
                   image_url,
                   destination,
                   user_id,
+                  price,
+                  date,
                   timestamp: admin.firestore.FieldValue.serverTimestamp(),
           });
         }
@@ -74,7 +76,6 @@ export class ItineraryItemsService {
   }
 
   async deleteItineraryItem(user_name: string, image_url: string, itinerary_id: string, timestamp: {_seconds: number, _nanoseconds: number}) : Promise<void> {        
-        user_name = 'User1';
         console.log("Received timestamp: " + JSON.stringify(timestamp))
         try {
           //Check if it exists...
@@ -83,7 +84,6 @@ export class ItineraryItemsService {
                 .doc(user_name)
                 .collection('Items')
 
-          
           const userItemsSnapshot = await userItemsDir
               .where('image_url', '==', image_url)
               .where('itinerary_id', '==', itinerary_id)

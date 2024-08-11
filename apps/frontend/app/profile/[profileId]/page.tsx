@@ -159,20 +159,25 @@ const Profile = () => {
       await fetchProfileDetails();
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const user_id = window.location.pathname.replace("/profile/", "");
-      const response = await axios.post(
-        `${backendUrl}/itinerary/getMySharedItineraries`,
-        {
-          user_id: user_id,
-        }
-      );
 
-      setItineraries(response.data);
+      const u = await getUser(user_id);
+      const user = JSON.parse(u || "{}");
+      if (user.sharingMode !== "private") {
+        const response = await axios.post(
+          `${backendUrl}/itinerary/getMySharedItineraries`,
+          {
+            user_id: user_id,
+          }
+        );
+        setItineraries(response.data);
+      }
       const postsResponse = await axios.post(
         `${backendUrl}/posts/getUserPosts`,
         {
           user_id: user_id,
         }
       );
+
       setPosts(postsResponse.data);
 
       const r = await axios.post(`${backendUrl}/follows/followers`, {
