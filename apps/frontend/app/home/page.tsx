@@ -146,21 +146,23 @@ const Home = () => {
         }}
       >
         {popularDestinations.map((destination, index) => (
-          <div key={index} style={{ flex: '1 0 auto', position: 'relative', width: '120px', height: '120px' }}>
-            <Link href={`/${destination.place_id}`} passHref>
-              <img
-                src={destination.image}
-                alt={`Destination ${index}`}
-                className="rounded-full shadow-md gentle-pulse"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: '50%',
-                  border: '5px solid',
-                  borderColor: 'rgba(255, 0, 150, 0.7) rgba(0, 255, 255, 0.7) rgba(255, 255, 0, 0.7) rgba(0, 255, 0, 0.7)',
-                }}
-              />
+    <div key={index} style={{ flexShrink: 0, marginRight: '16px' }}>
+      <Link href={`/${destination.place_id}`} passHref>
+        <div style={{ width: '120px', height: '120px', position: 'relative' }}>
+          <img
+            src={destination.image}
+            alt={`Destination ${index}`}
+            className="rounded-full shadow-md gentle-pulse"
+            style={{
+              width: '120px',
+              height: '120px',
+              objectFit: 'cover',
+              borderRadius: '50%',
+              border: '5px solid',
+              borderColor: 'rgba(255, 0, 150, 0.7) rgba(0, 255, 255, 0.7) rgba(255, 255, 0, 0.7) rgba(0, 255, 0, 0.7)',
+            }}
+          />
+          </div>
             </Link>
           </div>
         ))}
