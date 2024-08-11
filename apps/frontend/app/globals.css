@@ -17,15 +17,12 @@
   --background-dark: #333; /* Dark mode background color */
 }
 
-.text-2xl.font-bold.mb-4.text-center
-{
-  color:white;
+.text-2xl.font-bold.mb-4.text-center {
+  color: white;
 }
 
-
-.container.mx-auto.p-4
-{
-  color:black;
+.container.mx-auto.p-4 {
+  color: black;
 }
 
 body {
@@ -33,14 +30,18 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: var(--background-light); /* Use CSS variable for background color */
-  color: var(--text-color); /* Ensure text color is updated based on the theme */
+  background-color: var(
+    --background-light
+  ); /* Use CSS variable for background color */
+  color: var(
+    --text-color
+  ); /* Ensure text color is updated based on the theme */
 }
 
 /* Update background color based on the theme */
-[data-theme='dark'] body {
+[data-theme="dark"] body {
   background-color: var(--background-dark);
-  color: white; 
+  color: white;
   --text-color-dark: #ccc;
 }
 
@@ -48,11 +49,11 @@ body {
   color: var(--text-color-light); /* Default to light theme text color */
 }
 
-[data-theme='dark'] .text-2xl.font-bold.mb-4.text-center {
+[data-theme="dark"] .text-2xl.font-bold.mb-4.text-center {
   color: var(--text-color-dark);
 }
 
-.text-gray-700{
+.text-gray-700 {
   color: var(--text-color-dark); /* Use dark mode font color */
 }
 
@@ -60,29 +61,23 @@ body {
   color: black; /* Use light mode font color */
 }
 
-.card.max-w-sm.rounded.overflow-hidden.shadow-lg.flex.flex-col.items-center.p-4
-{
+.card.max-w-sm.rounded.overflow-hidden.shadow-lg.flex.flex-col.items-center.p-4 {
   background-color: #fff;
 }
 
-.text-center.text-gray-700.mb-4
-{
+.text-center.text-gray-700.mb-4 {
   color: black;
 }
-.image-description
-{
-  color:black;
+.image-description {
+  color: black;
 }
-.image-label
-{
-  color:black;
+.image-label {
+  color: black;
 }
 
-.navigation-buttons
-{
-  color:black;
+.navigation-buttons {
+  color: black;
 }
-
 
 /*DESTINATION*/
 .container {
@@ -141,7 +136,6 @@ body {
   color: orange;
 }
 
-
 /* HOME*/
 /* HOME*/
 /* .max-w-sm:hover {
@@ -159,7 +153,6 @@ body {
   text-decoration: none;
   color: inherit;
 } */
-
 
 /* Search  */
 .search-container {
@@ -303,7 +296,6 @@ body {
   border-radius: 50%;
   border: 3px solid #fff; /* White border */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
 }
 
 .profile-info {
@@ -347,7 +339,6 @@ body {
   color: #003366; /* Darker shade on hover */
 }
 
-
 .menu-button {
   background: none;
   border: none;
@@ -375,9 +366,6 @@ body {
   width: 100%;
   text-align: left;
 }
-
-
-
 
 .Following-title {
   margin-bottom: 20px;
@@ -407,63 +395,59 @@ body {
   font-size: larger;
 }
 
-
 .itinerary-card {
-  flex: 0 0 auto; 
-  width: 200px; 
+  flex: 0 0 auto;
+  width: 200px;
   height: 150px;
   background: white;
   border-radius: 10px;
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .itinerary-image {
-  width: 100%; 
+  width: 100%;
 
   min-height: 100px;
 
-  height: 100px; 
+  height: 100px;
   object-fit: cover;
-  border-top-left-radius: 10px; 
-  border-top-right-radius: 10px; 
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .itinerary-content {
-  padding: 10px; 
-  text-align: center; 
-
+  padding: 10px;
+  text-align: center;
 }
 .view-button {
-  background: #007bff; 
+  background: #007bff;
   border: none;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 5px; 
+  margin-top: 5px;
 }
 
 .view-button:hover {
-  background: #0056b3; 
+  background: #0056b3;
 }
 .view-button {
-  background: #007bff; 
+  background: #007bff;
   border: none;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 3px; 
+  margin-top: 3px;
 }
 
 .view-button:hover {
-  background: #0056b3; 
+  background: #0056b3;
 }
-
-
 
 .popup-overlay {
   position: fixed;
@@ -499,7 +483,6 @@ body {
 
 .popup-content button:hover {
   opacity: 0.9;
-
 }
 
 .followers-list,
@@ -534,15 +517,12 @@ body {
   margin: 0 auto;
 }
 
-
 .menu-button {
   font-size: 24px;
   background: none;
   border: none;
   cursor: pointer;
 }
-
-
 
 .menu-dropdown button {
   display: block;
@@ -563,7 +543,6 @@ body {
   font-size: large;
   font-weight: bold;
   margin-bottom: 1rem;
-
 }
 
 .saved-itineraries {
@@ -585,18 +564,18 @@ body {
   gap: 20px;
   overflow-x: auto;
   padding-bottom: 15px;
-  scrollbar-width: thin; 
+  scrollbar-width: thin;
   max-height: 300px; /* Adjust this height as needed */
 }
 
 .follow-button {
-  background: #007bff; 
+  background: #007bff;
   border: none;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 5px; 
+  margin-top: 5px;
 }
 
 .follow-button.unfollow {
@@ -694,11 +673,10 @@ body {
 
 /*IMAGE SLIDER*/
 
-
 .image-slider-container {
-  background-color: #ffffff; 
-  margin: 20px auto; 
-  padding: 20px; 
+  background-color: #ffffff;
+  margin: 20px auto;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -706,51 +684,51 @@ body {
 }
 
 .image-slider {
-  position: relative; 
-  overflow: hidden; 
+  position: relative;
+  overflow: hidden;
 }
 
 .image-container {
-  display: flex; 
-  transition: transform 0.5s ease; 
+  display: flex;
+  transition: transform 0.5s ease;
 }
 
 .image-container img {
-  width: 100%; 
-  height: auto; 
-  opacity: 0; 
+  width: 100%;
+  height: auto;
+  opacity: 0;
   transition: opacity 0.5s ease; /* Smooth transition for image opacity */
 }
 
 .image-container img.active {
-  opacity: 1; 
+  opacity: 1;
 }
 
 .button {
-  position: absolute; 
-  top: 50%; 
-  transform: translateY(-50%); 
-  background-color: rgba(0, 0, 0, 0.5); 
-  color: white; 
-  border: none; 
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
   cursor: pointer;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
 }
 
 .prev {
-  left: 0; 
+  left: 0;
 }
 
 .next {
-  right: 0; 
+  right: 0;
 }
-.image-label{
+.image-label {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.image-description{
+.image-description {
   font-size: 1rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
@@ -760,7 +738,7 @@ body {
 .modal {
   display: none;
   /* Add other styles as needed */
-  color:black;
+  color: black;
 }
 
 .modal {
@@ -817,7 +795,6 @@ body {
   font-weight: bold;
 }
 
-
 /* home */
 /* styles.css */
 
@@ -852,7 +829,6 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
 
 /* Destination card styles */
 .destination-card {
@@ -941,7 +917,7 @@ body {
 /* EXTRA INFO PAGE */
 .container {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "photos-section"
     "info-section"
     "attractions-section"
@@ -950,14 +926,13 @@ body {
   padding: 20px;
   align-items: center;
   text-align: center;
-  
 }
 
 .photos-section {
   grid-area: photos-section;
   display: flex;
-  align-items: flex-start; 
-  background-color:#d6d6d6;
+  align-items: flex-start;
+  background-color: #d6d6d6;
   border-radius: 8px;
   padding: 10px;
 }
@@ -974,22 +949,20 @@ body {
   margin-left: 40px;
   margin-top: 30px;
   border-radius: 8px;
-  
 }
-.second-photo{
+.second-photo {
   margin-top: 45px;
   border-radius: 8px;
   margin-right: 30px;
-
 }
 .info-section {
   grid-area: info-section;
   display: flex;
   justify-content: space-between;
-  
 }
 
-.google-street-view, .google-maps-api {
+.google-street-view,
+.google-maps-api {
   flex: 1;
   padding: 20px;
   margin: 10px;
@@ -999,7 +972,7 @@ body {
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  background-color:#d6d6d6;
+  background-color: #d6d6d6;
   border-radius: 8px;
 }
 .google-street-view,
@@ -1019,41 +992,40 @@ body {
   grid-area: attractions-section;
 
   padding: 20px;
-  background-color:#d6d6d6;
+  background-color: #d6d6d6;
   border-radius: 8px;
   text-align: center;
 }
-.attractions-section h2{
+.attractions-section h2 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin-bottom: 10px;
-  font-size: large
+  font-size: large;
 }
 .reviews-section {
   grid-area: reviews-section;
-   padding: 20px;
-  background-color:#d6d6d6;
+  padding: 20px;
+  background-color: #d6d6d6;
   border-radius: 8px;
   text-align: center;
 }
-.reviews-section h2{
+.reviews-section h2 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin-bottom: 10px;
-  font-size: large
+  font-size: large;
 }
 
 .google-street-view iframe,
 .google-maps-api iframe {
- 
   border-radius: 8px;
 }
 
 /* Image slider View Itinerary */
 .view-itinerary-page {
-  font-family: 'Roboto', sans-serif; 
-  background-color: #f2f2f2; 
-  padding: 20px;
+  font-family: "Roboto", sans-serif;
+  /* background-color: #f2f2f2; */
+  padding: 10px 20px 20px 20px;
   color: #333;
   display: flex;
   flex-direction: column;
@@ -1064,14 +1036,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color:  #046ea7; 
+  background-color: #046ea7;
   color: white;
   padding: 15px;
   border-radius: 8px;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .back-button {
@@ -1084,25 +1056,25 @@ body {
 }
 
 .back-button:hover {
-  color: #b2dfdb; 
+  color: #b2dfdb;
 }
 
 .slider-container {
-  background-color:rgba(173, 216, 230, 0.5);
+  background-color: rgba(173, 216, 230, 0.5);
   border-radius: 8px;
   padding: 20px;
   width: 100%;
-  max-width: 1400px;
-  height: 800px;
+  max-width: 1200px;
+  height: auto;
   position: relative;
   text-align: center;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .slider-heading {
   margin-bottom: 20px;
-  color:  #004062; 
+  color: #004062;
   font-size: 2rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -1115,7 +1087,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80%;
+  height: 60vh;
+  /* width: 100%; */
 }
 
 .slider-content {
@@ -1124,18 +1097,18 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 100%;
+  width: 65%;
 }
 
 .image-wrapper {
-  width: 90%;
-  height: 80%;
+  width: 80%;
+  height: 60%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.5s ease-in-out;
 }
 
@@ -1144,8 +1117,9 @@ body {
 }
 
 .slider-image {
-  width: 100%;
-  height: 100%;
+  width: 60%;
+  /* width: 100%;
+  height: 100%; */
   object-fit: cover;
   display: block;
   transition: opacity 0.5s ease-in-out;
@@ -1157,37 +1131,29 @@ body {
   align-items: center;
   width: 90%;
   margin: 20px auto 0 auto;
-  gap: 15px; 
+  gap: 15px;
 }
 
 .icon {
-  font-size: 3rem; 
+  font-size: 2.4rem;
   cursor: pointer;
   transition: color 0.3s;
 }
 
 .bookmark-icon {
-  color: grey; /* Default color for bookmark icon */
+  color: #5d5d5d;
 }
 
 .heart-icon {
-  color: grey; /* Default color for heart icon */
+  color: #5d5d5d;
 }
 
 .active-bookmarked {
-  color: blue; /* Color when bookmark is active */
+  color: #fbc02d;
 }
 
 .active-liked {
-  color: red; /* Color when like is active */
-}
-
-.image-label {
-  margin-top: 30px;
-  color: #004062; 
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+  color: #e57373;
 }
 
 .slider-button {
@@ -1216,7 +1182,41 @@ body {
 .slider-button.next {
   right: 20px;
 }
+.info-wrapper {
+  background-color: white;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  text-align: left;
+}
 
+.info-detail {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.info-icon {
+  margin-right: 10px;
+  color: #297ec0; /* Icon color */
+  font-size: 1.5rem;
+}
+
+.image-label {
+  margin-top: 10px;
+  color: #004062;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.image-summary,
+.image-price,
+.image-date {
+  color: #004062;
+  font-size: 1.2rem;
+}
 /* Posts */
 .posts {
   max-width: 900px;
@@ -1226,9 +1226,9 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 40px;
   text-align: center;
-  max-height: 500px; 
-  overflow-y: auto; 
-  overflow-x: auto; 
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 .posts-list {
   display: grid;
