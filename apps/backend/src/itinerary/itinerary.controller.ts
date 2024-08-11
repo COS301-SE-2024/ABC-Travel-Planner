@@ -161,4 +161,9 @@ export class ItineraryController {
       body.countries,
     );
   }
+
+  @Post('getItineraryOwner')
+  async getItineraryOwner(@Body() body: { itinerary_id: string }) {
+    return this.itineraryService.getItineraryOwner(body.itinerary_id);
+  }
 }
