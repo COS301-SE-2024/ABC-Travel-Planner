@@ -185,8 +185,6 @@ describe('FilterCard Component', () => {
     expect(datePicker).toBeInTheDocument();
 
     // Select the date by aria-label
-    const date: getDate = new getDate;
-
     const dateToSelect = screen.getByLabelText(/Choose Sunday, September 1st, 2024/i);
     expect(dateToSelect).toBeInTheDocument();
     fireEvent.click(dateToSelect);
