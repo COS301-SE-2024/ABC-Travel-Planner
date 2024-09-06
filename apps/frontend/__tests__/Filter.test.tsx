@@ -9,6 +9,7 @@ import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { insertRecord } from '@/app/utils/functions/insertRecord';
 import Cookie from 'js-cookie';
 import nock from 'nock';
+import getDate from '../app/utils/functions/getDate'
 
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
@@ -184,11 +185,13 @@ describe('FilterCard Component', () => {
     expect(datePicker).toBeInTheDocument();
 
     // Select the date by aria-label
-    const dateToSelect = screen.getByLabelText(/Choose Thursday, August 1st, 2024/i);
+    const date: getDate = new getDate;
+
+    const dateToSelect = screen.getByLabelText(/Choose Sunday, September 1st, 2024/i);
     expect(dateToSelect).toBeInTheDocument();
     fireEvent.click(dateToSelect);
 
-    const secondDate = screen.getByLabelText(/Choose Friday, August 2nd, 2024/i);
+    const secondDate = screen.getByLabelText(/Choose Monday, September 2nd, 2024/i);
     expect(secondDate).toBeInTheDocument();
     fireEvent.click(secondDate);
 
@@ -197,10 +200,10 @@ describe('FilterCard Component', () => {
     fireEvent.click(doneButton);
 
     // Verify the selected date
-    const selectedDateElement = screen.getByText(/Selected Date: 8\/1\/2024/i); // Adjust based on the actual date format
+    const selectedDateElement = screen.getByText(/Selected Date: 9\/1\/2024/i); // Adjust based on the actual date format
     expect(selectedDateElement).toBeInTheDocument();
 
-    const selectedDateElement2 = screen.getByText(/Selected Date: 8\/2\/2024/i);
+    const selectedDateElement2 = screen.getByText(/Selected Date: 9\/2\/2024/i);
     expect(selectedDateElement2).toBeInTheDocument();
   });
 
