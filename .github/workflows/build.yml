@@ -23,13 +23,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install python dependencies
-        run: |
-          ls
-          python -m pip install --upgrade pip
-          cd /
-          pip install -r requirements.txt
-
   run-build:
     name: Build
     needs: pre-start
@@ -41,6 +34,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Install python dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          cd apps
+          pip install -r requirements.txt
 
       - name: Set up Node.js 21
         uses: actions/setup-node@v4
