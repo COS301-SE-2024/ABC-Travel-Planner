@@ -56,7 +56,7 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           appdir: "apps/frontend"
-          buildpack: "https://github.com/heroku/heroku-buildpack-python.git,https://github.com/heroku/heroku-buildpack-nodejs.git"
+          buildpack: "https://github.com/heroku/heroku-buildpack-nodejs.git,https://github.com/heroku/heroku-buildpack-python.git"
 
       # Ensure Python dependencies are installed by specifying the requirements.txt file
       - name: Install Python dependencies (for Heroku)
