@@ -35,25 +35,24 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
       <div className="h-full w-full"> 
       <div className="flex items-center justify-center bg-slate-50 rounded-sm border-t-orange-500">
         <h1 className="mb-2 text-4xl font-medium font-['Roboto'] text-black mt-6 w-fit iteneraryHeader backdrop-filter backdrop-blur-[2px] backdrop-contrast-100 rounded-lg"  style={{  marginBottom:20 }}>Itinerary Items:</h1>
+        <div className="absolute top-14 left-6 px-8 justify-center items-center">
+            <BookMarkComponent />
+        </div>
+
+        <div className='mt-10 w-100 h-10'>
+        <div className="absolute top-8 right-8 px-4">
+        <Link href={`/booking?id=${id}`}>
+          <Button className="border-2 border-black-500 rounded-md doneButton bg-sky-600">
+            Done
+          </Button>
+        </Link>
+        </div>
+      </div>
       </div>
 
       <div className="flex justify-center">
         <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800 ">
             <DynamicDivs id={id} location={location} destination={destination} />
-        </div>
-      </div>
-      
-      <div className='mt-10 w-100 h-10'>
-        <div className="absolute bottom-4 right-4 px-4">
-        <Link href={`/booking?id=${id}`}>
-          <Button className="border-2 border-black-500 rounded-md doneButton bg-blue-700">
-            Done
-          </Button>
-        </Link>
-        </div>
-
-        <div className="absolute bottom-4 left-4 px-8 justify-center items-center">
-            <BookMarkComponent />
         </div>
       </div>
       </div>

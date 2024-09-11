@@ -186,13 +186,17 @@ interface ItemData {
         {divs.map((divItem) => (
             divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[6px]">
                 {/* <div className="max-w-sm rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass"> */}
-                    <a href="#" className='text-center flex justify-center'>
-                        <img className="w-full h-60 px-12 py-2 rounded-tl-lg rounded-full" src={divItem?.data?.image_url} alt="" />
+                    <a href="#" className='text-center flex justify-center ml-6 mr-6'>
+                        <img className="w-full mt-2 mb-2 h-60 border-[1px] border-white border-solid rounded-tl-lg rounded-full" src={divItem?.data?.image_url} alt="" />
                     </a>
+
                     <div className="p-5">
                         <a href="#">
                             <h2 className="mb-2 text-2xl font-medium tracking-tight text-gray-900 dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
                         </a>
+
+                    <hr></hr>
+
                         <p className="mb-3 font-normal text-slate-950 dark:text-gray-400">{divItem?.data?.item_type}</p>
                     </div>
                 {/* </div> */}
