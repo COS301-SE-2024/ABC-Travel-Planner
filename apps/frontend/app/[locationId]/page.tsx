@@ -97,7 +97,7 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
     <h1 className="text-3xl font-bold mb-4 text-gray-800">Need more info ?</h1>
     <div className="flex items-center text-gray-600">
         <FaInfoCircle className="mr-2 text-3xl text-gray-600" />
-        <span><strong>Summary:</strong> {data.formattedAddress}</span>
+        <span><strong>Summary:</strong> {data.editorialSummary}</span>
       </div>
   </div>
 
@@ -156,39 +156,8 @@ const TouristPage: React.FC<TouristPageProps> = async ({ params }: { params: { l
         </div>
 
         {/* Review submission form */}
-        <div className="review-form mt-8 p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-          {/* <form className="mx-auto max-w-md" onSubmit={handleSubmit}>
-            <h1 className="text-2xl font-bold mb-4 text-center">Post A Review</h1>
-            <div className="flex items-start mt-4">
-              <label htmlFor="rating" className="block font-semibold text-lg">Rating:</label>
-              <input
-                type="number"
-                name="rating"
-                id="rating"
-                min="1"
-                max="5"
-                required
-                className="block w-full border border-gray-300 rounded-md p-2 mb-4"
-              />
-            </div>
-            <label htmlFor="comment" className="block font-semibold text-lg">Comment:</label>
-            <textarea
-              name="comment"
-              id="comment"
-              rows={4}
-              required
-              className="block w-full border border-gray-300 rounded-md p-2 mb-4"
-            ></textarea>
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
-              >
-                Submit Review
-              </button>
-            </div>
-          </form> */}
-        </div>
+        {/* <div className="review-form mt-8 p-4 rounded-lg shadow-lg" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+        </div> */}
       </div>
     </div>
   );
