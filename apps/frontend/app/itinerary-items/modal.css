@@ -1,12 +1,37 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  @font-face {
+    font-family: 'Roboto';
+    font-style: medium;
+    font-weight: 400;
+    font-display: swap;
+    src: url(../../public/fonts/Roboto-Medium.woff2) format('woff2');
+  }
+}
+
 
 .iteneraryHeader {
+  align-items: center;
+  text-align: center;
 }
+
 .iteneraryInfo {
+  justify-content: center;
   margin-top: 40px;
   align-items: center;
   text-align: left;
   background-color:white;
   margin-bottom: 20px;
+}
+
+.itineraryItemsBackground {
+  background-image: url("../../public/Images/pineapple.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .addButton {
@@ -19,13 +44,8 @@
   width: max-content;
   background-color: rgba(173, 216, 230, 0.5);
 }
-.iteneraries-grid {
-}
 .closeButton {
   color: black;
-}
-.button-div {
-
 }
 .item-div {
   margin-top: 20px;
@@ -35,8 +55,11 @@
   max-height: 50vh;
   max-width: 30vw;
   width: max-content;
-  background-color: rgba(173, 216, 230, 0.5);
+  height: max-content;
+  background-color: rgba(209, 209, 209, 0.4);
+  /* backdrop-filter: blur(20px); */
 }
+
 .doneButton {
   font-size: 20px;
   font-weight:600;

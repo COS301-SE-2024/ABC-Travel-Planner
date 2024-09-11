@@ -30,36 +30,15 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
 
   return (
     <>
-    <div className="relative flex flex-col space-x-1 justify-center items-center">
-    <div className="flex flex-col border border-gray-300 rounded-lg p-4 bg-white shadow-md w-[96vw] h-auto iteneraryInfo">
-      <h1 className="mb-2 text-2xl font-bold text-gray-800 iteneraryHeader "  style={{ fontSize: '2rem', marginBottom:20 }}>Itinerary Items:</h1>
-      {/* <div className="shadow-md p-4 rounded-lg bg-gray-200" style ={{backgroundColor: 'rgba(173, 216, 230, 0.5)'}}>
-      <form >
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="startDate" className="block text-sm font-medium text-gray-800">Start Date of Trip</label>
-            <input
-              type="date"
-              id="startDate"
-              name="startDate"
-              className="mt-1 block w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="endDate" className="block text-sm font-medium text-gray-800">End Date of Trip</label>
-            <input
-              type="date"
-              id="endDate"
-              name="endDate"
-              className="mt-1 block w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm outline-none"
-            />
-          </div>
-        </div>
-      </form>
-      </div> */}
+    <div className="relative flex flex-col space-x-1 justify-center items-center text-center bg-neutral-300">
+      <div className="flex flex-col border border-gray-300 rounded-lg bg-white shadow-md w-[96vw] h-auto iteneraryInfo itineraryItemsBackground">
+      <div className="h-full w-full"> 
+      <div className="flex items-center justify-center bg-slate-50 rounded-sm border-t-orange-500">
+        <h1 className="mb-2 text-4xl font-medium font-['Roboto'] text-black mt-6 w-fit iteneraryHeader backdrop-filter backdrop-blur-[2px] backdrop-contrast-100 rounded-lg"  style={{  marginBottom:20 }}>Itinerary Items:</h1>
+      </div>
 
       <div className="flex justify-center">
-        <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800">
+        <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800 ">
             <DynamicDivs id={id} location={location} destination={destination} />
         </div>
       </div>
@@ -76,6 +55,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
         <div className="absolute bottom-4 left-4 px-8 justify-center items-center">
             <BookMarkComponent />
         </div>
+      </div>
       </div>
     </div>
   </div>

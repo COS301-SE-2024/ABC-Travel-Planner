@@ -85,7 +85,7 @@ interface ItemData {
                 initialDivs.forEach((data, index) => {
                     switch (data.data.item_type) {
                         case "stays":
-                            data.data.item_type = "A place to stay"
+                            data.data.item_type = "A Place to Stay"
                             break;
                         case "attractions":
                             data.data.item_type = "Attraction"
@@ -93,7 +93,7 @@ interface ItemData {
                         case "airportTaxis":
                             data.data.item_type = "Airport Taxi"
                             break;
-                        case "carRental":
+                        case "carRentals":
                             data.data.item_type = "Car Rental"
                             break;
                         case "flight": 
@@ -184,18 +184,18 @@ interface ItemData {
     return (
         <>
         {divs.map((divItem) => (
-            divItem.data && <div key={divItem.id} className="relative border-2 border-black-500 rounded-md item-div font-sans">
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass">
+            divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[6px]">
+                {/* <div className="max-w-sm rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass"> */}
                     <a href="#" className='text-center flex justify-center'>
-                        <img className="w-full h-60 rounded-t-lg" src={divItem?.data?.image_url} alt="" />
+                        <img className="w-full h-60 px-12 py-2 rounded-tl-lg rounded-full" src={divItem?.data?.image_url} alt="" />
                     </a>
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
+                            <h2 className="mb-2 text-2xl font-medium tracking-tight text-gray-900 dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
                         </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem?.data?.item_type}</p>
+                        <p className="mb-3 font-normal text-slate-950 dark:text-gray-400">{divItem?.data?.item_type}</p>
                     </div>
-                </div>
+                {/* </div> */}
 
                 <Button 
                     className="absolute top-2 right-2 text-gray-800 hover:text-gray-700 focus:outline-none closeButton" 
