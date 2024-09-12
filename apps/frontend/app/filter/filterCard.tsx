@@ -138,7 +138,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         const image_url = objectToUpload.firstPhotoUrl ?? 'PHOTO URL'
         const price = objectToUpload.price;
         const dates = selectedDates;
-  
+        
         const uploadDetails = {
             user_id: userId,
             item_name: itemTitle,
@@ -180,7 +180,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   let address = place.plusCode ? place.plusCode.compoundCode : 'Unknown Address';
   const location = extractLocation(address);
   const addressParts = address.split(',');
-
+  let ratingNum = place.rating;
+  ratingNum = ratingNum.toFixed(1);
   const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
   const price = generatePrice(place.id, place.type, location.country);
 
@@ -212,7 +213,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         <div className="text-right">
           <p className="text-gray-600 inline-block pr-2">{`${place.userRatingCount} reviews `}</p>
           <div className={`rounded-full ${getRatingColor(place.rating)} text-white px-2 py-2 text-sm font-semibold inline-block`}>
-            {place.rating}
+            {ratingNum}
           </div>
         </div>
       </div>
