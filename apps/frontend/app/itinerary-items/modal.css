@@ -27,8 +27,8 @@
 }
 
 .itineraryItemsBackground {
-  background-image: url("../../public/Images/blur.jpg");
-  /* background-color: linear-gradient(rgba(53, 121, 246, 0.7), red);  */
+  background-image: url("../../public/Images/night.jpg");
+  /* background-color:rgba(190, 229, 255, 1);  */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -55,6 +55,7 @@
   background-repeat: no-repeat;
   margin-bottom: 20px;
   color: white;
+  background-color: rgb(180, 229, 255);
   margin-left: 20px;
   margin-top: 30px;
   font-size: 20px;

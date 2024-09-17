@@ -37,7 +37,7 @@ const SearchModal: React.FC<SearchModalProp> = ({ handleAddDiv }) => {
         <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-50" />
         
       )}
-      <Button className="fixed bottom-8 right-12 bg-sky-600 rounded-full addButton" key="md" onClick={onClose}>+</Button>
+      <Button className="fixed bottom-8 right-12 bg-sky-500 rounded-full addButton" key="md" onClick={onClose}>+</Button>
       <Modal size="md" isOpen={isOpen} onOpenChange={onClose}>
         <ModalContent className="modal-content">
           <>

@@ -40,7 +40,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
         <div className="absolute left-2 px-4 justify-center items-center">
             {/* <BookMarkComponent /> */}
               <Link href={`/itinerary`}>
-                <Button className="rounded-full left-2 bg-sky-600 backButton">
+                <Button className="rounded-full left-2 backButton">
                 </Button>
               </Link>
         </div>
@@ -50,7 +50,7 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
         <div className='mt-10 w-100 h-10'>
         <div className="absolute top-8 right-8 px-4">
         <Link href={`/booking?id=${id}`}>
-          <Button className="border-2 border-black-500 rounded-md doneButton bg-sky-600">
+          <Button className="border-2 border-black-500 rounded-md doneButton bg-sky-500">
             Done
           </Button>
         </Link>
