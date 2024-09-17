@@ -202,7 +202,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 </div>
                 <div className="w-2/3 pl-4 overflow-hidden">
                     <Link href={`/${place.id}`} passHref>
-                        <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
+                        <h1 className="text-4xl font-bold mb-2 text-blue-500 pr-20">{place.displayName}</h1>
                         <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
 
                         {place.goodForChildren && (
