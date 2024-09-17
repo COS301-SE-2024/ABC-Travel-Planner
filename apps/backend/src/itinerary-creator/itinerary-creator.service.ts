@@ -48,24 +48,21 @@ export class ItineraryCreatorService {
         `Best hotels in ${country}`,
         `Top-rated accommodations in ${country}`,
         `Affordable stays in ${country}`,
-        `Luxury hotels in ${country} catering to ${interests}`,
-        `Hotels for ${reason} in ${country} near ${interests}`,
+        `Luxury hotels in ${country}`,
         `Family-friendly hotels for ${reason} in ${country} with ${interests}`,
-        `Hotels with great amenities for ${reason} in ${country}`,
-        `Budget hotels for ${reason} in ${country}`,
+        `Hotels with great amenities in ${country}`,
+        `Budget hotels in ${country}`,
         `Unique accommodations for ${reason} in ${country} considering ${interests}`
       ],
       attractions: [
-        `Top ${interests} tourist spots in ${country}`,
-        `Top ${interests} in ${country}`,
-        `${interests} in ${country}`
+        `best-rated ${interests} tourist spots in ${country}`,
+        `best-rated ${interests} attractions in ${country}`,
+        `${interests} attractions in ${country}`
       ],
       carRentals: [
         `Best car rental services in ${country}`,
         `Affordable car rentals in ${country}`,
         `Luxury car rentals in ${country}`,
-        `Family-friendly car rentals for ${reason} in ${country}`,
-        `Eco-friendly car rentals in ${country}`,
         `Reliable car rental agencies in ${country}`,
         `Convenient car rentals in ${country}`,
         `Best-rated car rentals in ${country}`
@@ -73,11 +70,10 @@ export class ItineraryCreatorService {
       airportTaxis: [
         `Reliable airport taxis in ${country}`,
         `Affordable airport taxis in ${country}`,
-        `Luxury airport taxi services for ${reason} in ${country}`,
-        `Family-friendly airport taxis for ${reason} in ${country}`,
+        `Luxury airport taxi services in ${country}`,
+        `Family-friendly airport taxis in ${country}`,
         `Best-rated airport taxi's in ${country}`,
         `24/7 airport taxis in ${country}`,
-        `Convenient airport taxis in ${country}`
       ]
     };
 
