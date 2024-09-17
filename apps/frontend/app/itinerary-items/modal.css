@@ -12,7 +12,6 @@
   }
 }
 
-
 .iteneraryHeader {
   align-items: center;
   text-align: center;
@@ -28,7 +27,8 @@
 }
 
 .itineraryItemsBackground {
-  background-image: url("../../public/Images/pineapple.jpg");
+  background-image: url("../../public/Images/blur.jpg");
+  /* background-color: linear-gradient(rgba(53, 121, 246, 0.7), red);  */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -48,16 +48,33 @@
 .closeButton {
   color: black;
 }
+.backButton {
+  display: flex;
+  background-image: url('../../public/back.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-bottom: 20px;
+  color: white;
+  margin-left: 20px;
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight:600;
+  height: 60px;
+  width: 70px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 .item-div {
   margin-top: 20px;
   font-size: 25px;
-  min-height: 50vh;
+  min-height: 60vh;
   min-width: 30vw;
-  max-height: 50vh;
+  max-height: 70vh;
   max-width: 30vw;
   width: max-content;
   height: max-content;
-  background-color: rgba(209, 209, 209, 0.4);
+  background-color: rgba(255, 255, 255, 0.5);
   /* backdrop-filter: blur(20px); */
 }
 

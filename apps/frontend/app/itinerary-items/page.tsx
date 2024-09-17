@@ -4,6 +4,7 @@ import React from "react";
 import BookMarkComponent from "./BookMarkComponent";
 import "./modal.css";
 import DynamicDivs from "./DynamicDivs";
+import BackButton from "../../public/back.svg";
 
 const getCoordinates = async (location: string) => {
   const encodedAddress = encodeURIComponent(location);
@@ -35,9 +36,16 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
       <div className="h-full w-full"> 
       <div className="flex items-center justify-center bg-slate-50 rounded-sm border-t-orange-500">
         <h1 className="mb-2 text-4xl font-medium font-['Roboto'] text-black mt-6 w-fit iteneraryHeader backdrop-filter backdrop-blur-[2px] backdrop-contrast-100 rounded-lg"  style={{  marginBottom:20 }}>Itinerary Items:</h1>
-        <div className="absolute top-14 left-6 px-8 justify-center items-center">
-            <BookMarkComponent />
+        
+        <div className="absolute left-2 px-4 justify-center items-center">
+            {/* <BookMarkComponent /> */}
+              <Link href={`/itinerary`}>
+                <Button className="rounded-full left-2 bg-sky-600 backButton">
+                </Button>
+              </Link>
         </div>
+
+        
 
         <div className='mt-10 w-100 h-10'>
         <div className="absolute top-8 right-8 px-4">
