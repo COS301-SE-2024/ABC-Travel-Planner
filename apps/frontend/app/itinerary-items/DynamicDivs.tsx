@@ -6,8 +6,12 @@ import "./modal.css"
 import Cookie from 'js-cookie'
 import PopupMessage from '../utils/PopupMessage';
 import { truncateTitle } from '../utils/functions/TruncateTitle';
+import { format, parseISO } from 'date-fns';
 
 interface ItemData {
+    destination: string;
+    location: string;
+    date: string[];
     item_name: string;
     item_type: string;
     image_url: string;
@@ -28,8 +32,36 @@ interface ItemData {
     location?: string;
     destination?: any;
   }
- 
 
+function formatDateGroup(dates: string[]): string {
+    if (dates.length === 0) return '';
+  
+    const parsedDates = dates.map(d => parseISO(d));
+    parsedDates.sort((a, b) => a.getTime() - b.getTime());
+  
+    const groups: { [key: string]: number[] } = {};
+  
+    parsedDates.forEach(date => {
+      const key = format(date, 'MMMM yyyy');
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(date.getDate());
+    });
+  
+    return Object.entries(groups)
+      .map(([monthYear, days]) => {
+        const uniqueDays = [...new Set(days)].sort((a, b) => a - b);
+        return `${uniqueDays.join(', ')} ${monthYear}`;
+      })
+      .join('; ');
+  }
+
+  function truncateDates(dateString: string) : string {
+    if (dateString.length > 80) {
+        return dateString.substring(0, 80) + '...';
+    }
+    
+    return dateString;
+  }
 
   //Making the component async ensures that it constantly refreshes the whole page on change/useEffect execution
   const DynamicDivs: React.FC<DynamicDivsProps> = ({ id, location, destination }) => {
@@ -106,6 +138,11 @@ interface ItemData {
                 });
                 setDivs(initialDivs);
                 setFetchedData(data);
+                divs.map((divItem) => {
+                    console.log(divItem?.data?.date);
+                })
+
+
             } catch (error) {
                 console.error("Error fetching items:", error);
             }
@@ -192,12 +229,27 @@ interface ItemData {
 
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-2xl font-medium tracking-tight text-white dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
+                            <h2 className="mb-2 text-xl font-medium tracking-tight text-black dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
                         </a>
 
                     <hr></hr>
 
-                        <p className="mb-3 font-normal text-white dark:text-gray-400">{divItem?.data?.item_type}</p>
+                    <div className="flex justify-between mb-1">
+                        <div className="text-xl mb-3 font-normal text-black text-left">Type:</div>
+                        <div className="text-xl text-right">{divItem?.data?.item_type}</div>
+                    </div>
+
+                    <div className="flex justify-between mb-1">
+                        <div className="text-xl mb-3 font-normal text-black text-left">Date:</div>
+                        <div className="text-xl text-right">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateDates(formatDateGroup(divItem?.data?.date))}</div>
+                    </div>
+
+                    <div className="flex justify-between mb-1">
+                        <div className="text-xl mb-3 font-normal text-black text-left">Address:</div>
+                        <div className="text-xl font-normal text-right">{divItem?.data?.destination}</div>
+                    </div>
+
+                            <p className="text-base mb-3 font-normal text-black"></p>
                     </div>
                 {/* </div> */}
 
