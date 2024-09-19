@@ -36,7 +36,7 @@ const FilterContainer = () => {
                     onClick={() => handleTopicSelect('flights')}
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'flights' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaPlane className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'flights' ? '#007BFF' : '#333' }} />
+                    <FaPlane className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'flights' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'flights' ? '#007BFF' : '#333' }}>Flights</span>
                 </button>
                 <button
@@ -44,7 +44,7 @@ const FilterContainer = () => {
                     onClick={() => handleTopicSelect('stays')}
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'stays' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaHotel className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'stays' ? '#007BFF' : '#333' }} />
+                    <FaHotel className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'stays' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'stays' ? '#007BFF' : '#333' }}>Stays</span>
                 </button>
                 <button
@@ -52,7 +52,7 @@ const FilterContainer = () => {
                     onClick={() => handleTopicSelect('carRentals')}
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'carRentals' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaCar className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'carRentals' ? '#007BFF' : '#333' }} />
+                    <FaCar className="search-icon" style={{ marginLeft: '6px', fontSize: '2rem', color: selectedTopic === 'carRentals' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'carRentals' ? '#007BFF' : '#333' }}>Car Rentals</span>
                 </button>
                 <button
@@ -60,7 +60,7 @@ const FilterContainer = () => {
                     onClick={() => handleTopicSelect('attractions')}
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'attractions' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaBinoculars className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'attractions' ? '#007BFF' : '#333' }} />
+                    <FaBinoculars className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'attractions' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'attractions' ? '#007BFF' : '#333' }}>Attractions</span>
                 </button>
                 <button
@@ -68,7 +68,7 @@ const FilterContainer = () => {
                     onClick={() => handleTopicSelect('airportTaxis')}
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'airportTaxis' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaTaxi className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'airportTaxis' ? '#007BFF' : '#333' }} />
+                    <FaTaxi className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'airportTaxis' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'airportTaxis' ? '#007BFF' : '#333' }}>Airport Taxis</span>
                 </button>
             </div>

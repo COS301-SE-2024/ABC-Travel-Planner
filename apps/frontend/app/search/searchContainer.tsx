@@ -73,42 +73,42 @@ const SearchContainer = () => {
                         className={`search-button ${selectedTopic === 'flights' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('flights')}
                     >
-                        <FaPlane className="search-icon" />
+                        <FaPlane className="search-icon" style={{marginLeft: '8px'}} />
                         Flights
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'stays' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('stays')}
                     >
-                        <FaHotel className="search-icon" />
+                        <FaHotel className="search-icon" style={{marginLeft: '8px'}}/>
                         Stays
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'carRentals' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('carRentals')}
                     >
-                        <FaCar className="search-icon" />
+                        <FaCar className="search-icon" style={{marginLeft: '8px'}}/>
                         Car Rentals
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'attractions' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('attractions')}
                     >
-                        <FaBinoculars className="search-icon" />
+                        <FaBinoculars className="search-icon" style={{marginLeft: '8px'}}/>
                         Attractions
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'airportTaxis' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('airportTaxis')}
                     >
-                        <FaTaxi className="search-icon" />
+                        <FaTaxi className="search-icon" style={{marginLeft: '8px'}}/>
                         Airport Taxis
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'profile' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('profile')}
                     >
-                        <FaUser className="search-icon" />
+                        <FaUser className="search-icon" style={{marginLeft: '8px'}}/>
                         Profile
                     </button>
                 </div>

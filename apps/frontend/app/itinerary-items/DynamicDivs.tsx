@@ -330,8 +330,8 @@ function formatDateGroup(dates: string[]): string {
                 </Button>
             </div>
         ))}
-            <SearchModal handleAddDiv={ handleModelClose }/>
             <PopupMessage msg={message} trigger={trigger} />
+            <SearchModal handleAddDiv={ handleModelClose }/>
         </>
     );
 };
