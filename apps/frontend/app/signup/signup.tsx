@@ -27,7 +27,7 @@ export default function RegisterPage() {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-  const theme = useTheme(); 
+  const theme = useTheme();
 
   const handleRegisterChange = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -104,6 +104,7 @@ export default function RegisterPage() {
         borderRadius: theme.spacing(2),
         boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
         marginTop: theme.spacing(8),
+        marginBottom: theme.spacing(6),
       }}
     >
       <Box
