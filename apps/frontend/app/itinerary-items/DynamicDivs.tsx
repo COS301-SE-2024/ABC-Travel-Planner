@@ -296,25 +296,25 @@ function formatDateGroup(dates: string[]): string {
 
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl font-bold tracking-tight text-white dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
+                            <h2 className="mb-2 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl font-bold tracking-tight text-black dark:text-black text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
                         </a>
 
                     <hr></hr>
 
                 <div className="moreInfo">
                     <div className="flex justify-between mb-1">
-                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-white text-left">Type:</div>
-                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words text-white">{divItem?.data?.item_type}</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Type:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words text-black">{divItem?.data?.item_type}</div>
                     </div>
 
                     <div className="flex justify-between mb-1">
-                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-white text-left">Date:</div>
-                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-white">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateInfo(formatDateGroup(divItem?.data?.date), 60)}</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Date:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateInfo(formatDateGroup(divItem?.data?.date), 60)}</div>
                     </div>
 
                     <div className="flex justify-between mb-1">
-                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-white text-left">Address:</div>
-                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-white">{truncateInfo(divItem?.data?.destination, 40)}</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Address:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{truncateInfo(divItem?.data?.destination, 40)}</div>
                     </div>
                     </div>
                 </div>
