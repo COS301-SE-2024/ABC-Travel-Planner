@@ -7,17 +7,76 @@
 </head>
 <body>
     <!-- Email content goes here -->
-    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="display: flex">
         <tr>
             <td align="center">
                 <table width="600" cellpadding="0" cellspacing="0" border="0">
                     <!-- Header -->
                     <tr>
-                        <td class="header" style="background-color: #4CAF50; padding: 40px; text-align: center; color: white; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 24px;">
-                            Congratulations!
+                        <td class="header" style="background-color: #1990ff; padding: 40px; text-align: center; color: white; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 35px;">
+                            Booking confirmed!
                         </td>
                     </tr>
+
+                    <tr>
+                        <td style="border: solid 1px #ddd; padding: 5px 20px;">
+                            <!-- Order Status -->
+                            <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                                Order Status:
+                                <span style="color: green; margin-left: 20px;">Success</span>
+                            </p>
+                            
+                            <!-- Transaction ID -->
+                            <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                                Transaction ID:
+                                <span>Some Transaction ID</span>
+                            </p>
+
+                            <!-- Total Amount -->
+                            <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                                Total Amount:
+                                <span>R 9000</span>
+                            </p>
+                        </td>
+                    </tr>
+                    
                     <!-- Body -->
+                    <tr>
+                        <th style="border: solid 1px #ddd; padding: 10px 20px; margin-top: 2px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                            Items:
+                        </th>
+                    </tr>
+
+                    <table style="border-collapse: collapse; width: 100%; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                        <tr>
+                            <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Item Name</th>
+                            <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Dates</th>
+                            <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Cost</th>
+                        </tr>
+
+                        <!-- For each Item, create new row: -->
+                        <tr>    
+                            <td>Hotel in Germany</td>
+                            <td style=>19-25 Sep; 15 Oct</td>
+                            <td>R 9000</td>
+                        </tr>
+
+                        <tr>    
+                            <td>Hotel in Finland</td>
+                            <td style=>26-27 Sep</td>
+                            <td>R 12000</td>
+                        </tr>
+
+                        <!-- Then display the total -->
+
+                        <tr>
+                            <td>Total:</td>
+                            <td></td>
+                            <td><b>R21 000</b></td>
+                        </tr>
+
+                    </table>
+                    
                     <tr>
                         <td class="body" style="padding: 40px; text-align: center; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 16px; line-height: 1.6;">
                             Your booking has been confirmed, have a wonderful trip! :) <br><br>
@@ -27,7 +86,14 @@
                     </tr>
                     <!-- Footer -->
                     <tr>
-                        <td class="footer" style="background-color: #333333; padding: 20px; text-align: center; color: white; font-size: 14px;">
+                        <td class="footer" style="background-color: rgba(0, 0, 255, 0.887); padding: 20px; text-align: center; color: white; font-size: 14px;"></td>
+                            <div>
+                                <!-- <img src="../../public/Images/logo2.png" alt="ABC Travel Planner Logo"> -->
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer" style="background-color: rgba(185, 185, 185, 0.777); padding: 20px; text-align: center; color: white; font-size: 14px;">
                             <div>
                                 <!-- <img src="../../public/Images/logo2.png" alt="ABC Travel Planner Logo"> -->
                             </div>

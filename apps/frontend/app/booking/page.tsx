@@ -43,7 +43,7 @@ const checkType = (type: string) => {
       return "Airport taxi"
 
     default:
-      return "TYPE"
+      return ""
   }
 }
 
@@ -219,6 +219,8 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   }
 
   const data: any[] = await fetchItems();
+  //Push Items to display on email...
+    //Dynamically insert items into html in another script...
   
   return (
     <div className="container mx-auto p-4 relative">
