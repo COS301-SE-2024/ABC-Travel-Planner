@@ -8,7 +8,7 @@ import {
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { getFirestore, doc, setDoc, collection } from "firebase/firestore";
 import app from "@/libs/firebase/firebase";
-import { time } from "console";
+
 
 export async function login(data: { email: string; password: string }) {
   const auth = getAuth(app);

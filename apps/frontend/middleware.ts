@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
 
  ///need to check if user is logged in or not
 
-  if (!userId && request.nextUrl.pathname !== "/login") {
+  if (!userId && request.nextUrl.pathname !== "/login" && request.nextUrl.pathname !== "/signup") {
     const loginUrl = new URL("/login", request.nextUrl.origin);
     console.log("url", loginUrl.toString());
     return NextResponse.redirect(loginUrl);
