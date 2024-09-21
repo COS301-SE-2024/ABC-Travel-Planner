@@ -122,9 +122,9 @@ function formatDateGroup(dates: string[]): string {
       return outStr
   }
 
-  function truncateDates(dateString: string) : string {
-    if (dateString.length > 80) {
-        return dateString.substring(0, 80) + '...';
+  function truncateInfo(dateString: string, len: number) : string {
+    if (dateString.length > len) {
+        return dateString.substring(0, len) + '...';
     }
     
     return dateString;
@@ -288,7 +288,7 @@ function formatDateGroup(dates: string[]): string {
     return (
         <>
         {divs.map((divItem) => (
-            divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[3px]">
+            divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[4px]">
                 {/* <div className="max-w-sm rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass"> */}
                     <a href="#" className='text-center flex justify-center ml-12 mr-12'>
                         <img className="w-full mt-10 mb-2 h-60 border-[1px] border-white border-solid rounded-md" src={divItem?.data?.image_url} alt="" />
@@ -296,29 +296,30 @@ function formatDateGroup(dates: string[]): string {
 
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-xl font-medium tracking-tight text-black dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
+                            <h2 className="mb-2 text-xl font-bold tracking-tight text-black dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
                         </a>
 
                     <hr></hr>
 
-                    <div className="flex justify-between mb-1 truncate">
-                        <div className="text-xl mb-3 font-normal text-black text-left">Type:</div>
-                        <div className="text-xl text-right">{divItem?.data?.item_type}</div>
+                <div className="moreInfo">
+                    <div className="flex justify-between mb-1">
+                        <div className="text-xl mb-3 font-semibold text-black text-left">Type:</div>
+                        <div className="text-xl text-right font-normal break-words">{divItem?.data?.item_type}</div>
                     </div>
 
-                    <div className="flex justify-between mb-1 truncate">
-                        <div className="text-xl mb-3 font-normal text-black text-left">Date:</div>
-                        <div className="text-xl text-right">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateDates(formatDateGroup(divItem?.data?.date))}</div>
+                    <div className="flex justify-between mb-1">
+                        <div className="text-xl mb-3 font-semibold text-black text-left">Date:</div>
+                        <div className="text-xl text-right font-normal break-words">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateInfo(formatDateGroup(divItem?.data?.date), 80)}</div>
                     </div>
 
-                    <div className="flex justify-between mb-1 truncate">
-                        <div className="text-xl mb-3 font-normal text-black text-left">Address:</div>
-                        <div className="text-xl font-normal text-right">{divItem?.data?.destination}</div>
+                    <div className="flex justify-between mb-1">
+                        <div className="text-xl mb-3 font-semibold text-black text-left">Address:</div>
+                        <div className="text-xl text-right font-normal break-words">{truncateInfo(divItem?.data?.destination, 60)}</div>
                     </div>
 
                             <p className="text-base mb-3 font-normal text-black"></p>
                     </div>
-                {/* </div> */}
+                </div>
 
                 <Button 
                     className="absolute top-2 right-2 text-gray-800 hover:text-gray-700 focus:outline-none closeButton" 
