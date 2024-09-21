@@ -301,17 +301,17 @@ function formatDateGroup(dates: string[]): string {
 
                     <hr></hr>
 
-                    <div className="flex justify-between mb-1">
+                    <div className="flex justify-between mb-1 truncate">
                         <div className="text-xl mb-3 font-normal text-black text-left">Type:</div>
                         <div className="text-xl text-right">{divItem?.data?.item_type}</div>
                     </div>
 
-                    <div className="flex justify-between mb-1">
+                    <div className="flex justify-between mb-1 truncate">
                         <div className="text-xl mb-3 font-normal text-black text-left">Date:</div>
                         <div className="text-xl text-right">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateDates(formatDateGroup(divItem?.data?.date))}</div>
                     </div>
 
-                    <div className="flex justify-between mb-1">
+                    <div className="flex justify-between mb-1 truncate">
                         <div className="text-xl mb-3 font-normal text-black text-left">Address:</div>
                         <div className="text-xl font-normal text-right">{divItem?.data?.destination}</div>
                     </div>
