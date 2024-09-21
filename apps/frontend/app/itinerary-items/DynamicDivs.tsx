@@ -288,36 +288,34 @@ function formatDateGroup(dates: string[]): string {
     return (
         <>
         {divs.map((divItem) => (
-            divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[4px]">
+            divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[4px] max-w-lg mx-auto">
                 {/* <div className="max-w-sm rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass"> */}
                     <a href="#" className='text-center flex justify-center ml-12 mr-12'>
-                        <img className="w-full mt-10 mb-2 h-60 border-[1px] border-white border-solid rounded-md" src={divItem?.data?.image_url} alt="" />
+                        <img className="w-full h-60 mt-10 mb-2 border-[1px] border-white border-solid rounded-md" src={divItem?.data?.image_url} alt="" />
                     </a>
 
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-xl font-bold tracking-tight text-black dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
+                            <h2 className="mb-2 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl font-bold tracking-tight text-black dark:text-white text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
                         </a>
 
                     <hr></hr>
 
                 <div className="moreInfo">
                     <div className="flex justify-between mb-1">
-                        <div className="text-xl mb-3 font-semibold text-black text-left">Type:</div>
-                        <div className="text-xl text-right font-normal break-words">{divItem?.data?.item_type}</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Type:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words">{divItem?.data?.item_type}</div>
                     </div>
 
                     <div className="flex justify-between mb-1">
-                        <div className="text-xl mb-3 font-semibold text-black text-left">Date:</div>
-                        <div className="text-xl text-right font-normal break-words">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateInfo(formatDateGroup(divItem?.data?.date), 80)}</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Date:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateInfo(formatDateGroup(divItem?.data?.date), 60)}</div>
                     </div>
 
                     <div className="flex justify-between mb-1">
-                        <div className="text-xl mb-3 font-semibold text-black text-left">Address:</div>
-                        <div className="text-xl text-right font-normal break-words">{truncateInfo(divItem?.data?.destination, 60)}</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Address:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap">{truncateInfo(divItem?.data?.destination, 40)}</div>
                     </div>
-
-                            <p className="text-base mb-3 font-normal text-black"></p>
                     </div>
                 </div>
 

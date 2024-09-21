@@ -59,8 +59,10 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
       </div>
 
       <div className="flex justify-center">
-        <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800 ">
-            <DynamicDivs id={id} location={location} destination={destination} />
+        <div className="ml-2 mr-2">
+            <div className="grid grid-cols-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 iteneraries-grid rounded-lg h-full sm:h-auto text-gray-800">
+              <DynamicDivs id={id} location={location} destination={destination} />
+            </div>
         </div>
       </div>
       </div>
