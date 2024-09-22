@@ -25,17 +25,17 @@
                             <!-- Order Status -->
                             <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                                 Order Status:
-                                <span style="color: green; margin-left: 20px; justify-content: flex-end">Success</span>
+                                <span style="color: green; margin-left: 20px;">Success</span>
                             </p>
                             
                             <!-- Transaction ID -->
                             <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                                 Transaction ID:
-                                <span style="justify-content: flex-end">Some Transaction ID</span>
+                                <span>Some Transaction ID</span>
                             </p>
 
                             <!-- Total Amount -->
-                            <p style="font-size: 18px; justify-content: flex-end; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                            <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                                 Total Amount:
                                 <span>R 9000</span>
                             </p>
@@ -62,22 +62,33 @@
                         
                         <tbody>
                             <!-- For each Item, create new row: -->
-                            
-                            
-                                <tr>
-                                    <td>Hotel in Germany</td>
-                                    <td>19-25 Sep; 15 Oct</td>
-                                    <td>9000.23</td>
-                                </tr>
-                                
-                            
+                            <tr>    
+                                <td>Hotel in Germany</td>
+                                <td style=>19-25 Sep; 15 Oct</td>
+                                <td>R 9000</td>
+                            </tr>
+
+                            <tr>    
+                                <td>Hotel in Finland</td>
+                                <td style=>26-27 Sep</td>
+                                <td>R 12000</td>
+                            </tr>
 
                             <!-- Then display the total -->
+
                             <tr>
                                 <td>Total:</td>
                                 <td></td>
-                                <td><b>9000.23</b></td>
+                                <td><b>R21 000</b></td>
                             </tr>
+
+                            <% items.forEach(item => { %>
+                                <tr>
+                                    <td><%= item.item_name %></td>
+                                    <td><%= item.item_dates %></td>
+                                    <td><%= item.item_cost.toFixed(2) %></td>
+                                </tr>
+                            <% }) %>
                         </tbody>
                     </table>
                     
