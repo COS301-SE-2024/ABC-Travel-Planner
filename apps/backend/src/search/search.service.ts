@@ -48,7 +48,7 @@ interface Profile {
 export class SearchService {
     private placesClient: any;
     private url: string = this.configService.get<string>('NEST_URL')!;
-    private defaultImageUrl = `${this.url}/logo2.png`;
+    private defaultImageUrl = `${this.url}/images/logo2.png`;
     private db: admin.firestore.Firestore;
     private filter: admin.firestore.Filter;
     constructor(private configService: ConfigService, @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App) {

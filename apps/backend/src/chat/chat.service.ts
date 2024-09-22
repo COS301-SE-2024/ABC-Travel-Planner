@@ -20,7 +20,6 @@ export class ChatService {
             });
 
             pythonProcess.stderr.on('data', (data) => {
-                // Filter out specific warnings or just ignore them
                 const output = data.toString();
                 if (!output.includes('Some weights of the model checkpoint at') &&
                     !output.includes('FutureWarning: `clean_up_tokenization_spaces` was not set.') &&

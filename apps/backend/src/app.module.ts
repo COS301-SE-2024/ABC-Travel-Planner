@@ -29,6 +29,7 @@ import { ChatModule } from './chat/chat.module';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'Images'), 
+      serveRoot: '/images',
     }),
     ItineraryModule, 
     ItineraryItemsModule,
