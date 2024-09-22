@@ -9,6 +9,8 @@ from environs import Env
 # Configuring loggin
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
+print(f"Current working directory: {os.getcwd()}", flush=True)
+
 # Loading env file
 env = Env()
 env.read_env('.env.local')
@@ -19,12 +21,19 @@ sender = os.getenv('EMAIL_USER')
 GMAIL_APP_PASS = os.getenv('GMAIL_APP_PASS')
 recipient = sys.argv[1]
 
+print(f"SENDER: {sender}")
+print(f"GMAIL_APP_PASS: {GMAIL_APP_PASS}")
+print(f"RECIPIENT: {recipient}")
+
+# Setup to work starting from 'backend' folder...
 try:
-    with open('email_format.html', 'r') as file:
+    with open('../frontend/pages/api/email_format.html', 'r') as file:
         html_content = file.read()
 except Exception as e:
     logging.error("Error reading HTML file: %s", e)
     exit(1)
+
+print(html_content)
 
 # Create email message
 msg = MIMEMultipart("alternative")
@@ -43,6 +52,6 @@ try:
         server.sendmail(sender, recipient, msg.as_string())
         logging.info("Email sent successfully.")
 except smtplib.SMTPException as e:
-    logging.error("SMTP error occurred: %s", e)
+    logging.error("!!!SMTP error occurred!!!: %s", e)
 except Exception as e:
-    logging.error("Error occurred: %s", e)
+    logging.error("!!!Error occurred!!! %s", e)

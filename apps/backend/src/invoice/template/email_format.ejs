@@ -33,12 +33,6 @@
                                 Transaction ID:
                                 <span style="justify-content: flex-end">Some Transaction ID</span>
                             </p>
-
-                            <!-- Total Amount -->
-                            <p style="font-size: 18px; justify-content: flex-end; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-                                Total Amount:
-                                <span>R 9000</span>
-                            </p>
                         </td>
                     </tr>
                     
@@ -62,21 +56,21 @@
                         
                         <tbody>
                             <!-- For each Item, create new row: -->
-                            
-                            
+                            <% let total = 0; %>
+                            <% items.forEach(item => { %>
                                 <tr>
-                                    <td>Hotel in Germany</td>
-                                    <td>19-25 Sep; 15 Oct</td>
-                                    <td>9000.23</td>
+                                    <td><%= item.item_name %></td>
+                                    <td><%= item.item_dates %></td>
+                                    <td><%= item.item_cost.toFixed(2) %></td>
                                 </tr>
-                                
-                            
+                                <% total += item.item_cost; %>
+                            <% }) %>
 
                             <!-- Then display the total -->
                             <tr>
                                 <td>Total:</td>
                                 <td></td>
-                                <td><b>9000.23</b></td>
+                                <td><b><%= total.toFixed(2) %></b></td>
                             </tr>
                         </tbody>
                     </table>
