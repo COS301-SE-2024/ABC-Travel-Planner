@@ -19,6 +19,7 @@ import { ItineraryCreatorModule } from './itinerary-creator/itinerary-creator.mo
 import { ActivityModule } from './activity/activity.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { join } from 'path';
     ItineraryCreatorModule,
     ActivityModule,
     GoogleMapsModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
