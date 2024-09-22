@@ -22,23 +22,30 @@
 
                     <tr>
                         <td style="border: solid 1px #ddd; padding: 5px 20px;">
-                            <div style="display: flex; flex-direction: column;">
-                                <!-- Order Status -->
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <p style="font-size: 18px; font-family:'Arial'; margin: 0;">
-                                        Order Status:
-                                    </p>
-                                    <span style="color: green; font-family:Arial, Helvetica, sans-serif">Success</span>
-                                </div>
-                    
-                                <!-- Transaction ID -->
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <% var id = 'id-' + Math.random().toString(36).substr(2, 12) + '-' + Date.now(); %>
-                                    <p style="font-size: 18px; font-family:'Arial'; margin: 0;">
-                                        Transaction ID:
-                                    </p>
-                                    <span style="font-family:Arial, Helvetica, sans-serif"> <%= id %></span>
-                                </div>
+                            <!-- Order Status -->
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <p style="font-size: 18px; font-family:'Arial'; margin: 0;">
+                                    Order Status:
+                                </p>
+                            </div>
+
+                            <div>
+                                <p style="color: green; font-size: medium; font-family:Arial, Helvetica, sans-serif">Success</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: solid 1px #ddd; padding: 5px 20px;">
+                            <!-- Transaction ID -->
+                            <div style="justify-content: space-between; align-items: center;">
+                                <p style="font-size: 18px; font-family:'Arial'; margin: 0;">
+                                    Transaction ID:
+                                </p>
+                            </div>
+
+                            <div>
+                                <p style="font-size: medium; font-family:Arial, Helvetica, sans-serif"> id-shw9zy7wnf-1727039983645</p>
                             </div>
                         </td>
                     </tr>
