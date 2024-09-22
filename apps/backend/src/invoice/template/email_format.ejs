@@ -33,10 +33,11 @@
                     
                                 <!-- Transaction ID -->
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <% var id = 'id-' + Math.random().toString(36).substr(2, 12) + '-' + Date.now(); %>
                                     <p style="font-size: 18px; font-family:'Arial'; margin: 0;">
                                         Transaction ID:
                                     </p>
-                                    <span style="font-family:Arial, Helvetica, sans-serif">Some Transaction ID</span>
+                                    <span style="font-family:Arial, Helvetica, sans-serif"> <%= id %></span>
                                 </div>
                             </div>
                         </td>
@@ -56,7 +57,7 @@
                         <tr style="background-color: <%= index % 2 === 0 ? '#ffffff' : '#f2f2f2' %>;">
                             <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;"><%= item.item_name %></td>
                             <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;"><%= item.item_dates %></td>
-                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;"><%= item.item_cost.toFixed(2) %></td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;"><%= item.item_cost.toFixed(3) %></td>
                         </tr>
 
                         <% total += item.item_cost; %>
@@ -64,7 +65,7 @@
                     
                 
                     <!-- Total Row -->
-                    <tr style="background-color: #f2f2f2;">
+                    <tr style="background-color: <%= items.length % 2 === 0 ? '#ffffff' : '#f2f2f2' %>;">
                         <td colspan="2" style="padding: 10px; text-align: left; font-weight: bold;">Total:</td>
                         <td style="padding: 10px; text-align: right; font-weight: bold;"><%= total.toFixed(2) %></td>
                     </tr>
