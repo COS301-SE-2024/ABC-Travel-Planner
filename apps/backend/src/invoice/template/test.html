@@ -25,70 +25,47 @@
                             <!-- Order Status -->
                             <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                                 Order Status:
-                                <span style="color: green; margin-left: 20px;">Success</span>
+                                <span style="color: green; margin-left: 20px; justify-content: flex-end">Success</span>
                             </p>
                             
                             <!-- Transaction ID -->
                             <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
                                 Transaction ID:
-                                <span>Some Transaction ID</span>
-                            </p>
-
-                            <!-- Total Amount -->
-                            <p style="font-size: 18px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-                                Total Amount:
-                                <span>R 9000</span>
+                                <span style="justify-content: flex-end">Some Transaction ID</span>
                             </p>
                         </td>
                     </tr>
-                    
-                    
+                    </table>
                     <!-- Body -->
-                     
-                    <tr>
-                        <th style="border: solid 1px #ddd; padding: 10px 20px; margin-top: 2px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-                            Items:
-                        </th>
-                    </tr>
 
-                    <table style="border-collapse: collapse; width: 100%; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                    <table style="border-collapse: collapse; width: 100%; font-family:'Arial', sans-serif">
                         <thead>
-                            <tr>
-                                <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Item Name</th>
-                                <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Dates</th>
-                                <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Cost</th>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="padding: 10px; text-align: left; font-size: 16px;">Item Name</th>
+                                <th style="padding: 10px; text-align: left; font-size: 16px;">Dates</th>
+                                <th style="padding: 10px; text-align: left; font-size: 16px;">Cost</th>
                             </tr>
                         </thead>
                         
                         <tbody>
                             <!-- For each Item, create new row: -->
-                            <tr>    
-                                <td>Hotel in Germany</td>
-                                <td style=>19-25 Sep; 15 Oct</td>
-                                <td>R 9000</td>
-                            </tr>
-
-                            <tr>    
-                                <td>Hotel in Finland</td>
-                                <td style=>26-27 Sep</td>
-                                <td>R 12000</td>
-                            </tr>
-
-                            <!-- Then display the total -->
-
-                            <tr>
-                                <td>Total:</td>
-                                <td></td>
-                                <td><b>R21 000</b></td>
-                            </tr>
-
+                            <% let total = 0; %>
                             <% items.forEach(item => { %>
                                 <tr>
-                                    <td><%= item.item_name %></td>
-                                    <td><%= item.item_dates %></td>
-                                    <td><%= item.item_cost.toFixed(2) %></td>
+                                    <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd"><%= item.item_name %></td>
+                                    <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd"><%= item.item_dates %></td>
+                                    <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd"><%= item.item_cost.toFixed(2) %></td>
                                 </tr>
+
+                                <% total += item.item_cost; %>
                             <% }) %>
+
+                            <!-- Then display the total -->
+                            <tr style="background-color: #f2f2f2"></tr>
+                                <td colspan="2" style="padding: 10px; text-align: left; font-weight: bold;">Total:</td>
+                                <td></td>
+                                <td style="padding: 10px; text-align: right; font-weight: bold;"><b><%= total.toFixed(2) %></b></td>
+                            </tr>
                         </tbody>
                     </table>
                     
