@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiOutlineMessage, AiOutlineClose, AiOutlineRobot} from 'react-icons/ai';
+import { AiOutlineMessage, AiOutlineClose, AiOutlineRobot } from 'react-icons/ai';
 
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,22 +16,48 @@ const ChatBot: React.FC = () => {
   // submit message
   const handleSendMessage = async () => {
     if (userInput.trim() === '') return;
-    
+
     // Add chat+time =>user
     setMessages([...messages, { sender: 'user', text: userInput, time: getCurrentTime() }]);
     setUserInput('');
-    
+
     // Simulate bot is typing
     setIsTyping(true);
+    try {
+      let url = '';
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      url = `${backendUrl}/chat/userQuery?query=${encodeURIComponent(userInput)}`
 
-    // Simulate the loading like Vics asked for , just used timer now
-    setTimeout(() => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { sender: 'bot', text: 'This is a simulated response.', time: getCurrentTime() },
-      ]);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      if (data) {
+        console.log(JSON.stringify(data));
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: 'bot', text: data.result.answer, time: getCurrentTime() },
+        ]);
+      } else {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: 'bot', text: 'This is a simulated response.', time: getCurrentTime() },
+        ]);
+      }
       setIsTyping(false);
-    }, 2000);
+      return data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    // // Simulate the loading like Vics asked for , just used timer now
+    // setTimeout(() => {
+    //   setMessages((prevMessages) => [
+    //     ...prevMessages,
+    //     { sender: 'bot', text: 'This is a simulated response.', time: getCurrentTime() },
+    //   ]);
+    //   setIsTyping(false);
+    // }, 2000);
   };
 
   // Handle pressing "Enter" key
@@ -52,20 +78,20 @@ const ChatBot: React.FC = () => {
           <AiOutlineMessage size={30} />
         </button>
       )}
-      
+
       {/* Chat Modal */}
       {isOpen && (
         <div className="bg-white w-96 h-[32rem] p-4 shadow-lg rounded-lg flex flex-col">
           {/* Modal Header */}
           <div className="flex justify-between items-center border-b pb-2">
-          <h2 className="text-lg font-bold flex items-center">
-              <AiOutlineRobot className="mr-2" /> 
+            <h2 className="text-lg font-bold flex items-center">
+              <AiOutlineRobot className="mr-2" />
               Need some help? Pop a message!
             </h2>
-            <AiOutlineClose 
-              size={24} 
-              className="cursor-pointer" 
-              onClick={() => setIsOpen(false)} 
+            <AiOutlineClose
+              size={24}
+              className="cursor-pointer"
+              onClick={() => setIsOpen(false)}
             />
           </div>
 

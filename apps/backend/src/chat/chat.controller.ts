@@ -8,11 +8,11 @@ export class ChatController {
   @Get('userQuery')
   async searchUser(@Query('query') query: string): Promise<any> {
     try {
-      return this.chatService.resolveQuery(query);
+      const result = await this.chatService.resolveQuery(query); 
+      return result; 
     } catch (error) {
-        console.error(error)
+      console.error(error);
+      return { error: 'An error occurred while processing your request.' };
     }
-    
   }
-
 }
