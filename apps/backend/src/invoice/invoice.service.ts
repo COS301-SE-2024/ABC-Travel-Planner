@@ -17,7 +17,6 @@ export class InvoiceService {
         const template  = fs.readFileSync(pathToTemplate, 'utf-8')
 
         const htmlInvoice = await ejs.render(template, { items })
-        console.log(htmlInvoice)
         return htmlInvoice
     }
 }

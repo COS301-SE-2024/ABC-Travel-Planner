@@ -219,6 +219,7 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   }
 
   const data: any[] = await fetchItems();
+  console.log("Retrieved Data: " + data)
   //Push Items to display on email...
     //Dynamically insert items into html in another script...
   
@@ -279,7 +280,7 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
           <h2 className="text-xl font-bold mb-4">Total: </h2>
           <p className="font-bold mb-4">R{totalCost.toFixed(2) ?? 0}</p>
           <div className="mt-4">
-            <ConfirmBookingButton /> {/* Render the client-side component here */}
+            <ConfirmBookingButton items={data}/> {/* Render the client-side component here */}
           </div>
         </div>
       </div>

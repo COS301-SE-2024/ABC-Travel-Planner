@@ -43,9 +43,9 @@
                                     Transaction ID:
                                 </p>
                             </div>
-
+                            <% var id = 'id-' + Math.random().toString(36).substr(2, 12) + '-' + Date.now(); %>
                             <div>
-                                <p style="font-size: medium; font-family:Arial, Helvetica, sans-serif"> id-shw9zy7wnf-1727039983645</p>
+                                <p style="font-size: medium; font-family:Arial, Helvetica, sans-serif"> <%= id %></p>
                             </div>
                         </td>
                     </tr>
@@ -63,11 +63,11 @@
                     <% items.forEach((item, index) => { %>
                         <tr style="background-color: <%= index % 2 === 0 ? '#ffffff' : '#f2f2f2' %>;">
                             <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;"><%= item.item_name %></td>
-                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;"><%= item.item_dates %></td>
-                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;"><%= item.item_cost.toFixed(3) %></td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;"><%= item.date %></td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;"><%= item.price.toFixed(3) %></td>
                         </tr>
 
-                        <% total += item.item_cost; %>
+                        <% total += item.price; %>
                     <% }) %>
                     
                 
