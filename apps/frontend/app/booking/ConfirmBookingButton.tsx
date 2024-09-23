@@ -3,25 +3,43 @@ import React, { useState } from "react";
 import Confetti from "react-confetti";
 import getUser from "@/libs/actions/getUser";
 import Cookie from "js-cookie"; 
+import axios from 'axios';
+
+// interface Items {
+//   item_name: string,
+//   date: string[],
+//   price: string
+// }
 
 interface ConfirmBookingButtonProps {
-  email: string;
-  bookingDetails: string;
+  items: any[];
 }
 
-const sendEmail = async() => {
+const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) => {
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
+ 
+  const sendEmail = async() => {
     const temp = Cookie.get("user_id");
     const result = (await getUser(temp));
     const email = JSON.parse(result || "").email;
-    const res = await fetch('/api/execute?email=' + email);
-    const data = await res.json();
-    console.log(data)
-}
+    console.log("ITEMS RECEIVED: " + JSON.stringify(items))
+    console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
 
-const ConfirmBookingButton = () => {
-  const [confirmationMessage, setConfirmationMessage] = useState("");
-  const [showConfetti, setShowConfetti] = useState(false);
-  
+    const jsonBody = {
+      items: items,
+      email: email
+    }
+    
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/invoice/send`,
+      jsonBody
+    )
+
+    const data = res.data;
+    console.log(data)
+  }
+
   const handleConfirmBooking = () => {
     // Logic to confirm booking and send email 
     setConfirmationMessage("Congratulations your trip as been booked, check your email for the confirmation of your booking. Safe travels and enjoy your stay!");

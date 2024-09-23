@@ -17,6 +17,7 @@ export class InvoiceController {
     @Post('send')
     async sendInvoice(@Body() body: { items: any[]; email: string}) {
         try {
+            console.log("ITEMS RECEIVED ON BACKEND SIDE:\n" + body.items + "\n" + body.email)
             const html = await this.invoiceService.generateInvoice(body.items);
             
             //Create a file with html inside...
@@ -39,16 +40,14 @@ export class InvoiceController {
 
             } catch (error) {
                 console.error(error)
-                throw new Error(`Failed to execute python script: ${error}`)                
             }
         }
         catch (error) {
             console.error(error);
-            throw new Error('Could not create & send invoice');
         }
     }
 
-    private createPythonProcess(email: string) {
+    private async createPythonProcess(email: string) {
         return new Promise((resolve, reject) => {
             const scriptPath = path.join(__dirname, '../../../frontend/pages/api', 'send_mail.py');
             console.log("Script path:" + scriptPath)
@@ -64,7 +63,6 @@ export class InvoiceController {
                 reject(data.toString());
             });
             
-            console.log("Output: " + output)
             pythonProcess.on('close', (code) => {
             if (code === 0) {
                 resolve(output);
