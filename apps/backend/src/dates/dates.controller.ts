@@ -10,23 +10,16 @@ interface dateTypes {
 
 @Controller('dates')
 export class DatesController {
-  private dateStrings: string[];
-
-  constructor(private readonly appService: DatesService) {
-    this.dateStrings = [
-      '2024-09-01T22:00:00.000Z',
-      '2024-09-02T22:00:00.000Z',
-      '2024-09-09T22:00:00.000Z',
-      '2024-09-04T22:00:00.000Z',
-      '2024-09-12T22:00:00.000Z',
-      '2024-09-06T22:00:00.000Z',
-      '2024-10-18T22:00:00.000Z'
-    ]
-  }
+  constructor(private readonly dateService: DatesService) {}
 
   @Get()
   getHello(): string {
-    const sortedDates = this.dateStrings.map(date => parseISO(date)).sort((a, b) => a.getTime() - b.getTime());
+    return `You've reached the dates-endpoint`;
+  }
+
+  @Post('convert')
+  convertDates(@Body() body : {dates: string[]}): string {
+    const sortedDates = body.dates.map(date => parseISO(date)).sort((a, b) => a.getTime() - b.getTime());
     
     let days:any = []
     let dateObjects:any = []
@@ -48,6 +41,14 @@ export class DatesController {
         //Keep on adding the days into an array until month != prevMonth...
         if (month === prevMonth && year === prevYear) {
             days.push(day)
+
+            if (idx === sortedDates.length - 1) {
+                dateObjects.push({
+                    year: year,
+                    month: month,
+                    days: days
+                })
+            }
         } else {
             dateObjects.push({
                 year: prevYear,
@@ -67,10 +68,6 @@ export class DatesController {
         }
     })
 
-    dateObjects.forEach((item: any) => {
-        console.log(JSON.stringify(item))
-    })
-  
-    return this.appService.getHello(dateObjects);
+    return this.dateService.getHello(dateObjects);
   }
 }
