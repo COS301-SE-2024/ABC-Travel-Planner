@@ -113,16 +113,14 @@ interface ItemData {
                             data.data.item_type = "Car Rental"
                             break;
                         case "flight": 
-                        data.data.item_type = "Flight"
+                            data.data.item_type = "Flight"
                             break;
-                            
-                            default:
-                                break;
+                        default:
+                            break;
                     }
                     
                 });
                 
-                // formatDates();
                 setDivs(initialDivs);
                 setFetchedData(data);
                 
@@ -192,35 +190,10 @@ interface ItemData {
       setIsOpen(false);
     };
 
-    // const formatDates = async () => {
-    //     console.log("Eneterd function!!!!!")
-
-    //     const dateString = await axios.post(
-    //         `${process.env.NEXT_PUBLIC_BACKEND_URL}/dates/convert`,
-    //         {
-    //             dates: divs.map(divItem => divItem.data.date).flat()
-    //         }
-    //     )
-        
-    //     const newDivs = divs.map((dataItem, index) => ({
-    //         id: index,
-    //         data: dataItem.data,
-    //     }));
-        
-    //     newDivs.forEach(async (dataItem, index) => {
-    //         dataItem.data.date = [dateString.data]
-    //     })
-    //     console.log("FORMATTING FINISHED")
-        
-    //     // return dateString.data
-    //     setDivs(newDivs)
-    //     console.log("New divs set!")
-    // }
-
     return (
         <>
         {divs.map((divItem) => (
-            divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[4px] max-w-lg mx-auto">
+            divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[4px] max-w-[520] mx-auto">
                 {/* <div className="max-w-sm rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass"> */}
                     <a href="#" className='text-center flex justify-center ml-12 mr-12'>
                         <img className="w-full h-60 mt-10 mb-2 border-[1px] border-white border-solid rounded-md" src={divItem?.data?.image_url} alt="" />
@@ -228,7 +201,7 @@ interface ItemData {
 
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl font-bold tracking-tight text-black dark:text-black text-center">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
+                            <h2 className="mb-2 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl font-bold tracking-tight text-black dark:text-black text-center">{truncateTitle(divItem?.data?.item_name, 30)}</h2>
                         </a>
 
                     <hr></hr>
@@ -241,7 +214,7 @@ interface ItemData {
 
                     <div className="flex justify-between mb-1">
                         <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Date:</div>
-                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{(divItem?.data?.date.length == 0 || divItem?.data?.date[0].length == 0) ? 'No date selected' : divItem?.data?.date}</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{(divItem?.data?.date.length == 0 || divItem?.data?.date[0].length == 0) ? 'No date selected' : truncateInfo(divItem?.data?.date[0], 42)}</div>
                     </div>
 
                     <div className="flex justify-between mb-1">

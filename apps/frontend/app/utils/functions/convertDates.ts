@@ -142,6 +142,6 @@ export function convertDates(dates: dateTypes[]): string {
     })
 
     out.substring(0, 2) === ', ' ? out = out.substring(2, out.length) : out;
-    out.replaceAll('; , ','; ');
+    out = out.replaceAll('; , ','; ');
     return out;
   }
