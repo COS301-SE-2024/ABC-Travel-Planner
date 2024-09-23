@@ -3,6 +3,7 @@ import { DatesService } from './dates.service';
 import { parseISO } from 'date-fns';
 
 interface dateTypes {
+  year: string,
   month: string,
   days: number[]
 }
@@ -28,6 +29,7 @@ export class DatesController {
     const sortedDates = this.dateStrings.map(date => parseISO(date)).sort((a, b) => a.getTime() - b.getTime());
     const date1: dateTypes[] = [
       {
+          year: '2024',
           month: '09',
           days: [
               1,2,3,5,7,9,10,11,13
