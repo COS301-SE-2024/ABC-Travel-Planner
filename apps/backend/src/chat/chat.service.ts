@@ -7,10 +7,7 @@ export class ChatService {
 
     async resolveQuery(query: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            // Use path.resolve to construct an absolute path to the Python script
             const scriptPath = path.resolve(__dirname, 'src', 'chat', 'model', 'chat.py');
-
-            // Call the Python script using the absolute path
             const pythonProcess = spawn('python3', ['src/chat/model/chat.py', query]);
 
             let scriptOutput = '';

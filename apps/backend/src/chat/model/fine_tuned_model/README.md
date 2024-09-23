@@ -9,36 +9,34 @@ tags:
 - sentence-similarity
 - feature-extraction
 - generated_from_trainer
-- dataset_size:832
+- dataset_size:1936
 - loss:CosineSimilarityLoss
 widget:
-- source_sentence: How do I use the trip creator for City113?
+- source_sentence: How do I plan a trip to city 384?
   sentences:
-  - How do I generate a ready-made trip for City109?
-  - Could you provide more information about How do I view who someone is following
-    or who their followers are??
-  - How do I generate a ready-made trip for City113?
-- source_sentence: How do I plan a trip to city 139?
+  - Can I book flights and stays for city 151?
+  - What is the process to change the theme of my app?
+  - Can I book flights and stays for city 384?
+- source_sentence: How do I plan a trip to city 495?
   sentences:
-  - Can I book flights and stays for city 337?
-  - Can you give me an example of Can I make a post of any particular place I have
-    been to??
-  - Can I book flights and stays for city 139?
-- source_sentence: How do I plan a trip to city 261?
+  - Can I book flights and stays for city 495?
+  - Can I book flights and stays for city 407?
+  - Can I book flights and stays for city 467?
+- source_sentence: How do I plan a trip to city 297?
   sentences:
-  - Can I book flights and stays for city 398?
-  - How do I generate a ready-made trip for City145?
-  - Can I book flights and stays for city 261?
-- source_sentence: How do I use the trip creator for City170?
+  - Can I book flights and stays for city 171?
+  - How do I book flights and stays for City199?
+  - Can I book flights and stays for city 297?
+- source_sentence: How can I contact support?
   sentences:
-  - Can I book flights and stays for city 457?
-  - Can I book flights and stays for city 271?
-  - How do I generate a ready-made trip for City170?
-- source_sentence: How do I plan a trip to city 342?
+  - How do I reach out to support?
+  - How do I book flights and stays for City160?
+  - Can I book flights and stays for city 260?
+- source_sentence: How do I plan a trip to city 328?
   sentences:
-  - Can I book flights and stays for city 303?
-  - Can I book flights and stays for city 222?
-  - Can I book flights and stays for city 342?
+  - Can I book flights and stays for city 127?
+  - Can I book flights and stays for city 328?
+  - Can I book flights and stays for city 307?
 ---
 
 # SentenceTransformer based on sentence-transformers/all-MiniLM-L6-v2
@@ -91,9 +89,9 @@ from sentence_transformers import SentenceTransformer
 model = SentenceTransformer("sentence_transformers_model_id")
 # Run inference
 sentences = [
-    'How do I plan a trip to city 342?',
-    'Can I book flights and stays for city 342?',
-    'Can I book flights and stays for city 303?',
+    'How do I plan a trip to city 328?',
+    'Can I book flights and stays for city 328?',
+    'Can I book flights and stays for city 307?',
 ]
 embeddings = model.encode(sentences)
 print(embeddings.shape)
@@ -148,19 +146,19 @@ You can finetune this model on your own dataset.
 #### Unnamed Dataset
 
 
-* Size: 832 training samples
+* Size: 1,936 training samples
 * Columns: <code>sentence_0</code>, <code>sentence_1</code>, and <code>label</code>
 * Approximate statistics based on the first 1000 samples:
   |         | sentence_0                                                                        | sentence_1                                                                        | label                                                          |
   |:--------|:----------------------------------------------------------------------------------|:----------------------------------------------------------------------------------|:---------------------------------------------------------------|
   | type    | string                                                                            | string                                                                            | float                                                          |
-  | details | <ul><li>min: 8 tokens</li><li>mean: 12.57 tokens</li><li>max: 16 tokens</li></ul> | <ul><li>min: 8 tokens</li><li>mean: 13.69 tokens</li><li>max: 24 tokens</li></ul> | <ul><li>min: 0.0</li><li>mean: 0.69</li><li>max: 1.0</li></ul> |
+  | details | <ul><li>min: 8 tokens</li><li>mean: 12.23 tokens</li><li>max: 16 tokens</li></ul> | <ul><li>min: 8 tokens</li><li>mean: 13.43 tokens</li><li>max: 24 tokens</li></ul> | <ul><li>min: 0.0</li><li>mean: 0.74</li><li>max: 1.0</li></ul> |
 * Samples:
-  | sentence_0                                          | sentence_1                                                                         | label            |
-  |:----------------------------------------------------|:-----------------------------------------------------------------------------------|:-----------------|
-  | <code>How do I plan a trip to city 43?</code>       | <code>Can I book flights and stays for city 43?</code>                             | <code>0.0</code> |
-  | <code>What are the top destinations circles?</code> | <code>Can you give me an example of What are the top destinations circles??</code> | <code>1.0</code> |
-  | <code>How do I plan a trip to city 38?</code>       | <code>Can I book flights and stays for city 38?</code>                             | <code>1.0</code> |
+  | sentence_0                                           | sentence_1                                                | label            |
+  |:-----------------------------------------------------|:----------------------------------------------------------|:-----------------|
+  | <code>Can you help me plan a trip to City199?</code> | <code>How do I book flights and stays for City199?</code> | <code>1.0</code> |
+  | <code>How do I plan a trip to city 70?</code>        | <code>Can I book flights and stays for city 70?</code>    | <code>1.0</code> |
+  | <code>How do I plan a trip to city 124?</code>       | <code>Can I book flights and stays for city 124?</code>   | <code>1.0</code> |
 * Loss: [<code>CosineSimilarityLoss</code>](https://sbert.net/docs/package_reference/sentence_transformer/losses.html#cosinesimilarityloss) with these parameters:
   ```json
   {
@@ -296,12 +294,16 @@ You can finetune this model on your own dataset.
 ### Training Logs
 | Epoch   | Step | Training Loss |
 |:-------:|:----:|:-------------:|
-| 38.4615 | 500  | 0.0524        |
-| 76.9231 | 1000 | 0.0019        |
+| 16.1290 | 500  | 0.0513        |
+| 32.2581 | 1000 | 0.0016        |
+| 48.3871 | 1500 | 0.0006        |
+| 64.5161 | 2000 | 0.0004        |
+| 80.6452 | 2500 | 0.0003        |
+| 96.7742 | 3000 | 0.0002        |
 
 
 ### Framework Versions
-- Python: 3.12.4
+- Python: 3.12.6
 - Sentence Transformers: 3.0.1
 - Transformers: 4.44.2
 - PyTorch: 2.4.1+cpu

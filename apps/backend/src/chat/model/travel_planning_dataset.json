@@ -4158,5 +4158,5525 @@
         "sentence1": "How do I use the trip creator or the itinerary creator?",
         "sentence2": "Can you give me an example of How do I use the trip creator or the itinerary creator??",
         "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How can I access my account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What steps do I need to follow to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I sign in using my email and password?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Is it possible to log in with my Google account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I enter my credentials to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What is the process for signing into my account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I use my social media account to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I access my account dashboard?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What do I need to do to sign in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How can I log in if I forgot my password?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Is there a way to log in using my phone number?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in with two-factor authentication?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in using my Facebook account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What are the steps to log in securely?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in if I am a new user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in with my username instead of email?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in from a different device?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What should I do if I can't log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in if I have multiple accounts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in using a QR code?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How can I navigate to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Where is the home page located?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I find the trending destinations on the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can you show me the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I access the main page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Where can I see the latest posts on the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I get to the home page from here?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can you direct me to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I scroll through the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Where can I find the home page link?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I return to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can I see the home page layout?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I view the home page content?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I go back to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can you take me to the main screen?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I access the home page features?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Where can I find the home page menu?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I explore the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can you guide me to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I see the home page updates?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Where can I look for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I find available flights and accommodations?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can you help me search for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I use the search function for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Where can I book flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I filter my search for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I find the best deals on flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can I search for flights and hotels together?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I compare flights and hotel options?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Where can I find the search bar for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I search for flights and hotels by date?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can I search for flights and hotels by destination?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I find flights and hotels within my budget?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I search for last-minute flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can I search for flights and hotels with specific amenities?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I find flights and hotels with flexible dates?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I search for flights and hotels with free cancellation?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Where can I find the search results for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I refine my search for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can I search for flights and hotels using a map view?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "What is the process for making a post on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Can you explain how I can create a post on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Could you guide me on how to make a post on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "How can I upload a post on this app?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "What do the top destinations on the home page represent?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "Can you explain what the top destinations circles mean?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "How do the top destinations on the home page work?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "How can I leave a comment on someone's post?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "What is the process to comment on posts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "Can you explain how I can comment on posts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "How can I start following someone on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "Can you explain the process for following users?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "What is the process to follow other users?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "How do I open someone's profile page?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Can you explain how to find user profiles?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Where can I find a user's profile page?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "How can I share my travel itinerary?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "What is the process to share an itinerary?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "Can you guide me on how to share my travel plans?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "How can I change the details on my profile?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "What is the process to edit my profile?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "Can you explain how I can update my profile information?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "How can I like a user's shared itinerary?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "What is the process for liking an itinerary?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "Can you explain how I can interact with others' travel plans?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "How can I see who a user follows and their followers?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "Can you show me how to view the list of followers for a user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "What is the process to check someone's following and followers?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "How can I see a specific post shared by a user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "What is the process to view a certain post from a user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "Can you explain how to find a particular post by a user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "How can I check my post interaction activity on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "What is the process to track my activity related to posts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "Can you guide me on how to check my interactions with posts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "How can I update the app\u2019s theme?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "What is the process to change the theme of my app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "Can you guide me on how to change the appearance of the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "How do I create an itinerary using the trip creator tool?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "Can you explain the steps for using the itinerary creator?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "What is the process to generate an itinerary automatically?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I book a flight?",
+        "sentence2": "What are the steps to book a flight?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I find a hotel?",
+        "sentence2": "Where can I book accommodation?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I cancel my flight?",
+        "sentence2": "How do I modify my flight?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the best travel destinations?",
+        "sentence2": "Can I book a flight to Paris?",
+        "label": 0
+    },
+    {
+        "sentence1": "Is there a way to get cheap flights?",
+        "sentence2": "How do I find low-cost flights?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I change my travel dates?",
+        "sentence2": "Can I cancel my hotel reservation?",
+        "label": 0
+    },
+    {
+        "sentence1": "Where can I rent a car?",
+        "sentence2": "How do I book a taxi?",
+        "label": 0
+    },
+    {
+        "sentence1": "What are the best places to visit in Italy?",
+        "sentence2": "What should I see in Rome?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I book airport taxis?",
+        "sentence2": "Where do I find airport transfers?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I find flight deals?",
+        "sentence2": "What is the cheapest time to book flights?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the best hotels in New York?",
+        "sentence2": "Where can I stay in New York?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make changes to my travel itinerary?",
+        "sentence2": "Can I modify my booking?",
+        "label": 1
+    },
+    {
+        "sentence1": "Where can I find travel recommendations?",
+        "sentence2": "How do I get personalized travel suggestions?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I check my flight status?",
+        "sentence2": "Can I cancel my car rental?",
+        "label": 0
+    },
+    {
+        "sentence1": "What attractions should I visit in London?",
+        "sentence2": "Which museums are in London?",
+        "label": 1
+    },
+    {
+        "sentence1": "Is it safe to travel to Japan?",
+        "sentence2": "Can I book a flight to Japan?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I sign up for travel alerts?",
+        "sentence2": "Can I get notifications about my travel plans?",
+        "label": 1
+    },
+    {
+        "sentence1": "Where can I find airport lounges?",
+        "sentence2": "What is the best airport to fly from?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I add an extra bag to my flight?",
+        "sentence2": "Can I add a carry-on bag to my flight?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I upgrade my seat?",
+        "sentence2": "How do I change my seat reservation?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 0?",
+        "sentence2": "Can I book flights and stays for city 0?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 1?",
+        "sentence2": "Can I book flights and stays for city 1?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 2?",
+        "sentence2": "Can I book flights and stays for city 2?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 3?",
+        "sentence2": "Can I book flights and stays for city 3?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 4?",
+        "sentence2": "Can I book flights and stays for city 4?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 5?",
+        "sentence2": "Can I book flights and stays for city 5?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 6?",
+        "sentence2": "Can I book flights and stays for city 6?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 7?",
+        "sentence2": "Can I book flights and stays for city 7?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 8?",
+        "sentence2": "Can I book flights and stays for city 8?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 9?",
+        "sentence2": "Can I book flights and stays for city 9?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 10?",
+        "sentence2": "Can I book flights and stays for city 10?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 11?",
+        "sentence2": "Can I book flights and stays for city 11?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 12?",
+        "sentence2": "Can I book flights and stays for city 12?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 13?",
+        "sentence2": "Can I book flights and stays for city 13?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 14?",
+        "sentence2": "Can I book flights and stays for city 14?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 15?",
+        "sentence2": "Can I book flights and stays for city 15?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 16?",
+        "sentence2": "Can I book flights and stays for city 16?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 17?",
+        "sentence2": "Can I book flights and stays for city 17?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 18?",
+        "sentence2": "Can I book flights and stays for city 18?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 19?",
+        "sentence2": "Can I book flights and stays for city 19?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 20?",
+        "sentence2": "Can I book flights and stays for city 20?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 21?",
+        "sentence2": "Can I book flights and stays for city 21?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 22?",
+        "sentence2": "Can I book flights and stays for city 22?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 23?",
+        "sentence2": "Can I book flights and stays for city 23?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 24?",
+        "sentence2": "Can I book flights and stays for city 24?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 25?",
+        "sentence2": "Can I book flights and stays for city 25?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 26?",
+        "sentence2": "Can I book flights and stays for city 26?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 27?",
+        "sentence2": "Can I book flights and stays for city 27?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 28?",
+        "sentence2": "Can I book flights and stays for city 28?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 29?",
+        "sentence2": "Can I book flights and stays for city 29?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 30?",
+        "sentence2": "Can I book flights and stays for city 30?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 31?",
+        "sentence2": "Can I book flights and stays for city 31?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 32?",
+        "sentence2": "Can I book flights and stays for city 32?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 33?",
+        "sentence2": "Can I book flights and stays for city 33?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 34?",
+        "sentence2": "Can I book flights and stays for city 34?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 35?",
+        "sentence2": "Can I book flights and stays for city 35?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 36?",
+        "sentence2": "Can I book flights and stays for city 36?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 37?",
+        "sentence2": "Can I book flights and stays for city 37?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 38?",
+        "sentence2": "Can I book flights and stays for city 38?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 39?",
+        "sentence2": "Can I book flights and stays for city 39?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 40?",
+        "sentence2": "Can I book flights and stays for city 40?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 41?",
+        "sentence2": "Can I book flights and stays for city 41?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 42?",
+        "sentence2": "Can I book flights and stays for city 42?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 43?",
+        "sentence2": "Can I book flights and stays for city 43?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 44?",
+        "sentence2": "Can I book flights and stays for city 44?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 45?",
+        "sentence2": "Can I book flights and stays for city 45?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 46?",
+        "sentence2": "Can I book flights and stays for city 46?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 47?",
+        "sentence2": "Can I book flights and stays for city 47?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 48?",
+        "sentence2": "Can I book flights and stays for city 48?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 49?",
+        "sentence2": "Can I book flights and stays for city 49?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 50?",
+        "sentence2": "Can I book flights and stays for city 50?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 51?",
+        "sentence2": "Can I book flights and stays for city 51?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 52?",
+        "sentence2": "Can I book flights and stays for city 52?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 53?",
+        "sentence2": "Can I book flights and stays for city 53?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 54?",
+        "sentence2": "Can I book flights and stays for city 54?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 55?",
+        "sentence2": "Can I book flights and stays for city 55?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 56?",
+        "sentence2": "Can I book flights and stays for city 56?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 57?",
+        "sentence2": "Can I book flights and stays for city 57?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 58?",
+        "sentence2": "Can I book flights and stays for city 58?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 59?",
+        "sentence2": "Can I book flights and stays for city 59?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 60?",
+        "sentence2": "Can I book flights and stays for city 60?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 61?",
+        "sentence2": "Can I book flights and stays for city 61?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 62?",
+        "sentence2": "Can I book flights and stays for city 62?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 63?",
+        "sentence2": "Can I book flights and stays for city 63?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 64?",
+        "sentence2": "Can I book flights and stays for city 64?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 65?",
+        "sentence2": "Can I book flights and stays for city 65?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 66?",
+        "sentence2": "Can I book flights and stays for city 66?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 67?",
+        "sentence2": "Can I book flights and stays for city 67?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 68?",
+        "sentence2": "Can I book flights and stays for city 68?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 69?",
+        "sentence2": "Can I book flights and stays for city 69?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 70?",
+        "sentence2": "Can I book flights and stays for city 70?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 71?",
+        "sentence2": "Can I book flights and stays for city 71?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 72?",
+        "sentence2": "Can I book flights and stays for city 72?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 73?",
+        "sentence2": "Can I book flights and stays for city 73?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 74?",
+        "sentence2": "Can I book flights and stays for city 74?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 75?",
+        "sentence2": "Can I book flights and stays for city 75?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 76?",
+        "sentence2": "Can I book flights and stays for city 76?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 77?",
+        "sentence2": "Can I book flights and stays for city 77?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 78?",
+        "sentence2": "Can I book flights and stays for city 78?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 79?",
+        "sentence2": "Can I book flights and stays for city 79?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 80?",
+        "sentence2": "Can I book flights and stays for city 80?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 81?",
+        "sentence2": "Can I book flights and stays for city 81?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 82?",
+        "sentence2": "Can I book flights and stays for city 82?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 83?",
+        "sentence2": "Can I book flights and stays for city 83?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 84?",
+        "sentence2": "Can I book flights and stays for city 84?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 85?",
+        "sentence2": "Can I book flights and stays for city 85?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 86?",
+        "sentence2": "Can I book flights and stays for city 86?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 87?",
+        "sentence2": "Can I book flights and stays for city 87?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 88?",
+        "sentence2": "Can I book flights and stays for city 88?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 89?",
+        "sentence2": "Can I book flights and stays for city 89?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 90?",
+        "sentence2": "Can I book flights and stays for city 90?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 91?",
+        "sentence2": "Can I book flights and stays for city 91?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 92?",
+        "sentence2": "Can I book flights and stays for city 92?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 93?",
+        "sentence2": "Can I book flights and stays for city 93?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 94?",
+        "sentence2": "Can I book flights and stays for city 94?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 95?",
+        "sentence2": "Can I book flights and stays for city 95?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 96?",
+        "sentence2": "Can I book flights and stays for city 96?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 97?",
+        "sentence2": "Can I book flights and stays for city 97?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 98?",
+        "sentence2": "Can I book flights and stays for city 98?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 99?",
+        "sentence2": "Can I book flights and stays for city 99?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 100?",
+        "sentence2": "Can I book flights and stays for city 100?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 101?",
+        "sentence2": "Can I book flights and stays for city 101?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 102?",
+        "sentence2": "Can I book flights and stays for city 102?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 103?",
+        "sentence2": "Can I book flights and stays for city 103?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 104?",
+        "sentence2": "Can I book flights and stays for city 104?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 105?",
+        "sentence2": "Can I book flights and stays for city 105?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 106?",
+        "sentence2": "Can I book flights and stays for city 106?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 107?",
+        "sentence2": "Can I book flights and stays for city 107?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 108?",
+        "sentence2": "Can I book flights and stays for city 108?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 109?",
+        "sentence2": "Can I book flights and stays for city 109?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 110?",
+        "sentence2": "Can I book flights and stays for city 110?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 111?",
+        "sentence2": "Can I book flights and stays for city 111?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 112?",
+        "sentence2": "Can I book flights and stays for city 112?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 113?",
+        "sentence2": "Can I book flights and stays for city 113?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 114?",
+        "sentence2": "Can I book flights and stays for city 114?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 115?",
+        "sentence2": "Can I book flights and stays for city 115?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 116?",
+        "sentence2": "Can I book flights and stays for city 116?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 117?",
+        "sentence2": "Can I book flights and stays for city 117?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 118?",
+        "sentence2": "Can I book flights and stays for city 118?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 119?",
+        "sentence2": "Can I book flights and stays for city 119?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 120?",
+        "sentence2": "Can I book flights and stays for city 120?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 121?",
+        "sentence2": "Can I book flights and stays for city 121?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 122?",
+        "sentence2": "Can I book flights and stays for city 122?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 123?",
+        "sentence2": "Can I book flights and stays for city 123?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 124?",
+        "sentence2": "Can I book flights and stays for city 124?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 125?",
+        "sentence2": "Can I book flights and stays for city 125?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 126?",
+        "sentence2": "Can I book flights and stays for city 126?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 127?",
+        "sentence2": "Can I book flights and stays for city 127?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 128?",
+        "sentence2": "Can I book flights and stays for city 128?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 129?",
+        "sentence2": "Can I book flights and stays for city 129?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 130?",
+        "sentence2": "Can I book flights and stays for city 130?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 131?",
+        "sentence2": "Can I book flights and stays for city 131?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 132?",
+        "sentence2": "Can I book flights and stays for city 132?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 133?",
+        "sentence2": "Can I book flights and stays for city 133?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 134?",
+        "sentence2": "Can I book flights and stays for city 134?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 135?",
+        "sentence2": "Can I book flights and stays for city 135?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 136?",
+        "sentence2": "Can I book flights and stays for city 136?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 137?",
+        "sentence2": "Can I book flights and stays for city 137?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 138?",
+        "sentence2": "Can I book flights and stays for city 138?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 139?",
+        "sentence2": "Can I book flights and stays for city 139?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 140?",
+        "sentence2": "Can I book flights and stays for city 140?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 141?",
+        "sentence2": "Can I book flights and stays for city 141?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 142?",
+        "sentence2": "Can I book flights and stays for city 142?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 143?",
+        "sentence2": "Can I book flights and stays for city 143?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 144?",
+        "sentence2": "Can I book flights and stays for city 144?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 145?",
+        "sentence2": "Can I book flights and stays for city 145?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 146?",
+        "sentence2": "Can I book flights and stays for city 146?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 147?",
+        "sentence2": "Can I book flights and stays for city 147?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 148?",
+        "sentence2": "Can I book flights and stays for city 148?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 149?",
+        "sentence2": "Can I book flights and stays for city 149?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 150?",
+        "sentence2": "Can I book flights and stays for city 150?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 151?",
+        "sentence2": "Can I book flights and stays for city 151?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 152?",
+        "sentence2": "Can I book flights and stays for city 152?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 153?",
+        "sentence2": "Can I book flights and stays for city 153?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 154?",
+        "sentence2": "Can I book flights and stays for city 154?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 155?",
+        "sentence2": "Can I book flights and stays for city 155?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 156?",
+        "sentence2": "Can I book flights and stays for city 156?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 157?",
+        "sentence2": "Can I book flights and stays for city 157?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 158?",
+        "sentence2": "Can I book flights and stays for city 158?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 159?",
+        "sentence2": "Can I book flights and stays for city 159?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 160?",
+        "sentence2": "Can I book flights and stays for city 160?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 161?",
+        "sentence2": "Can I book flights and stays for city 161?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 162?",
+        "sentence2": "Can I book flights and stays for city 162?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 163?",
+        "sentence2": "Can I book flights and stays for city 163?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 164?",
+        "sentence2": "Can I book flights and stays for city 164?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 165?",
+        "sentence2": "Can I book flights and stays for city 165?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 166?",
+        "sentence2": "Can I book flights and stays for city 166?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 167?",
+        "sentence2": "Can I book flights and stays for city 167?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 168?",
+        "sentence2": "Can I book flights and stays for city 168?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 169?",
+        "sentence2": "Can I book flights and stays for city 169?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 170?",
+        "sentence2": "Can I book flights and stays for city 170?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 171?",
+        "sentence2": "Can I book flights and stays for city 171?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 172?",
+        "sentence2": "Can I book flights and stays for city 172?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 173?",
+        "sentence2": "Can I book flights and stays for city 173?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 174?",
+        "sentence2": "Can I book flights and stays for city 174?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 175?",
+        "sentence2": "Can I book flights and stays for city 175?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 176?",
+        "sentence2": "Can I book flights and stays for city 176?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 177?",
+        "sentence2": "Can I book flights and stays for city 177?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 178?",
+        "sentence2": "Can I book flights and stays for city 178?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 179?",
+        "sentence2": "Can I book flights and stays for city 179?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 180?",
+        "sentence2": "Can I book flights and stays for city 180?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 181?",
+        "sentence2": "Can I book flights and stays for city 181?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 182?",
+        "sentence2": "Can I book flights and stays for city 182?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 183?",
+        "sentence2": "Can I book flights and stays for city 183?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 184?",
+        "sentence2": "Can I book flights and stays for city 184?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 185?",
+        "sentence2": "Can I book flights and stays for city 185?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 186?",
+        "sentence2": "Can I book flights and stays for city 186?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 187?",
+        "sentence2": "Can I book flights and stays for city 187?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 188?",
+        "sentence2": "Can I book flights and stays for city 188?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 189?",
+        "sentence2": "Can I book flights and stays for city 189?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 190?",
+        "sentence2": "Can I book flights and stays for city 190?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 191?",
+        "sentence2": "Can I book flights and stays for city 191?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 192?",
+        "sentence2": "Can I book flights and stays for city 192?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 193?",
+        "sentence2": "Can I book flights and stays for city 193?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 194?",
+        "sentence2": "Can I book flights and stays for city 194?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 195?",
+        "sentence2": "Can I book flights and stays for city 195?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 196?",
+        "sentence2": "Can I book flights and stays for city 196?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 197?",
+        "sentence2": "Can I book flights and stays for city 197?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 198?",
+        "sentence2": "Can I book flights and stays for city 198?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 199?",
+        "sentence2": "Can I book flights and stays for city 199?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 200?",
+        "sentence2": "Can I book flights and stays for city 200?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 201?",
+        "sentence2": "Can I book flights and stays for city 201?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 202?",
+        "sentence2": "Can I book flights and stays for city 202?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 203?",
+        "sentence2": "Can I book flights and stays for city 203?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 204?",
+        "sentence2": "Can I book flights and stays for city 204?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 205?",
+        "sentence2": "Can I book flights and stays for city 205?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 206?",
+        "sentence2": "Can I book flights and stays for city 206?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 207?",
+        "sentence2": "Can I book flights and stays for city 207?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 208?",
+        "sentence2": "Can I book flights and stays for city 208?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 209?",
+        "sentence2": "Can I book flights and stays for city 209?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 210?",
+        "sentence2": "Can I book flights and stays for city 210?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 211?",
+        "sentence2": "Can I book flights and stays for city 211?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 212?",
+        "sentence2": "Can I book flights and stays for city 212?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 213?",
+        "sentence2": "Can I book flights and stays for city 213?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 214?",
+        "sentence2": "Can I book flights and stays for city 214?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 215?",
+        "sentence2": "Can I book flights and stays for city 215?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 216?",
+        "sentence2": "Can I book flights and stays for city 216?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 217?",
+        "sentence2": "Can I book flights and stays for city 217?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 218?",
+        "sentence2": "Can I book flights and stays for city 218?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 219?",
+        "sentence2": "Can I book flights and stays for city 219?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 220?",
+        "sentence2": "Can I book flights and stays for city 220?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 221?",
+        "sentence2": "Can I book flights and stays for city 221?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 222?",
+        "sentence2": "Can I book flights and stays for city 222?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 223?",
+        "sentence2": "Can I book flights and stays for city 223?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 224?",
+        "sentence2": "Can I book flights and stays for city 224?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 225?",
+        "sentence2": "Can I book flights and stays for city 225?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 226?",
+        "sentence2": "Can I book flights and stays for city 226?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 227?",
+        "sentence2": "Can I book flights and stays for city 227?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 228?",
+        "sentence2": "Can I book flights and stays for city 228?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 229?",
+        "sentence2": "Can I book flights and stays for city 229?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 230?",
+        "sentence2": "Can I book flights and stays for city 230?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 231?",
+        "sentence2": "Can I book flights and stays for city 231?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 232?",
+        "sentence2": "Can I book flights and stays for city 232?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 233?",
+        "sentence2": "Can I book flights and stays for city 233?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 234?",
+        "sentence2": "Can I book flights and stays for city 234?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 235?",
+        "sentence2": "Can I book flights and stays for city 235?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 236?",
+        "sentence2": "Can I book flights and stays for city 236?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 237?",
+        "sentence2": "Can I book flights and stays for city 237?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 238?",
+        "sentence2": "Can I book flights and stays for city 238?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 239?",
+        "sentence2": "Can I book flights and stays for city 239?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 240?",
+        "sentence2": "Can I book flights and stays for city 240?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 241?",
+        "sentence2": "Can I book flights and stays for city 241?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 242?",
+        "sentence2": "Can I book flights and stays for city 242?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 243?",
+        "sentence2": "Can I book flights and stays for city 243?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 244?",
+        "sentence2": "Can I book flights and stays for city 244?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 245?",
+        "sentence2": "Can I book flights and stays for city 245?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 246?",
+        "sentence2": "Can I book flights and stays for city 246?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 247?",
+        "sentence2": "Can I book flights and stays for city 247?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 248?",
+        "sentence2": "Can I book flights and stays for city 248?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 249?",
+        "sentence2": "Can I book flights and stays for city 249?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 250?",
+        "sentence2": "Can I book flights and stays for city 250?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 251?",
+        "sentence2": "Can I book flights and stays for city 251?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 252?",
+        "sentence2": "Can I book flights and stays for city 252?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 253?",
+        "sentence2": "Can I book flights and stays for city 253?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 254?",
+        "sentence2": "Can I book flights and stays for city 254?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 255?",
+        "sentence2": "Can I book flights and stays for city 255?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 256?",
+        "sentence2": "Can I book flights and stays for city 256?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 257?",
+        "sentence2": "Can I book flights and stays for city 257?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 258?",
+        "sentence2": "Can I book flights and stays for city 258?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 259?",
+        "sentence2": "Can I book flights and stays for city 259?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 260?",
+        "sentence2": "Can I book flights and stays for city 260?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 261?",
+        "sentence2": "Can I book flights and stays for city 261?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 262?",
+        "sentence2": "Can I book flights and stays for city 262?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 263?",
+        "sentence2": "Can I book flights and stays for city 263?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 264?",
+        "sentence2": "Can I book flights and stays for city 264?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 265?",
+        "sentence2": "Can I book flights and stays for city 265?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 266?",
+        "sentence2": "Can I book flights and stays for city 266?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 267?",
+        "sentence2": "Can I book flights and stays for city 267?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 268?",
+        "sentence2": "Can I book flights and stays for city 268?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 269?",
+        "sentence2": "Can I book flights and stays for city 269?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 270?",
+        "sentence2": "Can I book flights and stays for city 270?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 271?",
+        "sentence2": "Can I book flights and stays for city 271?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 272?",
+        "sentence2": "Can I book flights and stays for city 272?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 273?",
+        "sentence2": "Can I book flights and stays for city 273?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 274?",
+        "sentence2": "Can I book flights and stays for city 274?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 275?",
+        "sentence2": "Can I book flights and stays for city 275?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 276?",
+        "sentence2": "Can I book flights and stays for city 276?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 277?",
+        "sentence2": "Can I book flights and stays for city 277?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 278?",
+        "sentence2": "Can I book flights and stays for city 278?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 279?",
+        "sentence2": "Can I book flights and stays for city 279?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 280?",
+        "sentence2": "Can I book flights and stays for city 280?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 281?",
+        "sentence2": "Can I book flights and stays for city 281?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 282?",
+        "sentence2": "Can I book flights and stays for city 282?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 283?",
+        "sentence2": "Can I book flights and stays for city 283?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 284?",
+        "sentence2": "Can I book flights and stays for city 284?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 285?",
+        "sentence2": "Can I book flights and stays for city 285?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 286?",
+        "sentence2": "Can I book flights and stays for city 286?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 287?",
+        "sentence2": "Can I book flights and stays for city 287?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 288?",
+        "sentence2": "Can I book flights and stays for city 288?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 289?",
+        "sentence2": "Can I book flights and stays for city 289?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 290?",
+        "sentence2": "Can I book flights and stays for city 290?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 291?",
+        "sentence2": "Can I book flights and stays for city 291?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 292?",
+        "sentence2": "Can I book flights and stays for city 292?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 293?",
+        "sentence2": "Can I book flights and stays for city 293?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 294?",
+        "sentence2": "Can I book flights and stays for city 294?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 295?",
+        "sentence2": "Can I book flights and stays for city 295?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 296?",
+        "sentence2": "Can I book flights and stays for city 296?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 297?",
+        "sentence2": "Can I book flights and stays for city 297?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 298?",
+        "sentence2": "Can I book flights and stays for city 298?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 299?",
+        "sentence2": "Can I book flights and stays for city 299?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 300?",
+        "sentence2": "Can I book flights and stays for city 300?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 301?",
+        "sentence2": "Can I book flights and stays for city 301?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 302?",
+        "sentence2": "Can I book flights and stays for city 302?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 303?",
+        "sentence2": "Can I book flights and stays for city 303?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 304?",
+        "sentence2": "Can I book flights and stays for city 304?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 305?",
+        "sentence2": "Can I book flights and stays for city 305?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 306?",
+        "sentence2": "Can I book flights and stays for city 306?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 307?",
+        "sentence2": "Can I book flights and stays for city 307?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 308?",
+        "sentence2": "Can I book flights and stays for city 308?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 309?",
+        "sentence2": "Can I book flights and stays for city 309?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 310?",
+        "sentence2": "Can I book flights and stays for city 310?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 311?",
+        "sentence2": "Can I book flights and stays for city 311?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 312?",
+        "sentence2": "Can I book flights and stays for city 312?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 313?",
+        "sentence2": "Can I book flights and stays for city 313?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 314?",
+        "sentence2": "Can I book flights and stays for city 314?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 315?",
+        "sentence2": "Can I book flights and stays for city 315?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 316?",
+        "sentence2": "Can I book flights and stays for city 316?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 317?",
+        "sentence2": "Can I book flights and stays for city 317?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 318?",
+        "sentence2": "Can I book flights and stays for city 318?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 319?",
+        "sentence2": "Can I book flights and stays for city 319?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 320?",
+        "sentence2": "Can I book flights and stays for city 320?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 321?",
+        "sentence2": "Can I book flights and stays for city 321?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 322?",
+        "sentence2": "Can I book flights and stays for city 322?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 323?",
+        "sentence2": "Can I book flights and stays for city 323?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 324?",
+        "sentence2": "Can I book flights and stays for city 324?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 325?",
+        "sentence2": "Can I book flights and stays for city 325?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 326?",
+        "sentence2": "Can I book flights and stays for city 326?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 327?",
+        "sentence2": "Can I book flights and stays for city 327?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 328?",
+        "sentence2": "Can I book flights and stays for city 328?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 329?",
+        "sentence2": "Can I book flights and stays for city 329?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 330?",
+        "sentence2": "Can I book flights and stays for city 330?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 331?",
+        "sentence2": "Can I book flights and stays for city 331?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 332?",
+        "sentence2": "Can I book flights and stays for city 332?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 333?",
+        "sentence2": "Can I book flights and stays for city 333?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 334?",
+        "sentence2": "Can I book flights and stays for city 334?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 335?",
+        "sentence2": "Can I book flights and stays for city 335?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 336?",
+        "sentence2": "Can I book flights and stays for city 336?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 337?",
+        "sentence2": "Can I book flights and stays for city 337?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 338?",
+        "sentence2": "Can I book flights and stays for city 338?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 339?",
+        "sentence2": "Can I book flights and stays for city 339?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 340?",
+        "sentence2": "Can I book flights and stays for city 340?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 341?",
+        "sentence2": "Can I book flights and stays for city 341?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 342?",
+        "sentence2": "Can I book flights and stays for city 342?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 343?",
+        "sentence2": "Can I book flights and stays for city 343?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 344?",
+        "sentence2": "Can I book flights and stays for city 344?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 345?",
+        "sentence2": "Can I book flights and stays for city 345?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 346?",
+        "sentence2": "Can I book flights and stays for city 346?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 347?",
+        "sentence2": "Can I book flights and stays for city 347?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 348?",
+        "sentence2": "Can I book flights and stays for city 348?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 349?",
+        "sentence2": "Can I book flights and stays for city 349?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 350?",
+        "sentence2": "Can I book flights and stays for city 350?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 351?",
+        "sentence2": "Can I book flights and stays for city 351?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 352?",
+        "sentence2": "Can I book flights and stays for city 352?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 353?",
+        "sentence2": "Can I book flights and stays for city 353?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 354?",
+        "sentence2": "Can I book flights and stays for city 354?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 355?",
+        "sentence2": "Can I book flights and stays for city 355?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 356?",
+        "sentence2": "Can I book flights and stays for city 356?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 357?",
+        "sentence2": "Can I book flights and stays for city 357?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 358?",
+        "sentence2": "Can I book flights and stays for city 358?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 359?",
+        "sentence2": "Can I book flights and stays for city 359?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 360?",
+        "sentence2": "Can I book flights and stays for city 360?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 361?",
+        "sentence2": "Can I book flights and stays for city 361?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 362?",
+        "sentence2": "Can I book flights and stays for city 362?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 363?",
+        "sentence2": "Can I book flights and stays for city 363?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 364?",
+        "sentence2": "Can I book flights and stays for city 364?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 365?",
+        "sentence2": "Can I book flights and stays for city 365?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 366?",
+        "sentence2": "Can I book flights and stays for city 366?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 367?",
+        "sentence2": "Can I book flights and stays for city 367?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 368?",
+        "sentence2": "Can I book flights and stays for city 368?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 369?",
+        "sentence2": "Can I book flights and stays for city 369?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 370?",
+        "sentence2": "Can I book flights and stays for city 370?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 371?",
+        "sentence2": "Can I book flights and stays for city 371?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 372?",
+        "sentence2": "Can I book flights and stays for city 372?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 373?",
+        "sentence2": "Can I book flights and stays for city 373?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 374?",
+        "sentence2": "Can I book flights and stays for city 374?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 375?",
+        "sentence2": "Can I book flights and stays for city 375?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 376?",
+        "sentence2": "Can I book flights and stays for city 376?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 377?",
+        "sentence2": "Can I book flights and stays for city 377?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 378?",
+        "sentence2": "Can I book flights and stays for city 378?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 379?",
+        "sentence2": "Can I book flights and stays for city 379?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 380?",
+        "sentence2": "Can I book flights and stays for city 380?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 381?",
+        "sentence2": "Can I book flights and stays for city 381?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 382?",
+        "sentence2": "Can I book flights and stays for city 382?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 383?",
+        "sentence2": "Can I book flights and stays for city 383?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 384?",
+        "sentence2": "Can I book flights and stays for city 384?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 385?",
+        "sentence2": "Can I book flights and stays for city 385?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 386?",
+        "sentence2": "Can I book flights and stays for city 386?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 387?",
+        "sentence2": "Can I book flights and stays for city 387?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 388?",
+        "sentence2": "Can I book flights and stays for city 388?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 389?",
+        "sentence2": "Can I book flights and stays for city 389?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 390?",
+        "sentence2": "Can I book flights and stays for city 390?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 391?",
+        "sentence2": "Can I book flights and stays for city 391?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 392?",
+        "sentence2": "Can I book flights and stays for city 392?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 393?",
+        "sentence2": "Can I book flights and stays for city 393?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 394?",
+        "sentence2": "Can I book flights and stays for city 394?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 395?",
+        "sentence2": "Can I book flights and stays for city 395?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 396?",
+        "sentence2": "Can I book flights and stays for city 396?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 397?",
+        "sentence2": "Can I book flights and stays for city 397?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 398?",
+        "sentence2": "Can I book flights and stays for city 398?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 399?",
+        "sentence2": "Can I book flights and stays for city 399?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 400?",
+        "sentence2": "Can I book flights and stays for city 400?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 401?",
+        "sentence2": "Can I book flights and stays for city 401?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 402?",
+        "sentence2": "Can I book flights and stays for city 402?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 403?",
+        "sentence2": "Can I book flights and stays for city 403?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 404?",
+        "sentence2": "Can I book flights and stays for city 404?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 405?",
+        "sentence2": "Can I book flights and stays for city 405?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 406?",
+        "sentence2": "Can I book flights and stays for city 406?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 407?",
+        "sentence2": "Can I book flights and stays for city 407?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 408?",
+        "sentence2": "Can I book flights and stays for city 408?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 409?",
+        "sentence2": "Can I book flights and stays for city 409?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 410?",
+        "sentence2": "Can I book flights and stays for city 410?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 411?",
+        "sentence2": "Can I book flights and stays for city 411?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 412?",
+        "sentence2": "Can I book flights and stays for city 412?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 413?",
+        "sentence2": "Can I book flights and stays for city 413?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 414?",
+        "sentence2": "Can I book flights and stays for city 414?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 415?",
+        "sentence2": "Can I book flights and stays for city 415?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 416?",
+        "sentence2": "Can I book flights and stays for city 416?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 417?",
+        "sentence2": "Can I book flights and stays for city 417?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 418?",
+        "sentence2": "Can I book flights and stays for city 418?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 419?",
+        "sentence2": "Can I book flights and stays for city 419?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 420?",
+        "sentence2": "Can I book flights and stays for city 420?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 421?",
+        "sentence2": "Can I book flights and stays for city 421?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 422?",
+        "sentence2": "Can I book flights and stays for city 422?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 423?",
+        "sentence2": "Can I book flights and stays for city 423?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 424?",
+        "sentence2": "Can I book flights and stays for city 424?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 425?",
+        "sentence2": "Can I book flights and stays for city 425?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 426?",
+        "sentence2": "Can I book flights and stays for city 426?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 427?",
+        "sentence2": "Can I book flights and stays for city 427?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 428?",
+        "sentence2": "Can I book flights and stays for city 428?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 429?",
+        "sentence2": "Can I book flights and stays for city 429?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 430?",
+        "sentence2": "Can I book flights and stays for city 430?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 431?",
+        "sentence2": "Can I book flights and stays for city 431?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 432?",
+        "sentence2": "Can I book flights and stays for city 432?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 433?",
+        "sentence2": "Can I book flights and stays for city 433?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 434?",
+        "sentence2": "Can I book flights and stays for city 434?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 435?",
+        "sentence2": "Can I book flights and stays for city 435?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 436?",
+        "sentence2": "Can I book flights and stays for city 436?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 437?",
+        "sentence2": "Can I book flights and stays for city 437?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 438?",
+        "sentence2": "Can I book flights and stays for city 438?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 439?",
+        "sentence2": "Can I book flights and stays for city 439?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 440?",
+        "sentence2": "Can I book flights and stays for city 440?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 441?",
+        "sentence2": "Can I book flights and stays for city 441?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 442?",
+        "sentence2": "Can I book flights and stays for city 442?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 443?",
+        "sentence2": "Can I book flights and stays for city 443?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 444?",
+        "sentence2": "Can I book flights and stays for city 444?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 445?",
+        "sentence2": "Can I book flights and stays for city 445?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 446?",
+        "sentence2": "Can I book flights and stays for city 446?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 447?",
+        "sentence2": "Can I book flights and stays for city 447?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 448?",
+        "sentence2": "Can I book flights and stays for city 448?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 449?",
+        "sentence2": "Can I book flights and stays for city 449?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 450?",
+        "sentence2": "Can I book flights and stays for city 450?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 451?",
+        "sentence2": "Can I book flights and stays for city 451?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 452?",
+        "sentence2": "Can I book flights and stays for city 452?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 453?",
+        "sentence2": "Can I book flights and stays for city 453?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 454?",
+        "sentence2": "Can I book flights and stays for city 454?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 455?",
+        "sentence2": "Can I book flights and stays for city 455?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 456?",
+        "sentence2": "Can I book flights and stays for city 456?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 457?",
+        "sentence2": "Can I book flights and stays for city 457?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 458?",
+        "sentence2": "Can I book flights and stays for city 458?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 459?",
+        "sentence2": "Can I book flights and stays for city 459?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 460?",
+        "sentence2": "Can I book flights and stays for city 460?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 461?",
+        "sentence2": "Can I book flights and stays for city 461?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 462?",
+        "sentence2": "Can I book flights and stays for city 462?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 463?",
+        "sentence2": "Can I book flights and stays for city 463?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 464?",
+        "sentence2": "Can I book flights and stays for city 464?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 465?",
+        "sentence2": "Can I book flights and stays for city 465?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 466?",
+        "sentence2": "Can I book flights and stays for city 466?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 467?",
+        "sentence2": "Can I book flights and stays for city 467?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 468?",
+        "sentence2": "Can I book flights and stays for city 468?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 469?",
+        "sentence2": "Can I book flights and stays for city 469?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 470?",
+        "sentence2": "Can I book flights and stays for city 470?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 471?",
+        "sentence2": "Can I book flights and stays for city 471?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 472?",
+        "sentence2": "Can I book flights and stays for city 472?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 473?",
+        "sentence2": "Can I book flights and stays for city 473?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 474?",
+        "sentence2": "Can I book flights and stays for city 474?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 475?",
+        "sentence2": "Can I book flights and stays for city 475?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 476?",
+        "sentence2": "Can I book flights and stays for city 476?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 477?",
+        "sentence2": "Can I book flights and stays for city 477?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 478?",
+        "sentence2": "Can I book flights and stays for city 478?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 479?",
+        "sentence2": "Can I book flights and stays for city 479?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 480?",
+        "sentence2": "Can I book flights and stays for city 480?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 481?",
+        "sentence2": "Can I book flights and stays for city 481?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 482?",
+        "sentence2": "Can I book flights and stays for city 482?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 483?",
+        "sentence2": "Can I book flights and stays for city 483?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 484?",
+        "sentence2": "Can I book flights and stays for city 484?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 485?",
+        "sentence2": "Can I book flights and stays for city 485?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 486?",
+        "sentence2": "Can I book flights and stays for city 486?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 487?",
+        "sentence2": "Can I book flights and stays for city 487?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 488?",
+        "sentence2": "Can I book flights and stays for city 488?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 489?",
+        "sentence2": "Can I book flights and stays for city 489?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 490?",
+        "sentence2": "Can I book flights and stays for city 490?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 491?",
+        "sentence2": "Can I book flights and stays for city 491?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 492?",
+        "sentence2": "Can I book flights and stays for city 492?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 493?",
+        "sentence2": "Can I book flights and stays for city 493?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 494?",
+        "sentence2": "Can I book flights and stays for city 494?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 495?",
+        "sentence2": "Can I book flights and stays for city 495?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 496?",
+        "sentence2": "Can I book flights and stays for city 496?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 497?",
+        "sentence2": "Can I book flights and stays for city 497?",
+        "label": 0
+    },
+    {
+        "sentence1": "How do I plan a trip to city 498?",
+        "sentence2": "Can I book flights and stays for city 498?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I plan a trip to city 499?",
+        "sentence2": "Can I book flights and stays for city 499?",
+        "label": 0
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City100?",
+        "sentence2": "How do I book flights and stays for City100?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City100?",
+        "sentence2": "How do I generate a ready-made trip for City100?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City101?",
+        "sentence2": "How do I book flights and stays for City101?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City101?",
+        "sentence2": "How do I generate a ready-made trip for City101?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City102?",
+        "sentence2": "How do I book flights and stays for City102?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City102?",
+        "sentence2": "How do I generate a ready-made trip for City102?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City103?",
+        "sentence2": "How do I book flights and stays for City103?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City103?",
+        "sentence2": "How do I generate a ready-made trip for City103?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City104?",
+        "sentence2": "How do I book flights and stays for City104?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City104?",
+        "sentence2": "How do I generate a ready-made trip for City104?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City105?",
+        "sentence2": "How do I book flights and stays for City105?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City105?",
+        "sentence2": "How do I generate a ready-made trip for City105?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City106?",
+        "sentence2": "How do I book flights and stays for City106?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City106?",
+        "sentence2": "How do I generate a ready-made trip for City106?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City107?",
+        "sentence2": "How do I book flights and stays for City107?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City107?",
+        "sentence2": "How do I generate a ready-made trip for City107?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City108?",
+        "sentence2": "How do I book flights and stays for City108?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City108?",
+        "sentence2": "How do I generate a ready-made trip for City108?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City109?",
+        "sentence2": "How do I book flights and stays for City109?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City109?",
+        "sentence2": "How do I generate a ready-made trip for City109?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City110?",
+        "sentence2": "How do I book flights and stays for City110?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City110?",
+        "sentence2": "How do I generate a ready-made trip for City110?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City111?",
+        "sentence2": "How do I book flights and stays for City111?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City111?",
+        "sentence2": "How do I generate a ready-made trip for City111?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City112?",
+        "sentence2": "How do I book flights and stays for City112?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City112?",
+        "sentence2": "How do I generate a ready-made trip for City112?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City113?",
+        "sentence2": "How do I book flights and stays for City113?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City113?",
+        "sentence2": "How do I generate a ready-made trip for City113?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City114?",
+        "sentence2": "How do I book flights and stays for City114?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City114?",
+        "sentence2": "How do I generate a ready-made trip for City114?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City115?",
+        "sentence2": "How do I book flights and stays for City115?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City115?",
+        "sentence2": "How do I generate a ready-made trip for City115?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City116?",
+        "sentence2": "How do I book flights and stays for City116?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City116?",
+        "sentence2": "How do I generate a ready-made trip for City116?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City117?",
+        "sentence2": "How do I book flights and stays for City117?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City117?",
+        "sentence2": "How do I generate a ready-made trip for City117?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City118?",
+        "sentence2": "How do I book flights and stays for City118?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City118?",
+        "sentence2": "How do I generate a ready-made trip for City118?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City119?",
+        "sentence2": "How do I book flights and stays for City119?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City119?",
+        "sentence2": "How do I generate a ready-made trip for City119?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City120?",
+        "sentence2": "How do I book flights and stays for City120?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City120?",
+        "sentence2": "How do I generate a ready-made trip for City120?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City121?",
+        "sentence2": "How do I book flights and stays for City121?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City121?",
+        "sentence2": "How do I generate a ready-made trip for City121?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City122?",
+        "sentence2": "How do I book flights and stays for City122?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City122?",
+        "sentence2": "How do I generate a ready-made trip for City122?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City123?",
+        "sentence2": "How do I book flights and stays for City123?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City123?",
+        "sentence2": "How do I generate a ready-made trip for City123?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City124?",
+        "sentence2": "How do I book flights and stays for City124?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City124?",
+        "sentence2": "How do I generate a ready-made trip for City124?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City125?",
+        "sentence2": "How do I book flights and stays for City125?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City125?",
+        "sentence2": "How do I generate a ready-made trip for City125?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City126?",
+        "sentence2": "How do I book flights and stays for City126?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City126?",
+        "sentence2": "How do I generate a ready-made trip for City126?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City127?",
+        "sentence2": "How do I book flights and stays for City127?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City127?",
+        "sentence2": "How do I generate a ready-made trip for City127?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City128?",
+        "sentence2": "How do I book flights and stays for City128?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City128?",
+        "sentence2": "How do I generate a ready-made trip for City128?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City129?",
+        "sentence2": "How do I book flights and stays for City129?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City129?",
+        "sentence2": "How do I generate a ready-made trip for City129?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City130?",
+        "sentence2": "How do I book flights and stays for City130?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City130?",
+        "sentence2": "How do I generate a ready-made trip for City130?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City131?",
+        "sentence2": "How do I book flights and stays for City131?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City131?",
+        "sentence2": "How do I generate a ready-made trip for City131?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City132?",
+        "sentence2": "How do I book flights and stays for City132?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City132?",
+        "sentence2": "How do I generate a ready-made trip for City132?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City133?",
+        "sentence2": "How do I book flights and stays for City133?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City133?",
+        "sentence2": "How do I generate a ready-made trip for City133?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City134?",
+        "sentence2": "How do I book flights and stays for City134?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City134?",
+        "sentence2": "How do I generate a ready-made trip for City134?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City135?",
+        "sentence2": "How do I book flights and stays for City135?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City135?",
+        "sentence2": "How do I generate a ready-made trip for City135?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City136?",
+        "sentence2": "How do I book flights and stays for City136?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City136?",
+        "sentence2": "How do I generate a ready-made trip for City136?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City137?",
+        "sentence2": "How do I book flights and stays for City137?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City137?",
+        "sentence2": "How do I generate a ready-made trip for City137?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City138?",
+        "sentence2": "How do I book flights and stays for City138?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City138?",
+        "sentence2": "How do I generate a ready-made trip for City138?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City139?",
+        "sentence2": "How do I book flights and stays for City139?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City139?",
+        "sentence2": "How do I generate a ready-made trip for City139?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City140?",
+        "sentence2": "How do I book flights and stays for City140?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City140?",
+        "sentence2": "How do I generate a ready-made trip for City140?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City141?",
+        "sentence2": "How do I book flights and stays for City141?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City141?",
+        "sentence2": "How do I generate a ready-made trip for City141?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City142?",
+        "sentence2": "How do I book flights and stays for City142?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City142?",
+        "sentence2": "How do I generate a ready-made trip for City142?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City143?",
+        "sentence2": "How do I book flights and stays for City143?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City143?",
+        "sentence2": "How do I generate a ready-made trip for City143?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City144?",
+        "sentence2": "How do I book flights and stays for City144?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City144?",
+        "sentence2": "How do I generate a ready-made trip for City144?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City145?",
+        "sentence2": "How do I book flights and stays for City145?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City145?",
+        "sentence2": "How do I generate a ready-made trip for City145?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City146?",
+        "sentence2": "How do I book flights and stays for City146?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City146?",
+        "sentence2": "How do I generate a ready-made trip for City146?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City147?",
+        "sentence2": "How do I book flights and stays for City147?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City147?",
+        "sentence2": "How do I generate a ready-made trip for City147?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City148?",
+        "sentence2": "How do I book flights and stays for City148?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City148?",
+        "sentence2": "How do I generate a ready-made trip for City148?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City149?",
+        "sentence2": "How do I book flights and stays for City149?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City149?",
+        "sentence2": "How do I generate a ready-made trip for City149?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City150?",
+        "sentence2": "How do I book flights and stays for City150?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City150?",
+        "sentence2": "How do I generate a ready-made trip for City150?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City151?",
+        "sentence2": "How do I book flights and stays for City151?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City151?",
+        "sentence2": "How do I generate a ready-made trip for City151?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City152?",
+        "sentence2": "How do I book flights and stays for City152?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City152?",
+        "sentence2": "How do I generate a ready-made trip for City152?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City153?",
+        "sentence2": "How do I book flights and stays for City153?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City153?",
+        "sentence2": "How do I generate a ready-made trip for City153?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City154?",
+        "sentence2": "How do I book flights and stays for City154?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City154?",
+        "sentence2": "How do I generate a ready-made trip for City154?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City155?",
+        "sentence2": "How do I book flights and stays for City155?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City155?",
+        "sentence2": "How do I generate a ready-made trip for City155?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City156?",
+        "sentence2": "How do I book flights and stays for City156?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City156?",
+        "sentence2": "How do I generate a ready-made trip for City156?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City157?",
+        "sentence2": "How do I book flights and stays for City157?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City157?",
+        "sentence2": "How do I generate a ready-made trip for City157?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City158?",
+        "sentence2": "How do I book flights and stays for City158?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City158?",
+        "sentence2": "How do I generate a ready-made trip for City158?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City159?",
+        "sentence2": "How do I book flights and stays for City159?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City159?",
+        "sentence2": "How do I generate a ready-made trip for City159?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City160?",
+        "sentence2": "How do I book flights and stays for City160?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City160?",
+        "sentence2": "How do I generate a ready-made trip for City160?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City161?",
+        "sentence2": "How do I book flights and stays for City161?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City161?",
+        "sentence2": "How do I generate a ready-made trip for City161?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City162?",
+        "sentence2": "How do I book flights and stays for City162?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City162?",
+        "sentence2": "How do I generate a ready-made trip for City162?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City163?",
+        "sentence2": "How do I book flights and stays for City163?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City163?",
+        "sentence2": "How do I generate a ready-made trip for City163?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City164?",
+        "sentence2": "How do I book flights and stays for City164?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City164?",
+        "sentence2": "How do I generate a ready-made trip for City164?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City165?",
+        "sentence2": "How do I book flights and stays for City165?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City165?",
+        "sentence2": "How do I generate a ready-made trip for City165?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City166?",
+        "sentence2": "How do I book flights and stays for City166?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City166?",
+        "sentence2": "How do I generate a ready-made trip for City166?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City167?",
+        "sentence2": "How do I book flights and stays for City167?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City167?",
+        "sentence2": "How do I generate a ready-made trip for City167?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City168?",
+        "sentence2": "How do I book flights and stays for City168?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City168?",
+        "sentence2": "How do I generate a ready-made trip for City168?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City169?",
+        "sentence2": "How do I book flights and stays for City169?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City169?",
+        "sentence2": "How do I generate a ready-made trip for City169?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City170?",
+        "sentence2": "How do I book flights and stays for City170?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City170?",
+        "sentence2": "How do I generate a ready-made trip for City170?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City171?",
+        "sentence2": "How do I book flights and stays for City171?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City171?",
+        "sentence2": "How do I generate a ready-made trip for City171?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City172?",
+        "sentence2": "How do I book flights and stays for City172?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City172?",
+        "sentence2": "How do I generate a ready-made trip for City172?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City173?",
+        "sentence2": "How do I book flights and stays for City173?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City173?",
+        "sentence2": "How do I generate a ready-made trip for City173?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City174?",
+        "sentence2": "How do I book flights and stays for City174?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City174?",
+        "sentence2": "How do I generate a ready-made trip for City174?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City175?",
+        "sentence2": "How do I book flights and stays for City175?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City175?",
+        "sentence2": "How do I generate a ready-made trip for City175?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City176?",
+        "sentence2": "How do I book flights and stays for City176?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City176?",
+        "sentence2": "How do I generate a ready-made trip for City176?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City177?",
+        "sentence2": "How do I book flights and stays for City177?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City177?",
+        "sentence2": "How do I generate a ready-made trip for City177?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City178?",
+        "sentence2": "How do I book flights and stays for City178?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City178?",
+        "sentence2": "How do I generate a ready-made trip for City178?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City179?",
+        "sentence2": "How do I book flights and stays for City179?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City179?",
+        "sentence2": "How do I generate a ready-made trip for City179?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City180?",
+        "sentence2": "How do I book flights and stays for City180?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City180?",
+        "sentence2": "How do I generate a ready-made trip for City180?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City181?",
+        "sentence2": "How do I book flights and stays for City181?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City181?",
+        "sentence2": "How do I generate a ready-made trip for City181?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City182?",
+        "sentence2": "How do I book flights and stays for City182?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City182?",
+        "sentence2": "How do I generate a ready-made trip for City182?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City183?",
+        "sentence2": "How do I book flights and stays for City183?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City183?",
+        "sentence2": "How do I generate a ready-made trip for City183?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City184?",
+        "sentence2": "How do I book flights and stays for City184?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City184?",
+        "sentence2": "How do I generate a ready-made trip for City184?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City185?",
+        "sentence2": "How do I book flights and stays for City185?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City185?",
+        "sentence2": "How do I generate a ready-made trip for City185?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City186?",
+        "sentence2": "How do I book flights and stays for City186?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City186?",
+        "sentence2": "How do I generate a ready-made trip for City186?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City187?",
+        "sentence2": "How do I book flights and stays for City187?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City187?",
+        "sentence2": "How do I generate a ready-made trip for City187?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City188?",
+        "sentence2": "How do I book flights and stays for City188?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City188?",
+        "sentence2": "How do I generate a ready-made trip for City188?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City189?",
+        "sentence2": "How do I book flights and stays for City189?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City189?",
+        "sentence2": "How do I generate a ready-made trip for City189?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City190?",
+        "sentence2": "How do I book flights and stays for City190?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City190?",
+        "sentence2": "How do I generate a ready-made trip for City190?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City191?",
+        "sentence2": "How do I book flights and stays for City191?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City191?",
+        "sentence2": "How do I generate a ready-made trip for City191?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City192?",
+        "sentence2": "How do I book flights and stays for City192?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City192?",
+        "sentence2": "How do I generate a ready-made trip for City192?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City193?",
+        "sentence2": "How do I book flights and stays for City193?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City193?",
+        "sentence2": "How do I generate a ready-made trip for City193?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City194?",
+        "sentence2": "How do I book flights and stays for City194?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City194?",
+        "sentence2": "How do I generate a ready-made trip for City194?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City195?",
+        "sentence2": "How do I book flights and stays for City195?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City195?",
+        "sentence2": "How do I generate a ready-made trip for City195?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City196?",
+        "sentence2": "How do I book flights and stays for City196?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City196?",
+        "sentence2": "How do I generate a ready-made trip for City196?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City197?",
+        "sentence2": "How do I book flights and stays for City197?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City197?",
+        "sentence2": "How do I generate a ready-made trip for City197?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City198?",
+        "sentence2": "How do I book flights and stays for City198?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City198?",
+        "sentence2": "How do I generate a ready-made trip for City198?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can you help me plan a trip to City199?",
+        "sentence2": "How do I book flights and stays for City199?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator for City199?",
+        "sentence2": "How do I generate a ready-made trip for City199?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I make a post of any particular place I have been to?",
+        "sentence2": "What is Can I make a post of any particular place I have been to? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I make a post of any particular place I have been to?",
+        "sentence2": "Can you explain Can I make a post of any particular place I have been to? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I make a post of any particular place I have been to?",
+        "sentence2": "Could you provide more information about Can I make a post of any particular place I have been to??",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I make a post of any particular place I have been to?",
+        "sentence2": "Can you give me an example of Can I make a post of any particular place I have been to??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "What is How do I make a post on the app? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Can you explain How do I make a post on the app? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Could you provide more information about How do I make a post on the app??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Can you give me an example of How do I make a post on the app??",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "What is What are the top destinations circles? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "Can you explain What are the top destinations circles? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "Could you provide more information about What are the top destinations circles??",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "Can you give me an example of What are the top destinations circles??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "What is How do I comment on a post? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "Can you explain How do I comment on a post? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "Could you provide more information about How do I comment on a post??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "Can you give me an example of How do I comment on a post??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "What is How do I follow another user? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "Can you explain How do I follow another user? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "Could you provide more information about How do I follow another user??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "Can you give me an example of How do I follow another user??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "What is How do I navigate to the profile page? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Can you explain How do I navigate to the profile page? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Could you provide more information about How do I navigate to the profile page??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Can you give me an example of How do I navigate to the profile page??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "What is How do I share my itinerary? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "Can you explain How do I share my itinerary? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "Could you provide more information about How do I share my itinerary??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "Can you give me an example of How do I share my itinerary??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "What is How do I edit my profile? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "Can you explain How do I edit my profile? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "Could you provide more information about How do I edit my profile??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "Can you give me an example of How do I edit my profile??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "What is How do I like someone's itinerary? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "Can you explain How do I like someone's itinerary? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "Could you provide more information about How do I like someone's itinerary??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "Can you give me an example of How do I like someone's itinerary??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "What is How do I view who someone is following or who their followers are? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "Can you explain How do I view who someone is following or who their followers are? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "Could you provide more information about How do I view who someone is following or who their followers are??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "Can you give me an example of How do I view who someone is following or who their followers are??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "What is How do I view a specific post from a user? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "Can you explain How do I view a specific post from a user? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "Could you provide more information about How do I view a specific post from a user??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "Can you give me an example of How do I view a specific post from a user??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "What is How do I view my activity in terms of interactions with posts? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "Can you explain How do I view my activity in terms of interactions with posts? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "Could you provide more information about How do I view my activity in terms of interactions with posts??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "Can you give me an example of How do I view my activity in terms of interactions with posts??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "What is How do I change my theme? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "Can you explain How do I change my theme? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "Could you provide more information about How do I change my theme??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "Can you give me an example of How do I change my theme??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "What is How do I use the trip creator or the itinerary creator? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "Can you explain How do I use the trip creator or the itinerary creator? in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "Could you provide more information about How do I use the trip creator or the itinerary creator??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "Can you give me an example of How do I use the trip creator or the itinerary creator??",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I make a post of any particular place I have been to?",
+        "sentence2": "What is Can I make a post of any particular place I have been to? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I make a post of any particular place I have been to?",
+        "sentence2": "Can you explain how Can I make a post of any particular place I have been to? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I make a post of any particular place I have been to?",
+        "sentence2": "Could you provide more information about Can I make a post of any particular place I have been to??",
+        "label": 1
+    },
+    {
+        "sentence1": "Can I make a post of any particular place I have been to?",
+        "sentence2": "Can you give me an example of Can I make a post of any particular place I have been to??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "What is How do I make a post on the app? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Can you explain how How do I make a post on the app? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Could you provide more information about How do I make a post on the app??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Can you give me an example of How do I make a post on the app??",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "What is What are the top destinations circles? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "Can you explain how What are the top destinations circles? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "Could you provide more information about What are the top destinations circles??",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "Can you give me an example of What are the top destinations circles??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "What is How do I comment on a post? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "Can you explain how How do I comment on a post? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "Could you provide more information about How do I comment on a post??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "Can you give me an example of How do I comment on a post??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "What is How do I follow another user? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "Can you explain how How do I follow another user? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "Could you provide more information about How do I follow another user??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "Can you give me an example of How do I follow another user??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "What is How do I navigate to the profile page? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Can you explain how How do I navigate to the profile page? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Could you provide more information about How do I navigate to the profile page??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Can you give me an example of How do I navigate to the profile page??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "What is How do I share my itinerary? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "Can you explain how How do I share my itinerary? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "Could you provide more information about How do I share my itinerary??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "Can you give me an example of How do I share my itinerary??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "What is How do I edit my profile? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "Can you explain how How do I edit my profile? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "Could you provide more information about How do I edit my profile??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "Can you give me an example of How do I edit my profile??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "What is How do I like someone's itinerary? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "Can you explain how How do I like someone's itinerary? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "Could you provide more information about How do I like someone's itinerary??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "Can you give me an example of How do I like someone's itinerary??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "What is How do I view who someone is following or who their followers are? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "Can you explain how How do I view who someone is following or who their followers are? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "Could you provide more information about How do I view who someone is following or who their followers are??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "Can you give me an example of How do I view who someone is following or who their followers are??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "What is How do I view a specific post from a user? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "Can you explain how How do I view a specific post from a user? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "Could you provide more information about How do I view a specific post from a user??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "Can you give me an example of How do I view a specific post from a user??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "What is How do I view my activity in terms of interactions with posts? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "Can you explain how How do I view my activity in terms of interactions with posts? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "Could you provide more information about How do I view my activity in terms of interactions with posts??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "Can you give me an example of How do I view my activity in terms of interactions with posts??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "What is How do I change my theme? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "Can you explain how How do I change my theme? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "Could you provide more information about How do I change my theme??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "Can you give me an example of How do I change my theme??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "What is How do I use the trip creator or the itinerary creator? about?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "Can you explain how How do I use the trip creator or the itinerary creator? works in detail?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "Could you provide more information about How do I use the trip creator or the itinerary creator??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "Can you give me an example of How do I use the trip creator or the itinerary creator??",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How can I access my account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What steps do I need to follow to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I sign in using my email and password?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Is it possible to log in with my Google account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I enter my credentials to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What is the process for signing into my account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I use my social media account to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I access my account dashboard?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What do I need to do to sign in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How can I log in if I forgot my password?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Is there a way to log in using my phone number?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in with two-factor authentication?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in using my Facebook account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What are the steps to log in securely?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in if I am a new user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in with my username instead of email?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in from a different device?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What should I do if I can't log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in if I have multiple accounts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in using a QR code?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How can I navigate to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Where is the home page located?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I find the trending destinations on the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can you show me the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I access the main page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Where can I see the latest posts on the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I get to the home page from here?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can you direct me to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I scroll through the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Where can I find the home page link?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I return to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can I see the home page layout?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I view the home page content?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I go back to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can you take me to the main screen?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I access the home page features?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Where can I find the home page menu?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I explore the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "Can you guide me to the home page?",
+        "label": 1
+    },
+    {
+        "sentence1": "Take me to the home page.",
+        "sentence2": "How do I see the home page updates?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Where can I look for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I find available flights and accommodations?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can you help me search for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I use the search function for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Where can I book flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I filter my search for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I find the best deals on flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can I search for flights and hotels together?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I compare flights and hotel options?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Where can I find the search bar for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I search for flights and hotels by date?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can I search for flights and hotels by destination?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I find flights and hotels within my budget?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I search for last-minute flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can I search for flights and hotels with specific amenities?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I find flights and hotels with flexible dates?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I search for flights and hotels with free cancellation?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Where can I find the search results for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "How do I refine my search for flights and hotels?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I search for flights or hotels?",
+        "sentence2": "Can I search for flights and hotels using a map view?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "What is the process for making a post on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Can you explain how I can create a post on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "Could you guide me on how to make a post on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I make a post on the app?",
+        "sentence2": "How can I upload a post on this app?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "What do the top destinations on the home page represent?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "Can you explain what the top destinations circles mean?",
+        "label": 1
+    },
+    {
+        "sentence1": "What are the top destinations circles?",
+        "sentence2": "How do the top destinations on the home page work?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "How can I leave a comment on someone's post?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "What is the process to comment on posts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I comment on a post?",
+        "sentence2": "Can you explain how I can comment on posts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "How can I start following someone on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "Can you explain the process for following users?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I follow another user?",
+        "sentence2": "What is the process to follow other users?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "How do I open someone's profile page?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Can you explain how to find user profiles?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I navigate to the profile page?",
+        "sentence2": "Where can I find a user's profile page?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "How can I share my travel itinerary?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "What is the process to share an itinerary?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I share my itinerary?",
+        "sentence2": "Can you guide me on how to share my travel plans?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "How can I change the details on my profile?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "What is the process to edit my profile?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I edit my profile?",
+        "sentence2": "Can you explain how I can update my profile information?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "How can I like a user's shared itinerary?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "What is the process for liking an itinerary?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I like someone's itinerary?",
+        "sentence2": "Can you explain how I can interact with others' travel plans?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "How can I see who a user follows and their followers?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "Can you show me how to view the list of followers for a user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view who someone is following or who their followers are?",
+        "sentence2": "What is the process to check someone's following and followers?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "How can I see a specific post shared by a user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "What is the process to view a certain post from a user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view a specific post from a user?",
+        "sentence2": "Can you explain how to find a particular post by a user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "How can I check my post interaction activity on the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "What is the process to track my activity related to posts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I view my activity in terms of interactions with posts?",
+        "sentence2": "Can you guide me on how to check my interactions with posts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "How can I update the app\u2019s theme?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "What is the process to change the theme of my app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my theme?",
+        "sentence2": "Can you guide me on how to change the appearance of the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "How do I create an itinerary using the trip creator tool?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "Can you explain the steps for using the itinerary creator?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I use the trip creator or the itinerary creator?",
+        "sentence2": "What is the process to generate an itinerary automatically?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How do I reach customer support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "What is the customer service number?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How can I get in touch with support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "Is there an email for customer support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How do I contact customer service?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "Can I call customer support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "What is the support email address?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How do I reach out to support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How can I get help from customer service?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "Is there a phone number for support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How do I email customer support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How can I contact the help desk?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "What is the best way to contact support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How do I get assistance from customer service?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "Can I contact support via phone?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How do I send an email to support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How can I reach customer service by phone?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "What is the contact number for support?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "How do I get in touch with customer service?",
+        "label": 1
+    },
+    {
+        "sentence1": "How can I contact support?",
+        "sentence2": "Is there a way to contact support online?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How can I update my settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "Where do I go to change my settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How do I manage my settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "Can I update my password in settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How do I access the settings page?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How can I change my notification preferences?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How do I update my account settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "Where can I find the settings option?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How do I modify my user settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "Can I change my preferences in settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How do I navigate to the settings page?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How can I manage my account settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "Where do I update my password?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How do I adjust my notification settings?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "How can I change my account preferences?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "Where do I find the settings menu?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "Can I change my settings from the app?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I change my settings?",
+        "sentence2": "Where do access the settings from the navigation bar",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how can i navigate to the search page",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "where is the search page located",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how do i find the search page",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how do i access the search page",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how can i switch to the search page",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how do i get to the search function",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "where can i find the search option",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how do i open the search page",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how do i go to the search page",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how can i reach the search page",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how do i use the search page",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how do i get to the search tab",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "where is the search feature",
+        "label": 1
+    },
+    {
+        "sentence1": "how do i get to the search page",
+        "sentence2": "how do i access the search bar",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How can I access my account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What steps do I need to follow to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I sign in using my email and password?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Is it possible to log in with my Google account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I enter my credentials to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What is the process for signing into my account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I use my social media account to log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I access my account dashboard?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What do I need to do to sign in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How can I log in if I forgot my password?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Is there a way to log in using my phone number?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in with two-factor authentication?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in using my Facebook account?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What are the steps to log in securely?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in if I am a new user?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in with my username instead of email?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in from a different device?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "What should I do if I can't log in?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "How do I log in if I have multiple accounts?",
+        "label": 1
+    },
+    {
+        "sentence1": "How do I log into my account?",
+        "sentence2": "Can I log in using a QR code?",
+        "label": 1
     }
 ]

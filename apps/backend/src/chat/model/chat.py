@@ -9,25 +9,33 @@ import sys
 import logging
 import warnings
 
-warnings.filterwarnings("ignore", message="Some weights of the model checkpoint at")
-warnings.filterwarnings("ignore", message="FutureWarning: `clean_up_tokenization_spaces` was not set.")
-
 logging.basicConfig(level=logging.ERROR)
+
+# Global variables to hold models
+ner_model = None
+ner_tokenizer = None
+rephraser_model = None
+rephraser_tokenizer = None
 
 # Pre-download and cache the models
 def preload_models():
-    # Load and cache NER model
-    ner_model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
-    _ = AutoModelForTokenClassification.from_pretrained(ner_model_name)
-    _ = AutoTokenizer.from_pretrained(ner_model_name)
+    global ner_model, ner_tokenizer, rephraser_model, rephraser_tokenizer
 
-    # Load and cache text2text generation model
+    ner_model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
+    ner_model = AutoModelForTokenClassification.from_pretrained(ner_model_name)
+    ner_tokenizer = AutoTokenizer.from_pretrained(ner_model_name)
+
     rephrasing_model_name = "tuner007/pegasus_paraphrase"
-    _ = AutoModelForSeq2SeqLM.from_pretrained(rephrasing_model_name)
-    _ = AutoTokenizer.from_pretrained(rephrasing_model_name)
+    rephraser_model = AutoModelForSeq2SeqLM.from_pretrained(rephrasing_model_name)
+    rephraser_tokenizer = AutoTokenizer.from_pretrained(rephrasing_model_name)
 
 preload_models()
 
+# Initialize the pipelines after preloading models
+ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=-1)
+rephraser = pipeline("text2text-generation", model=rephraser_model, tokenizer=rephraser_tokenizer, device=-1)
+
+# Load dataset
 with open("src/chat/model/chatbot_data.json", "r") as file:
     data = json.load(file)
 
@@ -38,22 +46,13 @@ for entry in data:
     doc = Document(page_content=combined_text, metadata={"answer": entry['answer']})
     documents.append(doc)
 
+# Hugging Face embedding and FAISS index
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
-
-# Embedding the documents with Hugging Face's model
 embeddings = HuggingFaceEmbeddings(model_name="src/chat/model/fine_tuned_model")
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 split_docs = text_splitter.split_documents(documents)
-
-# Index the documents using FAISS for similarity search
 db = FAISS.from_documents(split_docs, embeddings)
-
-# Load the NER model
-ner = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english", aggregation_strategy="simple", device=-1)
-
-# Use the T5 model for rephrasing
-rephraser = pipeline("text2text-generation", model="tuner007/pegasus_paraphrase", device=-1)
 
 def extract_location(query):
     """Extract location entities (like cities or countries) from the user's query."""
@@ -72,11 +71,10 @@ def main(query):
     locations = extract_location(query)
     location_str = ", ".join(locations) if locations else ""
 
-    similar_docs = db.similarity_search(query, k=3)
+    similar_docs = db.similarity_search(query, k=2)
     if not similar_docs:
         return json.dumps({"query": query, "results": []}, indent=2)
 
-    # Take the best answer (e.g., the first one, assuming the list is sorted by relevance)
     best_doc = similar_docs[0]
     if location_str:
         original_answer = f"{best_doc.metadata['answer']} for {location_str}"
