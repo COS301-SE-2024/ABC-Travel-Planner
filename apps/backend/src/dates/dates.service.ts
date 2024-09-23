@@ -10,7 +10,6 @@ interface dateTypes {
 export class DatesService {
   getHello(dates: dateTypes[]): string {
     let out = '';
-    console.log("Starting...")
 
     dates.forEach((date, idx) => {
         let startRange = date.days[0];
@@ -91,12 +90,10 @@ export class DatesService {
                 break;
         }
 
-        out += ` ${monthName} ${date.year}`
-        console.log(out)
+        out += ` ${monthName} ${date.year}; `
     })
 
     out.substring(0, 2) === ', ' ? out = out.substring(2, out.length) : out;
-    console.log(out)
     return out;
   }
 }
