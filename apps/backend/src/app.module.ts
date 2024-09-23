@@ -17,6 +17,7 @@ import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
 import { FollowsModule } from './follows/follows.module';
 import { ItineraryCreatorModule } from './itinerary-creator/itinerary-creator.module';
 import { ActivityModule } from './activity/activity.module';
+import { DatesModule } from './dates/dates.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ActivityModule } from './activity/activity.module';
     ItineraryCreatorModule,
     ActivityModule,
     GoogleMapsModule,
+    DatesModule
   ],
   controllers: [AppController],
   providers: [AppService],
