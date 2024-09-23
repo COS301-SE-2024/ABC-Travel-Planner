@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Confetti from "react-confetti";
 import getUser from "@/libs/actions/getUser";
 import Cookie from "js-cookie"; 
-import axios from 'axios';
+import axios, { all } from 'axios';
 
 // interface Items {
 //   item_name: string,
@@ -18,13 +18,12 @@ interface ConfirmBookingButtonProps {
 const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) => {
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
- 
+  const [fade, setFade] = useState(false);
+
   const sendEmail = async() => {
     const temp = Cookie.get("user_id");
     const result = (await getUser(temp));
     const email = JSON.parse(result || "").email;
-    console.log("ITEMS RECEIVED: " + JSON.stringify(items))
-    console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
 
     const jsonBody = {
       items: items,
@@ -37,14 +36,22 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
     )
 
     const data = res.data;
-    console.log(data)
   }
 
   const handleConfirmBooking = () => {
     // Logic to confirm booking and send email 
     setConfirmationMessage("Congratulations your trip as been booked, check your email for the confirmation of your booking. Safe travels and enjoy your stay!");
     sendEmail()
-    setShowConfetti(true);
+    setShowConfetti(true)
+    
+    //Fade out & stop confetti...
+    setTimeout(() => {
+      setFade(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 2000)
+    }, 8000)
+
   };
 
   return (
@@ -54,7 +61,7 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
           <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          style={{ position: "fixed", top: 0, left: 0, zIndex: -1 }}
+          className={fade ? "confetti animate-fadeOut" : "confetti"}
         />
         )}
       </div>
