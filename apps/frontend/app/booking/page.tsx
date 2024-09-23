@@ -56,7 +56,6 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   const cookie = cookieStore.get('user_id')
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const curr_user = cookie?.value;
-  console.log("Current user: " + curr_user);
   const { id } = searchParams;
   let totalCost = 0;
 
@@ -174,10 +173,8 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   ];
 
   const fetchItems = async() => {
-    console.log("Reached fetch function");
     try {
       const response = await axios.get(`${backendUrl}/itinerary-items/${id}/${curr_user}`);
-      console.log(response.data); // Handle the response data
       console.log("RESPONSE FROM SERVER: " + JSON.stringify(response.data));
       return response.data;
     } catch (error) {
@@ -212,16 +209,13 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   const accommodationTotal = calculateTotal(accommodations);
   const activityTotal = calculateTotal(activities);
   const finalTotal = flightTotal + accommodationTotal + activityTotal;
-  let curr_id = id ?? '' // JSON.parse(localStorage.getItem('id') as string).id;
+  let curr_id = id ?? ''
   
   if (!curr_id) {
     curr_id = 'NOIDFOUND'
   }
 
   const data: any[] = await fetchItems();
-  console.log("Retrieved Data: " + data)
-  //Push Items to display on email...
-    //Dynamically insert items into html in another script...
   
   return (
     <div className="container mx-auto p-4 relative">
