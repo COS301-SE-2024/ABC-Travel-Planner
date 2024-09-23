@@ -2,12 +2,6 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { DatesService } from './dates.service';
 import { parseISO } from 'date-fns';
 
-interface dateTypes {
-  year: string,
-  month: string,
-  days: number[]
-}
-
 @Controller('dates')
 export class DatesController {
   constructor(private readonly dateService: DatesService) {}
@@ -68,6 +62,6 @@ export class DatesController {
         }
     })
 
-    return this.dateService.getHello(dateObjects);
+    return this.dateService.convertDates(dateObjects);
   }
 }

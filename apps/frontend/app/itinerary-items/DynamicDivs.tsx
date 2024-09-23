@@ -6,7 +6,8 @@ import "./modal.css"
 import Cookie from 'js-cookie'
 import PopupMessage from '../utils/PopupMessage';
 import { truncateTitle } from '../utils/functions/TruncateTitle';
-import { format, parseISO } from 'date-fns';
+import { createNewDates } from '../utils/functions/convertDates';
+import axios from 'axios';
 
 interface ItemData {
     destination: string;
@@ -33,7 +34,7 @@ interface ItemData {
     destination?: any;
   }
 
-  
+
 
   function truncateInfo(dateString: string, len: number) : string {
     if (dateString.length > len) {
@@ -89,12 +90,15 @@ interface ItemData {
                 const data: ItemData[] = await response.json();
                 console.log("Response from server: " + JSON.stringify(data))
                 
+                
                 const initialDivs = data.map((dataItem, index) => ({
                     id: index,
                     data: dataItem,
                 }));
+                
+                initialDivs.forEach(async (data, index) => {    
+                    data.data.date = [createNewDates(data.data.date)]
 
-                initialDivs.forEach((data, index) => {
                     switch (data.data.item_type) {
                         case "stays":
                             data.data.item_type = "A Place to Stay"
@@ -109,20 +113,23 @@ interface ItemData {
                             data.data.item_type = "Car Rental"
                             break;
                         case "flight": 
-                            data.data.item_type = "Flight"
+                        data.data.item_type = "Flight"
                             break;
-
-                        default:
-                            break;
+                            
+                            default:
+                                break;
                     }
+                    
                 });
+                
+                // formatDates();
                 setDivs(initialDivs);
                 setFetchedData(data);
-                divs.map((divItem) => {
+                
+                divs.map(async (divItem) => {
                     console.log(divItem?.data?.date);
                 })
-
-
+                
             } catch (error) {
                 console.error("Error fetching items:", error);
             }
@@ -135,16 +142,6 @@ interface ItemData {
         }
 
     }, [uploaded])
-
-    const handleAddDiv = () => {
-      console.log("Current divs: " + JSON.stringify(divs))    
-      const newId = divs.length;
-      const newDiv = {
-        id: newId,
-        data: fetchedData[newId % fetchedData.length],
-      };
-      setDivs([...divs, newDiv]);
-    };
 
     const handleRemoveDiv = async (id: number) => {
         if (canRemove) {
@@ -162,15 +159,12 @@ interface ItemData {
                     method: 'POST',
                     headers: {
                     'Content-Type': 'application/json',
-                    //   Authorization: `Bearer ${idToken}`,
                     },
                     body: JSON.stringify({ user_name, image_url, itinerary_id, timestamp }),
                 })
                 
-                //Div ids still need to be updated after deletion...
                 setDivs(divs.filter(divItem => divItem.id !== id));
                 
-                //CODE TO CHANGE DIV's IDs... 
                 for (let index = id+1; index < divs.length; index++) {
                     divs[index].id--;
                     if (divs[index].id < 0) {
@@ -198,6 +192,31 @@ interface ItemData {
       setIsOpen(false);
     };
 
+    // const formatDates = async () => {
+    //     console.log("Eneterd function!!!!!")
+
+    //     const dateString = await axios.post(
+    //         `${process.env.NEXT_PUBLIC_BACKEND_URL}/dates/convert`,
+    //         {
+    //             dates: divs.map(divItem => divItem.data.date).flat()
+    //         }
+    //     )
+        
+    //     const newDivs = divs.map((dataItem, index) => ({
+    //         id: index,
+    //         data: dataItem.data,
+    //     }));
+        
+    //     newDivs.forEach(async (dataItem, index) => {
+    //         dataItem.data.date = [dateString.data]
+    //     })
+    //     console.log("FORMATTING FINISHED")
+        
+    //     // return dateString.data
+    //     setDivs(newDivs)
+    //     console.log("New divs set!")
+    // }
+
     return (
         <>
         {divs.map((divItem) => (
@@ -222,7 +241,7 @@ interface ItemData {
 
                     <div className="flex justify-between mb-1">
                         <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Date:</div>
-                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{divItem?.data?.date.length == 0 ? 'No date selected' : truncateInfo(formatDateGroup(divItem?.data?.date), 60)}</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{(divItem?.data?.date.length == 0 || divItem?.data?.date[0].length == 0) ? 'No date selected' : divItem?.data?.date}</div>
                     </div>
 
                     <div className="flex justify-between mb-1">

@@ -27,8 +27,8 @@
 }
 
 .itineraryItemsBackground {
-  background-image: url("../../public/Images/polygrid.png");
-  /* background-color:rgba(190, 229, 255, 1);  */
+  /* background-image: url("../../public/Images/polygrid.png"); */
+  background-color:rgba(127, 204, 255, 0.781); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
