@@ -36,7 +36,7 @@ const checkType = (type: string) => {
     case "stays":
       return "A place to stay"
     
-    case "carRental":
+    case "car rental":
       return "Car rental"
 
     case "airport taxi":
@@ -212,7 +212,7 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   let curr_id = id ?? ''
   
   if (!curr_id) {
-    curr_id = ''
+    curr_id = 'NOIDFOUND'
   }
 
   const data: any[] = await fetchItems();
