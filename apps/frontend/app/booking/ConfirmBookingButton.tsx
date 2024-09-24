@@ -45,24 +45,56 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
     sendEmail()
     setShowConfetti(true)
     
-    //Fade out & stop confetti...
+    // Fade out & stop confetti...
     setTimeout(() => {
       setFade(true);
-      setTimeout(() => {
-        setShowConfetti(false);
-      }, 2000)
     }, 8000)
-
+    
+    setTimeout(() => {
+      setShowConfetti(false);
+      setFade(false);
+    }, 10000)
   };
 
   return (
     <div className="relative">
-      <div className="absolute inset-0">
+      <style>
+      {`
+          @keyframes fadeOut {
+            0% {
+              opacity: 1;
+            }
+            100% {
+              opacity: 0;
+            }
+          }
+        `}
+      </style>
+      <div className="fixed">
         {showConfetti && (
           <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          className={fade ? "confetti animate-fadeOut" : "confetti"}
+          style={
+                fade 
+                  ? { 
+                    position: "fixed", 
+                    top: "0px", 
+                    left: "0px", 
+                    zIndex: 2, 
+                    pointerEvents: "none", 
+                    inset: "0px", 
+                    animation: "fadeOut 2s linear" 
+                  } 
+                  : { 
+                    position: "fixed", 
+                    top: "0px", 
+                    left: "0px", 
+                    zIndex: 2, 
+                    pointerEvents: "none", 
+                    inset: "0px"
+                  }
+                }
         />
         )}
       </div>
