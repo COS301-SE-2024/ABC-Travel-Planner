@@ -1383,3 +1383,61 @@ body {
   padding: 2rem;
   text-align: center;
 }
+
+
+
+
+
+/* Chatbot related styles */
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.chat-panel {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-panel .header {
+  padding: 10px;
+  background-color: #1e90ff;
+  color: white;
+  font-size: 18px;
+}
+
+.chat-panel .message-container {
+  padding: 10px 10px 10px 20px; 
+  overflow-y: auto;
+  flex-grow: 1;
+  scrollbar-width: none; 
+}
+
+.chat-panel .message-container::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-panel .input-container {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.speech-bubble {
+  position: relative;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.speech-bubble .text-xs {
+  font-size: 0.75rem; 
+  color: #000000;
+  margin-top: 4px;
+  text-align: right;
+}

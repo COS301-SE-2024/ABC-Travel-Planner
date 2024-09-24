@@ -20,7 +20,7 @@ import { ActivityModule } from './activity/activity.module';
 import { DatesModule } from './dates/dates.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -46,7 +46,8 @@ import { join } from 'path';
     ItineraryCreatorModule,
     ActivityModule,
     GoogleMapsModule,
-    DatesModule
+    DatesModule,
+    ChatModule
   ],
   controllers: [AppController],
   providers: [AppService],
