@@ -121,6 +121,7 @@ const SplashPage = () => {
           </Typography>
           <form onSubmit={handleLogin}>
             <TextField
+              data-testid="signInEmail"
               fullWidth
               label="Email Address"
               type="email"
@@ -132,6 +133,7 @@ const SplashPage = () => {
               required
             />
             <TextField
+              data-testid="signInPassword"
               fullWidth
               label="Password"
               type="password"
@@ -143,6 +145,7 @@ const SplashPage = () => {
               required
             />
             <Button
+              data-testid="signInSubmit"
               fullWidth
               type="submit"
               variant="contained"
@@ -155,6 +158,7 @@ const SplashPage = () => {
               Or
             </Typography>
             <Button
+              data-testid="signInGoogle"
               fullWidth
               onClick={handleGoogleSignIn}
               variant="outlined"
