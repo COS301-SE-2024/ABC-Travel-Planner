@@ -287,6 +287,25 @@ describe('FilterCard Component', () => {
     );
   });
 
+  it('should check trigger value for dates', async() => {
+    (insertRecord as jest.Mock).mockResolvedValue(200);
+
+    render(<FilterCard place={place} />);
+
+    const uploadButton = screen.getByText(place.displayName);
+
+    fireEvent.click(uploadButton);
+
+    await waitFor(() => {
+      const triggerState = screen.getByTestId('trigger-state');
+      expect(triggerState.textContent).toBe('true');
+    }, {timeout: 100})
+
+    await waitFor(() => {
+      const triggerState = screen.getByTestId('trigger-state');
+      expect(triggerState.textContent).toBe('false')
+    }, { timeout: 2500})
+  });
 
 });
 
