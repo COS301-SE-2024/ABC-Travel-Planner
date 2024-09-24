@@ -3,16 +3,16 @@ import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+
 import {
   Container,
-  Grid,
   TextField,
   Button,
   Typography,
   Paper,
   Box,
   Link,
+  useTheme,
 } from "@mui/material";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -23,6 +23,7 @@ import getUser from "@/libs/actions/getUser";
 
 const SplashPage = () => {
   const router = useRouter();
+  const theme = useTheme();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -98,13 +99,23 @@ const SplashPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: "url(https://source.unsplash.com/1920x1080/?travel)",
+        backgroundImage:
+          "url(https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/background%2Flogin.jpg?alt=media&token=33511fc2-c660-43b9-ae64-5187ab5fa23c)",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       <Container maxWidth="sm">
-        <Paper elevation={6} sx={{ padding: 4, textAlign: "center" }}>
+        <Paper
+          elevation={6}
+          sx={{
+            textAlign: "center",
+            backgroundColor: "rgba(255, 255, 255, 0.85)",
+            padding: theme.spacing(4),
+            borderRadius: theme.spacing(2),
+            boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
+          }}
+        >
           <Typography variant="h4" gutterBottom>
             Welcome Back, Traveler!
           </Typography>
