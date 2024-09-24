@@ -7,7 +7,6 @@ export class ChatService {
 
     async resolveQuery(query: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            const scriptPath = path.resolve(__dirname, 'src', 'chat', 'model', 'chat.py');
             const pythonProcess = spawn('python3', ['src/chat/model/chat.py', query]);
 
             let scriptOutput = '';
