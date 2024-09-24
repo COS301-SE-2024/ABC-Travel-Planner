@@ -272,7 +272,7 @@ describe('FilterCard Component', () => {
     expect(result).toBe(200);
 
     expect(routerPushMock).toHaveBeenCalledWith(
-      `/itinerary-items?id=mockId&location=mockLocation&destination=${place}&dates=Wed Oct 30 2024 00:00:00 GMT+0200 (South Africa Standard Time)`
+      `/itinerary-items?id=mockId&location=mockLocation&destination=${place}&dates=Wed Oct 30 2024 22:00:00 GMT+0200 (South Africa Standard Time)`
     );
   });
 
