@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Confetti from "react-confetti";
 import getUser from "@/libs/actions/getUser";
-import { createNewDates } from '../../../frontend/app/utils/functions/convertDates';
+import { createNewDates } from "../utils/functions/convertDates";
 import Cookie from "js-cookie"; 
 import axios, { all } from 'axios';
 
