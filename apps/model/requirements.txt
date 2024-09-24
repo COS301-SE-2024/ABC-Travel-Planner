@@ -1,0 +1,8 @@
+datasets==2.21.0
+faiss-cpu==1.8.0.post1
+huggingface-hub==0.24.6
+langchain-core==0.2.38
+sentence-transformers==3.0.1
+torch==2.4.1+cpu
+transformers==4.44.2
+python-dotenv==1.0.1
