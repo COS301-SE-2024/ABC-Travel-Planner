@@ -2,14 +2,9 @@
 import React, { useState } from "react";
 import Confetti from "react-confetti";
 import getUser from "@/libs/actions/getUser";
+import { createNewDates } from '../../../frontend/app/utils/functions/convertDates';
 import Cookie from "js-cookie"; 
 import axios, { all } from 'axios';
-
-// interface Items {
-//   item_name: string,
-//   date: string[],
-//   price: string
-// }
 
 interface ConfirmBookingButtonProps {
   items: any[];
@@ -25,6 +20,11 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
     const result = (await getUser(temp));
     const email = JSON.parse(result || "").email;
 
+    items.forEach((item) => {
+      item.date = [createNewDates(item.date)];
+      console.log("NEW DATE: " + item.date[0])
+    })
+
     const jsonBody = {
       items: items,
       email: email
@@ -36,6 +36,7 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
     )
 
     const data = res.data;
+    console.log(data)
   }
 
   const handleConfirmBooking = () => {
