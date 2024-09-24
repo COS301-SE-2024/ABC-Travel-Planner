@@ -13,8 +13,9 @@ from dotenv import load_dotenv
 
 logging.basicConfig(level=logging.ERROR)
 
-dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env.local')
-load_dotenv(dotenv_path)
+if os.getenv('ENV') == 'development':
+    dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env.local')
+    load_dotenv(dotenv_path)
 
 device = 0 if torch.cuda.is_available() else -1
 
