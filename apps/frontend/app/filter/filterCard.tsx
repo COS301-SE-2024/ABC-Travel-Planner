@@ -145,6 +145,13 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
     loadingScreen();
   }, [doneLoading]);
 
+  const datesEmpty = () => {
+    setTrigger(true);
+    setTimeout(() => {
+        setTrigger(false);
+    }, 2000);
+  }
+
   const uploadItem = async () => {
     const destination = place;
     console.log("TYPE: " + typeof destination);
@@ -165,11 +172,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
 
       //No dates selected... Don't upload
       if (dates.length === 0) {
-        console.log("No dates selected - can't upload...")
-        setTrigger(true);
-            setTimeout(() => {
-                setTrigger(false);
-            }, 2000);
+        datesEmpty()
       } else {
         const uploadDetails = {
           user_id: userId,
@@ -193,7 +196,6 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           router.push(`/itinerary-items?id=${id}&location=${location}&destination=${destination}&dates=${dates}`)
           // return response.status;
         } catch (error) {
-          console.error("Error uploading item:", error);
         }
       }
     }
@@ -353,6 +355,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         </div>
       </div>
       <PopupMessage msg={"Please select a date!"} trigger={trigger} />
+      <div data-testid="trigger-state" className='invisible'>{trigger.toString()}</div>
       </>
   );
 };
