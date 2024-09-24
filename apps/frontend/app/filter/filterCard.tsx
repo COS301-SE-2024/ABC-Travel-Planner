@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
 import { insertRecord } from '../utils/functions/insertRecord';
-import PopupMessage from '../../../frontend/app/utils/PopupMessage';
+import PopupMessage  from '../utils/PopupMessage';
 
 interface FilterCardProps {
   place: any;
