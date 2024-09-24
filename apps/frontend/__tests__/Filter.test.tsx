@@ -251,7 +251,7 @@ describe('FilterCard Component', () => {
       item_name: place.displayName,
       item_type: place.type,
       price: undefined, // Add the correct price if it's available in the place object
-      date: [new Date("2024-10-29T22:00:00.000Z")], // Adjust this to match the selected dates state
+      date: [new Date("2024-10-30T22:00:00.000Z")], // Adjust this to match the selected dates state
       location: 'mockLocation',
       itinerary_id: 'mockId',
       destination: place.formattedAddress,
