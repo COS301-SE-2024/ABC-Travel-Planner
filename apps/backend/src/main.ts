@@ -11,7 +11,6 @@ async function bootstrap() {
     const decodedCredentials = Buffer.from(base64Credentials, 'base64').toString('utf8');
     fs.writeFileSync('/tmp/google-credentials.json', decodedCredentials);
     process.env.GOOGLE_APPLICATION_CREDENTIALS = '/tmp/google-credentials.json';
-    console.log("CREDS: " + process.env.GOOGLE_APPLICATOIN_CREDENTIALS)
   }
   
   const app = await NestFactory.create(AppModule);

@@ -19,7 +19,7 @@ interface Itinerary {
     name: string;
     location: string;
     id: string;
-  }
+}
 
 export const getRatingColor = (rating: number) => {
     if (rating >= 4) {
@@ -103,12 +103,13 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const addressParts = address.split(',');
     const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
     const price = generatePrice(place.id, place.type, location.country);
-
+    let ratingNum = place.rating;
+    ratingNum = ratingNum.toFixed(1);
     const handleSelectDates = (dates: (Date | null)[]) => {
         setSelectedDates(dates.filter((date) => date !== null) as Date[]);
         setShowCalendar(false);
     };
-    
+
     const handleSelectItinerary = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedItinerary(event.target.value);
     };
@@ -125,7 +126,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const handleNewItineraryClick = () => {
         setIsModalOpen(false);
         setIsNewItineraryModalOpen(true);
-        
+
     };
 
     const handleSaveSelectedClick = async () => {
@@ -142,10 +143,14 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
             console.warn("selectedItinerary is not set");
             parsedItem = {}; // or provide default values
         }
-        console.log(JSON.stringify({ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates}));
-        const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, date: selectedDates});
+        console.log(JSON.stringify({
+            user_id: user_id, item_name: place.displayName, item_type: place.type,
+            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates
+        }));
+        const newItem = await axios.post(`${backendUrl}/itinerary-items/add`, {
+            user_id: user_id, item_name: place.displayName, item_type: place.type,
+            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, date: selectedDates
+        });
     };
 
     const handleSaveNewItinerary = async () => {
@@ -154,12 +159,14 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         const user_id = Cookies.get("user_id");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const image = await getItineraryImage(newItinerary.location);
-        const newI = await axios.post(`${backendUrl}/itinerary/create`,{name: newItinerary.tripName, location: newItinerary.location,user_id: user_id,imageUrl: image});
+        const newI = await axios.post(`${backendUrl}/itinerary/create`, { name: newItinerary.tripName, location: newItinerary.location, user_id: user_id, imageUrl: image });
         console.log(JSON.stringify(newI));
         //Now add the item
         const newItemData = JSON.parse(newI.config.data);
-        const newItem = await axios.post(`${backendUrl}/itinerary-items/add`,{ user_id: user_id, item_name: place.displayName, item_type: place.type, 
-            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, date: selectedDates});
+        const newItem = await axios.post(`${backendUrl}/itinerary-items/add`, {
+            user_id: user_id, item_name: place.displayName, item_type: place.type,
+            location: newItemData.location, itinerary_id: newI.data, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, date: selectedDates
+        });
     };
 
     function extractLocation(fullString: string) {
@@ -175,26 +182,27 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 <div className='absolute top-0 right-0 text-right'>
                     <div className="mb-1">
                         <div className={`rounded-full ${getRatingColor(place.rating)} text-white px-2 py-2 text-sm font-semibold inline-block mr-2 mt-2 mb-2`}>
-                            {place.rating}
+                            {ratingNum}
                         </div>
                     </div>
                     <p className="text-gray-600 inline-block pr-2">{`${place.userRatingCount} reviews `}</p>
                 </div>
             </Link>
 
-            <div className='flex flex-row justify-start items-start'>
-                <div className="w-1/3">
+            <div className='flex flex-row justify-start items-start h-full'>
+                <div className="w-1/3 h-full">
                     <Link href={`/${place.id}`} passHref>
                         <img
                             src={`${place.firstPhotoUrl}`}
                             alt={place.displayName}
-                            className="rounded-lg object-cover"
+                            style={{ objectFit: 'cover', width: '400px', height: '250px' }}
+                            className="rounded-lg"
                         />
                     </Link>
                 </div>
                 <div className="w-2/3 pl-4 overflow-hidden">
                     <Link href={`/${place.id}`} passHref>
-                        <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
+                        <h1 className="text-4xl font-bold mb-2 text-blue-500 pr-20">{place.displayName}</h1>
                         <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
 
                         {place.goodForChildren && (
@@ -222,63 +230,63 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                             </div>
                         )}
                     </Link>
-                    <div className="mt-4 flex justify-between items-end">
-                    <div className="mt-4 flex flex-col items-start space-y-4">
-    <button
-        onClick={() => setShowCalendar(!showCalendar)}
-        className="bg-blue-500 text-white rounded-md px-4 py-2"
-    >
-        Select Dates
-    </button>
+                    <div className="mt-3 flex justify-between items-end">
+                        <div className="mt-4 flex flex-col items-start space-y-4">
+                            <button
+                                onClick={() => setShowCalendar(!showCalendar)}
+                                className="bg-blue-500 text-white rounded-md px-4 py-2"
+                            >
+                                Select Dates
+                            </button>
 
-    {showCalendar && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white rounded-lg p-4 w-80 shadow-lg">
-                <DatePicker
-                    selected={null}
-                    onChange={(date) => {
-                        if (date) {
-                            setSelectedDates((prevDates) => {
-                                const isAlreadySelected = prevDates.some(
-                                    (d) => d.getTime() === date.getTime()
-                                );
-                                if (isAlreadySelected) {
-                                    return prevDates.filter(
-                                        (d) => d.getTime() !== date.getTime()
-                                    );
-                                } else {
-                                    return [...prevDates, date];
-                                }
-                            });
-                        }
-                    }}
-                    inline
-                    highlightDates={selectedDates}
-                    isClearable={false}
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="Select dates"
-                    className="block w-full bg-white border border-gray-300 rounded-md shadow-sm text-lg"
-                />
-                <button
-                    onClick={() => setShowCalendar(false)}
-                    className="bg-blue-500 text-white rounded-md px-4 py-2 mt-4 w-full"
-                >
-                    Done
-                </button>
-            </div>
-        </div>
-    )}
+                            {showCalendar && (
+                                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                    <div className="bg-white rounded-lg p-4 w-80 shadow-lg">
+                                        <DatePicker
+                                            selected={null}
+                                            onChange={(date) => {
+                                                if (date) {
+                                                    setSelectedDates((prevDates) => {
+                                                        const isAlreadySelected = prevDates.some(
+                                                            (d) => d.getTime() === date.getTime()
+                                                        );
+                                                        if (isAlreadySelected) {
+                                                            return prevDates.filter(
+                                                                (d) => d.getTime() !== date.getTime()
+                                                            );
+                                                        } else {
+                                                            return [...prevDates, date];
+                                                        }
+                                                    });
+                                                }
+                                            }}
+                                            inline
+                                            highlightDates={selectedDates}
+                                            isClearable={false}
+                                            dateFormat="yyyy-MM-dd"
+                                            placeholderText="Select dates"
+                                            className="block w-full bg-white border border-gray-300 rounded-md shadow-sm text-lg"
+                                        />
+                                        <button
+                                            onClick={() => setShowCalendar(false)}
+                                            className="bg-blue-500 text-white rounded-md px-4 py-2 mt-4 w-full"
+                                        >
+                                            Done
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
 
-    {selectedDates.length > 0 && (
-        <div className="bg-white rounded-md py-3 px-4 mt-1 shadow-sm">
-            {selectedDates.map((date, index) => (
-                <p key={index} className="text-blue-400 text-xl font-semibold">
-                    Selected Date: {date.toLocaleDateString()}
-                </p>
-            ))}
-        </div>
-    )}
-                       
+                            {selectedDates.length > 0 && (
+                                <div className="bg-white rounded-md py-3 px-4 mt-1 shadow-sm">
+                                    {selectedDates.map((date, index) => (
+                                        <p key={index} className="text-blue-400 text-xl font-semibold">
+                                            Selected Date: {date.toLocaleDateString()}
+                                        </p>
+                                    ))}
+                                </div>
+                            )}
+
                         </div>
                         <div className="text-right">
                             <Link href={`/${place.id}`} passHref>

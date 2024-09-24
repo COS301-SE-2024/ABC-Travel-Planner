@@ -17,12 +17,19 @@ import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
 import { FollowsModule } from './follows/follows.module';
 import { ItineraryCreatorModule } from './itinerary-creator/itinerary-creator.module';
 import { ActivityModule } from './activity/activity.module';
+import { DatesModule } from './dates/dates.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: path.resolve(__dirname, '../.env.local'),
       isGlobal: true, // Makes ConfigModule globally available
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'Images'), 
     }),
     ItineraryModule, 
     ItineraryItemsModule,
@@ -39,6 +46,7 @@ import { ActivityModule } from './activity/activity.module';
     ItineraryCreatorModule,
     ActivityModule,
     GoogleMapsModule,
+    DatesModule
   ],
   controllers: [AppController],
   providers: [AppService],
