@@ -246,6 +246,16 @@ describe('FilterCard Component', () => {
 
     fireEvent.click(uploadButton);
 
+    await waitFor(() => {
+      const triggerState = screen.getByTestId('trigger-state');
+      expect(triggerState.textContent).toBe('false');
+    }, {timeout: 100})
+
+    await waitFor(() => {
+      const triggerState = screen.getByTestId('trigger-state');
+      expect(triggerState.textContent).toBe('false')
+    }, { timeout: 2500})
+
     await waitFor(() => expect(insertRecord).toHaveBeenCalledWith({
       user_id: 'mockUserId',
       item_name: place.displayName,
