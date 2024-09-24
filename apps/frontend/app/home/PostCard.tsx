@@ -386,7 +386,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   return (
     <div className="flex justify-center items-center w-full">
       <PopupMessage msg={message} trigger={trigger} />
-      <div className="w-full justify-center w-full max-w-2xl bg-pink-100 rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
+      <div className="w-full justify-center w-full max-w-2xl bg-white rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
         <div className="flex items-center justify-between w-full">
           <div>
             <h3 className="text-lg font-bold">{userName}</h3>

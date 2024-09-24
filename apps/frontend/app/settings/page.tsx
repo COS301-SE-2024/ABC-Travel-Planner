@@ -1,4 +1,5 @@
 "use client";
+import { useTheme } from '../context/ThemeContext'; // Import the useTheme hook
 import React, { useState, useEffect } from "react";
 import {
   UserIcon,
@@ -55,18 +56,12 @@ const countries = [
   { name: "USA", value: "usa" },
 ];
 
-const themes = [
-  { value: 'beach', name: 'Beach Vibes' },
-  { value: 'luxury', name: 'Luxury Experience' },
-  { value: 'adventure', name: 'Adventure' },
+const themes: { value: 'default' | 'beach' | 'adventure' | 'cultural' | 'nature', name: string }[] = [
+    { value: 'default', name: 'Default Theme' },
+  { value: 'beach', name: 'Beach Holiday' },
+  { value: 'adventure', name: 'Sunsets and Pretty skies' },
   { value: 'cultural', name: 'Cultural Exploration' },
-  { value: 'nature', name: 'Nature Escape' },
-  { value: 'city', name: 'City Life' },
-  { value: 'romantic', name: 'Romantic Getaway' },
-  { value: 'family', name: 'Family Fun' },
-  { value: 'wellness', name: 'Wellness Retreat' },
-  { value: 'historical', name: 'Historical Journey' },
-  { value: 'none', name: 'None' },
+  { value: 'nature', name: 'Nature Retreat' },
 ];
 
 const SettingsPage: React.FC = () => {
@@ -77,29 +72,12 @@ const SettingsPage: React.FC = () => {
   };
 
   //Theme
-  const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // default dark mode
+  const { selectedTheme, setTheme, themeStyles } = useTheme();
+  const [showModalTheme, setShowModalTheme] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Safe to use localStorage
-      const storedTheme = localStorage.getItem('selectedTheme');
-      setSelectedTheme(storedTheme || null);
-    }
-  }, []);
-
-  const handleThemeSelect = (themeValue: string | null) => {
-    setSelectedTheme(themeValue);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('selectedTheme', themeValue || ''); // Save to localStorage
-    }
-    console.log('Selected Theme:', themeValue); // Log the selected theme
-    setShowModal(false);
-  };
-  
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+  const handleThemeSelect = (themeValue: "default"|"beach" | "adventure" | "cultural" | "nature") => {
+      setTheme(themeValue); // Use the context method to set theme
+      setShowModal(false);
   };
 
   //Account
@@ -317,11 +295,7 @@ const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div
-        className="max-w-4xl mx-auto p-8 rounded-lg shadow-lg"
-        style={{ backgroundColor: "rgba(173, 216, 230, 0.5)" }}
-      >
+    <div className="min-h-screen bg-gray-100 p-8" style={{ backgroundColor: themeStyles.background }}>
         <h1 className="text-4xl font-extrabold text-center mb-8">Settings</h1>
 
         <div className="space-y-6">
@@ -791,68 +765,33 @@ const SettingsPage: React.FC = () => {
           </section>
           {/* User Theme Section */}
           <section className="bg-white p-6 rounded-lg shadow-md">
-  <h2
-    className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
-    onClick={() => setShowModal(true)}
-  >
-    <HomeIcon className="w-6 h-6 text-purple-500" />
-    <span>User Theme</span>
-  </h2>
-  <div>
-    <h3 className="text-xl font-semibold">Selected Theme</h3>
-    <p className="text-gray-700">{themes.find(theme => theme.value === selectedTheme)?.name || 'None'}</p>
-  </div>
-  <div className="flex items-center mt-4 space-x-4">
-    <span className="text-xl">Light</span>
-    <label className="relative inline-flex items-center cursor-pointer">
-      <input
-        type="checkbox"
-        checked={isDarkMode}
-        onChange={toggleTheme}
-        className="sr-only"
-      />
-      <div className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${isDarkMode ? 'bg-blue-600' : 'bg-gray-300'}`}>
-        <div className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${isDarkMode ? 'translate-x-5' : 'translate-x-1'}`} />
-      </div>
-      <span className="ml-2 text-xl">Dark</span>
-    </label>
-  </div>
-</section>
-
-{/* Theme Modal */}
-{showModal && (
-  <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
-      <button
-        className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-        onClick={() => setShowModal(false)}
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-      </button>
-      <h2 className="text-2xl font-semibold mb-4 text-center">Select Theme</h2>
-      <div className="space-y-2">
-        {themes.map((theme) => (
-          <div
-            key={theme.value}
-            className={`p-4 cursor-pointer rounded-lg border-2 ${selectedTheme === theme.value ? 'border-blue-500 bg-blue-100' : 'border-gray-300'} hover:bg-blue-50`}
-            onClick={() => handleThemeSelect(theme.value)}
-          >
-            <span className="text-lg">{theme.name}</span>
-            {selectedTheme === theme.value && (
-              <svg className="w-6 h-6 inline-block text-blue-500 float-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            )}
+          <h2 className="text-2xl font-semibold mb-4 cursor-pointer flex items-center space-x-2" onClick={() => setShowModal(true)}>
+            <HomeIcon className="w-6 h-6 text-purple-500" />
+            <span>User Theme</span>
+          </h2>
+          <div>
+            <h3 className="text-xl font-semibold">Selected Theme</h3>
+            <p className="text-gray-700">{themes.find(theme => theme.value === selectedTheme)?.name || 'default'}</p>
           </div>
-        ))}
-      </div>
-    </div>
-  </div>
-)}
+        </section>
 
-        </div>
+        {/* Modal for theme selection */}
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
+              <button className="absolute top-2 right-2" onClick={() => setShowModal(false)}>X</button>
+              <h2 className="text-2xl font-semibold mb-4 text-center">Select Theme</h2>
+              <div className="space-y-2">
+                {themes.map((theme) => (
+                  <div key={theme.value} className={`p-4 cursor-pointer rounded-lg ${selectedTheme === theme.value ? 'bg-blue-100' : 'bg-gray-100'}`} onClick={() => handleThemeSelect(theme.value)}>
+                    <span className="text-lg">{theme.name}</span>
+                    {selectedTheme === theme.value && <CheckIcon className="w-6 h-6 inline-block text-blue-500 float-right" />}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

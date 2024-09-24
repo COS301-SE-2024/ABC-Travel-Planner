@@ -6,7 +6,11 @@ import { createItinerary, getItineraries, getItineraryImage } from ".";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Link from 'next/link';
+import { useTheme } from '../context/ThemeContext';
 const Itinerary = () => {
+  // Access selectedTheme and themeStyles from context
+  const { selectedTheme, themeStyles } = useTheme(); 
+
   const [itineraries, setItineraries] = useState<any>([]);
   const [showModal, setShowModal] = useState(false);
   const [itineraryName, setItineraryName] = useState("");
@@ -87,11 +91,23 @@ const Itinerary = () => {
     fetchItineraries();
   }, []);
 
+  useEffect(() => {
+    // Apply theme styles
+    document.body.style.backgroundColor = themeStyles.background;
+    document.body.style.color = themeStyles.textColor;
+
+    const navbar = document.querySelector('.navbar') as HTMLElement;
+    if (navbar) {
+      navbar.style.backgroundColor = themeStyles.navbarColor;
+    }
+  }, [themeStyles]);
+
+
   return (
     <div className="flex flex-col items-center m-4">
       <div className="p-8 mt-4 w-full rounded-lg bg-blue-50 shadow-xl">
         <div className="flex justify-between items-center mb-8">
-          <h1 data-testid="itinerariesTitle" className="text-4xl font-bold text-gray-800">My Itineraries</h1>
+          <h1 data-testid="itinerariesTitle" className="text-4xl font-bold text-gray-800" style={{ color: themeStyles.textColor }}>My Itineraries</h1>
           <div className="flex space-x-2">
             <button
               data-testid="addItineraryButton"
