@@ -7,7 +7,7 @@ import { truncateTitle } from "../utils/functions/TruncateTitle";
 import moment from 'moment';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
-import { createNewDates } from '../../../frontend/app/utils/functions/convertDates'
+import { createNewDates } from '../utils/functions/convertDates'
 
 interface Item {
   id: number;
