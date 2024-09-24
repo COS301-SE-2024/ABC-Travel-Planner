@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
 import { insertRecord } from '../utils/functions/insertRecord';
+import PopupMessage from '../../../frontend/app/utils/PopupMessage';
 
 interface FilterCardProps {
   place: any;
@@ -110,6 +111,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   const [uploaded, setUploaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [doneLoading, setDoneLoading] = useState(false);
+  const [trigger, setTrigger] = useState(false);
   const router = useRouter();
   const imageRef = useRef<HTMLImageElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
@@ -122,8 +124,6 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         const imageHeight = 250;
         const infoHeight = infoRef.current.offsetHeight;
         const priceHeight = priceRef.current.offsetHeight;
-        console.log(infoHeight);
-        console.log(priceHeight);
         // Calculate the margin needed to align the div to the bottom of the image
         const newMargin = imageHeight - (infoHeight + priceHeight);
         setMarginTop(newMargin > 0 ? newMargin : 0); // Set margin to 0 if it would go negative
@@ -163,29 +163,38 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
       const price = objectToUpload.price;
       const dates = selectedDates;
 
-      const uploadDetails = {
-        user_id: userId,
-        item_name: itemTitle,
-        item_type: itemType,
-        price: price,
-        date: dates,
-        location,
-        itinerary_id: id,
-        destination: address,
-        image_url
-      }
-
-      console.log("Going to upload to db...")
-      console.log(uploadDetails)
-
-      try {
-        setIsUploading(true);
-        await insertRecord(uploadDetails);
-        setIsUploading(false);
-        router.push(`/itinerary-items?id=${id}&location=${location}&destination=${destination}&dates=${dates}`)
-        // return response.status;
-      } catch (error) {
-        console.error("Error uploading item:", error);
+      //No dates selected... Don't upload
+      if (dates.length === 0) {
+        console.log("No dates selected - can't upload...")
+        setTrigger(true);
+            setTimeout(() => {
+                setTrigger(false);
+            }, 2000);
+      } else {
+        const uploadDetails = {
+          user_id: userId,
+          item_name: itemTitle,
+          item_type: itemType,
+          price: price,
+          date: dates,
+          location,
+          itinerary_id: id,
+          destination: address,
+          image_url
+        }
+  
+        console.log("Going to upload to db...")
+        console.log(uploadDetails)
+  
+        try {
+          setIsUploading(true);
+          await insertRecord(uploadDetails);
+          setIsUploading(false);
+          router.push(`/itinerary-items?id=${id}&location=${location}&destination=${destination}&dates=${dates}`)
+          // return response.status;
+        } catch (error) {
+          console.error("Error uploading item:", error);
+        }
       }
     }
   }
@@ -342,7 +351,9 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
             </div>
           </div>
         </div>
-      </div></>
+      </div>
+      <PopupMessage msg={"Please select a date!"} trigger={trigger} />
+      </>
   );
 };
 

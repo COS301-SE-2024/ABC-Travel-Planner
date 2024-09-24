@@ -3,7 +3,6 @@ import { InvoiceService } from "./invoice.service";
 import { spawn } from 'child_process';
 import * as fs from 'fs';
 import * as path from "path";
-import { cwd } from "process";
 
 @Controller('invoice')
 export class InvoiceController {

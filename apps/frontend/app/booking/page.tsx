@@ -7,6 +7,7 @@ import { truncateTitle } from "../utils/functions/TruncateTitle";
 import moment from 'moment';
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
+import { createNewDates } from '../../../frontend/app/utils/functions/convertDates'
 
 interface Item {
   id: number;
@@ -73,104 +74,104 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
     return items.reduce((total, item) => total + convertToRand(item.price), 0);
   };
 
-  const flights: Item[] = [
-    {
-      id: 1,
-      name: "Flight to Dubai",
-      details: "Non-stop, 14h 30m",
-      date: "2024-07-15",
-      time: "08:00 AM",
-      price: 500,
-      image: "/images/dubai.jpg",
-    },
-    {
-      id: 2,
-      name: "Flight to Spain",
-      details: "1 stop, 10h 45m",
-      date: "2024-07-20",
-      time: "03:00 PM",
-      price: 600,
-      image: "/images/spain.jpg",
-    },
-  ];
+  // const flights: Item[] = [
+  //   {
+  //     id: 1,
+  //     name: "Flight to Dubai",
+  //     details: "Non-stop, 14h 30m",
+  //     date: "2024-07-15",
+  //     time: "08:00 AM",
+  //     price: 500,
+  //     image: "/images/dubai.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Flight to Spain",
+  //     details: "1 stop, 10h 45m",
+  //     date: "2024-07-20",
+  //     time: "03:00 PM",
+  //     price: 600,
+  //     image: "/images/spain.jpg",
+  //   },
+  // ];
 
-  const accommodations: Item[] = [
-    {
-      id: 1,
-      name: "Dubai Grand Hotel",
-      details: "5-star hotel with luxury amenities",
-      checkIn: "2024-07-15",
-      checkOut: "2024-07-20",
-      price: 800,
-      image: "/images/dubai.jpg",
-    },
-    {
-      id: 2,
-      name: "Spain Boutique Hotel",
-      details: "4-star hotel with free breakfast",
-      checkIn: "2024-07-20",
-      checkOut: "2024-07-25",
-      price: 700,
-      image: "/images/spain.jpg",
-    },
-  ];
+  // const accommodations: Item[] = [
+  //   {
+  //     id: 1,
+  //     name: "Dubai Grand Hotel",
+  //     details: "5-star hotel with luxury amenities",
+  //     checkIn: "2024-07-15",
+  //     checkOut: "2024-07-20",
+  //     price: 800,
+  //     image: "/images/dubai.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Spain Boutique Hotel",
+  //     details: "4-star hotel with free breakfast",
+  //     checkIn: "2024-07-20",
+  //     checkOut: "2024-07-25",
+  //     price: 700,
+  //     image: "/images/spain.jpg",
+  //   },
+  // ];
 
-  const activities: Item[] = [
-    {
-      id: 1,
-      name: "Burj Khalifa Tour",
-      details: "Visit the tallest building in the world",
-      date: "2024-07-16",
-      time: "10:00 AM",
-      price: 100,
-      image: "/images/dubai.jpg",
-    },
-    {
-      id: 2,
-      name: "Museum of the Future Tour",
-      details: "Explore futuristic innovations and exhibits",
-      date: "2024-07-17",
-      time: "01:00 PM",
-      price: 120,
-      image: "/images/dubai.jpg",
-    },
-    {
-      id: 3,
-      name: "Night Out at Club Blu Oasis",
-      details: "Enjoy a luxurious night out at the top club in Dubai",
-      date: "2024-07-18",
-      time: "09:00 PM",
-      price: 150,
-      image: "/images/dubai.jpg",
-    },
-    {
-      id: 4,
-      name: "LaLiga Fixture",
-      details: "Watch a live LaLiga football match",
-      date: "2024-07-21",
-      time: "07:00 PM",
-      price: 200,
-      image: "/images/spain.jpg",
-    },
-    {
-      id: 5,
-      name: "Party at HI IBIZA Club",
-      details: "Experience the vibrant nightlife at HI IBIZA",
-      date: "2024-07-22",
-      time: "11:00 PM",
-      price: 180,
-      image: "/images/spain.jpg",
-    },
-    {
-      id: 6,
-      name: "Visit Sagrada Familia",
-      details: "Tour the famous Sagrada Familia cathedral in Barcelona",
-      date: "2024-07-23",
-      time: "10:00 AM",
-      price: 160,
-      image: "/images/spain.jpg",
-    },
-  ];
+  // const activities: Item[] = [
+  //   {
+  //     id: 1,
+  //     name: "Burj Khalifa Tour",
+  //     details: "Visit the tallest building in the world",
+  //     date: "2024-07-16",
+  //     time: "10:00 AM",
+  //     price: 100,
+  //     image: "/images/dubai.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Museum of the Future Tour",
+  //     details: "Explore futuristic innovations and exhibits",
+  //     date: "2024-07-17",
+  //     time: "01:00 PM",
+  //     price: 120,
+  //     image: "/images/dubai.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Night Out at Club Blu Oasis",
+  //     details: "Enjoy a luxurious night out at the top club in Dubai",
+  //     date: "2024-07-18",
+  //     time: "09:00 PM",
+  //     price: 150,
+  //     image: "/images/dubai.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "LaLiga Fixture",
+  //     details: "Watch a live LaLiga football match",
+  //     date: "2024-07-21",
+  //     time: "07:00 PM",
+  //     price: 200,
+  //     image: "/images/spain.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Party at HI IBIZA Club",
+  //     details: "Experience the vibrant nightlife at HI IBIZA",
+  //     date: "2024-07-22",
+  //     time: "11:00 PM",
+  //     price: 180,
+  //     image: "/images/spain.jpg",
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Visit Sagrada Familia",
+  //     details: "Tour the famous Sagrada Familia cathedral in Barcelona",
+  //     date: "2024-07-23",
+  //     time: "10:00 AM",
+  //     price: 160,
+  //     image: "/images/spain.jpg",
+  //   },
+  // ];
 
   const fetchItems = async() => {
     try {
@@ -205,10 +206,10 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
       .join('; ');
   }
 
-  const flightTotal = calculateTotal(flights);
-  const accommodationTotal = calculateTotal(accommodations);
-  const activityTotal = calculateTotal(activities);
-  const finalTotal = flightTotal + accommodationTotal + activityTotal;
+  // const flightTotal = calculateTotal(flights);
+  // const accommodationTotal = calculateTotal(accommodations);
+  // const activityTotal = calculateTotal(activities);
+  // const finalTotal = flightTotal + accommodationTotal + activityTotal;
   let curr_id = id ?? ''
   
   if (!curr_id) {
@@ -216,7 +217,10 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   }
 
   const data: any[] = await fetchItems();
-  
+  data.map((item) => {
+    console.log(JSON.stringify(item))
+  })
+
   return (
     <div className="container mx-auto p-4 relative">
       <Head>
@@ -227,7 +231,7 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         
        {/* Item cards */}
-      {data?.map((item: any, index: number) => (
+      {data?.map((item: any) => (
           <div key={item.id} className="rounded-lg shadow-lg p-4" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
             <Image
               src={item.image_url}
@@ -254,7 +258,7 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
 
               <div className="flex justify-between mb-1">
                 <div className="font-bold text-left">Date:</div>
-                {<div className="text-right">{formatDateGroup(item.date)}</div>}
+                {<div className="text-right">{item.date.length === 0 ? 'No Date selected' : createNewDates(item.date)}</div>}
               </div>
 
               <div className="flex justify-between mb-1">
