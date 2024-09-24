@@ -231,7 +231,7 @@ describe('FilterCard Component', () => {
       item_name: place.displayName,
       item_type: place.type,
       price: undefined,
-      date: [],
+      date: ['2024-12-12:22:00:00.000Z'],
       location: 'mockLocation',
       itinerary_id: 'mockId',
       destination: place.formattedAddress,
