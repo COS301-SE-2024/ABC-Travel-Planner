@@ -251,7 +251,7 @@ describe('FilterCard Component', () => {
       item_name: place.displayName,
       item_type: place.type,
       price: undefined, // Add the correct price if it's available in the place object
-      date: [new Date("2024-10-30T22:00:00.000Z")], // Adjust this to match the selected dates state
+      date: [new Date("2024-10-30T00:00:00.000Z")], // Adjust this to match the selected dates state
       location: 'mockLocation',
       itinerary_id: 'mockId',
       destination: place.formattedAddress,
@@ -263,7 +263,7 @@ describe('FilterCard Component', () => {
       item_name: place.displayName,
       item_type: place.type,
       price: undefined,
-      date: [new Date("2024-10-30T22:00:00.000Z")],
+      date: [new Date("2024-10-30T00:00:00.000Z")],
       location: 'mockLocation',
       itinerary_id: 'mockId',
       destination: place.formattedAddress,
@@ -272,7 +272,7 @@ describe('FilterCard Component', () => {
     expect(result).toBe(200);
 
     expect(routerPushMock).toHaveBeenCalledWith(
-      `/itinerary-items?id=mockId&location=mockLocation&destination=${place}&dates=Wed Oct 30 2024 22:00:00 GMT+0200 (South Africa Standard Time)`
+      `/itinerary-items?id=mockId&location=mockLocation&destination=${place}&dates=Wed Oct 30 2024 00:00:00 GMT+0200 (South Africa Standard Time)`
     );
   });
 
