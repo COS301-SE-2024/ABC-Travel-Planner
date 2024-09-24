@@ -11,7 +11,7 @@ export class DatesService {
   convertDates(dates: dateTypes[]): string {
     let out = '';
 
-    dates.forEach((date, idx) => {
+    dates.forEach((date) => {
         let startRange = date.days[0];
         let endRange = date.days[0];
 
