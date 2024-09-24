@@ -1,0 +1,5 @@
+Night image:
+    Photo by <a href="https://unsplash.com/@johnygoerend?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Johny Goerend</a> on <a href="https://unsplash.com/photos/galaxy-wallpaper-Oz2ZQ2j8We8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  
+Light blue background:
+    Photo by <a href="https://unsplash.com/@eduardocanophotoco?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Eduardo Cano Photo Co.</a> on <a href="https://unsplash.com/photos/a-blue-wall-with-a-red-light-in-the-middle-CXA1hasA3hc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
