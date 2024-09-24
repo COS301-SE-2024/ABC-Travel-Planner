@@ -1332,54 +1332,76 @@ body {
 }
 
 .comments-section {
-  margin-top: 10px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.comment-input {
-  width: 100%;
-  height: 60px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 8px;
-  margin-top: 10px;
+.comment-box {
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
 }
 
-.submit-comment-button {
-  background-color: #007bff;
+.add-comment-button {
+  background: linear-gradient(90deg, #D8BFD8, #00bfff);
   color: white;
-  padding: 8px 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
+  transition: all 0.3s;
 }
 
-.submit-comment-button:hover {
-  background-color: #0056b3;
+.add-comment-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #ff5f5f, #0099cc);
 }
 
 /* NEW HOME STYLING */
 
-@keyframes gentlePulse {
+/* Styling the ring */
+.destination-ring {
+  border: 5px solid #F08080; /* Light coral color for the ring */
+  border-radius: 50%;
+  padding: 10px;
+  animation: pulse 3s infinite ease-in-out;
+  transition: all 0.3s ease;
+}
+
+/* Subtle Pulse Animation */
+@keyframes pulse {
   0% {
-    opacity: 0.75;
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 160, 160, 0.5); /* Soft glow */
   }
   50% {
-    opacity: 1;
+    transform: scale(1.05); /* Slight expansion */
+    box-shadow: 0 0 20px rgba(255, 160, 160, 0.7); /* More intense glow */
   }
   100% {
-    opacity: 0.75;
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 160, 160, 0.5);
   }
 }
 
-.gentle-pulse {
-  animation: gentlePulse 2s infinite;
+/* Hover Effect */
+.destination-ring:hover {
+  transform: scale(1.08); /* Slight increase in size on hover */
+  box-shadow: 0 0 30px rgba(255, 160, 160, 0.9); /* More intense glow on hover */
 }
 
-/* filter search */
+/* Filter search */
 .filter-container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
+
+
