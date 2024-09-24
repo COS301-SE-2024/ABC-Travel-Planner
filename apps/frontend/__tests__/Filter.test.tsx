@@ -9,7 +9,16 @@ import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { insertRecord } from '@/app/utils/functions/insertRecord';
 import Cookie from 'js-cookie';
 import nock from 'nock';
-import getDate from '../app/utils/functions/getDate'
+// import getDate from '../app/utils/functions/getDate'
+
+beforeAll(() => {
+  jest.useFakeTimers('modern');
+  jest.setSystemTime(new Date('2024-10-01T00:00:00Z'));
+});
+
+afterAll(() => {
+  jest.useRealTimers();
+});
 
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
@@ -185,11 +194,11 @@ describe('FilterCard Component', () => {
     expect(datePicker).toBeInTheDocument();
 
     // Select the date by aria-label
-    const dateToSelect = screen.getByLabelText(/Choose Sunday, September 1st, 2024/i);
+    const dateToSelect = screen.getByLabelText(/Choose Tuesday, October 1st, 2024/i);
     expect(dateToSelect).toBeInTheDocument();
     fireEvent.click(dateToSelect);
 
-    const secondDate = screen.getByLabelText(/Choose Monday, September 2nd, 2024/i);
+    const secondDate = screen.getByLabelText(/Choose Wednesday, October 2nd, 2024/i);
     expect(secondDate).toBeInTheDocument();
     fireEvent.click(secondDate);
 
@@ -198,10 +207,10 @@ describe('FilterCard Component', () => {
     fireEvent.click(doneButton);
 
     // Verify the selected date
-    const selectedDateElement = screen.getByText(/Selected Date: 9\/1\/2024/i); // Adjust based on the actual date format
+    const selectedDateElement = screen.getByText(/Selected Date: 10\/1\/2024/i); // Adjust based on the actual date format
     expect(selectedDateElement).toBeInTheDocument();
 
-    const selectedDateElement2 = screen.getByText(/Selected Date: 9\/2\/2024/i);
+    const selectedDateElement2 = screen.getByText(/Selected Date: 10\/2\/2024/i);
     expect(selectedDateElement2).toBeInTheDocument();
   });
 
@@ -211,6 +220,29 @@ describe('FilterCard Component', () => {
     render(<FilterCard place={place} />);
 
     const uploadButton = screen.getByText(place.displayName); // Adjust the button selector as per your component
+    
+    const selectButton = screen.getByText(/Select Dates/i);
+    fireEvent.click(selectButton);
+
+    // Wait for the DatePicker to appear
+    const datePicker = screen.getByRole('dialog'); // Ensure this role is correct
+    expect(datePicker).toBeInTheDocument();
+
+    const currentMonth = screen.getByText(/October 2024/i);
+    expect(currentMonth).toBeInTheDocument();
+
+    // Select the date by aria-label
+    const dateToSelect = screen.getByLabelText(/Choose Wednesday, October 30th, 2024/i);
+    expect(dateToSelect).toBeInTheDocument();
+    fireEvent.click(dateToSelect);
+    
+    // Close the DatePicker
+    const doneButton = screen.getByText(/Done/i);
+    fireEvent.click(doneButton);
+
+    // Verify the selected date
+    const selectedDateElement = screen.getByText(/Selected Date: 10\/30\/2024/i); // Adjust based on the actual date format
+    expect(selectedDateElement).toBeInTheDocument();
 
     fireEvent.click(uploadButton);
 
@@ -219,7 +251,7 @@ describe('FilterCard Component', () => {
       item_name: place.displayName,
       item_type: place.type,
       price: undefined, // Add the correct price if it's available in the place object
-      date: ['2024-12-12:22:00:00.000Z'], // Adjust this to match the selected dates state
+      date: [new Date("2024-10-29T22:00:00.000Z")], // Adjust this to match the selected dates state
       location: 'mockLocation',
       itinerary_id: 'mockId',
       destination: place.formattedAddress,
@@ -231,7 +263,7 @@ describe('FilterCard Component', () => {
       item_name: place.displayName,
       item_type: place.type,
       price: undefined,
-      date: ['2024-12-12:22:00:00.000Z'],
+      date: [new Date("2024-10-30T22:00:00.000Z")],
       location: 'mockLocation',
       itinerary_id: 'mockId',
       destination: place.formattedAddress,
@@ -240,7 +272,7 @@ describe('FilterCard Component', () => {
     expect(result).toBe(200);
 
     expect(routerPushMock).toHaveBeenCalledWith(
-      `/itinerary-items?id=mockId&location=mockLocation&destination=${place}&dates=`
+      `/itinerary-items?id=mockId&location=mockLocation&destination=${place}&dates=Wed Oct 30 2024 00:00:00 GMT+0200 (South Africa Standard Time)`
     );
   });
 
