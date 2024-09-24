@@ -4,22 +4,24 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
 from transformers import pipeline, AutoModelForTokenClassification, AutoTokenizer, AutoModelForSeq2SeqLM
+import torch
 import os
 import sys
 import logging
-import warnings
+import random
 
 logging.basicConfig(level=logging.ERROR)
 
-# Global variables to hold models
+device = 0 if torch.cuda.is_available() else -1
+
 ner_model = None
 ner_tokenizer = None
 rephraser_model = None
 rephraser_tokenizer = None
+classifier = None
 
-# Pre-download and cache the models
 def preload_models():
-    global ner_model, ner_tokenizer, rephraser_model, rephraser_tokenizer
+    global ner_model, ner_tokenizer, rephraser_model, rephraser_tokenizer, classifier
 
     ner_model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
     ner_model = AutoModelForTokenClassification.from_pretrained(ner_model_name)
@@ -29,24 +31,23 @@ def preload_models():
     rephraser_model = AutoModelForSeq2SeqLM.from_pretrained(rephrasing_model_name)
     rephraser_tokenizer = AutoTokenizer.from_pretrained(rephrasing_model_name)
 
+    classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli", device=device)
+
 preload_models()
 
-# Initialize the pipelines after preloading models
-ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=-1)
-rephraser = pipeline("text2text-generation", model=rephraser_model, tokenizer=rephraser_tokenizer, device=-1)
+# These models have already been loaded
+ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=device) 
+rephraser = pipeline("text2text-generation", model=rephraser_model, tokenizer=rephraser_tokenizer, device=device)
 
-# Load dataset
 with open("src/chat/model/chatbot_data.json", "r") as file:
     data = json.load(file)
 
-# Combine question and context into documents
 documents = []
 for entry in data:
     combined_text = f"Question: {entry['question']}\nContext: {entry['context']}"
     doc = Document(page_content=combined_text, metadata={"answer": entry['answer']})
     documents.append(doc)
 
-# Hugging Face embedding and FAISS index
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
 embeddings = HuggingFaceEmbeddings(model_name="src/chat/model/fine_tuned_model")
 
@@ -67,13 +68,29 @@ def rephrase_answer(answer):
     rephrased_text = rephrased_answer[0]["generated_text"].strip()
     return rephrased_text
 
+def is_query_related(query):
+    labels = ['travel-related', 'social-media-related', 'greeting', 'farewell']
+    result = classifier(query, labels)
+
+    # Checking to see if the label has a high enough score to be considered relevant
+    if result['scores'][0] > 0.75:
+        return True
+    return False
+
 def main(query):
+    if not is_query_related(query):
+        return json.dumps({"query": query,"result": {
+        "answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
+        "type": "error"
+        }, indent=2)
+
     locations = extract_location(query)
     location_str = ", ".join(locations) if locations else ""
 
     similar_docs = db.similarity_search(query, k=2)
     if not similar_docs:
-        return json.dumps({"query": query, "results": []}, indent=2)
+        return json.dumps({"query": query, "result": {"answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
+                "type": "error"}, indent=2)
 
     best_doc = similar_docs[0]
     if location_str:
@@ -81,14 +98,16 @@ def main(query):
     else:
         original_answer = best_doc.metadata['answer']
 
-    rephrased = rephrase_answer(original_answer)
+    if random.random() < 0.5:
+        rephrased = rephrase_answer(original_answer)
+        final_answer = rephrased
+    else:
+        final_answer = original_answer
 
     return json.dumps({"query": query, "result": {
-        "answer": rephrased
-    }}, indent=2)
+        "answer": final_answer
+    }, "type": "response"}, indent=2)
 
 if __name__ == "__main__":
     query = sys.argv[1]
     print(main(query))
-
-

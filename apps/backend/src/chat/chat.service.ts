@@ -23,6 +23,8 @@ export class ChatService {
                     !output.includes('Some weights of PegasusForConditionalGeneration were not initialized from the model checkpoint at')) {
                     console.error(`Error: ${output}`);
                     reject(output);
+                }else{
+                    console.log(`Error: ${output}`);
                 }
             });
 

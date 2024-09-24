@@ -42,7 +42,7 @@ const ChatBot: React.FC = () => {
       } else {
         setMessages((prevMessages) => [
           ...prevMessages,
-          { sender: 'bot', text: 'This is a simulated response.', time: getCurrentTime() },
+          { sender: 'bot', text: 'There has been an error in the response.', time: getCurrentTime() },
         ]);
       }
       setIsTyping(false);
@@ -50,14 +50,7 @@ const ChatBot: React.FC = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-    // // Simulate the loading like Vics asked for , just used timer now
-    // setTimeout(() => {
-    //   setMessages((prevMessages) => [
-    //     ...prevMessages,
-    //     { sender: 'bot', text: 'This is a simulated response.', time: getCurrentTime() },
-    //   ]);
-    //   setIsTyping(false);
-    // }, 2000);
+
   };
 
   // Handle pressing "Enter" key
