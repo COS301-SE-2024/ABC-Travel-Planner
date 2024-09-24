@@ -47,6 +47,7 @@ import { InvoiceModule } from './invoice/invoice.module';
     ActivityModule,
     GoogleMapsModule,
     InvoiceModule,
+    // DatesModule
   ],
   controllers: [AppController],
   providers: [AppService],
