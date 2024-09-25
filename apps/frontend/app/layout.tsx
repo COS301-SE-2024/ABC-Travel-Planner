@@ -1,11 +1,8 @@
-// apps/frontend/app/layout.tsx
-
 "use client";
-
 import React from "react";
 import { usePathname } from "next/navigation";
 import { Navbar } from "./components/Navbar";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from './context/ThemeContext';
 import "./globals.css";
 import ChatBot from './components/Chatbot';
 
@@ -19,13 +16,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
-      {/* <ThemeProvider> */}
+      <head>
+        {/* Add any meta tags, title, etc. here */}
+      </head>
       <body>
-        {displayNavbar && <Navbar />}
-        {children}
-        <ChatBot />
+        <ThemeProvider>
+          {displayNavbar && <Navbar />}
+          {children}
+          <ChatBot />
+        </ThemeProvider>
       </body>
-      {/* </ThemeProvider> */}
     </html>
   );
 };
