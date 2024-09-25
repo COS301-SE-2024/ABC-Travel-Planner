@@ -7,4 +7,4 @@ import { AitaController } from './aita.controller';
   controllers: [AitaController],
   providers: [AitaService],
 })
-export class ActivityModule {}
+export class AitaModule {}

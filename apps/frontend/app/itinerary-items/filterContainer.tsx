@@ -2,6 +2,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import Select from 'react-select'
+
+interface aitaCodes {
+    id: number, code: string
+}
 
 const FilterContainer = () => {
     const [selectedTopic, setSelectedTopic] = useState<string>('');
@@ -23,8 +28,14 @@ const FilterContainer = () => {
 
     const handleSearch = async () => {
         router.push(`/filter?id=${actualId}&topic=${selectedTopic}&term=${searchInputRef.current?.value}`);
-
     };
+
+    const options = [
+        {value: 'DUR', label: 'Durban'},
+        {value: 'JHB', label: 'Johannesburg'},
+        {value: 'CPT', label: 'Cape Town'},
+        {value: 'MUC', label: 'Muchanes'}
+    ]
 
     return (
         <div style={{maxHeight: '1000px', height: '100%', maxWidth: '1050px'}}>
@@ -76,10 +87,24 @@ const FilterContainer = () => {
             </div>
     
             {selectedTopic && (
-                <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center'}}>
                     {selectedTopic === 'Flights' ? (
-                        <div style={{width: '1000px', backgroundColor: 'orange', height: '350px'}} className=''>Hi there :D</div>
+                        <>
+                        <div style={{width: '1000px', backgroundColor: 'white', height: '350px', display: 'block', justifyContent: 'center', borderRadius: '10px'}} className=''>
+                            <hr style={{border: '1.5px solid rgba(0, 122, 255, 0.85)', width: '100%'}}></hr>
+                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '20px' }}>
+                                <label>
+                                    Flying from:
+                                    <Select id='originSelect' options={options} placeholder="Select a starting location" className='text-black w-96'/>
+                                </label>
 
+                                <label>
+                                    Flying to:
+                                    <Select id='destinationSelect' options={options} placeholder="Select a destination" className='text-black w-96'/>
+                                </label>
+                            </div>
+                        </div>
+                        </>
                     ) : (
                         <>
                             <input

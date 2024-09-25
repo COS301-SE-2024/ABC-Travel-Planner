@@ -20,7 +20,7 @@ import { ActivityModule } from './activity/activity.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { InvoiceModule } from './invoice/invoice.module';
-
+import { AitaModule } from './aita/aita.module';
 
 @Module({
   imports: [
@@ -48,6 +48,7 @@ import { InvoiceModule } from './invoice/invoice.module';
     GoogleMapsModule,
     InvoiceModule,
     // DatesModule
+    AitaModule
   ],
   controllers: [AppController],
   providers: [AppService],
