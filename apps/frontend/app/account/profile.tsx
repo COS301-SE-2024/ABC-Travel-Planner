@@ -607,7 +607,7 @@ const Account = () => {
       )}
       {/* Posts */}
 
-      <section className="posts py-6 px-4">
+      <section className="posts py-6 px-4 " style={{ width: '140%'}}>
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
           onClick={() => setShowPostModal(true)}
