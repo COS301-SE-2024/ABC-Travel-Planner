@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 5000
 
 # Use ENTRYPOINT instead of CMD to ensure argument passing works properly
-ENTRYPOINT ["gunicorn", "chat:app", "--workers=1", "--timeout=60", "--bind", "0.0.0.0:$PORT"]
+ENTRYPOINT ["gunicorn", "--workers=1", "--timeout=60", "--bind", "0.0.0.0:$PORT", "chat:app"]
