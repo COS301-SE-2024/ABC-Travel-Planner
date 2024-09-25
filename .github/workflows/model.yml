@@ -1,4 +1,4 @@
-name: Deploy Python App to Heroku
+name: Deploy model for chatbot to heroku
 
 on:
   push:
@@ -8,24 +8,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Step 2: Set up Python environment
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
         with:
-          python-version: '3.10'  # Specify the Python version you're using
-
-      # Step 5: Deploy to Heroku
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.13.15
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}  # Store your Heroku API key as a secret in GitHub
-          heroku_app_name: ${{secrets.HEROKU_PYTHON_APP_NAME}}  # The name of your Heroku app
-          heroku_email: ${{secrets.HEROKU_EMAIL}}  # Your Heroku account email
-          appdir: "apps/model"  # The root directory of your Python app
-          buildpack: "heroku/python"  # Use the official Python buildpack
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_PYTHON_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: "apps/model"
+          usedocker: true
