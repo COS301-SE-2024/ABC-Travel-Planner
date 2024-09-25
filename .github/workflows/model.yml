@@ -16,5 +16,5 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_PYTHON_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           appdir: "apps/model"
-          stack: container
           usedocker: true
+          stack: "container"
