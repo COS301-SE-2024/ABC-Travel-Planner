@@ -45,7 +45,7 @@ preload_models()
 ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=device) 
 rephraser = pipeline("text2text-generation", model=rephraser_model, tokenizer=rephraser_tokenizer, device=device)
 
-with open("src/chat/model/chatbot_data.json", "r") as file:
+with open("chatbot_data.json", "r") as file:
     data = json.load(file)
 
 documents = []
@@ -55,7 +55,7 @@ for entry in data:
     documents.append(doc)
 
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = os.getenv('HUGGINGFACEHUB_API_TOKEN')
-embeddings = HuggingFaceEmbeddings(model_name="src/chat/model/fine_tuned_model")
+embeddings = HuggingFaceEmbeddings(model_name="fine_tuned_model")
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 split_docs = text_splitter.split_documents(documents)
