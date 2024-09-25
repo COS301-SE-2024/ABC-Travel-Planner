@@ -6,7 +6,7 @@ langchain-core==0.2.38
 langchain-huggingface==0.0.3
 langchain-text-splitters==0.2.4
 sentence-transformers==3.0.1
-torch==2.4.1
+torch==2.4.1 -f https://download.pytorch.org/whl/cpu
 transformers==4.44.2
 python-dotenv==1.0.1 
 flask==2.3.2
