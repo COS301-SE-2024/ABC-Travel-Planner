@@ -7,6 +7,14 @@
       {
         "include": "invoice/template/email_format.ejs",
         "outDir": "dist"
+      },
+      {
+        "include": "invoice/send_mail.py",
+        "outDir": "dist"
+      },
+      {
+        "include": "invoice/invoices/email_format.html",
+        "outDir": "dist"
       }
     ],
     "deleteOutDir": true

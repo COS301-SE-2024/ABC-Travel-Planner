@@ -20,7 +20,7 @@ export class InvoiceController {
             const html = await this.invoiceService.generateInvoice(body.items);
             
             //Create a file with html inside...
-            const invoicePath = path.join(__dirname, '../../../frontend/pages/api/', 'email_format.html');
+            const invoicePath = path.join(__dirname, 'invoices', 'email_format.html');
             console.log("PATH TO INVOICE: " + invoicePath)
             if (!fs.existsSync(path.dirname(invoicePath))) {
                 fs.mkdirSync(path.dirname(invoicePath), { recursive: true });
@@ -48,7 +48,8 @@ export class InvoiceController {
 
     private async createPythonProcess(email: string) {
         return new Promise((resolve, reject) => {
-            const scriptPath = path.join(__dirname, '../../../frontend/pages/api', 'send_mail.py');
+            const scriptPath = path.join(__dirname, 'send_mail.py');
+            console.log(__dirname)
             console.log("Script path:" + scriptPath)
             const pythonProcess = spawn('python3', [scriptPath, email]);
             
@@ -63,11 +64,11 @@ export class InvoiceController {
             });
             
             pythonProcess.on('close', (code) => {
-            if (code === 0) {
-                resolve(output);
-            } else {
-                reject(`Python script exited with code ${code}`);
-            }
+                if (code === 0) {
+                    resolve(output);
+                } else {
+                    reject(`Python script exited with code ${code}`);
+                }
             });
         })
     }
