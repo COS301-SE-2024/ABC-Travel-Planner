@@ -13,5 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code to the container
 COPY . .
 
-# Use ENTRYPOINT instead of CMD to ensure argument passing works properly
-ENTRYPOINT ["gunicorn", "--workers=1", "--timeout=60", "--bind=0.0.0.0:$PORT", "chat:app"]
+# Use CMD to run the app via Gunicorn
+CMD ["gunicorn", "chat:app", "--workers=1", "--timeout=60", "--bind=0.0.0.0:$PORT"]
