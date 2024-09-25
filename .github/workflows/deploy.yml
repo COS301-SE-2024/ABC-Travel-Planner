@@ -29,9 +29,7 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_BACKEND_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           appdir: "apps/backend"
-          buildpack: "https://github.com/heroku/heroku-buildpack-nodejs.git"
 
-      # Adding the Python and Node.js buildpacks for the frontend deployment
       - name: Deploy frontend to Heroku
         uses: akhileshns/heroku-deploy@v3.13.15
         with:
@@ -39,3 +37,12 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           appdir: "apps/frontend"
+
+      - name: Deploy model to Heroku
+        uses: akhileshns/heroku-deploy@v3.13.15 
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_PYTHON_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: "apps/model"
+          usedocker: true
