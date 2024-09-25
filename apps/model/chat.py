@@ -126,7 +126,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
-from transformers import pipeline, AutoModelForTokenClassification, AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import pipeline #, AutoModelForTokenClassification, AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 import os
 import logging
@@ -152,9 +152,9 @@ classifier = None
 def preload_models():
     global ner_model, ner_tokenizer, classifier
 
-    ner_model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
-    ner_model = AutoModelForTokenClassification.from_pretrained(ner_model_name)
-    ner_tokenizer = AutoTokenizer.from_pretrained(ner_model_name)
+    # ner_model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
+    # ner_model = AutoModelForTokenClassification.from_pretrained(ner_model_name)
+    # ner_tokenizer = AutoTokenizer.from_pretrained(ner_model_name)
 
     classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli", device=device)
 
@@ -162,7 +162,7 @@ def preload_models():
 preload_models()
 
 # Initialize pipelines
-ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=device) 
+#ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=device) 
 
 # Load dataset
 with open("chatbot_data.json", "r") as file:
@@ -184,11 +184,11 @@ db = FAISS.from_documents(split_docs, embeddings)
 # Flask app setup
 app = Flask(__name__)
 
-def extract_location(query):
-    """Extract location entities (like cities or countries) from the user's query."""
-    entities = ner(query)
-    locations = [entity['word'] for entity in entities if entity['entity_group'] == 'LOC']
-    return locations
+# def extract_location(query):
+#     """Extract location entities (like cities or countries) from the user's query."""
+#     entities = ner(query)
+#     locations = [entity['word'] for entity in entities if entity['entity_group'] == 'LOC']
+#     return locations
 
 def is_query_related(query):
     labels = ['travel-related', 'social-media-related', 'greeting', 'farewell', 'authentication', 'account-management']
@@ -207,8 +207,8 @@ def process_query():
             "type": "error"
         })
 
-    locations = extract_location(query)
-    location_str = ", ".join(locations) if locations else ""
+    # locations = extract_location(query)
+    # location_str = ", ".join(locations) if locations else ""
 
     similar_docs = db.similarity_search(query, k=2)
     if not similar_docs:
@@ -219,7 +219,7 @@ def process_query():
         })
 
     best_doc = similar_docs[0]
-    original_answer = f"{best_doc.metadata['answer']} for {location_str}" if location_str else best_doc.metadata['answer']
+    original_answer = best_doc.metadata['answer']
 
     return jsonify({
         "query": query,
