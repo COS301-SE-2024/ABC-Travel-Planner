@@ -10,12 +10,14 @@ const FilterContainer = () => {
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
     const handleTopicSelect = (topic: string) => {
         setSelectedTopic(topic);
         setSearchResults([]);
     };
     // const id = 25;//sample 
     const id = localStorage.getItem('id') as string
+    const location: any = JSON.parse(localStorage.getItem('location') || '{}').location;
     const actualId = JSON.parse(id).id
     //console.log(actualId)
 
@@ -32,44 +34,44 @@ const FilterContainer = () => {
     
             <div  style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '25px' }}>
                 <button
-                    className={`search-button ${selectedTopic === 'flights' ? 'search-button-selected' : ''}`}
-                    onClick={() => handleTopicSelect('flights')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'flights' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    className={`search-button ${selectedTopic === 'Flights' ? 'search-button-selected' : ''}`}
+                    onClick={() => handleTopicSelect('Flights')}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Flights' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaPlane className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'flights' ? '#007BFF' : '#333' }} />
+                    <FaPlane className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Flights' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'flights' ? '#007BFF' : '#333' }}>Flights</span>
                 </button>
                 <button
-                    className={`search-button ${selectedTopic === 'stays' ? 'search-button-selected' : ''}`}
-                    onClick={() => handleTopicSelect('stays')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'stays' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    className={`search-button ${selectedTopic === 'Hotels' ? 'search-button-selected' : ''}`}
+                    onClick={() => handleTopicSelect('Hotels')}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Hotels' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaHotel className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'stays' ? '#007BFF' : '#333' }} />
+                    <FaHotel className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Hotels' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'stays' ? '#007BFF' : '#333' }}>Stays</span>
                 </button>
                 <button
-                    className={`search-button ${selectedTopic === 'carRentals' ? 'search-button-selected' : ''}`}
-                    onClick={() => handleTopicSelect('carRentals')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'carRentals' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    className={`search-button ${selectedTopic === 'Car Rentals' ? 'search-button-selected' : ''}`}
+                    onClick={() => handleTopicSelect('Car Rentals')}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Car Rentals' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaCar className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'carRentals' ? '#007BFF' : '#333' }} />
+                    <FaCar className="search-icon" style={{ marginLeft: '6px', fontSize: '2rem', color: selectedTopic === 'Car Rentals' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'carRentals' ? '#007BFF' : '#333' }}>Car Rentals</span>
                 </button>
                 <button
-                    className={`search-button ${selectedTopic === 'attractions' ? 'search-button-selected' : ''}`}
-                    onClick={() => handleTopicSelect('attractions')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'attractions' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    className={`search-button ${selectedTopic === 'Attractions' ? 'search-button-selected' : ''}`}
+                    onClick={() => handleTopicSelect('Attractions')}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Attractions' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaBinoculars className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'attractions' ? '#007BFF' : '#333' }} />
+                    <FaBinoculars className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Attractions' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'attractions' ? '#007BFF' : '#333' }}>Attractions</span>
                 </button>
                 <button
-                    className={`search-button ${selectedTopic === 'airportTaxis' ? 'search-button-selected' : ''}`}
-                    onClick={() => handleTopicSelect('airportTaxis')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'airportTaxis' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    className={`search-button ${selectedTopic === 'Airport Taxis' ? 'search-button-selected' : ''}`}
+                    onClick={() => handleTopicSelect('Airport Taxis')}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Airport Taxis' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaTaxi className="search-icon" style={{ fontSize: '2rem', color: selectedTopic === 'airportTaxis' ? '#007BFF' : '#333' }} />
-                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'airportTaxis' ? '#007BFF' : '#333' }}>Airport Taxis</span>
+                    <FaTaxi className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Airport Taxis' ? '#007BFF' : '#333' }} />
+                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'Airport Taxis' ? '#007BFF' : '#333' }}>Airport Taxis</span>
                 </button>
             </div>
     
@@ -77,11 +79,11 @@ const FilterContainer = () => {
                 <div  style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
                     <input
                         type="text"
-                        placeholder={`Search for ${selectedTopic}`}
+                        placeholder={`${selectedTopic} in ${location}`}
                         className="search-input"
                         ref={searchInputRef}
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) => { setSearchTerm(e.target.value)}}
                         style={{ width: '70%', padding: '12px', fontSize: '1rem', borderRadius: '8px', border: '1px solid #ccc', boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)' }}
                     />
                     <button  onClick={handleSearch} style={{ marginLeft: '10px', padding: '12px 20px', fontSize: '1rem', borderRadius: '8px', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer' }}>
