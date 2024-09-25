@@ -21,13 +21,9 @@ sender = os.getenv('EMAIL_USER')
 GMAIL_APP_PASS = os.getenv('GMAIL_APP_PASS')
 recipient = sys.argv[1]
 
-print(f"SENDER: {sender}")
-print(f"GMAIL_APP_PASS: {GMAIL_APP_PASS}")
-print(f"RECIPIENT: {recipient}")
-
-# Setup to work starting from 'backend' folder...
+# Setup to work starting from 'backend/dist/' folder...
 try:
-    with open('../frontend/pages/api/email_format.html', 'r') as file:
+    with open('dist/invoice/invoices/email_format.html', 'r') as file:
         html_content = file.read()
 except Exception as e:
     logging.error("Error reading HTML file: %s", e)

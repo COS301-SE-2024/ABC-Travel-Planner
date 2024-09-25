@@ -44,7 +44,7 @@ const checkType = (type: string) => {
       return "Airport taxi"
 
     default:
-      return ""
+      return type
   }
 }
 
