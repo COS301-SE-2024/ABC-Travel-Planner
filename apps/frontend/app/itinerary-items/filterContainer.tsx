@@ -27,8 +27,8 @@ const FilterContainer = () => {
     };
 
     return (
-        <div>
-        <div  style={{alignContent:'center' ,height: '100%', maxHeight:'500px', width: '100%', maxWidth: '900px', margin: '0 auto', padding: '40px', backgroundColor: 'white' }}>
+        <div style={{maxHeight: '1000px', height: '100%', maxWidth: '1050px'}}>
+        <div  style={{alignContent:'center' ,height: '100%', maxHeight:'500px', width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '20px', backgroundColor: 'white' }}>
             <h1  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', color: '#333' }}>Search at your Convenience!</h1>
             <p  style={{ fontSize: '1.25rem', textAlign: 'center', marginBottom: '25px', color: '#666' }}>Click on an icon below to filter your search and provide better results</p>
     
@@ -76,21 +76,29 @@ const FilterContainer = () => {
             </div>
     
             {selectedTopic && (
-                <div  style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-                    <input
-                        type="text"
-                        placeholder={`${selectedTopic} in ${location}`}
-                        className="search-input"
-                        ref={searchInputRef}
-                        value={searchTerm}
-                        onChange={(e) => { setSearchTerm(e.target.value)}}
-                        style={{ width: '70%', padding: '12px', fontSize: '1rem', borderRadius: '8px', border: '1px solid #ccc', boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)' }}
-                    />
-                    <button  onClick={handleSearch} style={{ marginLeft: '10px', padding: '12px 20px', fontSize: '1rem', borderRadius: '8px', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer' }}>
-                        <FaSearch />
-                    </button>
+                <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+                    {selectedTopic === 'Flights' ? (
+                        <div style={{width: '1000px', backgroundColor: 'orange', height: '350px'}} className=''>Hi there :D</div>
+
+                    ) : (
+                        <>
+                            <input
+                                type="text"
+                                placeholder={`${selectedTopic} in ${location}`}
+                                className="search-input"
+                                ref={searchInputRef}
+                                value={searchTerm}
+                                onChange={(e) => { setSearchTerm(e.target.value)}}
+                                style={{ width: '70%', padding: '12px', fontSize: '1rem', borderRadius: '8px', border: '1px solid #ccc', boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)' }}
+                            />
+                            <button  onClick={handleSearch} style={{ marginLeft: '10px', padding: '12px 20px', fontSize: '1rem', borderRadius: '8px', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer' }}>
+                                <FaSearch />
+                            </button>
+                        </>
+                        )}
                 </div>
             )}
+
     
             {loading && (
                 <div
