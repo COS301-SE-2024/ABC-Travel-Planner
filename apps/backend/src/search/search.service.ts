@@ -47,10 +47,10 @@ interface Profile {
 @Injectable()
 export class SearchService {
     private placesClient: any;
-    private defaultImageUrl = 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg';
+    private url: string = this.configService.get<string>('NEST_URL')!;
+    private defaultImageUrl = `${this.url}/logo2.png`;
     private db: admin.firestore.Firestore;
     private filter: admin.firestore.Filter;
-
     constructor(private configService: ConfigService, @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App) {
         this.placesClient = new PlacesClient();
         this.db = firebaseApp.firestore();

@@ -22,3 +22,4 @@ log.txt
 .history/*
 supabase/.temp/cli-latest
 apps/backend/src/firebase/project-admin.json
+apps/frontend/pages/api/email_format.html

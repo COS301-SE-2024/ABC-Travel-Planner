@@ -1,8 +1,6 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 
-
-
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
     request: {
@@ -10,22 +8,27 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  
   const cookies = request.cookies;
   const userId = cookies.get("user_id");
   // console.log("user_id", userId);
   // const user = cookies.get("user");
   // console.log("user", user);
 
- ///need to check if user is logged in or not
+  ///need to check if user is logged in or not
 
-  if (!userId && request.nextUrl.pathname !== "/login") {
+  if (
+    !userId &&
+    request.nextUrl.pathname !== "/login" &&
+    request.nextUrl.pathname !== "/signup"
+  ) {
     const loginUrl = new URL("/login", request.nextUrl.origin);
     console.log("url", loginUrl.toString());
     return NextResponse.redirect(loginUrl);
   } else if (
     userId &&
-    (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/")
+    (request.nextUrl.pathname === "/login" ||
+      request.nextUrl.pathname === "/" ||
+      request.nextUrl.pathname === "/signup")
   ) {
     const homeUrl = new URL("/home", request.nextUrl.origin);
     console.log("url", homeUrl.toString());

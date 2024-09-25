@@ -3,6 +3,12 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
+    "assets": [
+      {
+        "include": "invoice/template/email_format.ejs",
+        "outDir": "dist"
+      }
+    ],
     "deleteOutDir": true
   }
 }

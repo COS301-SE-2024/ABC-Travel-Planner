@@ -1,21 +1,22 @@
 // apps/frontend/app/layout.tsx
-
-'use client';
-
-import React from 'react';
-import { usePathname } from 'next/navigation';
-import { Navbar } from './components/Navbar';
+"use client";
+import React from "react";
+import { usePathname } from "next/navigation";
+import { Navbar } from "./components/Navbar";
 import { ThemeProvider } from './context/ThemeContext';
-import './globals.css'; 
-
+import "./globals.css";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-    const pathname = usePathname();
-    const displayNavbar = pathname !== '/' && pathname !== '/login' && pathname !== '/Login';
+  const pathname = usePathname();
+  const displayNavbar =
+    pathname !== "/" &&
+    pathname !== "/login" &&
+    pathname !== "/Login" &&
+    pathname !== "/signup";
 
     return (
         <html lang="en">
-            <ThemeProvider>
+             <ThemeProvider>
                 <body>
                     {displayNavbar && <Navbar />}
                     {children}
@@ -23,7 +24,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </ThemeProvider>
         </html>
     );
+
 };
 
 export default Layout;
-
