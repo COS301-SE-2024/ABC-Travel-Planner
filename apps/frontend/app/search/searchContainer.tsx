@@ -127,7 +127,6 @@ const SearchContainer = () => {
                         data-testid="searchButton" 
                          className="search-button-submit h-12 flex items-center justify-center"
                         onClick={handleSearch}
-                        disabled={!selectedTopic} // Disable if no topic selected
                     >
                         <FaSearch />
                     </button>
