@@ -1,0 +1,2 @@
+release: python chat.py --preload
+web: python chat.py
