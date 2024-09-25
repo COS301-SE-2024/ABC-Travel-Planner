@@ -17,4 +17,4 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           appdir: "apps/model"
           usedocker: true
-          stack: "container"
+          branch: "feat/fixUsability"
