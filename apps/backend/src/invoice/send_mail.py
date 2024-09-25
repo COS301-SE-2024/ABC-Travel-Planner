@@ -9,6 +9,7 @@ from environs import Env
 # Configuring loggin
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# This is very crucial...
 print(f"Current working directory: {os.getcwd()}", flush=True)
 
 # Loading env file
