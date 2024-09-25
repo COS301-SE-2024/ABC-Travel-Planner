@@ -1,5 +1,5 @@
 "use client";
-import { useTheme } from '../context/ThemeContext'; // Import the useTheme hook
+import { useTheme } from "../context/ThemeContext"; // Import the useTheme hook
 import React, { useState, useEffect } from "react";
 import {
   UserIcon,
@@ -56,12 +56,15 @@ const countries = [
   { name: "USA", value: "usa" },
 ];
 
-const themes: { value: 'default' | 'beach' | 'adventure' | 'cultural' | 'nature', name: string }[] = [
-    { value: 'default', name: 'Default Theme' },
-  { value: 'beach', name: 'Beach Holiday' },
-  { value: 'adventure', name: 'Sunsets and Pretty skies' },
-  { value: 'cultural', name: 'Cultural Exploration' },
-  { value: 'nature', name: 'Nature Retreat' },
+const themes: {
+  value: "default" | "beach" | "adventure" | "cultural" | "nature";
+  name: string;
+}[] = [
+  { value: "default", name: "Default Theme" },
+  { value: "beach", name: "Beach Holiday" },
+  { value: "adventure", name: "Sunsets and Pretty skies" },
+  { value: "cultural", name: "Cultural Exploration" },
+  { value: "nature", name: "Nature Retreat" },
 ];
 
 const SettingsPage: React.FC = () => {
@@ -75,9 +78,11 @@ const SettingsPage: React.FC = () => {
   const { selectedTheme, setTheme, themeStyles } = useTheme();
   const [showModalTheme, setShowModalTheme] = useState<boolean>(false);
 
-  const handleThemeSelect = (themeValue: "default"|"beach" | "adventure" | "cultural" | "nature") => {
-      setTheme(themeValue); // Use the context method to set theme
-      setShowModal(false);
+  const handleThemeSelect = (
+    themeValue: "default" | "beach" | "adventure" | "cultural" | "nature"
+  ) => {
+    setTheme(themeValue); // Use the context method to set theme
+    setShowModal(false);
   };
 
   //Account
@@ -153,11 +158,10 @@ const SettingsPage: React.FC = () => {
     getLikesCount();
   }, []);
 
-
   useEffect(() => {
     async function getCommentsCount() {
       try {
-        const userId = Cookie.get('user_id');
+        const userId = Cookie.get("user_id");
         console.log(userId);
 
         const count = await fetchCommentsCount(userId || "");
@@ -174,7 +178,7 @@ const SettingsPage: React.FC = () => {
   useEffect(() => {
     async function getPostsCount() {
       try {
-        const userId = Cookie.get('user_id');
+        const userId = Cookie.get("user_id");
         console.log(userId);
 
         const count = await fetchPostsCount(userId || "");
@@ -187,7 +191,6 @@ const SettingsPage: React.FC = () => {
 
     getPostsCount();
   }, []);
-
 
   async function fetchLikesCount(userId: string): Promise<number> {
     const response = await axios.post(
@@ -215,11 +218,14 @@ const SettingsPage: React.FC = () => {
   }
 
   async function fetchPostsCount(userId: string): Promise<number> {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getPostsCount`, { userId });
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getPostsCount`,
+      { userId }
+    );
     console.log("Data is :" + response.data);
     console.log(response);
     if (!response.data) {
-      throw new Error('Failed to fetch posts count');
+      throw new Error("Failed to fetch posts count");
     }
     return response.data;
   }
@@ -253,19 +259,11 @@ const SettingsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [userList, setUserList] = useState([
-    { username: "john_doe", muted: false, blocked: false },
-    { username: "jane_smith", muted: true, blocked: false },
-    { username: "user123", muted: false, blocked: true },
+    { username: "john_doe", blocked: false },
+    { username: "jane_smith", blocked: false },
+    { username: "user123", blocked: true },
     // Add more users as needed
   ]);
-
-  const handleMute = (username: string) => {
-    setUserList((prevList) =>
-      prevList.map((user) =>
-        user.username === username ? { ...user, muted: !user.muted } : user
-      )
-    );
-  };
 
   const handleBlock = (username: string) => {
     setUserList((prevList) =>
@@ -295,483 +293,482 @@ const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8" style={{ backgroundColor: themeStyles.background }}>
-        <h1 className="text-4xl font-extrabold text-center mb-8">Settings</h1>
+    <div
+      className="min-h-screen bg-gray-100 p-8"
+      style={{ backgroundColor: themeStyles.background }}
+    >
+      <h1 className="text-4xl font-extrabold text-center mb-8">Settings</h1>
 
-        <div className="space-y-6">
-          {/* User Management Section */}
-          <section className="bg-white p-6 rounded-lg shadow-md">
-            <h2
-              className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
-              onClick={() => toggleSection("user-management")}
-            >
-              <FaUser className="w-6 h-6 text-blue-500" />
-              <span>User Management</span>
-            </h2>
-            {expandedSection === "user-management" && (
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-xl font-semibold">
-                      Muted and Blocked Users
-                    </h3>
-                    <p className="text-gray-700">
-                      Manage your muted and blocked users here.
-                    </p>
-                  </div>
-                  <button
-                    className="text-blue-500 hover:underline"
-                    onClick={() => setShowMutedBlockedModal(true)}
-                  >
-                    View List
-                  </button>
+      <div className="space-y-6">
+        {/* User Management Section */}
+        <section className="bg-white p-6 rounded-lg shadow-md">
+          <h2
+            className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
+            onClick={() => toggleSection("user-management")}
+          >
+            <FaUser className="w-6 h-6 text-blue-500" />
+            <span>User Management</span>
+          </h2>
+          {expandedSection === "user-management" && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-xl font-semibold">Blocked Users</h3>
+                  <p className="text-gray-700">
+                    Manage your blocked users here.
+                  </p>
                 </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-xl font-semibold">Activity</h3>
-                    <p className="text-gray-700">
-                      View posts you liked, commented on, or deleted.
-                    </p>
-                  </div>
-                  <button
-                    className="text-blue-500 hover:underline"
-                    onClick={() => setShowActivityModal(true)}
-                  >
-                    View Activity
-                  </button>
-                </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-xl font-semibold">Disable Account</h3>
-                    <p className="text-gray-700">
-                      Disable your Account Temporarily
-                    </p>
-                  </div>
-                  <button
-                    className="text-red-500 hover:underline"
-                    onClick={() => setShowDisableModal(true)}
-                  >
-                    Disable Account
-                  </button>
-                </div>
+                <button
+                  className="text-blue-500 hover:underline"
+                  onClick={() => setShowMutedBlockedModal(true)}
+                >
+                  View List
+                </button>
               </div>
-            )}
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-xl font-semibold">Activity</h3>
+                  <p className="text-gray-700">
+                    View posts you liked, commented on, or deleted.
+                  </p>
+                </div>
+                <button
+                  className="text-blue-500 hover:underline"
+                  onClick={() => setShowActivityModal(true)}
+                >
+                  View Activity
+                </button>
+              </div>
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-xl font-semibold">Delete Account</h3>
+                  <p className="text-gray-700">
+                    Delete your Account Permanently
+                  </p>
+                </div>
+                <button
+                  className="text-red-500 hover:underline"
+                  onClick={() => setShowDisableModal(true)}
+                >
+                  Delete Account
+                </button>
+              </div>
+            </div>
+          )}
 
-            {/* Muted and Blocked Users Modal */}
-            {showMutedBlockedModal && (
-              <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+          {/* Muted and Blocked Users Modal */}
+          {showMutedBlockedModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+                <button
+                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                  onClick={() => setShowMutedBlockedModal(false)}
+                >
+                  <FaTimes className="w-6 h-6" />
+                </button>
+                <h2 className="text-2xl font-semibold mb-4 text-center">
+                  Blocked Users
+                </h2>
+                <div className="relative mb-4">
+                  <FaTimes className="absolute w-5 h-5 left-3 top-3 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search users..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="space-y-2 max-h-60 overflow-y-auto">
+                  {filteredUsers.map((user) => (
+                    <div
+                      key={user.username}
+                      className="flex justify-between items-center p-4 border-b"
+                    >
+                      <span className="text-lg">{user.username}</span>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => handleBlock(user.username)}
+                          className={`p-2 rounded-full ${
+                            user.blocked ? "bg-red-500" : "bg-gray-200"
+                          }`}
+                        >
+                          <FaBan className="w-6 h-6 text-white" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-end mt-4">
                   <button
-                    className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
                     onClick={() => setShowMutedBlockedModal(false)}
                   >
-                    <FaTimes className="w-6 h-6" />
+                    Close
                   </button>
-                  <h2 className="text-2xl font-semibold mb-4 text-center">
-                    Muted and Blocked Users
-                  </h2>
-                  <div className="relative mb-4">
-                    <FaTimes className="absolute w-5 h-5 left-3 top-3 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="Search users..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div className="space-y-2 max-h-60 overflow-y-auto">
-                    {filteredUsers.map((user) => (
-                      <div
-                        key={user.username}
-                        className="flex justify-between items-center p-4 border-b"
-                      >
-                        <span className="text-lg">{user.username}</span>
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={() => handleMute(user.username)}
-                            className={`p-2 rounded-full ${
-                              user.muted ? "bg-yellow-500" : "bg-gray-200"
-                            }`}
-                          >
-                            <FaVolumeMute className="w-6 h-6 text-white" />
-                          </button>
-                          <button
-                            onClick={() => handleBlock(user.username)}
-                            className={`p-2 rounded-full ${
-                              user.blocked ? "bg-red-500" : "bg-gray-200"
-                            }`}
-                          >
-                            <FaBan className="w-6 h-6 text-white" />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex justify-end mt-4">
-                    <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded"
-                      onClick={() => setShowMutedBlockedModal(false)}
-                    >
-                      Close
-                    </button>
-                  </div>
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Activity Modal */}
-            {showActivityModal && (
-              <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-70 z-50">
-                <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full relative">
+          {/* Activity Modal */}
+          {showActivityModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-70 z-50">
+              <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full relative">
+                <button
+                  className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors duration-300"
+                  onClick={() => setShowActivityModal(false)}
+                >
+                  <FaTimes className="w-6 h-6" />
+                </button>
+                <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">
+                  Your Activity
+                </h2>
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg shadow-sm">
+                    <FaHeart className="w-8 h-8 text-red-600" />
+                    <span className="text-xl font-medium text-gray-800">
+                      Posts Liked:{" "}
+                      <span className="font-bold">{likesCount}</span>
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-4 p-4 bg-green-50 rounded-lg shadow-sm">
+                    <FaCommentAlt className="w-8 h-8 text-blue-600" />
+                    <span className="text-xl font-medium text-gray-800">
+                      Comments Made:{" "}
+                      <span className="font-bold">{commentsCount}</span>
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-4 p-4 bg-yellow-50 rounded-lg shadow-sm">
+                    <FaFileAlt className="w-8 h-8 text-green-600" />
+                    <span className="text-xl font-medium text-gray-800">
+                      Posts Created:{" "}
+                      <span className="font-bold">{postsCount}</span>
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-center mt-8">
                   <button
-                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors duration-300"
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300"
                     onClick={() => setShowActivityModal(false)}
                   >
-                    <FaTimes className="w-6 h-6" />
+                    Close
                   </button>
-                  <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">
-                    Your Activity
-                  </h2>
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg shadow-sm">
-                      <FaHeart className="w-8 h-8 text-red-600" />
-                      <span className="text-xl font-medium text-gray-800">
-                        Posts Liked:{" "}
-                        <span className="font-bold">{likesCount}</span>
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-4 p-4 bg-green-50 rounded-lg shadow-sm">
-                      <FaCommentAlt className="w-8 h-8 text-blue-600" />
-                      <span className="text-xl font-medium text-gray-800">
-                        Comments Made:{" "}
-                        <span className="font-bold">{commentsCount}</span>
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-4 p-4 bg-yellow-50 rounded-lg shadow-sm">
-                      <FaFileAlt className="w-8 h-8 text-green-600" />
-                      <span className="text-xl font-medium text-gray-800">
-                        Posts Created: <span className="font-bold">5</span>
-                      </span>
-                      <span className="text-xl font-medium text-gray-800">Posts Created: <span className="font-bold">{postsCount}</span></span>
-                    </div>
-                  </div>
-                  <div className="flex justify-center mt-8">
-                    <button
-                      className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300"
-                      onClick={() => setShowActivityModal(false)}
-                    >
-                      Close
-                    </button>
-                  </div>
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Disable Account Modal */}
-            {showDisableModal && (
-              <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+          {/* Disable Account Modal */}
+          {showDisableModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+                <button
+                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                  onClick={() => setShowDisableModal(false)}
+                >
+                  <FaTimes className="w-6 h-6" />
+                </button>
+                <h2 className="text-2xl font-semibold mb-4 text-center">
+                  Delete Account
+                </h2>
+                <p className="text-center text-gray-700 mb-6">
+                  Are you sure you want to delete your account permanently?
+                </p>
+                <div className="flex justify-center space-x-4">
                   <button
-                    className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                    className="bg-red-500 text-white px-4 py-2 rounded"
+                    onClick={handleDisableAccount}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="bg-gray-300 px-4 py-2 rounded"
                     onClick={() => setShowDisableModal(false)}
                   >
-                    <FaTimes className="w-6 h-6" />
-                  </button>
-                  <h2 className="text-2xl font-semibold mb-4 text-center">
-                    Disable Account
-                  </h2>
-                  <p className="text-center text-gray-700 mb-6">
-                    Are you sure you want to disable your account temporarily?
-                  </p>
-                  <div className="flex justify-center space-x-4">
-                    <button
-                      className="bg-red-500 text-white px-4 py-2 rounded"
-                      onClick={handleDisableAccount}
-                    >
-                      Disable
-                    </button>
-                    <button
-                      className="bg-gray-300 px-4 py-2 rounded"
-                      onClick={() => setShowDisableModal(false)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </section>
-
-          {/* Itinerary Settings Section */}
-          <section className="bg-white p-6 rounded-lg shadow-md">
-            <h2
-              className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
-              onClick={() => toggleSection("itinerary-settings")}
-            >
-              <GlobeAltIcon className="w-6 h-6 text-green-500" />
-              <span>Itinerary Settings</span>
-            </h2>
-            {expandedSection === "itinerary-settings" && (
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold">
-                    Select Favourite Countries
-                  </h3>
-                  <button
-                    className="text-blue-500 hover:underline"
-                    onClick={() => setShowCountryModal(true)}
-                  >
-                    Select
-                  </button>
-                </div>
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold">Sharing Settings</h3>
-                  <button
-                    className="text-blue-500 hover:underline"
-                    onClick={() => setShowSharingModal(true)}
-                  >
-                    Manage
+                    Cancel
                   </button>
                 </div>
               </div>
-            )}
+            </div>
+          )}
+        </section>
 
-            {/* Country Selection Modal */}
-            {showCountryModal && (
-              <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
+        {/* Itinerary Settings Section */}
+        <section className="bg-white p-6 rounded-lg shadow-md">
+          <h2
+            className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
+            onClick={() => toggleSection("itinerary-settings")}
+          >
+            <GlobeAltIcon className="w-6 h-6 text-green-500" />
+            <span>Itinerary Settings</span>
+          </h2>
+          {expandedSection === "itinerary-settings" && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-semibold">
+                  Select Favourite Countries
+                </h3>
+                <button
+                  className="text-blue-500 hover:underline"
+                  onClick={() => setShowCountryModal(true)}
+                >
+                  Select
+                </button>
+              </div>
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-semibold">Sharing Settings</h3>
+                <button
+                  className="text-blue-500 hover:underline"
+                  onClick={() => setShowSharingModal(true)}
+                >
+                  Manage
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Country Selection Modal */}
+          {showCountryModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
+                <button
+                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                  onClick={() => setShowCountryModal(false)}
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </button>
+                <h2 className="text-2xl font-semibold mb-4 text-center">
+                  Select Top 3 Countries
+                </h2>
+                <div className="p-2 space-y-2 max-h-[50vh] overflow-y-auto">
+                  {countries.map((country) => (
+                    <div
+                      key={country.value}
+                      className={`p-4 cursor-pointer rounded-lg border-2 ${
+                        selectedCountries.includes(country.value)
+                          ? "border-blue-500 bg-blue-100"
+                          : "border-gray-300"
+                      } hover:bg-blue-50 flex justify-between items-center`}
+                      onClick={() =>
+                        handleCountrySelectItinerary(country.value)
+                      }
+                    >
+                      <span className="text-lg">{country.name}</span>
+                      {selectedCountries.includes(country.value) && (
+                        <CheckIcon className="w-6 h-6 text-blue-500" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-between mt-4">
                   <button
-                    className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={handleSaveCountries}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="bg-gray-300 px-4 py-2 rounded"
                     onClick={() => setShowCountryModal(false)}
                   >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
+                    Cancel
                   </button>
-                  <h2 className="text-2xl font-semibold mb-4 text-center">
-                    Select Top 3 Countries
-                  </h2>
-                  <div className="p-2 space-y-2 max-h-[50vh] overflow-y-auto">
-                    {countries.map((country) => (
-                      <div
-                        key={country.value}
-                        className={`p-4 cursor-pointer rounded-lg border-2 ${
-                          selectedCountries.includes(country.value)
-                            ? "border-blue-500 bg-blue-100"
-                            : "border-gray-300"
-                        } hover:bg-blue-50 flex justify-between items-center`}
-                        onClick={() =>
-                          handleCountrySelectItinerary(country.value)
-                        }
-                      >
-                        <span className="text-lg">{country.name}</span>
-                        {selectedCountries.includes(country.value) && (
-                          <CheckIcon className="w-6 h-6 text-blue-500" />
-                        )}
-                      </div>
-                    ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Sharing Settings Modal */}
+          {showSharingModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+                <button
+                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                  onClick={() => setShowSharingModal(false)}
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </button>
+                <h2 className="text-2xl font-semibold mb-4 text-center">
+                  Sharing Settings
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      id="private"
+                      name="sharing-mode"
+                      checked={sharingMode === "private"}
+                      onChange={() => handleSharingModeChange("private")}
+                      className="form-radio h-6 w-6 text-blue-600"
+                    />
+                    <label
+                      htmlFor="private"
+                      className="ml-2 text-lg font-semibold"
+                    >
+                      Private
+                    </label>
                   </div>
+                  <p className="text-gray-700 mb-4">
+                    Your itineraries will be visible only to you.
+                  </p>
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      id="public"
+                      name="sharing-mode"
+                      checked={sharingMode === "public"}
+                      onChange={() => handleSharingModeChange("public")}
+                      className="form-radio h-6 w-6 text-blue-600"
+                    />
+                    <label
+                      htmlFor="public"
+                      className="ml-2 text-lg font-semibold"
+                    >
+                      Public
+                    </label>
+                  </div>
+                  <p className="text-gray-700">
+                    Your itineraries will be visible to everyone.
+                  </p>
+                </div>
+                <div className="flex justify-center mt-4">
+                  <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={handleSaveSharingMode}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* Account Settings Section */}
+        <section className="bg-white p-6 rounded-lg shadow-md">
+          <h2
+            className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
+            onClick={() => toggleSection("account-settings")}
+          >
+            <KeyIcon className="w-6 h-6 text-red-500" />
+            <span>Account Settings</span>
+          </h2>
+          {expandedSection === "account-settings" && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-semibold">Change Password</h3>
+                <button
+                  className="text-blue-500 hover:underline"
+                  onClick={() => setShowChangePasswordModal(true)}
+                >
+                  Change
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Change Password Modal */}
+          {showChangePasswordModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
+                <button
+                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+                  onClick={() => setShowChangePasswordModal(false)}
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </button>
+                <h2 className="text-2xl font-semibold mb-4 text-center">
+                  Change Password
+                </h2>
+                <div className="space-y-4">
+                  <input
+                    type="password"
+                    placeholder="New Password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Confirm New Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded"
+                  />
                   <div className="flex justify-between mt-4">
                     <button
                       className="bg-blue-500 text-white px-4 py-2 rounded"
-                      onClick={handleSaveCountries}
+                      onClick={handleChangePassword}
                     >
                       Save
                     </button>
                     <button
                       className="bg-gray-300 px-4 py-2 rounded"
-                      onClick={() => setShowCountryModal(false)}
+                      onClick={() => setShowChangePasswordModal(false)}
                     >
                       Cancel
                     </button>
                   </div>
                 </div>
               </div>
-            )}
-
-            {/* Sharing Settings Modal */}
-            {showSharingModal && (
-              <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
-                  <button
-                    className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-                    onClick={() => setShowSharingModal(false)}
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </button>
-                  <h2 className="text-2xl font-semibold mb-4 text-center">
-                    Sharing Settings
-                  </h2>
-                  <div className="space-y-4">
-                    <div className="flex items-center">
-                      <input
-                        type="radio"
-                        id="private"
-                        name="sharing-mode"
-                        checked={sharingMode === "private"}
-                        onChange={() => handleSharingModeChange("private")}
-                        className="form-radio h-6 w-6 text-blue-600"
-                      />
-                      <label
-                        htmlFor="private"
-                        className="ml-2 text-lg font-semibold"
-                      >
-                        Private
-                      </label>
-                    </div>
-                    <p className="text-gray-700 mb-4">
-                      Your itineraries will be visible only to you.
-                    </p>
-                    <div className="flex items-center">
-                      <input
-                        type="radio"
-                        id="public"
-                        name="sharing-mode"
-                        checked={sharingMode === "public"}
-                        onChange={() => handleSharingModeChange("public")}
-                        className="form-radio h-6 w-6 text-blue-600"
-                      />
-                      <label
-                        htmlFor="public"
-                        className="ml-2 text-lg font-semibold"
-                      >
-                        Public
-                      </label>
-                    </div>
-                    <p className="text-gray-700">
-                      Your itineraries will be visible to everyone.
-                    </p>
-                  </div>
-                  <div className="flex justify-center mt-4">
-                    <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded"
-                      onClick={handleSaveSharingMode}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </section>
-
-          {/* Account Settings Section */}
-          <section className="bg-white p-6 rounded-lg shadow-md">
-            <h2
-              className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
-              onClick={() => toggleSection("account-settings")}
-            >
-              <KeyIcon className="w-6 h-6 text-red-500" />
-              <span>Account Settings</span>
-            </h2>
-            {expandedSection === "account-settings" && (
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold">Change Password</h3>
-                  <button
-                    className="text-blue-500 hover:underline"
-                    onClick={() => setShowChangePasswordModal(true)}
-                  >
-                    Change
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Change Password Modal */}
-            {showChangePasswordModal && (
-              <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
-                  <button
-                    className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-                    onClick={() => setShowChangePasswordModal(false)}
-                  >
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </button>
-                  <h2 className="text-2xl font-semibold mb-4 text-center">
-                    Change Password
-                  </h2>
-                  <div className="space-y-4">
-                    <input
-                      type="password"
-                      placeholder="New Password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded"
-                    />
-                    <input
-                      type="password"
-                      placeholder="Confirm New Password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded"
-                    />
-                    <div className="flex justify-between mt-4">
-                      <button
-                        className="bg-blue-500 text-white px-4 py-2 rounded"
-                        onClick={handleChangePassword}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="bg-gray-300 px-4 py-2 rounded"
-                        onClick={() => setShowChangePasswordModal(false)}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </section>
-          {/* User Theme Section */}
-          <section className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-4 cursor-pointer flex items-center space-x-2" onClick={() => setShowModal(true)}>
+            </div>
+          )}
+        </section>
+        {/* User Theme Section */}
+        <section className="bg-white p-6 rounded-lg shadow-md">
+          <h2
+            className="text-2xl font-semibold mb-4 cursor-pointer flex items-center space-x-2"
+            onClick={() => setShowModal(true)}
+          >
             <HomeIcon className="w-6 h-6 text-purple-500" />
             <span>User Theme</span>
           </h2>
           <div>
             <h3 className="text-xl font-semibold">Selected Theme</h3>
-            <p className="text-gray-700">{themes.find(theme => theme.value === selectedTheme)?.name || 'default'}</p>
+            <p className="text-gray-700">
+              {themes.find((theme) => theme.value === selectedTheme)?.name ||
+                "default"}
+            </p>
           </div>
         </section>
 
@@ -779,13 +776,30 @@ const SettingsPage: React.FC = () => {
         {showModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
-              <button className="absolute top-2 right-2" onClick={() => setShowModal(false)}>X</button>
-              <h2 className="text-2xl font-semibold mb-4 text-center">Select Theme</h2>
+              <button
+                className="absolute top-2 right-2"
+                onClick={() => setShowModal(false)}
+              >
+                X
+              </button>
+              <h2 className="text-2xl font-semibold mb-4 text-center">
+                Select Theme
+              </h2>
               <div className="space-y-2">
                 {themes.map((theme) => (
-                  <div key={theme.value} className={`p-4 cursor-pointer rounded-lg ${selectedTheme === theme.value ? 'bg-blue-100' : 'bg-gray-100'}`} onClick={() => handleThemeSelect(theme.value)}>
+                  <div
+                    key={theme.value}
+                    className={`p-4 cursor-pointer rounded-lg ${
+                      selectedTheme === theme.value
+                        ? "bg-blue-100"
+                        : "bg-gray-100"
+                    }`}
+                    onClick={() => handleThemeSelect(theme.value)}
+                  >
                     <span className="text-lg">{theme.name}</span>
-                    {selectedTheme === theme.value && <CheckIcon className="w-6 h-6 inline-block text-blue-500 float-right" />}
+                    {selectedTheme === theme.value && (
+                      <CheckIcon className="w-6 h-6 inline-block text-blue-500 float-right" />
+                    )}
                   </div>
                 ))}
               </div>
