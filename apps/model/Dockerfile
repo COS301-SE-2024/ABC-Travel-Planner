@@ -27,9 +27,6 @@ COPY requirements.txt .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Redis (required for Celery)
-RUN apt-get update && apt-get install -y redis-server
-
 # Copy the rest of the application code to the container
 COPY . .
 
