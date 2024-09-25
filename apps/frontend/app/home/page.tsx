@@ -124,7 +124,17 @@ const Home = () => {
           Latest Posts
         </h2>
       </div>
-      <div className={`w-full mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left`} style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)',padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <div
+  className={`w-full max-w-screen-xl mx-auto mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left`}
+  style={{
+    backgroundColor: 'rgba(173, 216, 230, 0.5)',
+    padding: '20px',
+    paddingTop: '20px',
+    textAlign: 'center',
+    borderRadius: '10px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  }}
+>
         <div className="flex justify-center flex-col w-3/4 mx-auto">
           <div className="flex justify-center items-center flex-wrap gap-4">
             {posts.map((post) => (

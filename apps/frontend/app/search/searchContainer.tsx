@@ -113,22 +113,25 @@ const SearchContainer = () => {
                     </button>
                 </div>
 
-                {selectedTopic && (
-                    <div className="search-bar-container">
-                        <input
-                            data-testid="searchInput"
-                            type="text"
-                            placeholder={`Search for ${selectedTopic}`}
-                            className="search-input"
-                            ref={searchInputRef}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <button data-testid="searchButton" className="search-button-submit" onClick={handleSearch}>
-                            <FaSearch />
-                        </button>
-                    </div>
-                )}
+                <div className="search-bar-container">
+                    <input
+                        data-testid="searchInput"
+                        type="text"
+                        placeholder={selectedTopic ? `Search for ${selectedTopic}` : 'Example search: Hotels in Germany'}
+                        className="search-input"
+                        ref={searchInputRef}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button 
+                        data-testid="searchButton" 
+                         className="search-button-submit h-12 flex items-center justify-center"
+                        onClick={handleSearch}
+                        disabled={!selectedTopic} // Disable if no topic selected
+                    >
+                        <FaSearch />
+                    </button>
+                </div>
 
                 {loading && (
                     <div

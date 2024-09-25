@@ -14,17 +14,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     pathname !== "/Login" &&
     pathname !== "/signup";
 
-    return (
-        <html lang="en">
-             <ThemeProvider>
-                <body>
-                    {displayNavbar && <Navbar />}
-                    {children}
-                </body>
-            </ThemeProvider>
-        </html>
-    );
-
+  return (
+    <html lang="en">
+      <head>
+        {/* Add any meta tags, title, etc. here */}
+      </head>
+      <body>
+        <ThemeProvider>
+          {displayNavbar && <Navbar />}
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 };
 
 export default Layout;
