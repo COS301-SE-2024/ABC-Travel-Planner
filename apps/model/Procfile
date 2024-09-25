@@ -1,2 +1,2 @@
 release: python chat.py --preload
-web: python chat.py
+web: gunicorn chat:app --preload
