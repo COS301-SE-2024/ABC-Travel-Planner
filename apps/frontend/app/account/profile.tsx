@@ -1,5 +1,5 @@
 "use client";
-import { useTheme } from '../context/ThemeContext';
+
 import {
   FaMapMarkerAlt,
   FaRegCalendarAlt,
@@ -34,7 +34,6 @@ import Link from "next/link";
 import { FaPerson } from "react-icons/fa6";
 
 const Account = () => {
-  const { selectedTheme, themeStyles } = useTheme();
   const [profileDetails, setProfileDetails] = useState<{
     username: string;
     email: string;
@@ -94,17 +93,6 @@ const Account = () => {
   const [savedItineraries, setSavedItineraries] = useState<any>([]);
 
   const router = useRouter();
-
-  useEffect(() => {
-    // Apply theme styles
-    document.body.style.backgroundColor = themeStyles.background;
-    document.body.style.color = themeStyles.textColor;
-
-    const navbar = document.querySelector('.navbar') as HTMLElement;
-    if (navbar) {
-      navbar.style.backgroundColor = themeStyles.navbarColor;
-    }
-  }, [themeStyles]); 
 
   const handleSignout = async () => {
     await logout();
@@ -377,7 +365,7 @@ const Account = () => {
   };
 
   return (
-    <div data-testid="accountContainer" className="profile-page" style={{ padding: '20px', backgroundColor: themeStyles.background, color: themeStyles.textColor }}>
+    <div data-testid="accountContainer" className="profile-page">
       <header className="profile-header">
         <div className="profile-pic">
           <div className="relative">
@@ -433,8 +421,8 @@ const Account = () => {
             </div>
           ) : (
             <>
-              <h1 data-testid="accountName" style={{ color: themeStyles.textColor }}>{profileDetails.username}</h1>
-              <h2 data-testid="accountEmail" style={{ color: themeStyles.textColor }}>{profileDetails.email}</h2>
+              <h1 data-testid="accountName">{profileDetails.username}</h1>
+              <h2 data-testid="accountEmail">{profileDetails.email}</h2>
               {profileDetails.country && (
                 <div className="location">
                   <FaMapMarkerAlt />
@@ -619,7 +607,7 @@ const Account = () => {
       )}
       {/* Posts */}
 
-      <section className="posts py-6 px-4" style={{ width: '140%'}}>
+      <section className="posts py-6 px-4 " style={{ width: '140%'}}>
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
           onClick={() => setShowPostModal(true)}
