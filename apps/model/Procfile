@@ -1,2 +1,2 @@
-release: python chat.py --preload
-web: gunicorn chat:app --preload --workers=1 --timeout=60 --bind 0.0.0.0:$PORT
+release: python chat.py
+web: gunicorn chat:app --workers=1 --timeout=60 --bind 0.0.0.0:$PORT

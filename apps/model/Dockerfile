@@ -13,8 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code to the container
 COPY . .
 
-# Expose the port that Gunicorn will use
+# Expose the port that will be dynamically set by Heroku
 EXPOSE 5000
 
-# Run the Flask app using Gunicorn in production mode
-CMD ["gunicorn", "chat:app", "--preload", "--workers=1", "--timeout=60", "--bind", "0.0.0.0:5000"]
+# Run the Flask app using Gunicorn, binding to the $PORT
+CMD ["gunicorn", "chat:app", "--workers=1", "--timeout=60", "--bind", "0.0.0.0:$PORT"]
