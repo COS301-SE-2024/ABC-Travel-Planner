@@ -14,6 +14,7 @@ interface PostCardProps {
   post_description: string;
   post_likes: number;
   timestamp: number;
+  profileImageUrl?: string;
 }
 
 interface Comment {
@@ -74,6 +75,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const curr_user = Cookie.get("user_id") ?? ''
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
   console.log(backendUrl)
+
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: '',
@@ -340,45 +342,45 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
     const now = new Date();
     let postDate: Date;
 
-    // Handle Firebase Timestamp or standard Date object
+
     if (timestamp.toDate) {
-        postDate = timestamp.toDate();
+      postDate = timestamp.toDate();
     } else if (typeof timestamp === 'number') {
-        // Convert seconds to milliseconds by multiplying by 1000
-        postDate = new Date(timestamp * 1000);
+
+      postDate = new Date(timestamp * 1000);
     } else if (typeof timestamp === 'string') {
-        postDate = new Date(timestamp);
+      postDate = new Date(timestamp);
     } else {
-        postDate = timestamp;
+      postDate = timestamp;
     }
 
-    // Debug: Print values for inspection
-    console.log("Raw Timestamp:", timestamp);
-    console.log("Post Date:", postDate);
-    console.log("Now:", now);
 
-    // Calculate the time difference in seconds
     const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000);
-    
-    // Debug: Print time difference
+
     console.log("Time Difference (seconds):", diffInSeconds);
 
     if (diffInSeconds < 60) {
-        return `${diffInSeconds} seconds ago`;
+      return `${diffInSeconds} seconds ago`;
     } else if (diffInSeconds < 3600) {
-        return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
     } else if (diffInSeconds < 86400) {
-        return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours} hour${hours === 1 ? '' : 's'} ago`;
     } else if (diffInSeconds < 604800) {
-        return `${Math.floor(diffInSeconds / 86400)} days ago`;
+      const days = Math.floor(diffInSeconds / 86400);
+      return `${days} day${days === 1 ? '' : 's'} ago`;
     } else if (diffInSeconds < 2419200) {
-        return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
-    } else if (diffInSeconds < 31536000) { 
-        return `${Math.floor(diffInSeconds / 2592000)} months ago`; 
+      const weeks = Math.floor(diffInSeconds / 604800);
+      return `${weeks} week${weeks === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 31536000) {
+      const months = Math.floor(diffInSeconds / 2592000);
+      return `${months} month${months === 1 ? '' : 's'} ago`; // Approximate 30 days per month
     } else {
-        return postDate.toLocaleString();
+      return postDate.toLocaleString();
     }
-};
+  };
+
 
 
   const followUser = async () => {
@@ -459,9 +461,17 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
       <PopupMessage msg={message} trigger={trigger} />
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
         <div className="flex items-center justify-between w-full">
+          {/* Displaying the post image */}
+          {image_url && (
+            <img
+              src={`https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/Profiles%2F${user_id}.jpg?alt=media&token=cb1b06de-89b8-4918-8625-46fd742454e9`}
+              alt="Profile"
+              className="profile-image"
+            />
+          )}
           {/* User info and post description */}
           <div className="relative">
-            <a href={`/user/${user_id}`} className="text-lg font-bold text-black hover:underline">
+            <a href={`/profile/${user_id}`} className="text-lg font-bold text-black hover:underline">
               @{userName}
             </a>
             <p className="text-sm text-gray-500">{getTimeAgo(timestamp)}</p>

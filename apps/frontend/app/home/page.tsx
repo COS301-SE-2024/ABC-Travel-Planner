@@ -11,6 +11,7 @@ interface Post {
   post_likes?: number;
   timestamp: number;
   user_id: string;
+  profileImageUrl?: string;
 }
 
 interface Place {
@@ -64,7 +65,26 @@ const Home = () => {
         const response = await fetch(`${backendUrl}/posts`);
         if (!response.ok) throw new Error('Network response was not ok');
         const data: Post[] = await response.json();
-        setPosts(data);
+
+        const updatedData = await Promise.all(
+          data.map(async (item) => {
+            const user_id = item.user_id;
+            try {
+              const userResponse = await fetch(`${backendUrl}/users/${user_id}`);
+              if (!userResponse.ok) {
+                throw new Error('Failed to fetch user profile image');
+              }
+              const userData = await userResponse.json();
+              const imageLink = userData.profileImageUrl; // Assuming this field contains the image URL
+              return { ...item, profileImageUrl: imageLink }; // Add the image URL to the post data
+            } catch (error) {
+              console.error('Error fetching profile image:', error);
+              return item; // Return the original item if the fetch fails
+            }
+          })
+        );
+
+        setPosts(updatedData); // Update state with posts containing profile images
       } catch (error) {
         console.error('Error fetching posts:', error);
       }
@@ -72,6 +92,7 @@ const Home = () => {
 
     fetchPosts();
   }, []);
+
 
   useEffect(() => {
     const fetchPopularDestinations = async () => {
@@ -81,7 +102,8 @@ const Home = () => {
         const data = await response.json();
         const places = data.results;
 
-        const imageDestinations = places.map((place: Place) => {
+        // Limit to 12 destinations
+        const imageDestinations = places.slice(0, 12).map((place: Place) => {
           if (place.photos && place.photos.length > 0) {
             const photoReference = place.photos[0].photo_reference;
             const apikey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
@@ -102,6 +124,7 @@ const Home = () => {
 
     fetchPopularDestinations();
   }, []);
+
 
   return (
     <div
@@ -166,7 +189,7 @@ const Home = () => {
       >
         <div className="w-full flex flex-col">
           {posts.map((post) => (
-            <div key={post.id} className="mb-4"> {/* Added margin-bottom here */}
+            <div key={post.id} className="mb-4">
               <PostCard
                 post_id={post.id}
                 user_id={post.user_id}
@@ -174,9 +197,11 @@ const Home = () => {
                 post_description={post.caption || 'No description available.'}
                 post_likes={post.post_likes || 0}
                 timestamp={post.timestamp}
+                profileImageUrl={post.profileImageUrl} // Pass the profileImageUrl here
               />
             </div>
           ))}
+
         </div>
       </div>
     </div>
