@@ -208,24 +208,28 @@ body {
 }
 
 .search-input {
-  padding: 1rem;
-  font-size: 1.25rem;
-  border-radius: 4px 0 0 4px;
-  border: 1px solid #ccc;
-  outline: none;
-  flex: 1;
+  height: 48px; /* Set a fixed height */
+  padding: 0 12px; /* Padding for input */
+  border: 1px solid #ccc; /* Add your desired styles */
+  border-radius: 4px; /* Rounded corners */
+  flex: 1; /* Allow the input to take available width */
+  box-sizing: border-box; /* Ensure padding and border are included in height */
 }
 
 .search-button-submit {
-  padding: 1rem 1.5rem;
-  font-size: 1.25rem;
-  border-radius: 0 4px 4px 0;
-  border: 1px solid #ccc;
-  background-color: #0070f3;
-  color: white;
-  cursor: pointer;
-  outline: none;
+  background-color: #3b82f6; /* Example blue color */
+  border: none; /* Remove default button border */
+  border-radius: 4px; /* Same border radius as input */
+  color: white; /* Icon color */
+  cursor: pointer; /* Pointer cursor */
+  height: 48px; /* Same height as the input */
+  width: 48px; /* Set width for the button */
+  display: flex; /* Use flex to center the icon */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  padding: 0; /* Remove default padding */
 }
+
 
 /*ACCOUNT*/
 .edit-profile {
@@ -282,7 +286,7 @@ body {
   position: relative;
   background: rgba(173, 216, 230, 0.5);
   padding: 40px;
-  width: 100%;
+  width: 140%;
   max-width: 900px;
   border-radius: 10px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
@@ -547,7 +551,7 @@ body {
 }
 
 .saved-itineraries {
-  width: 100%;
+  width: 140%;
   max-width: 900px;
   background: rgba(173, 216, 230, 0.5);
   padding: 40px;
@@ -1383,3 +1387,4 @@ body {
   padding: 2rem;
   text-align: center;
 }
+

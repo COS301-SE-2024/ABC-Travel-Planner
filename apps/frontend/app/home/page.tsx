@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PostCard from './PostCard';
 import Link from 'next/link';
-
+import { useTheme } from '../context/ThemeContext'; 
 interface Post {
   caption: string;
   id: string;
@@ -30,39 +30,10 @@ const Home = () => {
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [popularDestinations, setPopularDestinations] = useState<{ image: string, place_id: string }[]>([]);
-  const [backgroundImage, setBackgroundImage] = useState<string>('');
-  const [defaultBackground, setDefaultBackground] = useState<string>('');
-  const [headerTextColor, setHeaderTextColor] = useState<string>('text-blue-1000'); // Default color
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   console.log(backendUrl);
 
-  useEffect(() => {
-    const theme = localStorage.getItem('selectedTheme') || 'none';
 
-    const themeImages: { [key: string]: string } = {
-      beach: '/Images/BeachTheme.png',
-      luxury: '/Images/Luxury.png',
-      adventure: '/Images/Adventure.png',
-      cultural: '/Images/Cultural.png',
-      nature: '/Images/Nature.png',
-      city: '/Images/City.png',
-      romantic: '/Images/Romantic.png',
-      family: '/Images/Family.png',
-      wellness: '/Images/Wellness.png',
-      historical: '/Images/Historical.png',
-      none: '', // Default background
-    };
-
-    if (theme === 'none') {
-      setBackgroundImage(''); 
-      setDefaultBackground('rgba(173, 216, 230, 0.5)'); 
-      setHeaderTextColor('text-blue-1000');
-    } else {
-      setBackgroundImage(`url(${themeImages[theme]})`);
-      setDefaultBackground('');
-      setHeaderTextColor('text-white');
-    }
-  }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -118,33 +89,27 @@ const Home = () => {
     fetchPopularDestinations();
   }, []);
 
+  //Theme
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
+  useEffect(() => {
+    // Apply theme styles
+    document.body.style.backgroundColor = themeStyles.background;
+    document.body.style.color = themeStyles.textColor;
+    const navbar = document.querySelector('.navbar') as HTMLElement;
+    if (navbar) {
+      navbar.style.backgroundColor = themeStyles.navbarColor;
+    }
+  }, [themeStyles]); 
   return (
     
-    <div
-      className="w-full mt-8"
-      style={{
-        padding: '20px',
-        backgroundColor: defaultBackground,
-        borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        backgroundImage: backgroundImage,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
+    <div className="w-full mt-8" >
       <div className="flex justify-center mb-4 mt-4">
-        <h2 className={`text-4xl font-extrabold ${headerTextColor} bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
+      <h2 className={`text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
           Top Destinations
         </h2>
       </div>
 
-      <div
-        className={`flex flex-row overflow-x-auto w-full custom-scrollbar ${backgroundImage ? '' : 'bg-gradient-to-r from-pink-200 via-green-200 to-blue-200'}`}
-        style={{
-          gap: '16px',
-          padding: '10px 0',
-        }}
-      >
+      <div className={`flex flex-row overflow-x-auto w-full custom-scrollbar backgroundColor: 'rgba(173, 216, 230, 0.5)'`} style={{ gap: '16px', padding: '10px 0' }}>
         {popularDestinations.map((destination, index) => (
     <div key={index} style={{ flexShrink: 0, marginRight: '16px' }}>
       <Link href={`/${destination.place_id}`} passHref>
@@ -168,19 +133,11 @@ const Home = () => {
         ))}
       </div>
       <div className="flex justify-center mb-4 mt-4">
-        <h2 className={`text-4xl font-extrabold ${headerTextColor} bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
+      <h2 className={`text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
           Latest Posts
         </h2>
       </div>
-      <div
-        className={`w-full mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left ${backgroundImage ? '' : 'bg-gradient-to-r from-pink-200 via-green-200 to-blue-200'}`}
-        style={{
-          padding: '20px',
-          textAlign: 'center',
-          borderRadius: '10px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        }}
-      >
+      <div className={`w-full max-w-screen-xl mx-auto mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left`} style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)',padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <div className="flex justify-center flex-col w-3/4 mx-auto">
           <div className="flex justify-center items-center flex-wrap gap-4">
             {posts.map((post) => (

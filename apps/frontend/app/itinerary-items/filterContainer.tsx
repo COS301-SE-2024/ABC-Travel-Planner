@@ -4,6 +4,7 @@ import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-i
 import { useRouter } from 'next/navigation';
 
 const FilterContainer = () => {
+ 
     const [selectedTopic, setSelectedTopic] = useState<string>('');
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchTerm, setSearchTerm] = useState('');
