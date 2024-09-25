@@ -13,8 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code to the container
 COPY . .
 
-# Expose the port that Gunicorn will use
-EXPOSE 5000
-
 # Use ENTRYPOINT instead of CMD to ensure argument passing works properly
-ENTRYPOINT ["gunicorn", "--workers=1", "--timeout=60", "--bind", "0.0.0.0:$PORT", "chat:app"]
+ENTRYPOINT ["gunicorn", "--workers=1", "--timeout=60", "--bind=0.0.0.0:$PORT", "chat:app"]
