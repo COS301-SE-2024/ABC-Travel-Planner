@@ -154,11 +154,29 @@ export class PostsService {
         throw new Error('Could not delete item - not found')
       }
 
-      //Deleting item...
+      //Deleting the post
       postsSnapshot.forEach((item) => {
         item.ref.delete();
         console.log("Document deleted successfully")
       })
+
+      //Delete likes associated with post
+      const likesDir = this.firebaseApp
+          .firestore()
+          .collection('Likes')
+      console.log(likesDir)
+
+      const likesSnapshot = await likesDir
+          .where('user_id', '==', userId)
+          .where('post_id', '==', postId)
+          .get()
+      
+      if (!likesSnapshot.empty) {
+        likesSnapshot.forEach((likeItem) => {
+          likeItem.ref.delete();
+          console.log("Like document deleted successfully")
+        })
+      }
     } catch (error) {
         console.error('Could not delete document: ', error.message)
         return error.message
