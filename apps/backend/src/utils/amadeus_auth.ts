@@ -20,13 +20,17 @@ export class Amadeus_Auth {
     private timeRenewed: Date
 
     constructor() {
-        this.timeRenewed = new Date('1998-08-08')
+        this.timeRenewed = new Date('2024-06-06')
         this.clientId = process.env.AMADEUS_API_KEY || '';
         this.clientSecret = process.env.AMADEUS_CLIENT_SECRET || '';
     }
 
     async getAccessToken() : Promise<string> {
-        if (new Date().getTime() - this.timeRenewed.getTime() > 1799) {
+        const currentTime = new Date();
+        console.log("CURRENT TIME: " + currentTime.getTime() / 1000)
+        console.log("TIME RENEWED: " + this.timeRenewed.getTime() / 1000)
+
+        if (currentTime.getTime()/1000 - this.timeRenewed.getTime()/1000 > 1795) {
             console.log("EXPIRED!!")
             
             const body = {
@@ -45,11 +49,9 @@ export class Amadeus_Auth {
             
             try {
                 const renewReq = await axios(reqOptions)
-                console.log(renewReq)
                 const data: Amadeus_Auth_Res = renewReq.data
-                console.log(data)
                 this.accessToken = data.access_token
-                this.timeRenewed = new Date();
+                this.timeRenewed = currentTime;
             } catch (error) {
                 console.error(error)
             }

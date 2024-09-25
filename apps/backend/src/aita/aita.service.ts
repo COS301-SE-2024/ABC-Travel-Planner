@@ -31,7 +31,14 @@ export class AitaService {
     const access_token = await this.getAccessToken();
     console.log("ACCESS: " + access_token)
     try {
-        const res = await axios.get(`https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY,AIRPORT&keyword=${searchTerm}&countryCode=${country_code}&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=LIGHT`)
+        const res = await axios.get(
+            `https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY,AIRPORT&keyword=${searchTerm}&countryCode=${country_code}&page[limit]=10&page[offset]=0&sort=analytics.travelers.score&view=LIGHT`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            }
+        })
+
         console.log(res)
         const resData = res.data
         console.log(resData)

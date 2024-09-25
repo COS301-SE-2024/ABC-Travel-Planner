@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import Select from 'react-select'
+import DatePicker from 'react-datepicker';
 
 interface aitaCodes {
     id: number, code: string
@@ -12,9 +13,11 @@ const FilterContainer = () => {
     const [selectedTopic, setSelectedTopic] = useState<string>('');
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [openCalender, setOpenCalender] = useState(false);
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const [selectedDates, setSelectedDates] = useState<Date[]>([])
 
     const handleTopicSelect = (topic: string) => {
         setSelectedTopic(topic);
@@ -103,6 +106,17 @@ const FilterContainer = () => {
                                     <Select id='destinationSelect' options={options} placeholder="Select a destination" className='text-black w-96'/>
                                 </label>
                             </div>
+
+                            
+                            <button onClick={() => setOpenCalender(!openCalender)}>Select departure date</button>
+
+                            {openCalender && (
+                                <div>
+                                    //TODO Implement a calender...
+                                </div>
+                            )}
+
+                            
                         </div>
                         </>
                     ) : (
