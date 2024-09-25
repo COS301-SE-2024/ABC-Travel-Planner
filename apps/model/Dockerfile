@@ -13,8 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code to the container
 COPY . .
 
-# Expose the port that Flask will use
+# Expose the port that Gunicorn will use
 EXPOSE 5000
 
-# Run the Flask app
-CMD ["python3", "chat.py"]
+# Run the Flask app using Gunicorn in production mode
+CMD ["gunicorn", "chat:app", "--preload", "--workers=1", "--timeout=60", "--bind", "0.0.0.0:5000"]

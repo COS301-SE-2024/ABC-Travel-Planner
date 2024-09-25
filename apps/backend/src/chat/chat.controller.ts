@@ -9,6 +9,7 @@ export class ChatController {
   async searchUser(@Query('query') query: string): Promise<any> {
     try {
       const result = await this.chatService.resolveQuery(query); 
+      console.log(result);
       return result; 
     } catch (error) {
       console.error(error);
