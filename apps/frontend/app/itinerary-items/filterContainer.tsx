@@ -33,6 +33,7 @@ const FilterContainer = () => {
         router.push(`/filter?id=${actualId}&topic=${selectedTopic}&term=${searchInputRef.current?.value}`);
     };
 
+    // TODO use api that retrieves codes...
     const options = [
         {value: 'DUR', label: 'Durban'},
         {value: 'JHB', label: 'Johannesburg'},
@@ -40,6 +41,9 @@ const FilterContainer = () => {
         {value: 'MUC', label: 'Muchanes'}
     ]
 
+    // TODO Display info in a seperate page? Or just use a modified filter page?
+    // TODO Frontend for filter page...
+    
     return (
         <div style={{maxHeight: '1000px', height: '100%', maxWidth: '1050px'}}>
         <div  style={{alignContent:'center' ,height: '100%', maxHeight:'500px', width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '20px', backgroundColor: 'white' }}>
