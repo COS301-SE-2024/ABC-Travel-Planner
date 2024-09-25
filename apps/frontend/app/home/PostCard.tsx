@@ -53,7 +53,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={handleOverlayClick}>
       <div className="bg-white p-4 rounded shadow-lg">
-      <button onClick={onClose} className="text-red-500">Close</button>
+        <button onClick={onClose} className="text-red-500">Close</button>
         {children}
       </div>
     </div>
@@ -336,14 +336,33 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
     }
   };
 
-  const getTimeAgo = (timestamp: number | string | Date) => {
+  const getTimeAgo = (timestamp: any) => {
     const now = new Date();
-    const postDate = typeof timestamp === 'number'
-        ? new Date(timestamp)
-        : new Date(timestamp);
+    let postDate: Date;
 
+    // Handle Firebase Timestamp or standard Date object
+    if (timestamp.toDate) {
+        postDate = timestamp.toDate();
+    } else if (typeof timestamp === 'number') {
+        // Convert seconds to milliseconds by multiplying by 1000
+        postDate = new Date(timestamp * 1000);
+    } else if (typeof timestamp === 'string') {
+        postDate = new Date(timestamp);
+    } else {
+        postDate = timestamp;
+    }
+
+    // Debug: Print values for inspection
+    console.log("Raw Timestamp:", timestamp);
+    console.log("Post Date:", postDate);
+    console.log("Now:", now);
+
+    // Calculate the time difference in seconds
     const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000);
     
+    // Debug: Print time difference
+    console.log("Time Difference (seconds):", diffInSeconds);
+
     if (diffInSeconds < 60) {
         return `${diffInSeconds} seconds ago`;
     } else if (diffInSeconds < 3600) {
@@ -353,17 +372,13 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
     } else if (diffInSeconds < 604800) {
         return `${Math.floor(diffInSeconds / 86400)} days ago`;
     } else if (diffInSeconds < 2419200) {
-        return 'Posted a week ago';
-    } else if (diffInSeconds < 31536000) {
         return `${Math.floor(diffInSeconds / 604800)} weeks ago`;
-    } else if (diffInSeconds < 31536000000) {
-        return `${Math.floor(diffInSeconds / 2592000)} months ago`;
+    } else if (diffInSeconds < 31536000) { 
+        return `${Math.floor(diffInSeconds / 2592000)} months ago`; 
     } else {
-        return postDate.toLocaleString(); // Format to local string for actual timestamp
+        return postDate.toLocaleString();
     }
 };
-
-
 
 
   const followUser = async () => {
