@@ -153,7 +153,7 @@ const Account = () => {
       });
       setFollowers(r.data);
     }
-    localStorage.removeItem('searchResults');
+    localStorage.removeItem("searchResults");
     fetch();
   }, []);
 
@@ -496,44 +496,44 @@ const Account = () => {
         {view === "shared" && (
           <div className="itinerary-cards">
             {itineraries.map((itinerary: any, index: any) => (
-              <div key={index} className="itinerary-card">
-                <img
-                  src={itinerary.imageUrl}
-                  alt={itinerary.name}
-                  className="itinerary-image"
-                />
-                <div className="itinerary-content">
-                  <h4>{itinerary.name}</h4>
-                  <Link
-                    href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=true&prev=${location.pathname}`}
-                    passHref
-                  >
-                    <button className="view-button">View</button>
-                  </Link>
+              <Link
+                key={index}
+                href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=true&prev=${location.pathname}`}
+                passHref
+              >
+                <div className="itinerary-card">
+                  <img
+                    src={itinerary.imageUrl}
+                    alt={itinerary.name}
+                    className="itinerary-image"
+                  />
+                  <div className="itinerary-content">
+                    <h4 className="itinerary-title">{itinerary.name}</h4>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
         {view === "bookmarks" && (
           <div className="itinerary-cards">
             {savedItineraries.map((itinerary: any, index: any) => (
-              <div key={index} className="itinerary-card">
-                <img
-                  src={itinerary.imageUrl}
-                  alt={itinerary.name}
-                  className="itinerary-image"
-                />
-                <div className="itinerary-content">
-                  <h4>{itinerary.name}</h4>
-                  <Link
-                    href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false&prev=${location.pathname}`}
-                    passHref
-                  >
-                    <button className="view-button">View</button>
-                  </Link>
+              <Link
+                key={index}
+                href={`/viewItinerary?itineraryName=${itinerary?.name}&itineraryId=${itinerary.id}&myItinerary=false&prev=${location.pathname}`}
+                passHref
+              >
+                <div className="itinerary-card">
+                  <img
+                    src={itinerary?.imageUrl}
+                    alt={itinerary?.name}
+                    className="itinerary-image"
+                  />
+                  <div className="itinerary-content">
+                    <h4 className="itinerary-title">{itinerary?.name}</h4>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
@@ -607,7 +607,7 @@ const Account = () => {
       )}
       {/* Posts */}
 
-      <section className="posts py-6 px-4">
+      <section className="posts py-6 px-4 " style={{ width: "140%" }}>
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
           onClick={() => setShowPostModal(true)}

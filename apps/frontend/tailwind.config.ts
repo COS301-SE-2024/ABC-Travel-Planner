@@ -8,7 +8,17 @@ const config: Config = {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        fadeOut: {
+          '0%': { opacity: '1'},
+          '100%': { opacity: '0'},
+        }
+      },
+      animation: {
+        fadeOut: 'fadeOut 2s ease-out'
+      }
+    },
   },
   plugins: [],
 };
