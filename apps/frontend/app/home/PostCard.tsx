@@ -460,23 +460,25 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
     <div className="flex justify-center items-center w-full">
       <PopupMessage msg={message} trigger={trigger} />
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center w-full space-x-3">
           {/* Displaying the post image */}
           {image_url && (
             <img
               src={`https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/Profiles%2F${user_id}.jpg?alt=media&token=cb1b06de-89b8-4918-8625-46fd742454e9`}
               alt="Profile"
-              className="profile-image"
+              className="profile-image w-12 h-12 rounded-full object-cover"
             />
           )}
+
           {/* User info and post description */}
-          <div className="relative">
+          <div className="flex-1">
             <a href={`/profile/${user_id}`} className="text-lg font-bold text-black hover:underline">
               @{userName}
             </a>
             <p className="text-sm text-gray-500">{getTimeAgo(timestamp)}</p>
             <h2>{post_description}</h2>
           </div>
+
           {/* Follow button */}
           {curr_user !== user_id && (
             <button className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full" onClick={followUser}>
@@ -484,6 +486,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             </button>
           )}
         </div>
+
 
         {/* Image with click handler */}
         <img

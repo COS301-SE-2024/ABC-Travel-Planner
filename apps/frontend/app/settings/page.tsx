@@ -477,7 +477,6 @@ const SettingsPage: React.FC = () => {
                     <div className="flex items-center space-x-4 p-4 bg-yellow-50 rounded-lg shadow-sm">
                       <FaFileAlt className="w-8 h-8 text-green-600" />
                       <span className="text-xl font-medium text-gray-800">
-                        Posts Created: <span className="font-bold">5</span>
                       </span>
                       <span className="text-xl font-medium text-gray-800">Posts Created: <span className="font-bold">{postsCount}</span></span>
                     </div>
