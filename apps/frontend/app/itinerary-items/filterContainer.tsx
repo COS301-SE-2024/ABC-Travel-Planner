@@ -4,10 +4,22 @@ import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-i
 import { useRouter } from 'next/navigation';
 import Select from 'react-select'
 import DatePicker from 'react-datepicker';
+import country_names from './country_names.json'
+import combobox_values from './combobox.json'
 
-interface aitaCodes {
-    id: number, code: string
+interface comboBoxValues {
+    value: string,
+    label: string
 }
+
+const countries:comboBoxValues[] = [];
+
+country_names.forEach((item) => {
+    countries.push({
+        value: item.value,
+        label: item.label
+    })
+})
 
 const FilterContainer = () => {
     const [selectedTopic, setSelectedTopic] = useState<string>('');
@@ -17,29 +29,69 @@ const FilterContainer = () => {
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const [selectedDates, setSelectedDates] = useState<Date[]>([])
+    const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+    const [startingAirport, setStartingAirport] = useState<comboBoxValues[]>([])
+    const [destinationAirport, setDestinationAirport] = useState<comboBoxValues[]>([])
 
     const handleTopicSelect = (topic: string) => {
         setSelectedTopic(topic);
         setSearchResults([]);
     };
-    // const id = 25;//sample 
+
+    const handleStartCountry = (country: string) => {
+        const startingAirports: comboBoxValues[] = []
+
+        combobox_values.forEach((item) => {
+            if (item.country === country) {
+                startingAirports.push({
+                    value: item.iata_code,
+                    label: `${item.airport_name.trim()}, ${item.city.trim()}, ${item.country}`
+                })
+            }
+        })
+
+        setStartingAirport(startingAirports)
+    }
+
+    const handleDestinationCountry = (country: string) => {
+        const destinationAirports: comboBoxValues[] = []
+
+        combobox_values.forEach((item) => {
+            if (item.country === country) {
+                destinationAirports.push({
+                    value: item.iata_code,
+                    label: `${item.airport_name.trim()}, ${item.city.trim()}, ${item.country}`
+                })
+            }
+        })
+
+        setDestinationAirport(destinationAirports)
+    }
+
     const id = localStorage.getItem('id') as string
     const location: any = JSON.parse(localStorage.getItem('location') || '{}').location;
     const actualId = JSON.parse(id).id
-    //console.log(actualId)
 
     const handleSearch = async () => {
         router.push(`/filter?id=${actualId}&topic=${selectedTopic}&term=${searchInputRef.current?.value}`);
     };
 
-    // TODO use api that retrieves codes...
-    const options = [
-        {value: 'DUR', label: 'Durban'},
-        {value: 'JHB', label: 'Johannesburg'},
-        {value: 'CPT', label: 'Cape Town'},
-        {value: 'MUC', label: 'Muchanes'}
-    ]
+    // Country codes for starting & destination flights...
+    const airports:comboBoxValues[] = []
+
+    combobox_values.forEach((item) => {
+        airports.push(
+            {
+                value: item.iata_code, 
+                label: `${item.airport_name}, ${item.city}, ${item.country}`
+            }
+        )
+    })
+
+    console.log("AIRPORT DATA: ")
+    airports.forEach((item) => {
+        console.log(item)
+    })
 
     // TODO Display info in a seperate page? Or just use a modified filter page?
     // TODO Frontend for filter page...
@@ -99,15 +151,27 @@ const FilterContainer = () => {
                         <>
                         <div style={{width: '1000px', backgroundColor: 'white', height: '350px', display: 'block', justifyContent: 'center', borderRadius: '10px'}} className=''>
                             <hr style={{border: '1.5px solid rgba(0, 122, 255, 0.85)', width: '100%'}}></hr>
-                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '20px' }}>
+                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
+                                <label>
+                                    Starting country:
+                                    <Select id='originSelect' options={countries} placeholder="Select a starting location" className='text-black w-96' onChange={(selectedVal) => {handleStartCountry(selectedVal?.value || '')}}/>
+                                </label>
+
+                                <label>
+                                    Destination country:
+                                    <Select id='destinationSelect' options={countries} placeholder="Select a destination" className='text-black w-96' onChange={(selectedVal) => {handleDestinationCountry(selectedVal?.value || '')}}/>
+                                </label>
+                            </div>
+
+                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
                                 <label>
                                     Flying from:
-                                    <Select id='originSelect' options={options} placeholder="Select a starting location" className='text-black w-96'/>
+                                    <Select id='originSelect' options={startingAirport} placeholder="Select a starting location" className='text-black w-96'/>
                                 </label>
 
                                 <label>
                                     Flying to:
-                                    <Select id='destinationSelect' options={options} placeholder="Select a destination" className='text-black w-96'/>
+                                    <Select id='destinationSelect' options={destinationAirport} placeholder="Select a destination" className='text-black w-96'/>
                                 </label>
                             </div>
 
