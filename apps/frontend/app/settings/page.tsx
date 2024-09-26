@@ -21,42 +21,44 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import Cookie from "js-cookie";
-import { deleteAccount } from ".";
+import { deleteAccount, getFavouriteCountries } from ".";
 import { logout } from "../account";
 
+import getUser from "@/libs/actions/getUser";
+
 const countries = [
-  { name: "Argentina", value: "argentina" },
-  { name: "Australia", value: "australia" },
-  { name: "Brazil", value: "brazil" },
-  { name: "Canada", value: "canada" },
-  { name: "China", value: "china" },
-  { name: "Egypt", value: "egypt" },
-  { name: "France", value: "france" },
-  { name: "Germany", value: "germany" },
-  { name: "Ghana", value: "ghana" },
-  { name: "Greece", value: "greece" },
-  { name: "India", value: "india" },
-  { name: "Indonesia", value: "indonesia" },
-  { name: "Italy", value: "italy" },
-  { name: "Japan", value: "japan" },
-  { name: "Kenya", value: "kenya" },
-  { name: "Malaysia", value: "malaysia" },
-  { name: "Mexico", value: "mexico" },
-  { name: "Morocco", value: "morocco" },
-  { name: "Netherlands", value: "netherlands" },
-  { name: "New Zealand", value: "new_zealand" },
-  { name: "Nigeria", value: "nigeria" },
-  { name: "Russia", value: "russia" },
-  { name: "South Africa", value: "south_africa" },
-  { name: "South Korea", value: "south_korea" },
-  { name: "Spain", value: "spain" },
-  { name: "Switzerland", value: "switzerland" },
-  { name: "Tanzania", value: "tanzania" },
-  { name: "Thailand", value: "thailand" },
-  { name: "Tunisia", value: "tunisia" },
-  { name: "Turkey", value: "turkey" },
-  { name: "United Kingdom", value: "uk" },
-  { name: "USA", value: "usa" },
+  "Argentina",
+  "Australia",
+  "Brazil",
+  "Canada",
+  "China",
+  "Egypt",
+  "France",
+  "Germany",
+  "Ghana",
+  "Greece",
+  "India",
+  "Indonesia",
+  "Italy",
+  "Japan",
+  "Kenya",
+  "Malaysia",
+  "Mexico",
+  "Morocco",
+  "Netherlands",
+  "New Zealand",
+  "Nigeria",
+  "Russia",
+  "South Africa",
+  "South Korea",
+  "Spain",
+  "Switzerland",
+  "Tanzania",
+  "Thailand",
+  "Tunisia",
+  "Turkey",
+  "United Kingdom",
+  "USA",
 ];
 
 const themes: {
@@ -158,6 +160,18 @@ const SettingsPage: React.FC = () => {
         const postsCount = await fetchPostsCount(userId || "");
 
         setPostsCount(postsCount);
+
+        const result = await getUser(userId);
+        const user = JSON.parse(result || "{}");
+
+        if (user !== null && user?.sharingMode) {
+          setSharingMode(user?.sharingMode);
+        } else {
+          setSharingMode("public");
+        }
+
+        const countries = await getFavouriteCountries(userId);
+        setSelectedCountries(countries);
       } catch (error: any) {
         setError(error.message);
       }
@@ -217,7 +231,6 @@ const SettingsPage: React.FC = () => {
       }
     );
     setShowCountryModal(false);
-    setSelectedCountries([]);
   };
 
   const handleSharingModeChange = (mode: "private" | "public") => {
@@ -540,18 +553,16 @@ const SettingsPage: React.FC = () => {
                 <div className="p-2 space-y-2 max-h-[50vh] overflow-y-auto">
                   {countries.map((country) => (
                     <div
-                      key={country.value}
+                      key={country}
                       className={`p-4 cursor-pointer rounded-lg border-2 ${
-                        selectedCountries.includes(country.value)
+                        selectedCountries?.includes(country)
                           ? "border-blue-500 bg-blue-100"
                           : "border-gray-300"
                       } hover:bg-blue-50 flex justify-between items-center`}
-                      onClick={() =>
-                        handleCountrySelectItinerary(country.value)
-                      }
+                      onClick={() => handleCountrySelectItinerary(country)}
                     >
-                      <span className="text-lg">{country.name}</span>
-                      {selectedCountries.includes(country.value) && (
+                      <span className="text-lg">{country}</span>
+                      {selectedCountries?.includes(country) && (
                         <CheckIcon className="w-6 h-6 text-blue-500" />
                       )}
                     </div>

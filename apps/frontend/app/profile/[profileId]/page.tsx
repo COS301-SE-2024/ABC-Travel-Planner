@@ -321,7 +321,7 @@ const Profile = () => {
 
       {/* Posts */}
 
-      <section className="posts py-6 px-4">
+      <section className="posts py-6 px-4" style={{ width: '140%'}}>
         <h3 className="text-xl font-bold mb-4">Travel Posts</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

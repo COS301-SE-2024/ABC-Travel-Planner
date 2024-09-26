@@ -28,7 +28,6 @@ export async function deleteAccount(user_id: any) {
       if (doc.data().user_id === user_id) {
         await deleteDoc(doc.ref);
 
-        
         const itinerary_id = doc.id;
         const q2 = collection(db, "Saved-Itineraries");
         const querySnapshot2 = await getDocs(q2);
@@ -42,4 +41,19 @@ export async function deleteAccount(user_id: any) {
   } catch (error) {
     return JSON.stringify({ message: error });
   }
+}
+
+export async function getFavouriteCountries(user_id: any) {
+  //from the favourite-country collection doc is the user_id
+  const db = getFirestore(app);
+  const q = collection(db, "Favourite-Countries");
+  const querySnapshot = await getDocs(q);
+  let countries: string[] = [];
+  querySnapshot.forEach((doc: any) => {
+    if (doc.id === user_id) {
+      countries = doc.data().favouriteCountries;
+    }
+  });
+  console.log(countries);
+  return countries;
 }
