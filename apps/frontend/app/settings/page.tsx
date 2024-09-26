@@ -8,6 +8,7 @@ import {
   HomeIcon,
   CheckIcon,
 } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 import {
   FaUser,
   FaSearch,
@@ -20,6 +21,8 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import Cookie from "js-cookie";
+import { deleteAccount } from ".";
+import { logout } from "../account";
 
 const countries = [
   { name: "Argentina", value: "argentina" },
@@ -86,6 +89,7 @@ const SettingsPage: React.FC = () => {
   };
 
   //Account
+  const router = useRouter();
   const [showChangePasswordModal, setShowChangePasswordModal] =
     useState<boolean>(false);
   const [oldPassword, setOldPassword] = useState<string>("");
@@ -143,53 +147,22 @@ const SettingsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function getLikesCount() {
+    async function fetch() {
       try {
         const userId = Cookie.get("user_id");
         console.log(userId);
-
         const count = await fetchLikesCount(userId || "");
-
         setLikesCount(count);
+        const commentsCount = await fetchCommentsCount(userId || "");
+        setCommentsCount(commentsCount);
+        const postsCount = await fetchPostsCount(userId || "");
+
+        setPostsCount(postsCount);
       } catch (error: any) {
         setError(error.message);
       }
     }
-    getLikesCount();
-  }, []);
-
-  useEffect(() => {
-    async function getCommentsCount() {
-      try {
-        const userId = Cookie.get("user_id");
-        console.log(userId);
-
-        const count = await fetchCommentsCount(userId || "");
-
-        setCommentsCount(count);
-      } catch (error: any) {
-        setError(error.message);
-      }
-    }
-
-    getCommentsCount();
-  }, []);
-
-  useEffect(() => {
-    async function getPostsCount() {
-      try {
-        const userId = Cookie.get("user_id");
-        console.log(userId);
-
-        const count = await fetchPostsCount(userId || "");
-
-        setPostsCount(count);
-      } catch (error: any) {
-        setError(error.message);
-      }
-    }
-
-    getPostsCount();
+    fetch();
   }, []);
 
   async function fetchLikesCount(userId: string): Promise<number> {
@@ -252,10 +225,9 @@ const SettingsPage: React.FC = () => {
   };
 
   //User Management
-  const [showMutedBlockedModal, setShowMutedBlockedModal] =
-    useState<boolean>(false);
+  const [showBlockedModal, setShowBlockedModal] = useState<boolean>(false);
   const [showActivityModal, setShowActivityModal] = useState<boolean>(false);
-  const [showDisableModal, setShowDisableModal] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [userList, setUserList] = useState([
@@ -288,8 +260,19 @@ const SettingsPage: React.FC = () => {
     setShowSharingModal(false);
   };
 
-  const handleDisableAccount = () => {
-    // Implement account disable functionality
+  const handleDeleteAccount = async () => {
+    const user_id = Cookie.get("user_id");
+
+    await deleteAccount(user_id);
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/deleteAccount`,
+      {
+        user_id: user_id,
+      }
+    );
+    await logout();
+    Cookie.remove("user_id");
+    router.push("/login");
   };
 
   return (
@@ -320,7 +303,7 @@ const SettingsPage: React.FC = () => {
                 </div>
                 <button
                   className="text-blue-500 hover:underline"
-                  onClick={() => setShowMutedBlockedModal(true)}
+                  onClick={() => setShowBlockedModal(true)}
                 >
                   View List
                 </button>
@@ -348,7 +331,7 @@ const SettingsPage: React.FC = () => {
                 </div>
                 <button
                   className="text-red-500 hover:underline"
-                  onClick={() => setShowDisableModal(true)}
+                  onClick={() => setShowDeleteModal(true)}
                 >
                   Delete Account
                 </button>
@@ -356,13 +339,13 @@ const SettingsPage: React.FC = () => {
             </div>
           )}
 
-          {/* Muted and Blocked Users Modal */}
-          {showMutedBlockedModal && (
+          {/*Blocked Users Modal */}
+          {showBlockedModal && (
             <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
               <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
                 <button
                   className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-                  onClick={() => setShowMutedBlockedModal(false)}
+                  onClick={() => setShowBlockedModal(false)}
                 >
                   <FaTimes className="w-6 h-6" />
                 </button>
@@ -402,7 +385,7 @@ const SettingsPage: React.FC = () => {
                 <div className="flex justify-end mt-4">
                   <button
                     className="bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={() => setShowMutedBlockedModal(false)}
+                    onClick={() => setShowBlockedModal(false)}
                   >
                     Close
                   </button>
@@ -459,13 +442,13 @@ const SettingsPage: React.FC = () => {
             </div>
           )}
 
-          {/* Disable Account Modal */}
-          {showDisableModal && (
+          {/* delete Account Modal */}
+          {showDeleteModal && (
             <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
               <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
                 <button
                   className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-                  onClick={() => setShowDisableModal(false)}
+                  onClick={() => setShowDeleteModal(false)}
                 >
                   <FaTimes className="w-6 h-6" />
                 </button>
@@ -478,13 +461,13 @@ const SettingsPage: React.FC = () => {
                 <div className="flex justify-center space-x-4">
                   <button
                     className="bg-red-500 text-white px-4 py-2 rounded"
-                    onClick={handleDisableAccount}
+                    onClick={handleDeleteAccount}
                   >
                     Delete
                   </button>
                   <button
                     className="bg-gray-300 px-4 py-2 rounded"
-                    onClick={() => setShowDisableModal(false)}
+                    onClick={() => setShowDeleteModal(false)}
                   >
                     Cancel
                   </button>
