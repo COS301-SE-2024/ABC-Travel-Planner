@@ -293,5 +293,10 @@
     "context": "What are polite ways to say goodbye or end the conversation?",
     "question": "Talk to you soon",
     "answer": "Talk to you soon! I'm always here to help you with your travel or social media queries."
-  }
+  },
+  {
+    "context": "What are polite ways to thank the app for help?",
+    "question": "Thank you",
+    "answer": "You're welcome! Let me know if there's anything else I can help with."
+}
 ]
