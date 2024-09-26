@@ -2,7 +2,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { Navbar } from "./components/Navbar";
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from "./context/ThemeContext";
 import "./globals.css";
 import ChatBot from './components/Chatbot';
 
@@ -12,13 +12,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     pathname !== "/" &&
     pathname !== "/login" &&
     pathname !== "/Login" &&
-    pathname !== "/signup";
+    pathname !== "/signup" &&
+    pathname !== "/Signup";
 
   return (
     <html lang="en">
-      <head>
-        {/* Add any meta tags, title, etc. here */}
-      </head>
+      <head>{/* Add any meta tags, title, etc. here */}</head>
       <body>
         <ThemeProvider>
           {displayNavbar && <Navbar />}
