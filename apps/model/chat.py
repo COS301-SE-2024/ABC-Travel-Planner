@@ -11,7 +11,6 @@ import logging
 import random
 from dotenv import load_dotenv
 
-# Setup logging
 logging.basicConfig(level=logging.ERROR)
 
 # Load environment variables if in development
