@@ -152,14 +152,6 @@ const SettingsPage: React.FC = () => {
     async function fetch() {
       try {
         const userId = Cookie.get("user_id");
-        console.log(userId);
-        const count = await fetchLikesCount(userId || "");
-        setLikesCount(count);
-        const commentsCount = await fetchCommentsCount(userId || "");
-        setCommentsCount(commentsCount);
-        const postsCount = await fetchPostsCount(userId || "");
-
-        setPostsCount(postsCount);
 
         const result = await getUser(userId);
         const user = JSON.parse(result || "{}");
@@ -179,6 +171,52 @@ const SettingsPage: React.FC = () => {
     fetch();
   }, []);
 
+  useEffect(() => {
+    async function getLikesCount() {
+      try {
+        const userId = Cookie.get("user_id");
+
+        const count = await fetchLikesCount(userId || "");
+
+        setLikesCount(count);
+      } catch (error: any) {
+        setError(error.message);
+      }
+    }
+    getLikesCount();
+  }, []);
+
+  useEffect(() => {
+    async function getCommentsCount() {
+      try {
+        const userId = Cookie.get("user_id");
+
+        const count = await fetchCommentsCount(userId || "");
+
+        setCommentsCount(count);
+      } catch (error: any) {
+        setError(error.message);
+      }
+    }
+
+    getCommentsCount();
+  }, []);
+
+  useEffect(() => {
+    async function getPostsCount() {
+      try {
+        const userId = Cookie.get("user_id");
+
+        const count = await fetchPostsCount(userId || "");
+
+        setPostsCount(count);
+      } catch (error: any) {
+        setError(error.message);
+      }
+    }
+
+    getPostsCount();
+  }, []);
   async function fetchLikesCount(userId: string): Promise<number> {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getLikesCount`,

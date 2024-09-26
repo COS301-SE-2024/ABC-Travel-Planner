@@ -230,7 +230,6 @@ body {
   padding: 0; /* Remove default padding */
 }
 
-
 /*ACCOUNT*/
 .edit-profile {
   display: flex;
@@ -400,32 +399,70 @@ body {
   font-size: larger;
 }
 
+.saved-itineraries {
+  width: 140%;
+  max-width: 900px;
+  background: rgba(173, 216, 230, 0.5);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  text-align: center;
+  max-height: 500px; /* Increased height */
+  overflow: hidden; /* Prevent overall section overflow */
+}
+
+.itinerary-cards {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto; /* Enable horizontal scrolling for the cards */
+  padding-bottom: 15px;
+  scrollbar-width: thin; /* For Firefox */
+  max-height: 300px; /* Adjust this height as needed */
+}
+.itinerary-card:hover {
+  transform: scale(1.01);
+}
 .itinerary-card {
-  flex: 0 0 auto;
-  width: 200px;
-  height: 150px;
+  flex: 0 0 auto; /* Prevent cards from shrinking */
+  width: 220px; /* Fixed width for cards */
+  min-height: 170px; /* Auto height to accommodate content */
+  max-height: 250px; /* Set a max height for uniformity */
   background: white;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Hide overflow to keep card clean */
 }
 
 .itinerary-image {
   width: 100%;
-
-  min-height: 100px;
-
-  height: 100px;
+  min-height: 100px; /* Minimum height for the image */
+  height: 100px; /* Fixed height for the image */
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
 .itinerary-content {
+  width: 100%; /* Ensure the container has a defined width */
   padding: 10px;
+  display: flex;
+  flex-direction: column;
   text-align: center;
+}
+
+.itinerary-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block; /* Ensure it's a block-level element */
+  width: 100%; /* Ensure full width */
+  min-width: 0; /* Important for flexbox to ensure ellipsis works */
 }
 .view-button {
   background: #007bff;
@@ -548,29 +585,6 @@ body {
   font-size: large;
   font-weight: bold;
   margin-bottom: 1rem;
-}
-
-.saved-itineraries {
-  width: 140%;
-  max-width: 900px;
-  background: rgba(173, 216, 230, 0.5);
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
-  text-align: center;
-  max-height: 500px; /* Increased height */
-  overflow-y: auto; /* Allow vertical scrolling if necessary */
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
-}
-
-.itinerary-cards {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding-bottom: 15px;
-  scrollbar-width: thin;
-  max-height: 300px; /* Adjust this height as needed */
 }
 
 .follow-button {
@@ -1387,4 +1401,3 @@ body {
   padding: 2rem;
   text-align: center;
 }
-

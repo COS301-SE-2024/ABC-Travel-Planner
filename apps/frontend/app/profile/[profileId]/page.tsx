@@ -253,22 +253,22 @@ const Profile = () => {
         <h3 className="section-title">Shared Itineraries</h3>
         <div className="itinerary-cards">
           {itineraries.map((itinerary: any, index: any) => (
-            <div key={index} className="itinerary-card">
-              <img
-                src={itinerary.imageUrl}
-                alt={itinerary.name}
-                className="itinerary-image"
-              />
-              <div className="itinerary-content">
-                <h4>{itinerary.name}</h4>
-                <Link
-                  href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false&prev=${location.pathname}`}
-                  passHref
-                >
-                  <button className="view-button">View</button>
-                </Link>
+            <Link
+              key={index}
+              href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false&prev=${location.pathname}`}
+              passHref
+            >
+              <div className="itinerary-card">
+                <img
+                  src={itinerary.imageUrl}
+                  alt={itinerary.name}
+                  className="itinerary-image"
+                />
+                <div className="itinerary-content">
+                  <h4 className="itinerary-title">{itinerary.name}</h4>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -321,7 +321,7 @@ const Profile = () => {
 
       {/* Posts */}
 
-      <section className="posts py-6 px-4" style={{ width: '140%'}}>
+      <section className="posts py-6 px-4" style={{ width: "140%" }}>
         <h3 className="text-xl font-bold mb-4">Travel Posts</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
