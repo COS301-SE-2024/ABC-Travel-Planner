@@ -36,7 +36,7 @@ def preload_models():
     classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli", device=device)
 
 # Preload models
-preload_models()
+#preload_models()
 
 # Initialize pipelines
 #ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=device) 
@@ -77,12 +77,12 @@ def is_query_related(query):
 @app.route('/query', methods=['POST'])
 def process_query():
     query = request.json.get('query')
-    if not is_query_related(query):
-        return jsonify({
-            "query": query,
-            "result": {"answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
-            "type": "error"
-        })
+    # if not is_query_related(query):
+    #     return jsonify({
+    #         "query": query,
+    #         "result": {"answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
+    #         "type": "error"
+    #     })
 
     # locations = extract_location(query)
     # location_str = ", ".join(locations) if locations else ""
