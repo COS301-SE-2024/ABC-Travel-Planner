@@ -6,6 +6,8 @@ import Select from 'react-select'
 import DatePicker from 'react-datepicker';
 import country_names from './country_names.json'
 import combobox_values from './combobox.json'
+import { CButton } from '@coreui/react';
+import { Input } from '@nextui-org/react';
 
 interface comboBoxValues {
     value: string,
@@ -32,6 +34,35 @@ const FilterContainer = () => {
     const [selectedDates, setSelectedDates] = useState<Date[]>([]);
     const [startingAirport, setStartingAirport] = useState<comboBoxValues[]>([])
     const [destinationAirport, setDestinationAirport] = useState<comboBoxValues[]>([])
+    const [flights, setFlights] = useState<{
+        start: string, 
+        end: string, 
+        adults: number,
+        class: string
+    }>
+    ({
+        start: '',
+        end: '',
+        adults: 0,
+        class: '--'
+    })
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || ''
+
+    const travelClassOptions = [
+        {
+            value: 'ECONOMY', label: 'Economy'
+        },
+        {
+            value: 'PREMIUM_ECONOMY', label: 'Premium Economy'
+        },
+        {
+            value: 'BUSINESS', label: 'Business Class'
+        },
+        {
+            value: 'FIRST', label: 'First Class'
+        }
+    ];
 
     const handleTopicSelect = (topic: string) => {
         setSelectedTopic(topic);
@@ -86,11 +117,6 @@ const FilterContainer = () => {
                 label: `${item.airport_name}, ${item.city}, ${item.country}`
             }
         )
-    })
-
-    console.log("AIRPORT DATA: ")
-    airports.forEach((item) => {
-        console.log(item)
     })
 
     // TODO Display info in a seperate page? Or just use a modified filter page?
@@ -150,34 +176,108 @@ const FilterContainer = () => {
                     {selectedTopic === 'Flights' ? (
                         <>
                         <div style={{width: '1000px', backgroundColor: 'white', height: '350px', display: 'block', justifyContent: 'center', borderRadius: '10px'}} className=''>
-                            <hr style={{border: '1.5px solid rgba(0, 122, 255, 0.85)', width: '100%'}}></hr>
+                            <hr style={{border: '1.5px solid rgba(65, 156, 247, 0.85)', width: '100%'}}></hr>
                             <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
                                 <label>
                                     Starting country:
-                                    <Select id='originSelect' options={countries} placeholder="Select a starting location" className='text-black w-96' onChange={(selectedVal) => {handleStartCountry(selectedVal?.value || '')}}/>
+                                    <Select id='originCountry' options={countries} placeholder="Select a starting location" className='text-black w-96' onChange={(selectedVal) => {handleStartCountry(selectedVal?.value || '')}}/>
                                 </label>
 
                                 <label>
                                     Destination country:
-                                    <Select id='destinationSelect' options={countries} placeholder="Select a destination" className='text-black w-96' onChange={(selectedVal) => {handleDestinationCountry(selectedVal?.value || '')}}/>
+                                    <Select id='destinationCountry' options={countries} placeholder="Select a destination" className='text-black w-96' onChange={(selectedVal) => {handleDestinationCountry(selectedVal?.value || '')}}/>
                                 </label>
                             </div>
 
                             <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
                                 <label>
                                     Flying from:
-                                    <Select id='originSelect' options={startingAirport} placeholder="Select a starting location" className='text-black w-96'/>
+                                    <Select id='originAirport' options={startingAirport} placeholder="Select a starting location" className='text-black w-96' onChange={(val) => {
+                                        const options = {
+                                            start: val?.value || '',
+                                            end: flights.end,
+                                            adults: flights.adults,
+                                            class: flights.class
+                                        }
+
+                                        setFlights(options)
+                                    }}/>
                                 </label>
 
                                 <label>
                                     Flying to:
-                                    <Select id='destinationSelect' options={destinationAirport} placeholder="Select a destination" className='text-black w-96'/>
+                                    <Select id='destinationAirport' options={destinationAirport} placeholder="Select a destination" className='text-black w-96' onChange={(val) => {
+                                        const options = {
+                                            start: flights.start,
+                                            end: val?.value || '',
+                                            adults: flights.adults,
+                                            class: flights.class
+                                        }
+
+                                        setFlights(options)
+                                    }}/>
                                 </label>
                             </div>
 
-                            
-                            <button onClick={() => setOpenCalender(!openCalender)}>Select departure date</button>
+                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
+                                <label>
+                                    Number of adults:
+                                    <Input placeholder="3" onChange={(item) => {
+                                        const options = {
+                                            start: flights.start,
+                                            end: flights.end,
+                                            adults: Number(item.target.value) || 0,
+                                            class: flights.class
+                                        }
 
+                                        setFlights(options)
+                                    }}></Input>
+                                </label>
+
+                                <label>
+                                    Travel class:
+                                    <Select id='travelClassSelect' options={travelClassOptions} placeholder="Select a travel class" className='text-black w-96' onChange={(val) => {
+                                        const options = {
+                                            start: flights.start,
+                                            end: flights.end,
+                                            adults: flights.adults,
+                                            class: val?.value || '--'
+                                        }
+
+                                        setFlights(options)
+                                    }}/>
+                                </label>
+                            </div>
+
+                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
+                            {/* <button onClick={() => setOpenCalender(!openCalender)}>Select departure date</button> */}
+                                <button className='w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700'
+                                    onClick={
+                                        async (val) => {
+                                            console.log('Searching...')
+                                            const adults = flights.adults;
+                                            const destination = flights.end;
+                                            const startingPoint = flights.start;
+                                            const selectedDate = new Date()
+                                            
+                                            const departureDate = `${selectedDate.getFullYear()}-${(selectedDate.getMonth()+1).toString().length === 1 ? '0' + (selectedDate.getMonth()+1).toString() : selectedDate.getMonth()+1}-${selectedDate.getDate()}`
+                                            const travelClass = flights.class;
+                                            console.log(departureDate)
+
+                                            //returnDate is excluded in search - Only one way trips for now
+                                            try {
+                                                // const res = await fetch(`${backendUrl}/flights/offers?originLocationCode=${startingPoint}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${adults}&travelClass=${travelClass}`)
+                                                
+                                            } catch (error) {
+                                                console.log(error)
+                                            }
+
+                                        }
+                                }
+                                >Search</button>
+                            </div>
+
+                            
                             {openCalender && (
                                 <div>
                                     //TODO Implement a calender...
