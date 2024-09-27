@@ -1,6 +1,6 @@
 [
   {
-    "context": "How do I log into my account? What’s the process to sign in? Can I use my Google account to log in?",
+    "context": "How do I log into my account? What’s the process to sign in? Can I use my Google account or other social media to log in?",
     "question": "How do I log into my account?",
     "answer": "To log in, go to the Login Page and enter your email and password. You can also sign in using Google authentication"
   },
@@ -67,7 +67,7 @@
   {
     "context": "Can you please give me a trip planned to City7",
     "question": "Can you please give me a trip planned to City7",
-    "answer": "There is a designated feature for this, navigate to the itinerary page and click the itinerary creator button, a pop up will show with various details details you can enter about yourself and "
+    "answer": "There is a designated feature for this, navigate to the itinerary page and click the itinerary creator button, a pop up will show with various details details you can enter about yourself and the location you would like to go to."
   },
   {
     "context": "Can I make a post of any particular place I have been to? How does the social media integration work on the app?",
@@ -217,17 +217,17 @@
   {
     "context": "How can I make my account private? Is there an option to adjust the visibility of my account or the itineraries I share?",
     "question": "How do I make my account private?",
-    "answer": "Unfortunately, you cannot change the visibility of your account, but you can change the visibility of your shared and saved itineraries to either public or private in the settings page under itinerary settings."
+    "answer": "You can change the visibility of your account which affects the visibility of your shared and saved itineraries to either public or private in the settings page under itinerary settings."
   },
   {
     "context": "Is it possible to disable my account? How can I manage my account status or deactivate it temporarily?",
     "question": "How do I disable my account?",
-    "answer": "Yes, you can disable your account by navigating to the settings page. Under the user management tab, you will find the option to disable your account."
+    "answer": "You can't disable your account but you can delete the account in your settings."
   },
   {
-    "context": "How can I mute or block specific users? Is there a section in the app where I can manage my interactions with other users?",
-    "question": "How do I mute or block a particular user?",
-    "answer": "You can block or mute a user by navigating to the settings page. Under the 'User Management' tab, once you click view list, you can search for the specific user(s) you want to mute or block and take action."
+    "context": "How can I block specific users? Is there a section in the app where I can manage my interactions with other users?",
+    "question": "How do I block a particular user?",
+    "answer": "You can block a user by searching for their profile. Once you are there look for the block button and from there click on it to block the user."
   },
   {
     "context": "How can I update my profile picture? Where can I upload a new image for my profile?",
@@ -298,5 +298,55 @@
     "context": "What are polite ways to thank the app for help?",
     "question": "Thank you",
     "answer": "You're welcome! Let me know if there's anything else I can help with."
-}
+  },
+  {
+    "context": "Can I mute another user? How do I mute someone?",
+    "question": "Can I mute a user?",
+    "answer": "Apologies but the app currently does not support muting other users. You can block users instead if needed."
+  },
+  {
+    "context": "How do I delete my account? Can I remove my account from the app?",
+    "question": "How do I delete my account?",
+    "answer": "You can delete your account by navigating to the Settings page under the User Management tab."
+  },
+  {
+    "context": "Can I switch to dark mode? How do I change the app to light or dark mode?",
+    "question": "Can I switch to dark mode?",
+    "answer": "Sorry the app does not support switching to dark or light mode. However, you can customize your theme with a variety of color options in the settings."
+  },
+  {
+    "context": "Can I message or DM other users? Is there a direct messaging feature?",
+    "question": "Can I message or DM another user?",
+    "answer": "My apologies but there is no direct messaging feature in the app."
+  },
+  {
+    "context": "Can I share a post outside the app? Is it possible to share posts externally?",
+    "question": "Can I share a post outside the app?",
+    "answer": "Apologies, sharing posts outside the app is not currently supported."
+  },
+  {
+    "context": "Where can I get more information about a specific destination? How can I learn more about a location?",
+    "question": "How can I get more info on a destination?",
+    "answer": "You can search for the destination in the app. After clicking on the destination card, it will take you to the More Info page where all the details about that location are provided."
+  },
+  {
+    "context": "How do I greet the app? What are basic greetings I can use?",
+    "question": "How are you?",
+    "answer": "I'm doing great, thank you! How can I assist you today?"
+  },
+  {
+    "context": "How do I greet the app? What are basic greetings I can use?",
+    "question": "What's up?",
+    "answer": "Not much! How can I help you with your travel plans or app-related questions?"
+  },
+  {
+    "context": "How do I close a conversation with the app? How do I say goodbye?",
+    "question": "Bye",
+    "answer": "Goodbye! Have a wonderful day, and feel free to come back if you need help."
+  },
+  {
+    "context": "What are polite ways to say goodbye?",
+    "question": "See ya",
+    "answer": "See ya! Don't hesitate to reach out if you need any assistance in the future."
+  }
 ]

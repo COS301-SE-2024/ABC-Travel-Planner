@@ -68,21 +68,34 @@ app = Flask(__name__)
 #     return locations
 
 def is_query_related(query):
-    labels = ['travel-related', 'social-media-related', 'greeting', 'farewell', 'authentication', 'account-management']
-    result = classifier(query, labels)
-    if result['scores'][0] > 0.75:
+    # Define keywords for each category
+    travel_keywords = ['travel', 'itinerary', 'itineraries', 'trip', 'trips', 'date', 'country', 'items', 'attractions', 'attraction', 'destination', 'tour', 'booking', 'flight', 'vacation', 'hotel', 'accommodation', 'holiday', 'rental', 'airport taxi', 'sightseeing', 'creator', 'generate', 'generator', 'google', 'social media']
+    social_media_keywords = ['post', 'like', 'comment', 'share', 'follow', 'login', 'logout', 'user', 'account', 'update', 'block', 'mute', 'profile', 'message', 'dm', 'friend', 'timeline', 'feed', 'story', 'share', 'dark mode', 'light mode', 'edit', 'image']
+    greeting_keywords = ['hello', 'hi', 'good morning', 'good afternoon', 'hey', 'good evening', 'how are you', 'how is it going', 'good day', 'morning', 'afternoon', 'evening', 'greetings', 'what\'s up']
+    farewell_keywords = ['goodbye', 'bye', 'see you', 'farewell', 'take care', 'later', 'catch you later', 'talk to you later', 'peace', 'adios', 'ciao', 'good night', 'so long', 'see you later', 'have a good day', 'good night', 'see ya']
+
+    query_lower = query.lower()
+
+    if any(word in query_lower for word in travel_keywords):
         return True
+    elif any(word in query_lower for word in social_media_keywords):
+        return True
+    elif any(word in query_lower for word in greeting_keywords):
+        return True
+    elif any(word in query_lower for word in farewell_keywords):
+        return True
+
     return False
 
 @app.route('/query', methods=['POST'])
 def process_query():
     query = request.json.get('query')
-    # if not is_query_related(query):
-    #     return jsonify({
-    #         "query": query,
-    #         "result": {"answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
-    #         "type": "error"
-    #     })
+    if not is_query_related(query):
+        return jsonify({
+            "query": query,
+            "result": {"answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
+            "type": "error"
+        })
 
     # locations = extract_location(query)
     # location_str = ", ".join(locations) if locations else ""
