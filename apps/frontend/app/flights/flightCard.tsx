@@ -1,22 +1,44 @@
 "use client";
-import Link from 'next/link';
 import React, { useEffect, useState, useRef } from 'react';
-import Cookie from 'js-cookie';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
-import { insertRecord } from '../utils/functions/insertRecord';
 import PopupMessage  from '../utils/PopupMessage';
 
-interface FlightCardProps {
-  title: string
+interface SegmentType {
+  departure: {
+    iataCode: string,
+    terminal: string,
+    at: string            //Time
+  },
+  arrival: {
+    iataCode: string,
+    terminal: string, 
+    at: string
+  },
+  duration: string,
 }
 
+interface FlightCardProps {
+  title: string,
+  bookableSeats: number,
+  lastTicketDate: string,
+  segments: SegmentType[],
+  price: string,
+  currency: string,
+  weightSupported: string,
+  weightUnit: string
+}
 
-export const getRatingColor = (rating: number) => {
-  if (rating >= 4) {
+export const formatSegments = (segments: SegmentType[]) => {
+  segments.forEach((item) => {
+    console.log(JSON.stringify(item))
+  })
+}
+
+export const getWeightColor = (weight: number) => {
+  if (weight >= 25) {
     return 'bg-green-500';
-  } else if (rating >= 3) {
+  } else if (weight >= 20) {
     return 'bg-yellow-500';
   } else {
     return 'bg-red-500';
@@ -51,9 +73,16 @@ const spinnerAnimation = `
     100% { transform: rotate(360deg); }
   }`;
 
-const FlightCard: React.FC<FlightCardProps> = ({title}) => {
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
-  const [showCalendar, setShowCalendar] = useState(false);
+const FlightCard: React.FC<FlightCardProps> = ({
+    title, 
+    bookableSeats,
+    lastTicketDate,
+    segments,
+    price,
+    currency,
+    weightSupported,
+    weightUnit
+  }) => {
   const [uploaded, setUploaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [doneLoading, setDoneLoading] = useState(false);
@@ -87,16 +116,10 @@ const FlightCard: React.FC<FlightCardProps> = ({title}) => {
       await new Promise(resolve => setTimeout(resolve, 2800));
       setDoneLoading(true);
     };
-
+    
     loadingScreen();
+    // getCurrencies();
   }, [doneLoading]);
-
-  const datesEmpty = () => {
-    setTrigger(true);
-    setTimeout(() => {
-        setTrigger(false);
-    }, 2000);
-  }
 
   const uploadItem = async () => {
     // const destination = flight;
@@ -147,15 +170,6 @@ const FlightCard: React.FC<FlightCardProps> = ({title}) => {
     // }
   }
 
-  function extractLocation(fullString: string) {
-    const parts = fullString.split(/,|\s+/);
-
-    const city = parts.slice(1, -1).join(' ');
-    const country = parts[parts.length - 1];
-
-    return { city, country };
-  }
-
   return (
     <><div>
       {!doneLoading && (
@@ -179,12 +193,12 @@ const FlightCard: React.FC<FlightCardProps> = ({title}) => {
             <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
               <h1 className="text-4xl font-bold mb-2 text-blue-500">{title}</h1>
             </div>
-            <p className="text-gray-700 text-lg font-semibold">{`CITY & COUNTRY`}</p>
+            <p className="text-gray-700 text-lg font-semibold">{lastTicketDate}</p>
           </div>
           <div className="text-right">
-            <p className="text-gray-600 inline-block pr-2">{`RATING  `}</p>
-            <div className={`rounded-full ${getRatingColor(4.6)} text-white px-2 py-2 text-sm font-semibold inline-block`}>
-              {4.6}
+            <p className="text-gray-600 inline-block pr-2">{bookableSeats}</p>
+            <div className={`rounded-full ${getWeightColor(Number(weightSupported))} text-white px-2 py-2 text-sm font-semibold inline-block`}>
+              {`${weightSupported} ${weightUnit}`}
             </div>
           </div>
         </div>
@@ -207,7 +221,7 @@ const FlightCard: React.FC<FlightCardProps> = ({title}) => {
               <div className="mt-4 flex flex-col items-start space-y-4">
               </div>
               <div className="text-right">
-                <p className="text-3xl text-blue-500 font-semibold">PRICE</p>
+                <p className="text-3xl text-blue-500 font-semibold">R {price}</p>
                 <p className="text-blue-500 text-sm">TYPE</p>
                 <p className="text-blue-500 text-sm">Rates and taxes included</p>
               </div>

@@ -28,9 +28,18 @@ const Flights = () => {
         console.log("TRAVEL CLASS: " + travelClass)
 
           try {
-              const res = await fetch(`${backendUrl}/flights/offers?originLocationCode=${start}&destinationLocationCode=${end}&departureDate=${departureDate}&adults=${adults}&travelClass=${travelClass}`)
+              const res = await fetch(`${backendUrl}/flights/offers?originLocationCode=${start}&destinationLocationCode=${end}&departureDate=${departureDate}&adults=${adults}&travelClass=${travelClass}&max=20`)
               const data = await res.json()
+              
               console.log(data)
+
+              // try {
+              //   const res = await fetch(`https://api.frankfurter.app/latest?amount${price}&from=${currency}&to=ZAR`)
+              //   const convertedPrice = await res.json();
+              //   return convertedPrice?.rates['ZAR']
+              // } catch (error) {
+              //   console.error(error)
+              // }
 
               setFlightData(data?.data)
               setResultsCount(data?.meta.count)
@@ -73,7 +82,18 @@ const Flights = () => {
         <div className="flex flex-col gap-4 rounded-lg pt-10 pb-10" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
           <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
             {flightData?.map((item, index) => (
-              <FlightCard key={index} title={item?.id}/>
+              <FlightCard 
+                key={item?.id} 
+                title={item?.itineraries[0]?.duration || 'P0'} 
+                bookableSeats={item?.numberOfBookableSeats || ':'} 
+                lastTicketDate={item?.lastTicketingDate || ''} 
+                segments={item?.itineraries?.segments}
+                price={item?.price?.total}
+                currency={item?.price?.currency}
+                weightSupported={item?.travelerPricings[0]?.fareDetailsBySegment[0]?.includedCheckedBags?.weight}
+                weightUnit={item?.travelerPricings[0]?.fareDetailsBySegment[0]?.includedCheckedBags?.weightUnit}
+                />
+                
             ))}
           </div>
         </div>

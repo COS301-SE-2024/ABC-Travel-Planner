@@ -108,7 +108,7 @@ const FilterContainer = () => {
     };
 
     const handleFlightSearch = async (startingPoint: string, endPoint: string, adults: number, departDate: string, travelClass: string) => {
-        router.push(`/flights?start=${startingPoint}&end=${endPoint}&adults=${adults}&date=${departDate}&class=${travelClass}`)
+        router.push(`/flights?start=${startingPoint}&end=${endPoint}&adults=${adults}&date=${departDate}&class=${travelClass}&id=${id}&location=${location}`)
     }
 
     // Country codes for starting & destination flights...

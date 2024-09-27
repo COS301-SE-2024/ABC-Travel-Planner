@@ -43,19 +43,7 @@ export class FlightsService {
         console.error(error);
         return ['Error - Check server console']
     }
-}
-
-    // searchPrices() : Promise<any[]> {
-    //     try {
-    //         const response = await this.amadeus.shopping.flightOffersPrice.
-    //     }
-    // }
-
-    // createBooking() : Promise<any[]> {
-    //     try {
-    //         const response = await this.amadeus.shopping.flightOffersPrice.
-    //     }
-    // }
+  }
 
     flightEndpoint() : string {
         return "You've reached the flight endpoint✈️"
