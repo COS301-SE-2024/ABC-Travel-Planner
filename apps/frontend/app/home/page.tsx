@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PostCard from './PostCard';
 import Link from 'next/link';
-import { useTheme } from '../context/ThemeContext'; 
+//import { useTheme } from '../context/ThemeContext'; 
 interface Post {
   caption: string;
   id: string;
@@ -101,15 +101,6 @@ const Home = () => {
 
   //Theme
   const { selectedTheme, themeStyles, setTheme } = useTheme();
-  useEffect(() => {
-    // Apply theme styles
-    document.body.style.backgroundColor = themeStyles.background;
-    document.body.style.color = themeStyles.textColor;
-    const navbar = document.querySelector('.navbar') as HTMLElement;
-    if (navbar) {
-      navbar.style.backgroundColor = themeStyles.navbarColor;
-    }
-  }, [themeStyles]); 
   return (
     
     <div className="w-full mt-8" >
