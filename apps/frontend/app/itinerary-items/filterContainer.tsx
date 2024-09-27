@@ -127,10 +127,10 @@ const FilterContainer = () => {
     // TODO Frontend for filter page...
     
     return (
-        <div style={{maxHeight: '1000px', height: '100%', maxWidth: '1050px'}}>
-        <div  style={{alignContent:'center' ,height: '100%', maxHeight:'500px', width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '20px', backgroundColor: 'white' }}>
-            <h1  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', color: '#333' }}>Search at your Convenience!</h1>
-            <p  style={{ fontSize: '1.25rem', textAlign: 'center', marginBottom: '25px', color: '#666' }}>Click on an icon below to filter your search and provide better results</p>
+        <div style={{maxHeight: '1000px', height: '100%', maxWidth: '1050px', borderRadius: '4px'}}>
+        <div  style={{alignContent:'center' ,height: '100%', maxHeight:'500px', width: '100%', maxWidth: '1200px', margin: '0 auto', backgroundColor: 'white', borderRadius: '8px' }}>
+            <h1 style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', marginTop: '30px', color: '#333' }}>Search at your Convenience!</h1>
+            <p style={{ fontSize: '1.25rem', textAlign: 'center', marginBottom: '25px', color: '#666' }}>Click on an icon below to filter your search and provide better results</p>
     
             <div  style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '25px' }}>
                 <button
@@ -176,12 +176,12 @@ const FilterContainer = () => {
             </div>
     
             {selectedTopic && (
-                <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center'}}>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
                     {selectedTopic === 'Flights' ? (
                         <>
-                        <div style={{width: '1000px', backgroundColor: 'white', height: '350px', display: 'block', justifyContent: 'center', borderRadius: '10px'}} className=''>
+                        <div style={{width: '100%', backgroundColor: 'white', height: '315px', display: 'block', justifyContent: 'center', borderRadius: '10px', padding: '20px'}} className=''>
                             <hr style={{border: '1.5px solid rgba(65, 156, 247, 0.85)', width: '100%'}}></hr>
-                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
+                            <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px' }}>
                                 <label>
                                     Starting country:
                                     <Select id='originCountry' options={countries} placeholder="Select a starting location" className='text-black w-96' onChange={(selectedVal) => {handleStartCountry(selectedVal?.value || '')}}/>
@@ -193,7 +193,7 @@ const FilterContainer = () => {
                                 </label>
                             </div>
 
-                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
+                            <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px' }}>
                                 <label>
                                     Flying from:
                                     <Select id='originAirport' options={startingAirport} placeholder="Select a starting location" className='text-black w-96' onChange={(val) => {
@@ -223,10 +223,10 @@ const FilterContainer = () => {
                                 </label>
                             </div>
 
-                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
+                            <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px' }}>
                                 <label>
                                     Number of adults:
-                                    <Input placeholder="1" className='w-auto' onChange={(item) => {
+                                    <Input placeholder="1" className='w-full rounded-sm' onChange={(item) => {
                                         const options = {
                                             start: flights.start,
                                             end: flights.end,
@@ -253,7 +253,7 @@ const FilterContainer = () => {
                                 </label>
                             </div>
 
-                            <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
+                            <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px', marginTop: '10px'}}>
                             {/* <button onClick={() => setOpenCalender(!openCalender)}>Select departure date</button> */}
                                 <button className='w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700'
                                     onClick={
@@ -286,7 +286,7 @@ const FilterContainer = () => {
                         </div>
                         </>
                     ) : (
-                        <>
+                        <div className='flex ml-3 mr-3 mb-5 w-full justify-center border-solid border-1 border-slate-500'>
                             <input
                                 type="text"
                                 placeholder={`${selectedTopic} in ${location}`}
@@ -299,7 +299,7 @@ const FilterContainer = () => {
                             <button  onClick={handleSearch} style={{ marginLeft: '10px', padding: '12px 20px', fontSize: '1rem', borderRadius: '8px', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer' }}>
                                 <FaSearch />
                             </button>
-                        </>
+                        </div>
                         )}
                 </div>
             )}

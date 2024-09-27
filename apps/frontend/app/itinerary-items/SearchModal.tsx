@@ -39,10 +39,10 @@ const SearchModal: React.FC<SearchModalProp> = ({ handleAddDiv }) => {
         
       )}
       <Button className="fixed bottom-8 right-12 hover:bg-blue-400 text-white rounded-full addButton" key="md" onClick={onClose}>+</Button>
-      <Modal size="5xl" isOpen={isOpen} onOpenChange={onClose} style={{maxHeight: '1000px', padding: '0px'}}>
-        <ModalContent className="modal-content">
+      <Modal size="5xl" isOpen={isOpen} onOpenChange={onClose} style={{maxHeight: '1000px', padding: '0px 0px 0px 0px', borderRadius: '4px'}}>
+        <ModalContent className="modal-content px-0 py-0 rounded">
           <>
-            <ModalBody>
+            <ModalBody className="px-0 py-0 rounded">
               <FilterContainer />
             </ModalBody>
           </>
