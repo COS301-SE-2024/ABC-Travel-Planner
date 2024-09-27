@@ -456,7 +456,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
     }
   }
 
-  return (
+ return (
     <div className="flex justify-center items-center w-full">
       <PopupMessage msg={message} trigger={trigger} />
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
@@ -469,7 +469,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
               className="profile-image w-12 h-12 rounded-full object-cover"
             />
           )}
-
+  
           {/* User info and post description */}
           <div className="flex-1">
             <a href={`/profile/${user_id}`} className="text-lg font-bold text-black hover:underline">
@@ -477,48 +477,43 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             </a>
             <p className="text-sm text-gray-500">{getTimeAgo(timestamp)}</p>
             <h2>{post_description}</h2>
-      <div className="w-full justify-center w-full max-w-2xl bg-white rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
-        <div className="flex items-center justify-between w-full">
-          <div>
-            <h3 className="text-lg font-bold">{userName}</h3>
-            <p className="text-sm text-gray-500">{new Date(timestamp * 1000).toLocaleDateString()}</p>
-            <h2 >{post_description}</h2>
           </div>
-
-          {/* Follow button */}
-          {curr_user !== user_id && (
-            <button className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full" onClick={followUser}>
-              {isFollowing}
-            </button>
-          )}
         </div>
-
-
+  
+        {/* Follow button */}
+        {curr_user !== user_id && (
+          <button className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full" onClick={followUser}>
+            {isFollowing}
+          </button>
+        )}
+  
         {/* Image with click handler */}
-        <img
-          src={image_url}
-          alt='Post Image'
-          className="cursor-pointer"
-          onClick={() => setIsModalOpen(true)}
-        />
-
+        {image_url && (
+          <img
+            src={image_url}
+            alt="Post Image"
+            className="cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+          />
+        )}
+  
         {/* Modal for enlarged image */}
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <img src={image_url} alt='Enlarged Post Image' className="max-w-full max-h-screen" />
+          <img src={image_url} alt="Enlarged Post Image" className="max-w-full max-h-screen" />
         </Modal>
-
+  
         {/* Like and comment buttons */}
         <div className="flex items-center space-x-4">
           <button className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none" onClick={handleLike}>
             <FontAwesomeIcon icon={liked ? filledHeart : unfilledHeart} className={liked ? 'text-red-500' : ''} />
             <span>{numLikes}</span>
           </button>
-
+  
           <button className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none" onClick={handleCommentToggle}>
             <FontAwesomeIcon icon={faComment} />
           </button>
         </div>
-
+  
         {/* Comments section */}
         {showComments && (
           <div className="w-full mt-4 comments-section">
@@ -553,6 +548,4 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
       </div>
     </div>
   );
-};
-
-export default PostCard;
+  export default PostCard;
