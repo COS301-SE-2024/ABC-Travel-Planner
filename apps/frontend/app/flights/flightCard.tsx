@@ -9,7 +9,7 @@ import { insertRecord } from '../utils/functions/insertRecord';
 import PopupMessage  from '../utils/PopupMessage';
 
 interface FlightCardProps {
-
+  title: string
 }
 
 
@@ -51,7 +51,7 @@ const spinnerAnimation = `
     100% { transform: rotate(360deg); }
   }`;
 
-const FlightCard: React.FC<FlightCardProps> = () => {
+const FlightCard: React.FC<FlightCardProps> = ({title}) => {
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
   const [showCalendar, setShowCalendar] = useState(false);
   const [uploaded, setUploaded] = useState(false);
@@ -177,7 +177,7 @@ const FlightCard: React.FC<FlightCardProps> = () => {
         <div className="flex justify-between">
           <div className="w-1/2 pr-4">
             <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
-              <h1 className="text-4xl font-bold mb-2 text-blue-500">FLIGHT TITLE</h1>
+              <h1 className="text-4xl font-bold mb-2 text-blue-500">{title}</h1>
             </div>
             <p className="text-gray-700 text-lg font-semibold">{`CITY & COUNTRY`}</p>
           </div>
@@ -205,65 +205,11 @@ const FlightCard: React.FC<FlightCardProps> = () => {
             </div>
             <div className={`flex justify-between self-end`} ref={priceRef} style={{ marginTop: `${marginTop}px` }}>
               <div className="mt-4 flex flex-col items-start space-y-4">
-                <button
-                  onClick={() => setShowCalendar(!showCalendar)}
-                  className="bg-blue-500 text-white rounded-md px-4 py-2"
-                >
-                  Select Dates
-                </button>
-
-                {showCalendar && (
-                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white rounded-lg p-4 w-80 shadow-lg">
-                      <DatePicker
-                        selected={null}
-                        onChange={(date) => {
-                          if (date) {
-                            setSelectedDates((prevDates) => {
-                              const isAlreadySelected = prevDates.some(
-                                (d) => d.getTime() === date.getTime()
-                              );
-                              if (isAlreadySelected) {
-                                return prevDates.filter(
-                                  (d) => d.getTime() !== date.getTime()
-                                );
-                              } else {
-                                return [...prevDates, date];
-                              }
-                            });
-                          }
-                        }}
-                        inline
-                        highlightDates={selectedDates}
-                        isClearable={false}
-                        dateFormat="yyyy-MM-dd"
-                        placeholderText="Select dates"
-                        className="block w-full bg-white border border-gray-300 rounded-md shadow-sm text-lg"
-                      />
-                      <button
-                        onClick={() => setShowCalendar(false)}
-                        className="bg-blue-500 text-white rounded-md px-4 py-2 mt-4 w-full"
-                      >
-                        Done
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {selectedDates.length > 0 && (
-                  <div className="bg-white rounded-md py-3 px-4 mt-1 shadow-sm">
-                    {selectedDates.map((date, index) => (
-                      <p key={index} className="text-blue-400 text-xl font-semibold">
-                        Selected Date: {date.toLocaleDateString()}
-                      </p>
-                    ))}
-                  </div>
-                )}
               </div>
               <div className="text-right">
                 <p className="text-3xl text-blue-500 font-semibold">PRICE</p>
                 <p className="text-blue-500 text-sm">TYPE</p>
-                <p className="text-blue-500 text-sm">Tax and rates included</p>
+                <p className="text-blue-500 text-sm">Rates and taxes included</p>
               </div>
             </div>
           </div>

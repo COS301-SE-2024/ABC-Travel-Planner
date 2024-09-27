@@ -107,8 +107,8 @@ const FilterContainer = () => {
         router.push(`/filter?id=${actualId}&topic=${selectedTopic}&term=${searchInputRef.current?.value}`);
     };
 
-    const handleFlightSearch = async () => {
-        router.push(`/flights?start=${flights.start}&end=${flights.end}&adults=${flights.adults}&class=${flights.class}`)
+    const handleFlightSearch = async (startingPoint: string, endPoint: string, adults: number, departDate: string, travelClass: string) => {
+        router.push(`/flights?start=${startingPoint}&end=${endPoint}&adults=${adults}&date=${departDate}&class=${travelClass}`)
     }
 
     // Country codes for starting & destination flights...
@@ -226,7 +226,7 @@ const FilterContainer = () => {
                             <div style={{display: 'flex', width: '900px', justifyContent: 'space-between', padding: '10px' }}>
                                 <label>
                                     Number of adults:
-                                    <Input placeholder="3" onChange={(item) => {
+                                    <Input placeholder="1" className='w-auto' onChange={(item) => {
                                         const options = {
                                             start: flights.start,
                                             end: flights.end,
@@ -269,9 +269,7 @@ const FilterContainer = () => {
                                             console.log(departureDate)
 
                                             //Go to another page and make api call
-                                            handleFlightSearch()
-
-                                            //returnDate is excluded in search - Only one way trips for now
+                                            handleFlightSearch(startingPoint, destination, adults, departureDate, travelClass)
                                         }
                                 }
                                 >Search</button>
