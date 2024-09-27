@@ -548,4 +548,5 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
       </div>
     </div>
   );
+  };
   export default PostCard;
