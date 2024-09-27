@@ -107,6 +107,10 @@ const FilterContainer = () => {
         router.push(`/filter?id=${actualId}&topic=${selectedTopic}&term=${searchInputRef.current?.value}`);
     };
 
+    const handleFlightSearch = async () => {
+        router.push(`/flights?start=${flights.start}&end=${flights.end}&adults=${flights.adults}&class=${flights.class}`)
+    }
+
     // Country codes for starting & destination flights...
     const airports:comboBoxValues[] = []
 
@@ -264,15 +268,10 @@ const FilterContainer = () => {
                                             const travelClass = flights.class;
                                             console.log(departureDate)
 
-                                            //returnDate is excluded in search - Only one way trips for now
-                                            try {
-                                                const res = await fetch(`${backendUrl}/flights/offers?originLocationCode=${startingPoint}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${adults}&travelClass=${travelClass}`)
-                                                const data = await res.json()
-                                                console.log(data)
-                                            } catch (error) {
-                                                console.log(error)
-                                            }
+                                            //Go to another page and make api call
+                                            handleFlightSearch()
 
+                                            //returnDate is excluded in search - Only one way trips for now
                                         }
                                 }
                                 >Search</button>
