@@ -76,7 +76,7 @@ const FilterContainer = () => {
             if (item.country === country) {
                 startingAirports.push({
                     value: item.iata_code,
-                    label: `${item.airport_name.trim()}, ${item.city.trim()}, ${item.country}`
+                    label: `${item.airport_name}, ${item.city}, ${item.country}`
                 })
             }
         })
@@ -91,7 +91,7 @@ const FilterContainer = () => {
             if (item.country === country) {
                 destinationAirports.push({
                     value: item.iata_code,
-                    label: `${item.airport_name.trim()}, ${item.city.trim()}, ${item.country}`
+                    label: `${item.airport_name}, ${item.city}, ${item.country}`
                 })
             }
         })
@@ -266,8 +266,9 @@ const FilterContainer = () => {
 
                                             //returnDate is excluded in search - Only one way trips for now
                                             try {
-                                                // const res = await fetch(`${backendUrl}/flights/offers?originLocationCode=${startingPoint}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${adults}&travelClass=${travelClass}`)
-                                                
+                                                const res = await fetch(`${backendUrl}/flights/offers?originLocationCode=${startingPoint}&destinationLocationCode=${destination}&departureDate=${departureDate}&adults=${adults}&travelClass=${travelClass}`)
+                                                const data = await res.json()
+                                                console.log(data)
                                             } catch (error) {
                                                 console.log(error)
                                             }

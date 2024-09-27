@@ -9,7 +9,7 @@ export class FlightsController {
     // 1) - Get available flights
     @Get('offers')
     async getOffers(@Query() query: FlightsDto): Promise<any> {
-        console.log(query)
+        console.log("QUERY RECEIVED: " + JSON.stringify(query))
         const data = await this.flightService.searchFlights(query);
         return data
     }

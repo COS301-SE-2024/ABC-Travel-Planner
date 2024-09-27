@@ -14,6 +14,7 @@ import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { LikesModule } from './likes/likes.module';
 import { ItineraryItemsModule } from './itinerary-items/itinerary-items.module';
+import { FlightsModule } from './flights/flights.module';
 import { FollowsModule } from './follows/follows.module';
 import { ItineraryCreatorModule } from './itinerary-creator/itinerary-creator.module';
 import { ActivityModule } from './activity/activity.module';
@@ -41,13 +42,12 @@ import { AitaModule } from './aita/aita.module';
     PostsModule,
     CommentsModule,
     LikesModule,
-    ItineraryItemsModule,
     FollowsModule,
     ItineraryCreatorModule,
     ActivityModule,
     GoogleMapsModule,
     InvoiceModule,
-    // DatesModule
+    FlightsModule,
     AitaModule
   ],
   controllers: [AppController],
