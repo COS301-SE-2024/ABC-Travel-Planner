@@ -100,12 +100,12 @@ const Home = () => {
 
 
   //Theme
-  const { selectedTheme, themeStyles, setTheme } = useTheme();
+  //const { selectedTheme, themeStyles, setTheme } = useTheme();
   return (
-    
+
     <div className="w-full mt-8" >
       <div className="flex justify-center mb-4 mt-4">
-      <h2 className={`text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
+        <h2 className={`text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
           Top Destinations
         </h2>
       </div>
@@ -135,11 +135,11 @@ const Home = () => {
       </div>
 
       <div className="flex justify-center mb-4 mt-4">
-      <h2 className={`text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
+        <h2 className={`text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
           Latest Posts
         </h2>
       </div>
-      <div className={`w-full max-w-screen-xl mx-auto mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left`} style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)',padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <div className={`w-full max-w-screen-xl mx-auto mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left`} style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <div className="flex justify-center flex-col w-3/4 mx-auto">
           <div className="flex justify-center items-center flex-wrap gap-4">
             {posts.map((post) => (
@@ -152,9 +152,8 @@ const Home = () => {
                 timestamp={post.timestamp}
                 profileImageUrl={post.profileImageUrl} // Pass the profileImageUrl here
               />
-            </div>
-          ))}
-
+            ))}
+          </div>
         </div>
       </div>
     </div>
