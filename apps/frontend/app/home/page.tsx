@@ -1,163 +1,393 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import PostCard from './PostCard';
-import Link from 'next/link';
-//import { useTheme } from '../context/ThemeContext'; 
-interface Post {
-  caption: string;
-  id: string;
-  imageUrl: string;
-  post_likes?: number;
-  timestamp: number;
+import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as filledHeart, faShareAlt, faComment } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as unfilledHeart } from '@fortawesome/free-regular-svg-icons';
+import getUser from "@/libs/actions/getUser";
+import PopupMessage from '../utils/PopupMessage';
+import Cookie from "js-cookie";
+
+interface PostCardProps {
+  post_id: string;
   user_id: string;
-  profileImageUrl?: string;
+  image_url?: string;
+  post_description: string;
+  post_likes: number;
+  timestamp: number;
+  profileImageUrl?: string; // Add profileImageUrl to props
 }
 
-interface Place {
-  name: string;
-  photos?: {
-    photo_reference: string;
-  }[];
-  formatted_address: string;
-  place_id: string;
-  types: string[];
+interface Comment {
+  comment: string;
+  id?: string;
+  post_id: string;
+  user_id: string;
+  timestamp?: number;
+  username?: string;
 }
 
-const Home = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [popularDestinations, setPopularDestinations] = useState<{ image: string, place_id: string }[]>([]);
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+interface User {
+  memberSince: string,
+  user_id: string,
+  country: string,
+  name: string,
+  username: string,
+  email: string,
+  imageUrl: string
+}
 
+interface ModalProps {
+  isOpen: boolean; // Explicitly define the type as boolean
+  onClose: () => void;
+  children: React.ReactNode;
+}
 
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+  if (!isOpen) return null;
 
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.currentTarget === e.target) {
+      onClose();
+    }
+  };
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch(`${backendUrl}/posts`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data: Post[] = await response.json();
-
-        const updatedData = await Promise.all(
-          data.map(async (item) => {
-            const user_id = item.user_id;
-            try {
-              const userResponse = await fetch(`${backendUrl}/users/${user_id}`);
-              if (!userResponse.ok) {
-                throw new Error('Failed to fetch user profile image');
-              }
-              const userData = await userResponse.json();
-              const imageLink = userData.profileImageUrl; // Assuming this field contains the image URL
-              return { ...item, profileImageUrl: imageLink }; // Add the image URL to the post data
-            } catch (error) {
-              console.error('Error fetching profile image:', error);
-              return item; // Return the original item if the fetch fails
-            }
-          })
-        );
-
-        setPosts(updatedData); // Update state with posts containing profile images
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-
-  useEffect(() => {
-    const fetchPopularDestinations = async () => {
-      try {
-        const response = await fetch(`${backendUrl}/google-maps/popular-destinations`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        const places = data.results;
-
-        // Limit to 12 destinations
-        const imageDestinations = places.slice(0, 12).map((place: Place) => {
-          if (place.photos && place.photos.length > 0) {
-            const photoReference = place.photos[0].photo_reference;
-            const apikey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY!;
-            return {
-              image: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${apikey}`,
-              place_id: place.place_id,
-            };
-          } else {
-            return { image: '/Images/default.jpg' };
-          }
-        });
-
-        setPopularDestinations(imageDestinations);
-      } catch (error) {
-        console.error('Error fetching popular destinations:', error);
-      }
-    };
-
-    fetchPopularDestinations();
-  }, []);
-
-
-  //Theme
-  //const { selectedTheme, themeStyles, setTheme } = useTheme();
   return (
-
-    <div className="w-full mt-8" >
-      <div className="flex justify-center mb-4 mt-4">
-        <h2 className={`text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
-          Top Destinations
-        </h2>
-      </div>
-
-      <div className={`flex flex-row overflow-x-auto w-full custom-scrollbar backgroundColor: 'rgba(173, 216, 230, 0.5)'`} style={{ gap: '16px', padding: '10px 0' }}>
-        {popularDestinations.map((destination, index) => (
-          <div key={index} style={{ flexShrink: 0, marginRight: '16px' }}>
-            <Link href={`/${destination.place_id}`} passHref>
-              <div style={{ width: '120px', height: '120px', position: 'relative' }}>
-                <img
-                  src={destination.image}
-                  alt={`Destination ${index}`}
-                  className="rounded-full shadow-md gentle-pulse"
-                  style={{
-                    width: '120px',
-                    height: '120px',
-                    objectFit: 'cover',
-                    borderRadius: '50%',
-                    border: '5px solid #D8BFD8', // Solid purple border
-                    boxShadow: '0 0 10px rgba(128, 0, 128, 0.7), 0 0 20px rgba(128, 0, 128, 0.5)', // Neon glow effect
-                  }}
-                />
-              </div>
-            </Link>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-center mb-4 mt-4">
-        <h2 className={`text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
-          Latest Posts
-        </h2>
-      </div>
-      <div className={`w-full max-w-screen-xl mx-auto mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left`} style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-        <div className="flex justify-center flex-col w-3/4 mx-auto">
-          <div className="flex justify-center items-center flex-wrap gap-4">
-            {posts.map((post) => (
-              <PostCard
-                post_id={post.id}
-                user_id={post.user_id}
-                image_url={post.imageUrl}
-                post_description={post.caption || 'No description available.'}
-                post_likes={post.post_likes || 0}
-                timestamp={post.timestamp}
-                profileImageUrl={post.profileImageUrl} // Pass the profileImageUrl here
-              />
-            ))}
-          </div>
-        </div>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={handleOverlayClick}>
+      <div className="bg-white p-4 rounded shadow-lg">
+        <button onClick={onClose} className="text-red-500">Close</button>
+        {children}
       </div>
     </div>
   );
-
 };
-export default Home;
+
+const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_description, post_likes, timestamp, profileImageUrl }) => {
+  const [liked, setLiked] = useState(false);
+  const [numLikes, setNumLikes] = useState(post_likes);
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [isFollowing, setIsFollowing] = useState('Follow');
+  const [message, setMessage] = useState('');
+  const [trigger, setTrigger] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const curr_user = Cookie.get("user_id") ?? '';
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+  const [newComment, setNewComment] = useState<Comment>({
+    comment: '',
+    id: '',
+    post_id: '',
+    user_id: curr_user,
+    timestamp: 0,
+    username: '',
+  });
+
+  useEffect(() => {
+    const getIsLiked = async () => {
+      try {
+        const temp = await getUser(curr_user);
+        const u = JSON.parse(temp || "{}");
+        setNewComment({
+          comment: '',
+          id: '',
+          post_id: post_id,
+          user_id: curr_user,
+          timestamp: 0,
+          username: u.username,
+        });
+        const isLikedRes = await fetch(`${backendUrl}/likes/userLikesPost`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id: curr_user,
+            post_id: post_id
+          })
+        });
+
+        const isLikedText = await isLikedRes.text();
+
+        if (isLikedText === "true") {
+          setLiked(true);
+        }
+
+      } catch (error) {
+        console.log(error);
+        throw new Error(`Could not get userName of ${user_id}: ${(error as Error).message}`);
+      }
+    };
+
+    getIsLiked();
+  }, []);
+
+  useEffect(() => {
+    const getUserName = async () => {
+      try {
+        const userNameRes = await fetch(`${backendUrl}/users/${user_id}`);
+        const userNameText: User[] = await userNameRes.json();
+        setUserName(userNameText[0].username);
+      } catch (error) {
+        console.log(error);
+        throw new Error(`Could not get userName of ${user_id}: ${(error as Error).message}`);
+      }
+    };
+
+    getUserName();
+  }, []);
+
+  useEffect(() => {
+    const isFollowing = async () => {
+      const postData = {
+        user_id: user_id,
+        follower_id: Cookie.get('user_id')
+      };
+
+      const isFollowingRes = await fetch(`${backendUrl}/follows/isFollowing`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData)
+      });
+      const following = await isFollowingRes.text();
+      if (following === "true") {
+        setIsFollowing("Following");
+      }
+    };
+
+    isFollowing();
+  }, []);
+
+  const handleLike = async () => {
+    if (liked) {
+      try {
+        const unLikeRes = await fetch(`${backendUrl}/likes/unlikePost`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            post_id: post_id,
+            user_id: curr_user
+          }),
+        });
+
+        if (unLikeRes) {
+          const decrementLikeRes = await fetch(`${backendUrl}/posts/decrementLikes`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              postId: post_id
+            })
+          });
+
+          if (decrementLikeRes) {
+            setNumLikes(numLikes - 1);
+          }
+        } else {
+          setMessage(`Could not like post...`);
+          setTrigger(true);
+          setTimeout(() => {
+            setTrigger(false);
+          }, 4000);
+          throw new Error('unlikePost endpoint not functioning');
+        }
+      } catch (error) {
+        console.log(error);
+        throw new Error(`Could not unlike post: ${(error as Error).message}`);
+      }
+    } else {
+      try {
+        const LikeRes = await fetch(`${backendUrl}/likes/likePost`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            post_id: post_id,
+            user_id: curr_user
+          }),
+        });
+
+        if (LikeRes) {
+          const incrementLikeRes = await fetch(`${backendUrl}/posts/incrementLikes`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              postId: post_id
+            })
+          });
+
+          if (incrementLikeRes) {
+            setNumLikes(numLikes + 1);
+          }
+        } else {
+          setMessage(`Could not like post...`);
+          setTrigger(true);
+          setTimeout(() => {
+            setTrigger(false);
+          }, 4000);
+          throw new Error('likePost endpoint not functioning');
+        }
+      } catch (error) {
+        console.log(error);
+        throw new Error(`Could not like post: ${(error as Error).message}`);
+      }
+    }
+    setLiked(!liked);
+  };
+
+  const handleCommentToggle = async () => {
+    setShowComments(!showComments);
+
+    if (!showComments) {
+      const commentRes = await fetch(`${backendUrl}/comments/getComments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ post_id })
+      });
+
+      const midData = await commentRes.text();
+      let receivedComments: Comment[] = [];
+      JSON.parse(midData).map((element: {
+        comment: string;
+        id: string;
+        post_id: string;
+        user_id: string;
+        timestamp: {
+          _seconds: number,
+          _nanoseconds: number
+        };
+        username: string;
+      }) => {
+        receivedComments.push({
+          comment: element.comment,
+          id: element.id,
+          user_id: element.user_id,
+          post_id: element.post_id,
+          timestamp: element.timestamp._seconds,
+          username: element.username
+        });
+      });
+      setComments(receivedComments);
+    }
+  };
+
+  const handleAddComment = async () => {
+    if (newComment) {
+      const temp = await getUser(curr_user);
+      const u = JSON.parse(temp || "{}");
+
+      const dataToAdd = {
+        comment: newComment.comment,
+        user_id: curr_user,
+        post_id: newComment.post_id,
+        username: u.username,
+      };
+
+      const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToAdd),
+      });
+
+      if (addCommentRes.ok) {
+        setMessage('Comment posted');
+        setTrigger(true);
+        setTimeout(() => {
+          setTrigger(false);
+        }, 4000);
+      }
+
+      setComments([...comments, newComment]);
+
+      setNewComment({
+        comment: '',
+        id: '',
+        post_id: '',
+        user_id: curr_user,
+        timestamp: 0,
+        username: '',
+      });
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-4 my-4">
+      <PopupMessage msg={message} trigger={trigger} />
+      <div className="flex items-center">
+        {profileImageUrl && (
+          <img
+            src={profileImageUrl}
+            alt="User profile"
+            className="w-10 h-10 rounded-full mr-2" // Adjust size as needed
+          />
+        )}
+        <h4 className="font-semibold">{userName}</h4>
+        <span className="text-gray-500 text-sm ml-2">{new Date(timestamp * 1000).toLocaleString()}</span>
+      </div>
+      {image_url && (
+        <img
+          src={image_url}
+          alt="Post"
+          className="w-full h-auto rounded-lg mt-2"
+          onClick={() => setIsModalOpen(true)}
+        />
+      )}
+      <div className="flex justify-between items-center mt-2">
+        <div>
+          <button onClick={handleLike} className="flex items-center">
+            <FontAwesomeIcon icon={liked ? filledHeart : unfilledHeart} className="text-red-500 mr-2" />
+            <span>{numLikes}</span>
+          </button>
+          <button onClick={handleCommentToggle} className="flex items-center ml-4">
+            <FontAwesomeIcon icon={faComment} className="mr-2" />
+            <span>{comments.length} Comments</span>
+          </button>
+          <button className="flex items-center ml-4">
+            <FontAwesomeIcon icon={faShareAlt} className="mr-2" />
+            <span>Share</span>
+          </button>
+        </div>
+        <button className="text-blue-500">{isFollowing}</button>
+      </div>
+      {showComments && (
+        <div className="mt-4">
+          <div>
+            {comments.map((comment) => (
+              <div key={comment.id} className="flex items-center my-2">
+                <span className="font-semibold">{comment.username}:</span>
+                <span className="ml-2">{comment.comment}</span>
+              </div>
+            ))}
+          </div>
+          <input
+            type="text"
+            value={newComment.comment}
+            onChange={(e) => setNewComment({ ...newComment, comment: e.target.value })}
+            placeholder="Add a comment..."
+            className="border p-2 w-full rounded mt-2"
+          />
+          <button onClick={handleAddComment} className="bg-blue-500 text-white px-4 py-2 rounded mt-2">Post</button>
+        </div>
+      )}
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <img src={image_url} alt="Post" className="w-full h-auto" />
+        </Modal>
+      )}
+    </div>
+  );
+};
+
+export default PostCard;
