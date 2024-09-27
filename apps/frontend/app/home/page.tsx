@@ -144,6 +144,7 @@ const Home = () => {
           <div className="flex justify-center items-center flex-wrap gap-4">
             {posts.map((post) => (
               <PostCard
+                key={post.id} 
                 post_id={post.id}
                 user_id={post.user_id}
                 image_url={post.imageUrl}
