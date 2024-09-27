@@ -4,7 +4,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
-from transformers import pipeline #, AutoModelForTokenClassification, AutoTokenizer, AutoModelForSeq2SeqLM
+#from transformers import pipeline 
 import torch
 import os
 import logging
@@ -26,21 +26,6 @@ ner_model = None
 ner_tokenizer = None
 classifier = None
 
-def preload_models():
-    global ner_model, ner_tokenizer, classifier
-
-    # ner_model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
-    # ner_model = AutoModelForTokenClassification.from_pretrained(ner_model_name)
-    # ner_tokenizer = AutoTokenizer.from_pretrained(ner_model_name)
-
-    classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli", device=device)
-
-# Preload models
-#preload_models()
-
-# Initialize pipelines
-#ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=device) 
-
 # Load dataset
 with open("chatbot_data.json", "r") as file:
     data = json.load(file)
@@ -60,12 +45,6 @@ db = FAISS.from_documents(split_docs, embeddings)
 
 # Flask app setup
 app = Flask(__name__)
-
-# def extract_location(query):
-#     """Extract location entities (like cities or countries) from the user's query."""
-#     entities = ner(query)
-#     locations = [entity['word'] for entity in entities if entity['entity_group'] == 'LOC']
-#     return locations
 
 def is_query_related(query):
     # Define keywords for each category
@@ -96,9 +75,6 @@ def process_query():
             "result": {"answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
             "type": "error"
         })
-
-    # locations = extract_location(query)
-    # location_str = ", ".join(locations) if locations else ""
 
     similar_docs = db.similarity_search(query, k=2)
     if not similar_docs:
