@@ -284,7 +284,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
                 <p className="text-3xl text-blue-500 font-semibold">R {((Number(price) * zaRate) * (1 / euRate)).toFixed(2)}</p>
                 {
                   weightSupported != null ? 
-                  <p>Supported luggage weight : {`${weightSupported} ${weightUnit}`}</p> :
+                  <p className='text-blue-500 text-sm'>Supported luggage weight : {`${weightSupported} ${weightUnit}`}</p> :
                   <p></p>
                 }
                 <p className="text-blue-500 text-sm">{bookableSeats} seats available</p>
