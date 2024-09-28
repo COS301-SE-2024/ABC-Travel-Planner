@@ -1,0 +1,302 @@
+[
+  {
+    "context": "How do I log into my account? What’s the process to sign in? Can I use my Google account to log in?",
+    "question": "How do I log into my account?",
+    "answer": "To log in, go to the Login Page and enter your email and password. You can also sign in using Google authentication"
+  },
+  {
+    "context": "Take me to the home page. I want to see the trending destinations. How can I scroll through posts on the home page?",
+    "question": "Take me to the home page.",
+    "answer": "On the Home Page, you can scroll through posts, interact with them by liking or commenting, or click on trending destinations for more details"
+  },
+  {
+    "context": "How do I search for flights or hotels? Where can I find car rentals? I want to search for airport taxis.",
+    "question": "How do I search for flights or hotels?",
+    "answer": "Go to the Search Page, where you can filter your search by flights, stays, car rentals, attractions, and airport taxis"
+  },
+  {
+    "context": "How do I add an itinerary? I want to plan my trip to Spain. Where can I create my travel itinerary?",
+    "question": "How do I add an itinerary?",
+    "answer": "Go to the Itinerary Page, click on 'Add Itinerary,' then name your trip and location. You can then start adding options like flights and hotels"
+  },
+  {
+    "context": "Can I edit my trip? How do I add a hotel to my itinerary?",
+    "question": "Can I edit my trip?",
+    "answer": "Click the pencil button to edit an itinerary. You can add stays, car rentals, or other items by clicking on the plus sign and selecting a date"
+  },
+  {
+    "context": "Can the app create an itinerary for me? I want help planning my trip.",
+    "question": "Can the app create an itinerary for me?",
+    "answer": "On the Itinerary Page, click the green 'Itinerary Creator' button. Enter your location and interests, and the app will generate an itinerary for you"
+  },
+  {
+    "context": "How do I book a trip? I want to confirm my booking. Can I get a summary of my trip before booking?",
+    "question": "How do I book a trip?",
+    "answer": "Once you've added all the items to your itinerary, go to the Booking Page for a trip summary, including total costs. Click 'Confirm Booking' to finalize your booking"
+  },
+  {
+    "context": "Can I cancel my booking? How do I cancel a flight?",
+    "question": "Can I cancel my booking?",
+    "answer": "You cannot cancel directly through us. You’ll need to contact the airline for cancellation"
+  },
+  {
+    "context": "Are there hidden fees? Do I pay more than the listed price?",
+    "question": "Are there hidden fees?",
+    "answer": "There are no hidden fees. The price you see is the final price"
+  },
+  {
+    "context": "How can I contact support? Is there a number to reach customer service?",
+    "question": "How can I contact support?",
+    "answer": "You can contact customer support via email at abctravel@gmail.com or by phone at 0814562345 or 0713452668"
+  },
+  {
+    "context": "How do I change my settings? Can I manage my notifications? I want to update my password.",
+    "question": "How do I change my settings?",
+    "answer": "Go to the Settings Page via the gear icon in the navigation bar. You can manage user settings, update your password, and change your preferences"
+  },
+  {
+    "context": "How do I get to the search page?",
+    "question": "How do I get to the search page?",
+    "answer": "Use the navigation bar at the top of the app to switch between the Home Page, Itinerary Page, Search Page, and more"
+  },
+  {
+    "context": "How can I update my profile?",
+    "question": "How can I update my profile?",
+    "answer": "Go to the Profile Page, where you can follow/unfollow users, post updates, and view your shared itineraries"
+  },
+  {
+    "context": "Can you please give me a trip planned to City7",
+    "question": "Can you please give me a trip planned to City7",
+    "answer": "There is a designated feature for this, navigate to the itinerary page and click the itinerary creator button, a pop up will show with various details details you can enter about yourself and "
+  },
+  {
+    "context": "Can I make a post of any particular place I have been to? How does the social media integration work on the app?",
+    "question": "Can I make a post of any particular place I have been to?",
+    "answer": "Yes, you can make a post as our app also has social media integration on top of the base features of our application"
+  },
+  {
+    "context": "How do I make a post on the app? How do I share text or images?",
+    "question": "How do I make a post?",
+    "answer": "You can make a post by navigating to the account tab. Scroll down to the My Travel Posts section and click on the add post button. A pop-up will appear where you can add any text or images you want to post"
+  },
+  {
+    "context": "What are the top destinations circles? How do I find popular destinations?",
+    "question": "What are the top destinations circles?",
+    "answer": "The top destinations on the home page are popular destination suggestions. If you click on any of them, you'll get more information on that particular destination"
+  },
+  {
+    "context": "How do I comment on a post? Can I interact with other users' posts?",
+    "question": "How do I comment on a post?",
+    "answer": "You can comment on a post by clicking on the message icon on the post. The comment section will expand, allowing you to add your comment"
+  },
+  {
+    "context": "How do I follow another user? How can I keep track of someone's posts?",
+    "question": "How do I follow another user?",
+    "answer": "You can follow a user from their profile page or from a post they made. Look for the follow button and click on it"
+  },
+  {
+    "context": "How do I navigate to the profile page? Where can I find user profiles?",
+    "question": "How do I navigate to the profile page?",
+    "answer": "You can navigate to a profile page by searching for a user or by clicking on their username or profile picture on a post"
+  },
+  {
+    "context": "How do I share my itinerary? Can others see my travel plans?",
+    "question": "How do I share my itinerary?",
+    "answer": "You can share an itinerary by navigating to the Itinerary Page and clicking the share button. This will make it visible on your profile page for others to see"
+  },
+  {
+    "context": "How do I edit my profile? Can I update my personal information?",
+    "question": "How do I edit my profile?",
+    "answer": "You can edit your profile by navigating to the Account Page and clicking on the hamburger menu to change your details"
+  },
+  {
+    "context": "How do I like someone's itinerary? Can I interact with others' travel plans?",
+    "question": "How do I like someone's itinerary?",
+    "answer": "Navigate to the user's profile page, find the itinerary they shared, and click the like button. You can also save the itinerary"
+  },
+  {
+    "context": "How do I view who someone is following or who their followers are? Can I see user connections?",
+    "question": "How do I view who someone is following or who their followers are?",
+    "answer": "You can view a user's following and followers by clicking on the number of followers or following, which will display the list"
+  },
+  {
+    "context": "How do I view a specific post from a user? Can I get more details on a post?",
+    "question": "How do I view a specific post from a user?",
+    "answer": "Navigate to the user's profile page, click on the post you're interested in, and you'll see the full view of the post"
+  },
+  {
+    "context": "How do I view my activity in terms of interactions with posts? Where can I track my activity?",
+    "question": "How do I view my activity in terms of interactions with posts?",
+    "answer": "You can view your social media activity in the Settings Page under the User Management section, specifically in the Activity tab"
+  },
+  {
+    "context": "How do I change my app's theme? Can I customize the appearance?",
+    "question": "How do I change my theme?",
+    "answer": "You can change the theme by going to the color palette in the settings and selecting your desired color scheme"
+  },
+  {
+    "context": "How do I use the trip creator or the itinerary creator? Can I generate an itinerary automatically?",
+    "question": "How do I use the trip creator or the itinerary creator?",
+    "answer": "You can use the trip creator by first entering the city and country you want to visit, followed by selecting your reason for the trip and providing a comma-separated list of your interests"
+  },
+  {
+    "context": "How do I like a post? Can I like posts from other users? Where is the like button located?",
+    "question": "How do I like a particular post?",
+    "answer": "You can like a user's post by clicking on the like button of any user's particular post."
+  },
+  {
+    "context": "What is the trip creator? How can I use the trip creator to plan my itinerary? Can it help me find hotels, attractions, or transportation?",
+    "question": "What is the trip creator?",
+    "answer": "The itinerary trip creator is a tool that helps the user generate an itinerary to a certain destination, with suggestions for stays, car rentals, attractions, and airport taxis."
+  },
+  {
+    "context": "What are the top destinations? How does the app decide which destinations to feature? Can I learn more about these destinations?",
+    "question": "What are the top destinations?",
+    "answer": "The top destinations are the best picks or trending destinations that users may be interested in visiting. To get more information on a particular destination, you can simply click on one of the top destination stories."
+  },
+  {
+    "context": "What is an itinerary? How does an itinerary help me organize my travel plans? Can I include flights, hotels, and other activities in my itinerary?",
+    "question": "What is an itinerary?",
+    "answer": "An itinerary is a planned trip in a sense. It is a tool used to organize various aspects of your trip, such as flights, stays, activities, and more."
+  },
+  {
+    "context": "How do I get more information about the ABC Travel Planner app? Can I find tutorials or guides to help me understand the app?",
+    "question": "How do I get in-depth information about your app (ABC Travel Planner)?",
+    "answer": "You can easily get more information about us from the help center and through the YouTube video in the help center."
+  },
+  {
+    "context": "Can I recover my itinerary if it is deleted? Are there any backups available for deleted itineraries?",
+    "question": "Can I recover my itinerary?",
+    "answer": "Unfortunately, you cannot recover your itinerary once it has been deleted. You will need to create a new itinerary."
+  },
+  {
+    "context": "How do I delete my itinerary? Is there a confirmation process for deleting itineraries?",
+    "question": "How do I delete my itinerary?",
+    "answer": "You can delete your itinerary by navigating to the itinerary page and clicking the delete button to remove it."
+  },
+  {
+    "context": "Will I be prompted to confirm before deleting an itinerary? How does the confirmation process work for itinerary deletion?",
+    "question": "Will I be able to confirm the deletion of my itinerary?",
+    "answer": "Yes, you will have to confirm when you want to delete an itinerary, whether generated or manually created."
+  },
+  {
+    "context": "How can I change my password? Is there a specific section where I can update my account settings, such as changing passwords?",
+    "question": "How do I change my password?",
+    "answer": "To change your password, navigate to the settings page. Under the 'Account Settings' tab, there will be a section where you can change your password by clicking the change button."
+  },
+  {
+    "context": "How can I change my username? Is it possible to update my username in the app's account settings?",
+    "question": "How do I change my username?",
+    "answer": "You can change your username by navigating to the account page, clicking on the hamburger menu, and changing your username in the textbox."
+  },
+  {
+    "context": "How can I view itineraries that I have shared with others? Is there a section in the app where I can manage my shared itineraries?",
+    "question": "How do I view my shared itineraries?",
+    "answer": "You can view your shared itineraries on the account page."
+  },
+  {
+    "context": "How do I search for a specific user? Is there a way to find other users on the app?",
+    "question": "How do I find a particular user?",
+    "answer": "You can find a certain user by navigating to the search page and searching for that user under the user tab."
+  },
+  {
+    "context": "How can I access the itineraries I have saved? Is there a section on my profile where I can view these saved itineraries?",
+    "question": "How do I view my saved itineraries?",
+    "answer": "You can view your saved itineraries on your account page under the 'Saved itineraries' tab."
+  },
+  {
+    "context": "How can I view the shared itineraries of other users? Where can I find a user's shared travel plans?",
+    "question": "How do I view a certain user's shared itineraries?",
+    "answer": "You can view a user's shared itineraries after searching for the user and viewing their shared itineraries on their profile page."
+  },
+  {
+    "context": "How do I view the saved itineraries of other users? Is there a section in the app where I can view these itineraries?",
+    "question": "How do I view a certain user's saved itineraries?",
+    "answer": "You can view a user's saved itineraries after searching for the user and viewing their saved itineraries on their profile page."
+  },
+  {
+    "context": "How can I make my account private? Is there an option to adjust the visibility of my account or the itineraries I share?",
+    "question": "How do I make my account private?",
+    "answer": "Unfortunately, you cannot change the visibility of your account, but you can change the visibility of your shared and saved itineraries to either public or private in the settings page under itinerary settings."
+  },
+  {
+    "context": "Is it possible to disable my account? How can I manage my account status or deactivate it temporarily?",
+    "question": "How do I disable my account?",
+    "answer": "Yes, you can disable your account by navigating to the settings page. Under the user management tab, you will find the option to disable your account."
+  },
+  {
+    "context": "How can I mute or block specific users? Is there a section in the app where I can manage my interactions with other users?",
+    "question": "How do I mute or block a particular user?",
+    "answer": "You can block or mute a user by navigating to the settings page. Under the 'User Management' tab, once you click view list, you can search for the specific user(s) you want to mute or block and take action."
+  },
+  {
+    "context": "How can I update my profile picture? Where can I upload a new image for my profile?",
+    "question": "How do I change my profile picture?",
+    "answer": "You can change your profile image by clicking 'Edit Profile' in the account page. Once you click on the placeholder image, you will be able to upload your new profile picture."
+  },
+  {
+    "context": "How do I logout of the app? Where is the logout button located? Can I log out from any page in the app?",
+    "question": "How do I logout of the application?",
+    "answer": "You can logout of the application by navigating to the account page and clicking on the hamburger menu. Once you are there, you can click on the logout button to be logged out of the application."
+  },
+  {
+    "context": "Can I have multiple accounts on the app? How can I switch between different accounts? Do I need to register each account separately?",
+    "question": "Can I have multiple accounts?",
+    "answer": "Yes, you can have multiple accounts. You just need to register each of them on our system. Once registered, you can log in with any of the accounts you have created."
+  },
+  {
+    "context": "How do I greet the app? What are basic greetings I can use?",
+    "question": "Hello",
+    "answer": "Hello! How can I assist you today with your travel plans or social media activities?"
+  },
+  {
+    "context": "How do I greet the app? What are basic greetings I can use?",
+    "question": "Hi",
+    "answer": "Hi there! How can I help you with your travel planning or social media needs?"
+  },
+  {
+    "context": "What are basic greetings I can use? How do I start a conversation?",
+    "question": "Good morning",
+    "answer": "Good day! Let me know if you need help with your itinerary or anything else."
+  },
+  {
+    "context": "What are basic greetings I can use? How do I start a conversation?",
+    "question": "Good afternoon",
+    "answer": "Good day! How can I assist you today? Let me know if you need help with your travel plans."
+  },
+  {
+    "context": "What are basic greetings I can use? How do I start a conversation?",
+    "question": "Good evening",
+    "answer": "Good day! I’m here to help you with any questions you might have about your trip or account."
+  },
+  {
+    "context": "What are polite ways to thank the app for help?",
+    "question": "Thank you",
+    "answer": "You're welcome! Let me know if there's anything else I can help with."
+  },
+  {
+    "context": "How do I close a conversation with the app? How do I say goodbye?",
+    "question": "Goodbye",
+    "answer": "Goodbye! Have a great day and feel free to come back anytime you need assistance."
+  },
+  {
+    "context": "How do I close a conversation with the app? How do I say goodbye?",
+    "question": "See you later",
+    "answer": "See you later! Feel free to reach out if you need anything else."
+  },
+  {
+    "context": "What are polite ways to say thank you or show appreciation?",
+    "question": "Thanks a lot",
+    "answer": "You're very welcome! I'm happy to help. Let me know if you have any other questions."
+  },
+  {
+    "context": "What are polite ways to say goodbye or end the conversation?",
+    "question": "Talk to you soon",
+    "answer": "Talk to you soon! I'm always here to help you with your travel or social media queries."
+  },
+  {
+    "context": "What are polite ways to thank the app for help?",
+    "question": "Thank you",
+    "answer": "You're welcome! Let me know if there's anything else I can help with."
+}
+]

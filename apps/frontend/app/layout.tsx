@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Navbar } from "./components/Navbar";
 import { ThemeProvider } from "./context/ThemeContext";
 import "./globals.css";
+import ChatBot from './components/Chatbot';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -21,6 +22,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <ThemeProvider>
           {displayNavbar && <Navbar />}
           {children}
+          <ChatBot />
         </ThemeProvider>
       </body>
     </html>
