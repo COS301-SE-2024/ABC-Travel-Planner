@@ -37,8 +37,6 @@ const Flights = () => {
               const res = await fetch(`${backendUrl}/flights/offers?originLocationCode=${start}&destinationLocationCode=${end}&departureDate=${departureDate}&adults=${adults}&travelClass=${travelClass}&max=20`)
               const data = await res.json()
               
-              console.log(data)
-
               setFlightData(data?.data)
               setResultsCount(data?.meta.count)
               setFetchCount((fetchCount+1))
@@ -59,11 +57,8 @@ const Flights = () => {
   useEffect(() => {
     const getCurrencies = async () => {
       const apiKey = process.env.NEXT_PUBLIC_OPEN_EXCHANGE_RATES_KEY
-      console.log("API KEY: " + apiKey)
       const res = await fetch(`https://openexchangerates.org/api/latest.json?app_id=${apiKey}`)
       const data = await res.json();
-
-      console.log("CURRENCY DATA: " + JSON.stringify(data))
 
       setRandRate(data?.rates?.ZAR)
       setEurRate(data?.rates?.EUR)

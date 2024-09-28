@@ -2,9 +2,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
-import PopupMessage  from '../utils/PopupMessage';
 import './flights.css'
 import combobox_values from '../itinerary-items/combobox.json'
+import Cookie from 'js-cookie'
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import app from "@/libs/firebase/firebase";
+import { insertRecord } from '../utils/functions/insertRecord';
 
 interface SegmentType {
   departure: {
@@ -34,12 +37,6 @@ interface FlightCardProps {
   from: string,
   euRate: number,
   zaRate: number
-}
-
-export const formatSegments = (segments: SegmentType[]) => {
-  segments.forEach((item) => {
-    console.log(JSON.stringify(item))
-  })
 }
 
 export const getSeatsColor = (available: number, adults: number) => {
@@ -173,9 +170,6 @@ const FlightCard: React.FC<FlightCardProps> = ({
         })
       })
 
-      console.log("EURATE: " + euRate)
-      console.log("ZARATE: " + zaRate)
-
       const newAirportNames = [...new Set(airportNames)]
       setSegmentStringArr(newAirportNames)
     }
@@ -183,52 +177,47 @@ const FlightCard: React.FC<FlightCardProps> = ({
   }, [])
 
   const uploadItem = async () => {
-    // const destination = flight;
-    // console.log("TYPE: " + typeof destination);
+    if (!uploaded) {
+      const id = JSON.parse(localStorage.getItem('id') as string).id;
+      const location = JSON.parse(localStorage.getItem('location') as string).location;
+      
+      const storage = getStorage(app);
+      const storageRef = ref(storage, `locations/flight.svg`);
+      const url = await getDownloadURL(storageRef);
 
-    // if (!uploaded && destination) {
-    //   const id = JSON.parse(localStorage.getItem('id') as string).id;
-    //   const location = JSON.parse(localStorage.getItem('location') as string).location;
-    //   const objectToUpload = place;
-    //   console.log("object: " + JSON.stringify(objectToUpload));
+      const userId = Cookie.get('user_id') ?? 'User1';
+      const itemTitle = startAirport ?? 'NONAME';
+      const itemType = 'Flight' ?? 'NOTYPE';
+      const address = startAirport ?? 'DEFAULT ADDRESS'
+      const image_url = url ?? 'PHOTO URL'
+      const uploadPrice = Number(((Number(price) * zaRate) * (1 / euRate)).toFixed(2));
+      const dates = [new Date()];
 
-    //   const userId = Cookie.get('user_id') ?? 'User1';
-    //   const itemTitle = objectToUpload.displayName ?? 'NONAME';
-    //   const itemType = objectToUpload.type ?? 'NOTYPE';
-    //   const address = objectToUpload.formattedAddress ?? 'DEFAULT ADDRESS'
-    //   const image_url = objectToUpload.firstPhotoUrl ?? 'PHOTO URL'
-    //   const price = objectToUpload.price;
-    //   const dates = selectedDates;
-
-    //   //No dates selected... Don't upload
-    //   if (dates.length === 0) {
-    //     datesEmpty()
-    //   } else {
-    //     const uploadDetails = {
-    //       user_id: userId,
-    //       item_name: itemTitle,
-    //       item_type: itemType,
-    //       price: price,
-    //       date: dates,
-    //       location,
-    //       itinerary_id: id,
-    //       destination: address,
-    //       image_url
-    //     }
+        const uploadDetails = {
+          user_id: userId,
+          item_name: itemTitle,
+          item_type: itemType,
+          price: uploadPrice,
+          date: dates,
+          location,
+          itinerary_id: id,
+          destination: address,
+          image_url
+        }
   
-    //     console.log("Going to upload to db...")
-    //     console.log(uploadDetails)
+        // console.log("Going to upload to db...")
+        // console.log(uploadDetails)
   
-    //     try {
-    //       setIsUploading(true);
-    //       await insertRecord(uploadDetails);
-    //       setIsUploading(false);
-    //       router.push(`/itinerary-items?id=${id}&location=${location}&destination=${destination}&dates=${dates}`)
-    //       // return response.status;
-    //     } catch (error) {
-    //     }
-    //   }
-    // }
+        try {
+          setIsUploading(true);
+          await insertRecord(uploadDetails);
+          setIsUploading(false);
+          router.push(`/itinerary-items?id=${id}&location=${location}`)
+          // return response.status;
+        } catch (error) {
+          console.error(error)
+        } 
+    }
   }
 
   return (
@@ -305,7 +294,6 @@ const FlightCard: React.FC<FlightCardProps> = ({
           </div>
         </div>
       </div>
-      <PopupMessage msg={"Please select a date!"} trigger={trigger} />
       <div data-testid="trigger-state" className='invisible'>{trigger.toString()}</div>
       </>
   );
