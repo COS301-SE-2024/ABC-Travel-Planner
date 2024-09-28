@@ -1,18 +1,6 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Amadeus_Auth } from 'src/utils/amadeus_auth';
 import axios from 'axios'
-
-interface Amadeus_Auth_Res {
-    type: string,
-    username: string,
-    application_name: string,
-    client_id: string,
-    token_type: string,
-    access_token: string,
-    expires_in: number,
-    state: string,
-    scope: string
-}
 
 @Injectable()
 export class AitaService {

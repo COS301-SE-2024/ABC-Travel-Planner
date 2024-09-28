@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FlightsDto } from './dto/flights.dto';
-import { ResponseDto } from './dto/response.dto';
-
-const amadeus = require('amadeus');
+// import { ResponseDto } from './dto/response.dto';
+import amadeus from 'amadeus-ts';
 
 @Injectable()
 export class FlightsService {
@@ -23,20 +22,20 @@ export class FlightsService {
         })
 
         console.log(`This was the reponse from the Amadeus API:\n${JSON.stringify(response)}`)
-        const results = response?.result;
-        const count = results?.meta?.count;
-        const flightData: any = results?.data;
+        // const results = response?.result;
+        // const count = results?.meta?.count;
+        // const flightData: any = results?.data;
 
-        const responseData: ResponseDto = {
-          count: count,
-          data: flightData.map((item:any) => {
-            const flightItem = {
-              ...item
-            }
+        // const responseData: ResponseDto = {
+        //   count: count,
+        //   data: flightData.map((item:any) => {
+        //     const flightItem = {
+        //       ...item
+        //     }
 
-            return flightItem;
-          })
-        };
+        //     return flightItem;
+        //   })
+        // };
 
         return response?.result;
     } catch(error) {

@@ -36,6 +36,7 @@
     "@nestjs/serve-static": "^4.0.2",
     "@nestjs/typeorm": "^10.0.2",
     "amadeus": "^10.1.0",
+    "amadeus-ts": "^4.0.3",
     "date-fns": "^4.1.0",
     "ejs": "^3.1.10",
     "firebase-admin": "^12.2.0",

@@ -1,6 +1,5 @@
 import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import axios from 'axios'
 
 @Injectable()
 export class UsersService {

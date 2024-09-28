@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
 
 interface Amadeus_Auth_Res {
     type: string,
