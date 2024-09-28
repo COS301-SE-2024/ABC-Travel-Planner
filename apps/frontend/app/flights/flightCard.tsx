@@ -3,6 +3,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
 import PopupMessage  from '../utils/PopupMessage';
+import './flights.css'
+import combobox_values from '../itinerary-items/combobox.json'
 
 interface SegmentType {
   departure: {
@@ -26,7 +28,10 @@ interface FlightCardProps {
   price: string,
   currency: string,
   weightSupported: string,
-  weightUnit: string
+  weightUnit: string,
+  adults: number,
+  to: string,
+  from: string
 }
 
 export const formatSegments = (segments: SegmentType[]) => {
@@ -35,10 +40,11 @@ export const formatSegments = (segments: SegmentType[]) => {
   })
 }
 
-export const getWeightColor = (weight: number) => {
-  if (weight >= 25) {
-    return 'bg-green-500';
-  } else if (weight >= 20) {
+export const getSeatsColor = (available: number, adults: number) => {
+  const ratio = ((available - adults) / available) * 100
+  if ( ratio >= 50 ) {
+    return '';
+  } else if (ratio >= 25) {
     return 'bg-yellow-500';
   } else {
     return 'bg-red-500';
@@ -81,7 +87,10 @@ const FlightCard: React.FC<FlightCardProps> = ({
     price,
     currency,
     weightSupported,
-    weightUnit
+    weightUnit,
+    adults,
+    to,
+    from
   }) => {
   const [uploaded, setUploaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -92,6 +101,10 @@ const FlightCard: React.FC<FlightCardProps> = ({
   const infoRef = useRef<HTMLDivElement>(null);
   const priceRef = useRef<HTMLDivElement>(null);
   const [marginTop, setMarginTop] = useState(0);
+  const [segmentString, setSegmentString] = useState('');
+  const [segmentStringArr, setSegmentStringArr] = useState<string[]>([])
+  const [startAirport, setStartAirport] = useState('');
+  const [endAirport, setEndAirport] = useState('');
 
   useEffect(() => {
     const adjustMargin = () => {
@@ -114,12 +127,55 @@ const FlightCard: React.FC<FlightCardProps> = ({
   useEffect(() => {
     const loadingScreen = async () => {
       await new Promise(resolve => setTimeout(resolve, 2800));
+      
       setDoneLoading(true);
     };
     
-    loadingScreen();
-    // getCurrencies();
+    if (doneLoading != true) {
+      loadingScreen();
+    }
   }, [doneLoading]);
+
+  useEffect(() => {
+    if (segmentString === '') {
+      let stringArr: {to: string, from: string, duration: string}[] = []
+      segments.forEach((item, index) => {
+          stringArr.push({to: item.departure.iataCode, from: item.arrival.iataCode, duration: item.duration.substring(2, item.duration.length-1)});
+      })
+
+      //Remove duplicates...
+      const newArr: {to: string, from: string, duration: string}[] = [...new Set(stringArr)]
+      const airportNames: string[] = []
+      
+      combobox_values.forEach((item) => {
+        newArr.forEach((arrItem) => {
+          console.log("TO: " + to)    //PAR
+          console.log("FROM: " + from)//JNB
+
+          const start = arrItem.from
+          const end = arrItem.to
+          if (item.iata_code === start || item.iata_code === end) {
+            
+            if (startAirport === '' || endAirport === '') {
+              if (from === item.iata_code) {
+                setStartAirport(item.airport_name)
+              }
+  
+              if (to === item.iata_code) {
+                setEndAirport(item.airport_name)
+              }
+            }
+
+            airportNames.push(`${item.airport_name} - ${item.country}`)
+          }
+        })
+      })
+
+      const newAirportNames = [...new Set(airportNames)]
+      setSegmentStringArr(newAirportNames)
+    }
+    
+  }, [])
 
   const uploadItem = async () => {
     // const destination = flight;
@@ -191,39 +247,54 @@ const FlightCard: React.FC<FlightCardProps> = ({
         <div className="flex justify-between">
           <div className="w-1/2 pr-4">
             <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
-              <h1 className="text-4xl font-bold mb-2 text-blue-500">{title}</h1>
+              <h1 className="text-4xl font-bold mb-2 text-blue-500">Flight offer: {title.substring(2,title.length)}</h1>
             </div>
-            <p className="text-gray-700 text-lg font-semibold">{lastTicketDate}</p>
+            {
+              segmentStringArr.map((airport, idx) => (
+                <p key={idx} className="text-blue-500 text-md font-medium">{airport || ''}</p>
+              ))
+            }
           </div>
           <div className="text-right">
-            <p className="text-gray-600 inline-block pr-2">{bookableSeats}</p>
-            <div className={`rounded-full ${getWeightColor(Number(weightSupported))} text-white px-2 py-2 text-sm font-semibold inline-block`}>
-              {`${weightSupported} ${weightUnit}`}
+            <p className="text-gray-600 inline-block pr-2 mb-2">Flying from:</p>
+            <div className={`rounded-full bg-green-500 text-white px-2 py-2 text-sm mb-2 font-semibold inline-block`}>
+              {startAirport}
             </div>
+            {
+              endAirport != '' ? 
+              <>
+                <br />
+                <p className="text-gray-600 inline-block pr-2">Flying to:</p>
+                <div className={`rounded-full bg-green-500 text-white px-2 py-2 text-sm font-semibold inline-block`}>
+                  {endAirport}
+                </div>
+              </>
+             :
+            <div></div>
+            }
+           
           </div>
         </div>
         <div className='flex flex-row justify-start items-start mt-4'>
-          <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
-            <img
-              ref={imageRef}
-              src={`defaultImageUrl`}
-              alt={`defaultImageUrl`}
-              style={{ objectFit: 'cover', width: '400px', height: '250px' }}
-              className="rounded-lg cursor-pointer"
-            />
+          <div style={{ cursor: 'pointer', objectFit: 'cover', width: '400px', height: '250px', borderRadius: '10px' }} className='flightImage' onClick={uploadItem}>
           </div>
           <div className="w-2/3 pl-4 overflow-hidden">
             <div ref={infoRef}>
               <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
               </div>
             </div>
-            <div className={`flex justify-between self-end`} ref={priceRef} style={{ marginTop: `${marginTop}px` }}>
+            <div className={`flex justify-between self-end static`} ref={priceRef} style={{ marginTop: `${marginTop}px` }}>
               <div className="mt-4 flex flex-col items-start space-y-4">
               </div>
-              <div className="text-right">
+              <div className="text-right absolute bottom-0 right-4 px-4 py-6">
                 <p className="text-3xl text-blue-500 font-semibold">R {price}</p>
-                <p className="text-blue-500 text-sm">TYPE</p>
-                <p className="text-blue-500 text-sm">Rates and taxes included</p>
+                {
+                  weightSupported != null ? 
+                  <p>Supported luggage weight : {`${weightSupported} ${weightUnit}`}</p> :
+                  <p></p>
+                }
+                <p className="text-blue-500 text-sm">{bookableSeats} seats available</p>
+                <p className="text-blue-500 text-sm">Last ticket date: {lastTicketDate}</p>
               </div>
             </div>
           </div>

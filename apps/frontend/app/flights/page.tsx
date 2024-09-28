@@ -11,7 +11,11 @@ const Flights = () => {
   const router = useRouter();
   const [searchInitiated, setSearchInitiated] = useState(false);
   const [flightData, setFlightData] = useState<any[]>();
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || ''
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || '';
+  const [adultCount, setAdultCount] = useState(0);
+  const [fetchCount, setFetchCount] = useState(0);
+  const [segmentStrings, setSegmentStrings] = useState<any[]>([]);
+  const [dest, setDest] = useState<string[]>([])
 
   useEffect(() => {
       const fetchData = async () => {
@@ -20,7 +24,14 @@ const Flights = () => {
         const adults = searchParams?.get('adults');
         const departureDate = searchParams?.get('date');
         const travelClass = searchParams?.get('class');
+        
+        const dest:any = []
 
+        dest?.push(end)
+        dest?.push(start)
+
+        setDest(dest)
+        setAdultCount(Number(adults))
         console.log("START: " + start)
         console.log("END: " + end)
         console.log("ADULTS: " + adults)
@@ -43,25 +54,20 @@ const Flights = () => {
 
               setFlightData(data?.data)
               setResultsCount(data?.meta.count)
+              setFetchCount((fetchCount+1))
           } catch (error) {
               console.log(error)
           }
-
-          setLoading(false)
-          setSearchInitiated(false)
+            setLoading(false)
+            setSearchInitiated(false)
         };
         
-        setLoading(true);
-        setSearchInitiated(true);
-        fetchData();
-
-      //   if (searchTerm && topic) {
-      //     setLoading(true);
-      //     setSearchInitiated(true);
-      //     generalSearch(searchTerm, topic);
-      //   }
-      // }, [searchTerm, topic]);
-  }, []);
+        if (fetchCount < 1 ) {
+          setLoading(true);
+          setSearchInitiated(true);
+          fetchData();
+        }
+  }, [searchInitiated, loading]);
 
   return (
     <div className='ml-20 mr-20 mt-16'>
@@ -87,11 +93,14 @@ const Flights = () => {
                 title={item?.itineraries[0]?.duration || 'P0'} 
                 bookableSeats={item?.numberOfBookableSeats || ':'} 
                 lastTicketDate={item?.lastTicketingDate || ''} 
-                segments={item?.itineraries?.segments}
+                segments={item?.itineraries[0]?.segments}
                 price={item?.price?.total}
                 currency={item?.price?.currency}
                 weightSupported={item?.travelerPricings[0]?.fareDetailsBySegment[0]?.includedCheckedBags?.weight}
                 weightUnit={item?.travelerPricings[0]?.fareDetailsBySegment[0]?.includedCheckedBags?.weightUnit}
+                adults={adultCount}
+                to={dest[0]}
+                from={dest[1]}
                 />
                 
             ))}

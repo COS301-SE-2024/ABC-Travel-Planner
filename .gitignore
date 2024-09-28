@@ -33,3 +33,5 @@ apps/frontend/app/utils/functions/country_names.json
 apps/frontend/app/utils/functions/country_names.py
 apps/frontend/app/utils/functions/json_format.py
 apps/frontend/app/utils/functions/jsondata.json
+apps/frontend/app/flights/test.json
+apps/frontend/app/flights/result.json
