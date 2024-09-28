@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import FlightCard from './flightCard';
 import { useRouter, useSearchParams } from 'next/navigation';
-import SearchCard from '../search/searchCard';
 
 const Flights = () => {
   const [resultsCount, setResultsCount] = useState(0);
@@ -14,8 +13,9 @@ const Flights = () => {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || '';
   const [adultCount, setAdultCount] = useState(0);
   const [fetchCount, setFetchCount] = useState(0);
-  const [segmentStrings, setSegmentStrings] = useState<any[]>([]);
   const [dest, setDest] = useState<string[]>([])
+  const [randRate, setRandRate] = useState(0.000000)
+  const [eurRate, setEurRate] = useState(0.000000)
 
   useEffect(() => {
       const fetchData = async () => {
@@ -32,25 +32,12 @@ const Flights = () => {
 
         setDest(dest)
         setAdultCount(Number(adults))
-        console.log("START: " + start)
-        console.log("END: " + end)
-        console.log("ADULTS: " + adults)
-        console.log("DEPARTURE_DATE: " + departureDate)
-        console.log("TRAVEL CLASS: " + travelClass)
 
           try {
               const res = await fetch(`${backendUrl}/flights/offers?originLocationCode=${start}&destinationLocationCode=${end}&departureDate=${departureDate}&adults=${adults}&travelClass=${travelClass}&max=20`)
               const data = await res.json()
               
               console.log(data)
-
-              // try {
-              //   const res = await fetch(`https://api.frankfurter.app/latest?amount${price}&from=${currency}&to=ZAR`)
-              //   const convertedPrice = await res.json();
-              //   return convertedPrice?.rates['ZAR']
-              // } catch (error) {
-              //   console.error(error)
-              // }
 
               setFlightData(data?.data)
               setResultsCount(data?.meta.count)
@@ -68,6 +55,25 @@ const Flights = () => {
           fetchData();
         }
   }, [searchInitiated, loading]);
+
+  useEffect(() => {
+    const getCurrencies = async () => {
+      const apiKey = process.env.NEXT_PUBLIC_OPEN_EXCHANGE_RATES_KEY
+      console.log("API KEY: " + apiKey)
+      const res = await fetch(`https://openexchangerates.org/api/latest.json?app_id=${apiKey}`)
+      const data = await res.json();
+
+      console.log("CURRENCY DATA: " + JSON.stringify(data))
+
+      setRandRate(data?.rates?.ZAR)
+      setEurRate(data?.rates?.EUR)
+    }
+
+    if (fetchCount < 1) {
+      getCurrencies()
+    }
+
+  }, [])
 
   return (
     <div className='ml-20 mr-20 mt-16'>
@@ -101,6 +107,8 @@ const Flights = () => {
                 adults={adultCount}
                 to={dest[0]}
                 from={dest[1]}
+                euRate={eurRate}
+                zaRate={randRate}
                 />
                 
             ))}

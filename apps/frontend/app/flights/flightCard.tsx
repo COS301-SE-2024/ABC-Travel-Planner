@@ -31,7 +31,9 @@ interface FlightCardProps {
   weightUnit: string,
   adults: number,
   to: string,
-  from: string
+  from: string,
+  euRate: number,
+  zaRate: number
 }
 
 export const formatSegments = (segments: SegmentType[]) => {
@@ -90,7 +92,9 @@ const FlightCard: React.FC<FlightCardProps> = ({
     weightUnit,
     adults,
     to,
-    from
+    from,
+    euRate,
+    zaRate
   }) => {
   const [uploaded, setUploaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -149,8 +153,6 @@ const FlightCard: React.FC<FlightCardProps> = ({
       
       combobox_values.forEach((item) => {
         newArr.forEach((arrItem) => {
-          console.log("TO: " + to)    //PAR
-          console.log("FROM: " + from)//JNB
 
           const start = arrItem.from
           const end = arrItem.to
@@ -170,6 +172,9 @@ const FlightCard: React.FC<FlightCardProps> = ({
           }
         })
       })
+
+      console.log("EURATE: " + euRate)
+      console.log("ZARATE: " + zaRate)
 
       const newAirportNames = [...new Set(airportNames)]
       setSegmentStringArr(newAirportNames)
@@ -287,7 +292,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
               <div className="mt-4 flex flex-col items-start space-y-4">
               </div>
               <div className="text-right absolute bottom-0 right-4 px-4 py-6">
-                <p className="text-3xl text-blue-500 font-semibold">R {price}</p>
+                <p className="text-3xl text-blue-500 font-semibold">R {((Number(price) * zaRate) * (1 / euRate)).toFixed(2)}</p>
                 {
                   weightSupported != null ? 
                   <p>Supported luggage weight : {`${weightSupported} ${weightUnit}`}</p> :
