@@ -1,7 +1,0 @@
-If you wanna run these scripts, you need to run this on the terminal beforehand:
-
-sudo apt-get install python3-distutils
-pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client email
-pip install google-api-python-client
-pip install python-dotenv
-pip install environs

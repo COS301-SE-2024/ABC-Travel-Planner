@@ -24,6 +24,7 @@ country_names.forEach((item) => {
 })
 
 const FilterContainer = () => {
+ 
     const [selectedTopic, setSelectedTopic] = useState<string>('');
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchTerm, setSearchTerm] = useState('');

@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^7.11.2",
+    "@nestjs/axios": "^3.0.3",
     "@nestjs/core": "^10.3.10",
+    "@nestjs/serve-static": "^4.0.2",
     "concurrently": "^8.2.2",
     "react-datepicker": "^7.3.0",
     "react-icons": "^5.2.1"

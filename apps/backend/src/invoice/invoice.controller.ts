@@ -30,7 +30,7 @@ export class InvoiceController {
             fs.writeFileSync(invoicePath, html, 'utf8');
             console.log("FILE CREATED!")
 
-            //Send email...
+            //Send email... ┬─┬⃰͡ (ᵔᵕᵔ͜ )
             try {
                 const pythonPromise = await this.createPythonProcess(body.email);
                 console.log(pythonPromise)
@@ -46,11 +46,10 @@ export class InvoiceController {
         }
     }
 
+    // Create the process (｡◕‿◕｡)
     private async createPythonProcess(email: string) {
         return new Promise((resolve, reject) => {
             const scriptPath = path.join(__dirname, 'send_mail.py');
-            console.log(__dirname)
-            console.log("Script path:" + scriptPath)
             const pythonProcess = spawn('python3', [scriptPath, email]);
             
             let output = '';

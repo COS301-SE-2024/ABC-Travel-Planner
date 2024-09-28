@@ -107,7 +107,8 @@ export default function RegisterPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: "url(https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/background%2Flogin.jpg?alt=media&token=33511fc2-c660-43b9-ae64-5187ab5fa23c)", // Replace with your public folder image path
+        backgroundImage:
+          "url(https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/background%2Flogin.jpg?alt=media&token=33511fc2-c660-43b9-ae64-5187ab5fa23c)", // Replace with your public folder image path
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -135,11 +136,18 @@ export default function RegisterPage() {
           <Typography
             component="h1"
             variant="h4"
-            sx={{ fontWeight: "bold", marginBottom: theme.spacing(2) }}
+            sx={{
+              fontWeight: "bold",
+              marginBottom: theme.spacing(2),
+              color: "black",
+            }}
           >
             Join the Adventure!
           </Typography>
-          <Typography variant="body1" sx={{ marginBottom: theme.spacing(3) }}>
+          <Typography
+            variant="body1"
+            sx={{ marginBottom: theme.spacing(3), color: "black" }}
+          >
             Create an account and start planning your next trip.
           </Typography>
           <Box component="form" onSubmit={handleRegister}>
@@ -224,9 +232,17 @@ export default function RegisterPage() {
               Sign Up
             </Button>
 
-            <Typography variant="body2" sx={{ textAlign: "center", mt: 2 }}>
+            <Typography
+              variant="body2"
+              sx={{ textAlign: "center", mt: 2, color: "black" }}
+            >
               Already have an account?{" "}
-              <Link component={NextLink} href="/login" underline="hover">
+              <Link
+                component={NextLink}
+                color="secondary"
+                href="/login"
+                underline="hover"
+              >
                 Login
               </Link>
             </Typography>

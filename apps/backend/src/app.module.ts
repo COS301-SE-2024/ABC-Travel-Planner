@@ -20,6 +20,7 @@ import { ItineraryCreatorModule } from './itinerary-creator/itinerary-creator.mo
 import { ActivityModule } from './activity/activity.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ChatModule } from './chat/chat.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { AitaModule } from './aita/aita.module';
 
@@ -46,6 +47,7 @@ import { AitaModule } from './aita/aita.module';
     ItineraryCreatorModule,
     ActivityModule,
     GoogleMapsModule,
+    ChatModule,
     InvoiceModule,
     FlightsModule,
     AitaModule
