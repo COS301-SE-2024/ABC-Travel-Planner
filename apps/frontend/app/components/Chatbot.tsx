@@ -33,7 +33,7 @@ const ChatBot: React.FC = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      if (data) {
+      if (data.result) {
         console.log(JSON.stringify(data));
         setMessages((prevMessages) => [
           ...prevMessages,
