@@ -11,7 +11,7 @@ import {
   ModalFooter,
   useDisclosure,
 } from '@nextui-org/modal';
-
+import { useTheme } from "../context/ThemeContext";
 interface SearchModalProp {
   handleAddDiv: () => void;
 }
@@ -30,14 +30,14 @@ const SearchModal: React.FC<SearchModalProp> = ({ handleAddDiv }) => {
         console.log("Open: " + isOpen)
       }
   }
-
+  const { selectedTheme, setTheme, themeStyles } = useTheme();
   return (
     <>
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-50" />
         
       )}
-      <Button className="fixed bottom-8 right-12 bg-sky-500 rounded-full addButton" key="md" onClick={onClose}>+</Button>
+      <Button className="fixed bottom-8 right-12 bg-sky-500 rounded-full addButton" key="md" onClick={onClose} style={{background: themeStyles.navbarColor}}>+</Button>
       <Modal size="4xl" isOpen={isOpen} onOpenChange={onClose}>
         <ModalContent className="modal-content">
           <>

@@ -1,8 +1,11 @@
+"use client"
 import React from 'react';
 import { FaEnvelope, FaPhone, FaQuestionCircle, FaVideo, FaPlane } from 'react-icons/fa';
 import ClearLocalStorage from './clearLocalStorage';
+import { useTheme } from "../context/ThemeContext";
 
 const Help = () => {
+  const { selectedTheme, setTheme, themeStyles } = useTheme();
   // Mock data for FAQs
   const faqs = [
     { question: 'How do I book a flight?', answer: 'To book a flight, go to the Flights section in the Search page, Type anything related to your flight preference.' },
@@ -19,7 +22,7 @@ const Help = () => {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-4xl font-bold items-center text-center pt-10">Help Centre </h1>
-      <div className="rounded-lg shadow-md p-6 mb-6 text-center items-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px' }}>
+      <div className="rounded-lg shadow-md p-6 mb-6 text-center items-center" style={{ background: themeStyles.primaryColor, padding: '20px' }}>
         <div className="flex justify-center">
           <h2 className="text-2xl font-bold mb-4 flex items-center text-center">Steps to Book a Trip <FaPlane className="ml-2" /></h2>
         </div>
@@ -32,7 +35,7 @@ const Help = () => {
         </ol>
       </div>
 
-      <div className="rounded-lg shadow-md p-6 mb-6" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', width: '100%' }}>
+      <div className="rounded-lg shadow-md p-6 mb-6" style={{ backgroundColor: themeStyles.primaryColor, padding: '20px', width: '100%' }}>
   <div className="flex justify-center">
     <h2 className="text-2xl font-bold mb-4 flex items-center text-center">Frequently Asked Questions <FaQuestionCircle className="ml-2" /></h2>
   </div>
@@ -46,7 +49,7 @@ const Help = () => {
   </ol>
 </div>
 
-      <div className="rounded-lg shadow-md p-6 mb-6" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px' }}>
+      <div className="rounded-lg shadow-md p-6 mb-6" style={{background: themeStyles.primaryColor, padding: '20px' }}>
         <div className="flex justify-center">
           <h2 className="text-2xl font-bold mb-4 flex items-center text-center">Contact Us <FaEnvelope className="ml-2" /></h2>
         </div>
@@ -57,7 +60,7 @@ const Help = () => {
         </p>
       </div>
 
-      <div className="rounded-lg shadow-md p-6 mb-6 text-center" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px' }}>
+      <div className="rounded-lg shadow-md p-6 mb-6 text-center" style={{ background: themeStyles.primaryColor, padding: '20px' }}>
         <div className="flex justify-center">
           <h2 className="text-2xl font-bold mb-4 flex items-center text-center">Need more information? Watch Me! <FaVideo className="ml-2" /></h2>
         </div>

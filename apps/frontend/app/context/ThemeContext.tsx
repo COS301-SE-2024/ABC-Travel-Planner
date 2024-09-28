@@ -12,7 +12,7 @@ interface ThemeContextProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
- const [selectedTheme, setSelectedTheme] = useState<ThemeKeys>('default');
+ const [selectedTheme, setSelectedTheme] = useState<ThemeKeys>('beach');
 
   const themeStyles = themes[selectedTheme] || themes.default;
 

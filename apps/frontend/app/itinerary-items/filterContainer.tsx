@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
-
+import { useTheme } from "../context/ThemeContext";
 const FilterContainer = () => {
  
     const [selectedTopic, setSelectedTopic] = useState<string>('');
@@ -26,18 +26,18 @@ const FilterContainer = () => {
         router.push(`/filter?id=${actualId}&topic=${selectedTopic}&term=${searchInputRef.current?.value}`);
 
     };
-
+    const { selectedTheme, setTheme, themeStyles } = useTheme();
     return (
         <div>
-        <div  style={{alignContent:'center' ,height: '100%', maxHeight:'500px', width: '100%', maxWidth: '900px', margin: '0 auto', padding: '40px', backgroundColor: 'white' }}>
-            <h1  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', color: '#333' }}>Search at your Convenience!</h1>
-            <p  style={{ fontSize: '1.25rem', textAlign: 'center', marginBottom: '25px', color: '#666' }}>Click on an icon below to filter your search and provide better results</p>
+        <div  style={{ color: themeStyles.textColor, alignContent:'center' ,height: '100%', maxHeight:'500px', width: '100%', maxWidth: '900px', margin: '0 auto', padding: '40px', backgroundColor: 'white' }}>
+            <h1  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', color: themeStyles.textColor }}>Search at your Convenience!</h1>
+            <p  style={{ fontSize: '1.25rem', textAlign: 'center', marginBottom: '25px', color: themeStyles.textColor}}>Click on an icon below to filter your search and provide better results</p>
     
-            <div  style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '25px' }}>
+            <div  style={{display: 'flex', justifyContent: 'space-around', marginBottom: '25px' }}>
                 <button
                     className={`search-button ${selectedTopic === 'Flights' ? 'search-button-selected' : ''}`}
                     onClick={() => handleTopicSelect('Flights')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Flights' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Flights' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s',color: themeStyles.textColor }}
                 >
                     <FaPlane className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Flights' ? '#007BFF' : '#333' }} />
                     <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'flights' ? '#007BFF' : '#333' }}>Flights</span>
@@ -85,7 +85,7 @@ const FilterContainer = () => {
                         ref={searchInputRef}
                         value={searchTerm}
                         onChange={(e) => { setSearchTerm(e.target.value)}}
-                        style={{ width: '70%', padding: '12px', fontSize: '1rem', borderRadius: '8px', border: '1px solid #ccc', boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)' }}
+                        style={{ color: themeStyles.textColor,width: '70%', padding: '12px', fontSize: '1rem', borderRadius: '8px', border: '1px solid #ccc', boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)' }}
                     />
                     <button  onClick={handleSearch} style={{ marginLeft: '10px', padding: '12px 20px', fontSize: '1rem', borderRadius: '8px', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer' }}>
                         <FaSearch />

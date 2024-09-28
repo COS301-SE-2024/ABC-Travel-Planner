@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { deleteItinerary, updateItinerary, getItineraryImage } from ".";
 import axios from "axios";
-
+import { useTheme } from "../context/ThemeContext";
 interface ItineraryComponentProps {
   name: string;
   location: string;
@@ -88,7 +88,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
     fetchItineraries();
     closeShareModal();
   };
-
+  const { selectedTheme, setTheme, themeStyles } = useTheme();
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 cursor-pointer relative">
       <Link href={`/itinerary-items?location=${location}&id=${id}`} passHref>
@@ -102,10 +102,10 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
           />
         </div>
         <div className="p-4">
-          <h2 className="text-xl font-semibold text-gray-800 line-clamp-1">
+          <h2 className="text-xl font-semibold text-gray-800 line-clamp-1" style={{ color: themeStyles.textColor}} >
             {name}
           </h2>
-          <p className="ml-1 text-sm text-gray-500 line-clamp-1">{location}</p>
+          <p className="ml-1 text-sm text-gray-500 line-clamp-1"  style={{ color: themeStyles.textColor}}>{location}</p>
           <div className="flex justify-between items-center mt-2">
             <button
               onClick={openShareModal}

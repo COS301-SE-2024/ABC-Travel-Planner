@@ -333,9 +333,9 @@ const SettingsPage: React.FC = () => {
     >
       <h1 className="text-4xl font-extrabold text-center mb-8">Settings</h1>
 
-      <div className="space-y-6">
+      <div className="space-y-6" >
         {/* User Management Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md">
+        <section className="bg-white p-6 rounded-lg shadow-md" style={{ background: themeStyles.primaryColor}}>
           <h2
             className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
             onClick={() => toggleSection("user-management")}
@@ -529,7 +529,7 @@ const SettingsPage: React.FC = () => {
         </section>
 
         {/* Itinerary Settings Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md">
+        <section className="bg-white p-6 rounded-lg shadow-md" style={{ background: themeStyles.primaryColor}}>
           <h2
             className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
             onClick={() => toggleSection("itinerary-settings")}
@@ -704,7 +704,7 @@ const SettingsPage: React.FC = () => {
         </section>
 
         {/* Account Settings Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md">
+        <section className="bg-white p-6 rounded-lg shadow-md" style={{ background: themeStyles.primaryColor}}>
           <h2
             className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
             onClick={() => toggleSection("account-settings")}
@@ -787,7 +787,7 @@ const SettingsPage: React.FC = () => {
           )}
         </section>
         {/* User Theme Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md">
+        <section className="bg-white p-6 rounded-lg shadow-md" style={{ background: themeStyles.primaryColor}}>
           <h2
             className="text-2xl font-semibold mb-4 cursor-pointer flex items-center space-x-2"
             onClick={() => setShowModal(true)}

@@ -6,7 +6,7 @@ import getUser from "@/libs/actions/getUser";
 import PopupMessage from '../utils/PopupMessage';
 
 import Cookie from "js-cookie";
-
+import { useTheme } from '../context/ThemeContext';
 interface PostCardProps {
   post_id: string;
   user_id: string;
@@ -36,6 +36,7 @@ interface User {
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_description, post_likes, timestamp }) => {
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
   const [liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(post_likes);
   const [showComments, setShowComments] = useState(false);
@@ -395,8 +396,9 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           </div>
         {curr_user != user_id &&
           <button 
-            className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full"
+            className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full"  style={{background: themeStyles.primaryColor}}
             onClick={followUser}>{isFollowing}
+            
           </button>
           }
         </div>
@@ -444,6 +446,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
               <button
                 onClick={handleAddComment}
                 className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                style={{background: themeStyles.navbarColor}}
               >
                 Add
               </button>

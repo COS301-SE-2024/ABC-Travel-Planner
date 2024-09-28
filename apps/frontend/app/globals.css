@@ -160,6 +160,7 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  margin-top: 150px;
 }
 
 .search-title {
@@ -594,8 +595,20 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 5px;
+  margin-right: 10px; /* Add space between buttons */
+  display: inline-block; /* Ensure buttons are aligned next to each other */
 }
+
+.block-button {
+  background: #ff5b6b;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block; /* Ensure buttons are aligned next to each other */
+}
+
 
 .follow-button.unfollow {
   background: #007bff;

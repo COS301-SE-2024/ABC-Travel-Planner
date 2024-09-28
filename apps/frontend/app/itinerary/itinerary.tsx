@@ -6,6 +6,7 @@ import { createItinerary, getItineraries, getItineraryImage } from ".";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Link from 'next/link';
+import { useTheme } from "../context/ThemeContext";
 const Itinerary = () => {
   const [itineraries, setItineraries] = useState<any>([]);
   const [showModal, setShowModal] = useState(false);
@@ -86,19 +87,20 @@ const Itinerary = () => {
     localStorage.removeItem('searchResults');
     fetchItineraries();
   }, []);
-
+  const { selectedTheme, setTheme, themeStyles } = useTheme();
   return (
-    <div className="flex flex-col items-center m-4">
-      <div className="p-8 mt-4 w-full rounded-lg bg-blue-50 shadow-xl">
+    <div className="flex flex-col items-center m-4 mt-20">
+      <div className="p-8 mt-4 w-full rounded-lg bg-blue-50 shadow-xl" style={{background: themeStyles.primaryColor}}>
         <div className="flex justify-between items-center mb-8">
-          <h1 data-testid="itinerariesTitle" className="text-4xl font-bold text-gray-800">My Itineraries</h1>
+          <h1 data-testid="itinerariesTitle" className="text-4xl font-bold text-gray-800" style={{ color: themeStyles.textColor}}>My Itineraries</h1>
           <div className="flex space-x-2">
             <button
               data-testid="addItineraryButton"
               aria-label="Add Itinerary"
               onClick={openModal}
               className="flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
+              style={{ background: themeStyles.navbarColor}}
+           >
               <FaPlus className="mr-2" />
               Add Itinerary
             </button>
@@ -106,6 +108,7 @@ const Itinerary = () => {
               aria-label="AI Trip Creator"
               onClick={openTripCreatorModal}
               className="flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 ml-2"
+              style={{ background: themeStyles.textColor}}
             >
               <FaPlus className="mr-2" />
               Itinerary Creator
@@ -122,13 +125,14 @@ const Itinerary = () => {
           <div className="relative w-full max-w-lg mx-auto my-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               {/* Modal Header */}
-              <div className="flex justify-between items-center px-6 py-4 bg-blue-600 text-white">
-                <h3 className="text-xl font-semibold place-self-center">
+              <div className="flex justify-between items-center px-6 py-4 bg-blue-600 text-white" style={{ background: themeStyles.navbarColor}}>
+                <h3 className="text-xl font-semibold place-self-center" >
                   Add New Itinerary
                 </h3>
                 <button
                   className="text-gray-300 hover:text-gray-300 focus:outline-none"
                   onClick={closeModal}
+                  style={{ background: themeStyles.navbarColor}} 
                 >
                   &#215;
                 </button>
@@ -180,6 +184,7 @@ const Itinerary = () => {
                     data-testid="addItinerarySubmit"
                     type="submit"
                     className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    style={{ background: themeStyles.navbarColor}}
                   >
                     Add Itinerary
                   </button>
@@ -195,7 +200,7 @@ const Itinerary = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
           <div className="relative w-full max-w-lg mx-auto my-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="flex justify-between items-center px-6 py-4 bg-green-600 text-white">
+              <div className="flex justify-between items-center px-6 py-4 bg-green-600 text-white" style={{ background: themeStyles.textColor}}>
                 <h3 className="text-xl font-semibold place-self-center">AI Trip Creator</h3>
                 <button className="text-gray-300 hover:text-gray-300 focus:outline-none" onClick={closeTripCreatorModal}>
                   &#215;
@@ -260,6 +265,7 @@ const Itinerary = () => {
                       data-testid="createTripSubmit"
                       type="button"
                       className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                      style={{ background: themeStyles.textColor}}
                     >
                       Create Trip
                     </button>
