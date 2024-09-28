@@ -255,7 +255,6 @@ const FilterContainer = () => {
                             </div>
 
                             <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px', marginTop: '10px'}}>
-                            {/* <button onClick={() => setOpenCalender(!openCalender)}>Select departure date</button> */}
                                 <button className='w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700'
                                     onClick={
                                         async (val) => {
@@ -269,21 +268,11 @@ const FilterContainer = () => {
                                             const travelClass = flights.class;
                                             console.log(departureDate)
 
-                                            //Go to another page and make api call
                                             handleFlightSearch(startingPoint, destination, adults, departureDate, travelClass)
                                         }
                                 }
                                 >Search</button>
                             </div>
-
-                            
-                            {openCalender && (
-                                <div>
-                                    //TODO Implement a calender...
-                                </div>
-                            )}
-
-                            
                         </div>
                         </>
                     ) : (
