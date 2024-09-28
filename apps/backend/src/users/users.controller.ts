@@ -34,13 +34,4 @@ export class UsersController {
             throw new Error(error.message);
         }
     }
-
-    @Post('delete')
-    async deleteUserById(@Body() body : {userId: string}) {
-        try {
-            return await this.userService.deleteUserById(body.userId)
-        } catch (error) {
-            throw new Error(error.message)
-        }
-    }
 }
