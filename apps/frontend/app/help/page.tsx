@@ -5,7 +5,7 @@ import ClearLocalStorage from './clearLocalStorage';
 import { useTheme } from "../context/ThemeContext";
 
 const Help = () => {
-  const { selectedTheme, setTheme, themeStyles } = useTheme();
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
   // Mock data for FAQs
   const faqs = [
     { question: 'How do I book a flight?', answer: 'To book a flight, go to the Flights section in the Search page, Type anything related to your flight preference.' },
