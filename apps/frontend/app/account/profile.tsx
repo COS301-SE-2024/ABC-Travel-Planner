@@ -137,7 +137,6 @@ const Account = () => {
           user_id: userId,
         }
       );
-      setPosts(postsResponse.data);
 
       const res = await axios.post(
         `${backendUrl}/itinerary/getSavedItineraries`,
@@ -150,11 +149,64 @@ const Account = () => {
       const f = await axios.post(`${backendUrl}/follows/following`, {
         user_id: userId,
       });
-      setFollowing(f.data);
+
+      const r1 = await axios.post(`${backendUrl}/block/blockedUsers`, {
+        user_id: userId,
+      });
+
+      const blockedUsers = r1.data;
+
+      const r2 = await axios.post(`${backendUrl}/block/blockedBy`, {
+        user_id: userId,
+      });
+      const blockedBy = r2.data;
+
+      const filteredPosts = postsResponse.data.filter(
+        (item: any) =>
+          !blockedUsers.some((user: any) =>
+            item.comments.some(
+              (comment: any) => comment.user_id === user.user_id
+            )
+          )
+      );
+
+      const filteredPosts2 = filteredPosts.filter(
+        (item: any) =>
+          !blockedBy.some((user: any) =>
+            item.comments.some(
+              (comment: any) => comment.user_id === user.user_id
+            )
+          )
+      );
+
+      setPosts(filteredPosts2);
+
+      const filteredData = f.data.filter(
+        (item: any) =>
+          !blockedUsers.some((user: any) => user.user_id === item.user_id)
+      );
+
+      const filteredData2 = filteredData.filter(
+        (item: any) =>
+          !blockedBy.some((user: any) => user.user_id === item.user_id)
+      );
+
+      setFollowing(filteredData2);
       const r = await axios.post(`${backendUrl}/follows/followers`, {
         user_id: userId,
       });
-      setFollowers(r.data);
+
+      const filteredData3 = r.data.filter(
+        (item: any) =>
+          !blockedUsers.some((user: any) => user.user_id === item.user_id)
+      );
+
+      const filteredData4 = filteredData3.filter(
+        (item: any) =>
+          !blockedBy.some((user: any) => user.user_id === item.user_id)
+      );
+
+      setFollowers(filteredData4);
     }
     localStorage.removeItem("searchResults");
     fetch();

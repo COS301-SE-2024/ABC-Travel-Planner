@@ -18,4 +18,9 @@ export class BlockController {
   async isBlocked(@Body() body: { user_id: string; blocked_id: string }) {
     return this.blockService.isBlocked(body.user_id, body.blocked_id);
   }
+
+  @Post('blockedBy')
+  async blockedBy(@Body() body: { user_id: string }) {
+    return this.blockService.blockedBy(body.user_id);
+  }
 }
