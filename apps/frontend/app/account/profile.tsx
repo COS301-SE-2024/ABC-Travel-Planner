@@ -161,23 +161,29 @@ const Account = () => {
       });
       const blockedBy = r2.data;
 
-      const filteredPosts = postsResponse.data.filter(
-        (item: any) =>
-          !blockedUsers.some((user: any) =>
-            item.comments.some(
-              (comment: any) => comment.user_id === user.user_id
-            )
-          )
-      );
+      const filteredPosts = postsResponse.data.map((item: any) => {
+        const filteredComments = item.comments.filter(
+          (comment: any) =>
+            !blockedUsers.some((user: any) => comment.user_id === user.user_id)
+        );
 
-      const filteredPosts2 = filteredPosts.filter(
-        (item: any) =>
-          !blockedBy.some((user: any) =>
-            item.comments.some(
-              (comment: any) => comment.user_id === user.user_id
-            )
-          )
-      );
+        return {
+          ...item,
+          comments: filteredComments,
+        };
+      });
+
+      const filteredPosts2 = filteredPosts.map((item: any) => {
+        const filteredComments = item.comments.filter(
+          (comment: any) =>
+            !blockedUsers.some((user: any) => comment.user_id === user.user_id)
+        );
+
+        return {
+          ...item,
+          comments: filteredComments,
+        };
+      });
 
       setPosts(filteredPosts2);
 
