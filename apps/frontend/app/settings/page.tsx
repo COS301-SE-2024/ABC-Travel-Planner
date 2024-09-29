@@ -164,6 +164,24 @@ const SettingsPage: React.FC = () => {
 
         const countries = await getFavouriteCountries(userId);
         setSelectedCountries(countries);
+
+        //get blocked users
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/block/blockedUsers`,
+          { user_id: userId }
+        );
+
+        const blockedUsers = response.data;
+        //filter I want the username then blocked set to true
+        const blockedUsersList = blockedUsers.map((user: any) => {
+          return {
+            username: user.username,
+            blocked: true,
+            user_id: user.user_id,
+          };
+        });
+        //setBlocked
+        setUserList(blockedUsersList);
       } catch (error: any) {
         setError(error.message);
       }
@@ -280,19 +298,21 @@ const SettingsPage: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const [userList, setUserList] = useState([
-    { username: "john_doe", blocked: false },
-    { username: "jane_smith", blocked: false },
-    { username: "user123", blocked: true },
-    // Add more users as needed
-  ]);
+  //useeffect for blocked users
+  const [userList, setUserList] = useState<any[]>([]);
 
-  const handleBlock = (username: string) => {
+  const handleBlock = async (user_id: string) => {
     setUserList((prevList) =>
       prevList.map((user) =>
-        user.username === username ? { ...user, blocked: !user.blocked } : user
+        user.user_id === user_id ? { ...user, blocked: !user.blocked } : user
       )
     );
+
+    const u = Cookie.get("user_id");
+    await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/block/blockUser`, {
+      user_id: u,
+      blocked_id: user_id,
+    });
   };
 
   const filteredUsers = userList.filter((user) =>
@@ -332,9 +352,12 @@ const SettingsPage: React.FC = () => {
     >
       <h1 className="text-4xl font-extrabold text-center mb-8">Settings</h1>
 
-      <div className="space-y-6" >
+      <div className="space-y-6">
         {/* User Management Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md" style={{ background: themeStyles.primaryColor}}>
+        <section
+          className="bg-white p-6 rounded-lg shadow-md"
+          style={{ background: themeStyles.primaryColor }}
+        >
           <h2
             className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
             onClick={() => toggleSection("user-management")}
@@ -421,7 +444,7 @@ const SettingsPage: React.FC = () => {
                       <span className="text-lg">{user.username}</span>
                       <div className="flex space-x-2">
                         <button
-                          onClick={() => handleBlock(user.username)}
+                          onClick={() => handleBlock(user.user_id)}
                           className={`p-2 rounded-full ${
                             user.blocked ? "bg-red-500" : "bg-gray-200"
                           }`}
@@ -528,7 +551,10 @@ const SettingsPage: React.FC = () => {
         </section>
 
         {/* Itinerary Settings Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md" style={{ background: themeStyles.primaryColor}}>
+        <section
+          className="bg-white p-6 rounded-lg shadow-md"
+          style={{ background: themeStyles.primaryColor }}
+        >
           <h2
             className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
             onClick={() => toggleSection("itinerary-settings")}
@@ -703,7 +729,10 @@ const SettingsPage: React.FC = () => {
         </section>
 
         {/* Account Settings Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md" style={{ background: themeStyles.primaryColor}}>
+        <section
+          className="bg-white p-6 rounded-lg shadow-md"
+          style={{ background: themeStyles.primaryColor }}
+        >
           <h2
             className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
             onClick={() => toggleSection("account-settings")}
@@ -786,7 +815,10 @@ const SettingsPage: React.FC = () => {
           )}
         </section>
         {/* User Theme Section */}
-        <section className="bg-white p-6 rounded-lg shadow-md" style={{ background: themeStyles.primaryColor}}>
+        <section
+          className="bg-white p-6 rounded-lg shadow-md"
+          style={{ background: themeStyles.primaryColor }}
+        >
           <h2
             className="text-2xl font-semibold mb-4 cursor-pointer flex items-center space-x-2"
             onClick={() => setShowModal(true)}
