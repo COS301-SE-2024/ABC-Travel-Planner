@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { getItineraryImage } from '../itinerary';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useTheme } from "../context/ThemeContext";
+
 interface SearchCardProps {
     place: any;
 }
@@ -175,7 +175,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         const country = parts[parts.length - 1];
         return { city, country };
     }
-    const { selectedTheme, setTheme, themeStyles } = useTheme();
+
     return (
         <div className="relative w-[70%] mx-auto bg-white rounded-lg shadow-md p-4 h-70">
             <Link href={`/${place.id}`} passHref>
@@ -270,7 +270,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                                         <button
                                             onClick={() => setShowCalendar(false)}
                                             className="bg-blue-500 text-white rounded-md px-4 py-2 mt-4 w-full"
-                                            style={{background: themeStyles.navbarColor}}
+                                          
                                         >
                                             Done
                                         </button>
@@ -298,7 +298,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                             <button
                                 onClick={handleAddToItineraryClick}
                                 className="bg-blue-500 text-white rounded-md px-4 py-2 mt-2"
-                                style={{background: themeStyles.navbarColor}}
+                       
                             >
                                 Add to Itinerary
                             </button>
