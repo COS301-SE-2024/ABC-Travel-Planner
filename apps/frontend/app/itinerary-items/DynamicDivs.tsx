@@ -8,6 +8,7 @@ import PopupMessage from '../utils/PopupMessage';
 import { truncateTitle } from '../utils/functions/TruncateTitle';
 import { createNewDates } from '../utils/functions/convertDates';
 import axios from 'axios';
+import { useTheme } from '../context/ThemeContext';
 
 interface ItemData {
     destination: string;
@@ -55,6 +56,7 @@ interface ItemData {
     const [canRemove, setCanRemove] = useState(true);
     const [trigger, setTrigger] = useState(false);
     const [message, setMessage] = useState("");
+    const { selectedTheme, themeStyles, setTheme } = useTheme();
     
     useEffect(() => {
         if (id) {
@@ -201,24 +203,24 @@ interface ItemData {
 
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl font-bold tracking-tight text-black dark:text-black text-center">{truncateTitle(divItem?.data?.item_name, 30)}</h2>
+                            <h2 className="mb-2 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl font-bold tracking-tight text-black dark:text-black text-center" style={{ color: themeStyles.textColor }}>{truncateTitle(divItem?.data?.item_name, 30)}</h2>
                         </a>
 
                     <hr></hr>
 
                 <div className="moreInfo">
                     <div className="flex justify-between mb-1">
-                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Type:</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left" style={{ color: themeStyles.textColor }}>Type:</div>
                         <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words text-black">{divItem?.data?.item_type}</div>
                     </div>
 
                     <div className="flex justify-between mb-1">
-                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Date:</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left" style={{ color: themeStyles.textColor }}>Date:</div>
                         <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{(divItem?.data?.date.length == 0 || divItem?.data?.date[0].length == 0) ? 'No date selected' : truncateInfo(divItem?.data?.date[0], 42)}</div>
                     </div>
 
                     <div className="flex justify-between mb-1">
-                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left">Address:</div>
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left" style={{ color: themeStyles.textColor }}>Address:</div>
                         <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{truncateInfo(divItem?.data?.destination, 40)}</div>
                     </div>
                     </div>

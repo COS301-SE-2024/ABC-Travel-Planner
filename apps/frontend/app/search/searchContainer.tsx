@@ -6,8 +6,10 @@ import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from './searchCard';
 import ProfileCard from './ProfileCard';
 import { useTheme } from "../context/ThemeContext";
+import Cookie from "js-cookie";
+
 const SearchContainer = () => {
-    const [selectedTopic, setSelectedTopic] = useState<string>('');
+    const [selectedTopic, setSelectedTopic] = useState<string>('stays');
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -35,8 +37,9 @@ const SearchContainer = () => {
         try {
             let url = '';
             const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const user_id = Cookie.get("user_id")!;
             if (selectedTopic == 'profile') {
-                url = `${backendUrl}/search/user?user=${encodeURIComponent(searchTerm)}`;
+                url = `${backendUrl}/search/user?user=${encodeURIComponent(searchTerm)}&currUser=${encodeURIComponent(user_id)}`;
             } else {
                 url = `${backendUrl}/search/places?textQuery=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(selectedTopic)}`
             }
@@ -47,7 +50,7 @@ const SearchContainer = () => {
             const data = await response.json();
             if (data.length) {
                 setSearchResults(data);
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
             } else {
                 setSearchResults([]);
             }
@@ -60,9 +63,27 @@ const SearchContainer = () => {
         }
 
     };
+
+    const getPlaceholderText = () => {
+        switch (selectedTopic) {
+            case 'flights':
+                return 'e.g. Airports in South Africa';
+            case 'stays':
+                return 'e.g. Hotels in Germany';
+            case 'carRentals':
+                return 'e.g. Car rentals in Spain';
+            case 'attractions':
+                return 'e.g. Top attractions in France';
+            case 'airportTaxis':
+                return 'e.g. Airport taxis in Dubai';
+            case 'profile':
+                return 'e.g. name or username';
+        }
+    };
+
     const { selectedTheme, setTheme, themeStyles } = useTheme();
     return (
-        <div style={{background: themeStyles.background}} >
+        <div style={{background: themeStyles.background, minHeight: '100vh'}} >
             <div data-testid="searchContainer" className="search-container" style={{background: themeStyles.background}}>
                 <h1 className="search-title" style={{ fontSize: '2rem' }}>Search at your Convenience!</h1>
                 <p className="search-subtitle" style={{ fontSize: '1.5rem' }}>Click on an icon below to filter your search and provide better results</p>
@@ -74,7 +95,7 @@ const SearchContainer = () => {
                         onClick={() => handleTopicSelect('flights')}
                     >
                         <FaPlane className="search-icon" />
-                        Flights
+                        Airports
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'stays' ? 'search-button-selected' : ''}`}
@@ -117,7 +138,7 @@ const SearchContainer = () => {
                     <input
                         data-testid="searchInput"
                         type="text"
-                        placeholder={selectedTopic ? `Search for ${selectedTopic}` : 'Example search: Hotels in Germany'}
+                        placeholder={getPlaceholderText()}
                         className="search-input"
                         ref={searchInputRef}
                         value={searchTerm}

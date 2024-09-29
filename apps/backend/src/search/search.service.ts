@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import { PlacesClient } from '@googlemaps/places';
+import { BlockService } from 'src/block/block.service';
 interface Place {
     formattedAddress: string;
     displayName: string;
@@ -51,7 +52,7 @@ export class SearchService {
     private defaultImageUrl = `${this.url}/logo2.png`;
     private db: admin.firestore.Firestore;
     private filter: admin.firestore.Filter;
-    constructor(private configService: ConfigService, @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App) {
+    constructor(private configService: ConfigService, @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App, private blockService: BlockService) {
         this.placesClient = new PlacesClient();
         this.db = firebaseApp.firestore();
     }
@@ -255,30 +256,7 @@ export class SearchService {
         }
     }
 
-    // async searchProfile(user: string): Promise<Profile[]> {
-    //     const usersSnapshot = await this.db.collection('Users').get();
-    //     const users: Profile[] = [];
-    //     const lowerCaseUser = user.toLowerCase();
-
-    //     usersSnapshot.forEach(doc => {
-    //         const data = doc.data();
-    //         const name = data.name.toLowerCase();
-    //         const username = data.username.toLowerCase();
-
-    //         if (name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) {
-    //             users.push({
-    //                 name: data.name,
-    //                 username: data.username,
-    //                 id: data.user_id,
-    //                 imageUrl: data.imageUrl
-    //             } as Profile);
-    //         }
-    //     });
-
-    //     return users;
-    // }
-
-    async searchProfile(user: string): Promise<Profile[]> {
+    async searchProfile(user: string, currUser: string): Promise<Profile[]> {
         const usersSnapshot = await this.db.collection('Users').get();
         const lowerCaseUser = user.toLowerCase();
 
@@ -286,8 +264,8 @@ export class SearchService {
             const data = doc.data();
             const name = data.name.toLowerCase();
             const username = data.username.toLowerCase();
-
-            if (name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) {
+            const blocked = await this.blockService.isBlocked(currUser, data.user_id);
+            if ((name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) &&  !blocked) {
                 return {
                     name: data.name,
                     username: data.username,
