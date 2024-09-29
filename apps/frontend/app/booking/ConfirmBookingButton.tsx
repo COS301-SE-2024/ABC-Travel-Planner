@@ -2,41 +2,100 @@
 import React, { useState } from "react";
 import Confetti from "react-confetti";
 import getUser from "@/libs/actions/getUser";
+import { createNewDates } from "../utils/functions/convertDates";
 import Cookie from "js-cookie"; 
-
+import axios, { all } from 'axios';
+import { useTheme } from '../context/ThemeContext';
 interface ConfirmBookingButtonProps {
-  email: string;
-  bookingDetails: string;
+  items: any[];
 }
 
-const sendEmail = async() => {
+const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) => {
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [fade, setFade] = useState(false);
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
+
+  const sendEmail = async() => {
     const temp = Cookie.get("user_id");
     const result = (await getUser(temp));
     const email = JSON.parse(result || "").email;
-    const res = await fetch('/api/execute?email=' + email);
-    const data = await res.json();
-    console.log(data)
-}
 
-const ConfirmBookingButton = () => {
-  const [confirmationMessage, setConfirmationMessage] = useState("");
-  const [showConfetti, setShowConfetti] = useState(false);
-  
+    items.forEach((item) => {
+      item.date = [createNewDates(item.date)];
+      console.log("NEW DATE: " + item.date[0])
+    })
+
+    const jsonBody = {
+      items: items,
+      email: email
+    }
+    
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/invoice/send`,
+      jsonBody
+    )
+
+    const data = res.data;
+    console.log(data)
+  }
+
   const handleConfirmBooking = () => {
     // Logic to confirm booking and send email 
     setConfirmationMessage("Congratulations your trip as been booked, check your email for the confirmation of your booking. Safe travels and enjoy your stay!");
     sendEmail()
-    setShowConfetti(true);
+    setShowConfetti(true)
+    
+    // Fade out & stop confetti...
+    setTimeout(() => {
+      setFade(true);
+    }, 8000)
+    
+    setTimeout(() => {
+      setShowConfetti(false);
+      setFade(false);
+    }, 10000)
   };
 
   return (
     <div className="relative">
-      <div className="absolute inset-0">
+      <style>
+      {`
+          @keyframes fadeOut {
+            0% {
+              opacity: 1;
+            }
+            100% {
+              opacity: 0;
+            }
+          }
+        `}
+      </style>
+      <div className="fixed">
         {showConfetti && (
           <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          style={{ position: "fixed", top: 0, left: 0, zIndex: -1 }}
+          style={
+                fade 
+                  ? { 
+                    position: "fixed", 
+                    top: "0px", 
+                    left: "0px", 
+                    zIndex: 2, 
+                    pointerEvents: "none", 
+                    inset: "0px", 
+                    animation: "fadeOut 2s linear" 
+                  } 
+                  : { 
+                    position: "fixed", 
+                    top: "0px", 
+                    left: "0px", 
+                    zIndex: 2, 
+                    pointerEvents: "none", 
+                    inset: "0px"
+                  }
+                }
         />
         )}
       </div>
@@ -45,6 +104,7 @@ const ConfirmBookingButton = () => {
         <button
           onClick={handleConfirmBooking}
           className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
+          style={{ background: themeStyles.navbarColor}}
         >
           Confirm Booking
         </button>

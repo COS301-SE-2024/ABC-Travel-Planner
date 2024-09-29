@@ -5,9 +5,11 @@ import { FaHotel, FaPlane, FaCar, FaBinoculars, FaTaxi, FaSearch, FaUser } from 
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from './searchCard';
 import ProfileCard from './ProfileCard';
+import { useTheme } from "../context/ThemeContext";
+import Cookie from "js-cookie";
 
 const SearchContainer = () => {
-    const [selectedTopic, setSelectedTopic] = useState<string>('');
+    const [selectedTopic, setSelectedTopic] = useState<string>('stays');
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -35,8 +37,9 @@ const SearchContainer = () => {
         try {
             let url = '';
             const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const user_id = Cookie.get("user_id")!;
             if (selectedTopic == 'profile') {
-                url = `${backendUrl}/search/user?user=${encodeURIComponent(searchTerm)}`;
+                url = `${backendUrl}/search/user?user=${encodeURIComponent(searchTerm)}&currUser=${encodeURIComponent(user_id)}`;
             } else {
                 url = `${backendUrl}/search/places?textQuery=${encodeURIComponent(searchTerm)}&type=${encodeURIComponent(selectedTopic)}`
             }
@@ -47,7 +50,7 @@ const SearchContainer = () => {
             const data = await response.json();
             if (data.length) {
                 setSearchResults(data);
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
             } else {
                 setSearchResults([]);
             }
@@ -61,9 +64,27 @@ const SearchContainer = () => {
 
     };
 
+    const getPlaceholderText = () => {
+        switch (selectedTopic) {
+            case 'flights':
+                return 'e.g. Airports in South Africa';
+            case 'stays':
+                return 'e.g. Hotels in Germany';
+            case 'carRentals':
+                return 'e.g. Car rentals in Spain';
+            case 'attractions':
+                return 'e.g. Top attractions in France';
+            case 'airportTaxis':
+                return 'e.g. Airport taxis in Dubai';
+            case 'profile':
+                return 'e.g. name or username';
+        }
+    };
+
+    const { selectedTheme, setTheme, themeStyles } = useTheme();
     return (
-        <div>
-            <div data-testid="searchContainer" className="search-container">
+        <div style={{background: themeStyles.background, minHeight: '100vh'}} >
+            <div data-testid="searchContainer" className="search-container" style={{background: themeStyles.background}}>
                 <h1 className="search-title" style={{ fontSize: '2rem' }}>Search at your Convenience!</h1>
                 <p className="search-subtitle" style={{ fontSize: '1.5rem' }}>Click on an icon below to filter your search and provide better results</p>
 
@@ -74,7 +95,7 @@ const SearchContainer = () => {
                         onClick={() => handleTopicSelect('flights')}
                     >
                         <FaPlane className="search-icon" />
-                        Flights
+                        Airports
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'stays' ? 'search-button-selected' : ''}`}
@@ -113,27 +134,29 @@ const SearchContainer = () => {
                     </button>
                 </div>
 
-                {selectedTopic && (
-                    <div className="search-bar-container">
-                        <input
-                            data-testid="searchInput"
-                            type="text"
-                            placeholder={`Search for ${selectedTopic}`}
-                            className="search-input"
-                            ref={searchInputRef}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <button data-testid="searchButton" className="search-button-submit" onClick={handleSearch}>
-                            <FaSearch />
-                        </button>
-                    </div>
-                )}
+                <div className="search-bar-container">
+                    <input
+                        data-testid="searchInput"
+                        type="text"
+                        placeholder={getPlaceholderText()}
+                        className="search-input"
+                        ref={searchInputRef}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button 
+                        data-testid="searchButton" 
+                         className="search-button-submit h-12 flex items-center justify-center"
+                        onClick={handleSearch}
+                    >
+                        <FaSearch />
+                    </button>
+                </div>
 
                 {loading && (
                     <div
                         className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-blue-500 motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                        role="status">
+                        role="status" style={{background: themeStyles.background}}>
                         <span
                             className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
                         >Loading...</span>
@@ -144,7 +167,7 @@ const SearchContainer = () => {
             </div>
 
             {searchResults.length > 0 && (
-                <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
+                <div className="flex flex-col items-center gap-4 rounded-lg pt-10" style={{background: themeStyles.background}}>
                     {searchResults.map((result, index) => (
                         selectedTopic === 'profile' ? (
                             <ProfileCard key={index} profile={result} />
@@ -156,7 +179,7 @@ const SearchContainer = () => {
             )}
 
             {searchInitiated && !loading && searchResults.length === 0 && (
-                <div className="flex justify-center items-center h-20 mt-10">
+                <div className="flex justify-center items-center h-20 mt-10" style={{background: themeStyles.background}}>
                     <p className="text-gray-500 text-lg">No search results found.</p>
                 </div>
             )}

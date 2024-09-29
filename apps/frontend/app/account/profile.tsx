@@ -13,6 +13,7 @@ import {
   FaHeart,
   FaComment,
   FaPlus,
+  FaTrash,
   FaPaperPlane,
   FaBookmark,
   FaUser,
@@ -24,6 +25,7 @@ import {
   updateUserProfile,
   getSharedItineraries,
   updateImageURL,
+  deletePost,
 } from ".";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -32,6 +34,7 @@ import getUser from "@/libs/actions/getUser";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
 import { FaPerson } from "react-icons/fa6";
+import { useTheme } from "../context/ThemeContext";
 
 const Account = () => {
   const [profileDetails, setProfileDetails] = useState<{
@@ -58,7 +61,7 @@ const Account = () => {
     comments: any[];
     timestamp: string;
   }
-
+  const { selectedTheme, setTheme, themeStyles } = useTheme();
   const [originalProfileDetails, setOriginalProfileDetails] =
     useState(profileDetails);
   const [file, setFile] = useState<any>(null);
@@ -134,7 +137,6 @@ const Account = () => {
           user_id: userId,
         }
       );
-      setPosts(postsResponse.data);
 
       const res = await axios.post(
         `${backendUrl}/itinerary/getSavedItineraries`,
@@ -147,13 +149,72 @@ const Account = () => {
       const f = await axios.post(`${backendUrl}/follows/following`, {
         user_id: userId,
       });
-      setFollowing(f.data);
+
+      const r1 = await axios.post(`${backendUrl}/block/blockedUsers`, {
+        user_id: userId,
+      });
+
+      const blockedUsers = r1.data;
+
+      const r2 = await axios.post(`${backendUrl}/block/blockedBy`, {
+        user_id: userId,
+      });
+      const blockedBy = r2.data;
+
+      const filteredPosts = postsResponse.data.map((item: any) => {
+        const filteredComments = item.comments.filter(
+          (comment: any) =>
+            !blockedUsers.some((user: any) => comment.user_id === user.user_id)
+        );
+
+        return {
+          ...item,
+          comments: filteredComments,
+        };
+      });
+
+      const filteredPosts2 = filteredPosts.map((item: any) => {
+        const filteredComments = item.comments.filter(
+          (comment: any) =>
+            !blockedUsers.some((user: any) => comment.user_id === user.user_id)
+        );
+
+        return {
+          ...item,
+          comments: filteredComments,
+        };
+      });
+
+      setPosts(filteredPosts2);
+
+      const filteredData = f.data.filter(
+        (item: any) =>
+          !blockedUsers.some((user: any) => user.user_id === item.user_id)
+      );
+
+      const filteredData2 = filteredData.filter(
+        (item: any) =>
+          !blockedBy.some((user: any) => user.user_id === item.user_id)
+      );
+
+      setFollowing(filteredData2);
       const r = await axios.post(`${backendUrl}/follows/followers`, {
         user_id: userId,
       });
-      setFollowers(r.data);
+
+      const filteredData3 = r.data.filter(
+        (item: any) =>
+          !blockedUsers.some((user: any) => user.user_id === item.user_id)
+      );
+
+      const filteredData4 = filteredData3.filter(
+        (item: any) =>
+          !blockedBy.some((user: any) => user.user_id === item.user_id)
+      );
+
+      setFollowers(filteredData4);
     }
-    localStorage.removeItem('searchResults');
+    localStorage.removeItem("searchResults");
     fetch();
   }, []);
 
@@ -218,7 +279,11 @@ const Account = () => {
       console.log(response);
     }
     await updateUserProfile(profileDetails);
-    toggleEdit(); // Exit edit mode
+    if (file) {
+      window.location.reload();
+    } else {
+      toggleEdit();
+    }
   };
 
   const toggleEdit = () => {
@@ -363,10 +428,24 @@ const Account = () => {
   const handleViewChange = (view: string) => {
     setView(view);
   };
+  //delete button
+  const handleDeletePost = async (postId: string) => {
+    try {
+      await deletePost(postId);
+
+      setPosts(posts.filter((post) => post.id !== postId));
+      closeEnlargedPost();
+    } catch (error) {
+      console.error("Failed to delete the post:", error);
+    }
+  };
 
   return (
     <div data-testid="accountContainer" className="profile-page">
-      <header className="profile-header">
+      <header
+        className="profile-header"
+        style={{ background: themeStyles.primaryColor }}
+      >
         <div className="profile-pic">
           <div className="relative">
             {profileDetails.imageUrl && (
@@ -411,7 +490,11 @@ const Account = () => {
                 className="edit-input"
               />
               <div className="edit-buttons">
-                <button onClick={handleSave} className="save-button">
+                <button
+                  onClick={handleSave}
+                  className="save-button"
+                  style={{ backgroundColor: themeStyles.navbarColor }}
+                >
                   Save
                 </button>
                 <button onClick={handleCancel} className="cancel-button">
@@ -421,7 +504,12 @@ const Account = () => {
             </div>
           ) : (
             <>
-              <h1 data-testid="accountName">{profileDetails.username}</h1>
+              <h1
+                data-testid="accountName"
+                style={{ color: themeStyles.textColor }}
+              >
+                {profileDetails.username}
+              </h1>
               <h2 data-testid="accountEmail">{profileDetails.email}</h2>
               {profileDetails.country && (
                 <div className="location">
@@ -463,7 +551,10 @@ const Account = () => {
         )}
       </header>
 
-      <section className="saved-itineraries">
+      <section
+        className="saved-itineraries"
+        style={{ background: themeStyles.primaryColor }}
+      >
         <h3 className="Following-title">My Following</h3>
         <div className="profile-stats">
           <div className="following" onClick={toggleFollowing}>
@@ -496,44 +587,44 @@ const Account = () => {
         {view === "shared" && (
           <div className="itinerary-cards">
             {itineraries.map((itinerary: any, index: any) => (
-              <div key={index} className="itinerary-card">
-                <img
-                  src={itinerary.imageUrl}
-                  alt={itinerary.name}
-                  className="itinerary-image"
-                />
-                <div className="itinerary-content">
-                  <h4>{itinerary.name}</h4>
-                  <Link
-                    href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=true&prev=${location.pathname}`}
-                    passHref
-                  >
-                    <button className="view-button">View</button>
-                  </Link>
+              <Link
+                key={index}
+                href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=true&prev=${location.pathname}`}
+                passHref
+              >
+                <div className="itinerary-card">
+                  <img
+                    src={itinerary.imageUrl}
+                    alt={itinerary.name}
+                    className="itinerary-image"
+                  />
+                  <div className="itinerary-content">
+                    <h4 className="itinerary-title">{itinerary.name}</h4>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
         {view === "bookmarks" && (
           <div className="itinerary-cards">
             {savedItineraries.map((itinerary: any, index: any) => (
-              <div key={index} className="itinerary-card">
-                <img
-                  src={itinerary.imageUrl}
-                  alt={itinerary.name}
-                  className="itinerary-image"
-                />
-                <div className="itinerary-content">
-                  <h4>{itinerary.name}</h4>
-                  <Link
-                    href={`/viewItinerary?itineraryName=${itinerary.name}&itineraryId=${itinerary.id}&myItinerary=false&prev=${location.pathname}`}
-                    passHref
-                  >
-                    <button className="view-button">View</button>
-                  </Link>
+              <Link
+                key={index}
+                href={`/viewItinerary?itineraryName=${itinerary?.name}&itineraryId=${itinerary.id}&myItinerary=false&prev=${location.pathname}`}
+                passHref
+              >
+                <div className="itinerary-card">
+                  <img
+                    src={itinerary?.imageUrl}
+                    alt={itinerary?.name}
+                    className="itinerary-image"
+                  />
+                  <div className="itinerary-content">
+                    <h4 className="itinerary-title">{itinerary?.name}</h4>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
@@ -575,7 +666,10 @@ const Account = () => {
                 </div>
               ))}
             </div>
-            <button className="close-button" onClick={toggleFollowers}>
+            <button
+              onClick={toggleFollowers}
+              style={{ backgroundColor: themeStyles.navbarColor }}
+            >
               Close
             </button>
           </div>
@@ -599,7 +693,11 @@ const Account = () => {
                 </div>
               ))}
             </div>
-            <button className="close-button" onClick={toggleFollowing}>
+            <button
+              className="close-button"
+              onClick={toggleFollowing}
+              style={{ backgroundColor: themeStyles.navbarColor }}
+            >
               Close
             </button>
           </div>
@@ -607,11 +705,15 @@ const Account = () => {
       )}
       {/* Posts */}
 
-      <section className="posts py-6 px-4">
+      <section
+        className="posts py-6 px-4 "
+        style={{ width: "140%", background: themeStyles.primaryColor }}
+      >
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
           onClick={() => setShowPostModal(true)}
           className="mt-6 mb-4 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg flex items-center mx-auto"
+          style={{ background: themeStyles.navbarColor }}
         >
           <FaPlus className="mr-2" /> Add Post
         </button>
@@ -680,12 +782,13 @@ const Account = () => {
               <button
                 onClick={handleNewPostSubmit}
                 className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
+                style={{ backgroundColor: themeStyles.navbarColor }}
               >
                 Submit
               </button>
               <button
                 onClick={() => setShowPostModal(false)}
-                className="bg-gray-500 text-white py-2 px-4 rounded-lg shadow-lg"
+                className="cancel-button"
               >
                 Cancel
               </button>
@@ -735,6 +838,14 @@ const Account = () => {
                 <FaComment className="mr-1 text-2xl" />
                 {posts[enlargedPostIndex]?.comments?.length}
               </button>
+              {/* Delete Button */}
+              <button
+                onClick={() => handleDeletePost(posts[enlargedPostIndex].id)}
+                className="flex items-center text-red-600"
+              >
+                <FaTrash className="mr-1 text-2xl" />
+                Delete Post
+              </button>
             </div>
             <div className="mb-4">
               {posts[enlargedPostIndex]?.comments?.map((data, index) => (
@@ -753,6 +864,7 @@ const Account = () => {
             <button
               onClick={handleCommentSubmit}
               className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
+              style={{ backgroundColor: themeStyles.navbarColor }}
             >
               Submit
             </button>

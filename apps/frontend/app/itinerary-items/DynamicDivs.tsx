@@ -6,8 +6,14 @@ import "./modal.css"
 import Cookie from 'js-cookie'
 import PopupMessage from '../utils/PopupMessage';
 import { truncateTitle } from '../utils/functions/TruncateTitle';
+import { createNewDates } from '../utils/functions/convertDates';
+import axios from 'axios';
+import { useTheme } from '../context/ThemeContext';
 
 interface ItemData {
+    destination: string;
+    location: string;
+    date: string[];
     item_name: string;
     item_type: string;
     image_url: string;
@@ -28,8 +34,16 @@ interface ItemData {
     location?: string;
     destination?: any;
   }
- 
 
+
+
+  function truncateInfo(dateString: string, len: number) : string {
+    if (dateString.length > len) {
+        return dateString.substring(0, len) + '...';
+    }
+    
+    return dateString;
+  }
 
   //Making the component async ensures that it constantly refreshes the whole page on change/useEffect execution
   const DynamicDivs: React.FC<DynamicDivsProps> = ({ id, location, destination }) => {
@@ -42,6 +56,7 @@ interface ItemData {
     const [canRemove, setCanRemove] = useState(true);
     const [trigger, setTrigger] = useState(false);
     const [message, setMessage] = useState("");
+    const { selectedTheme, themeStyles, setTheme } = useTheme();
     
     useEffect(() => {
         if (id) {
@@ -77,15 +92,18 @@ interface ItemData {
                 const data: ItemData[] = await response.json();
                 console.log("Response from server: " + JSON.stringify(data))
                 
+                
                 const initialDivs = data.map((dataItem, index) => ({
                     id: index,
                     data: dataItem,
                 }));
+                
+                initialDivs.forEach(async (data, index) => {    
+                    data.data.date = [createNewDates(data.data.date)]
 
-                initialDivs.forEach((data, index) => {
                     switch (data.data.item_type) {
                         case "stays":
-                            data.data.item_type = "A place to stay"
+                            data.data.item_type = "A Place to Stay"
                             break;
                         case "attractions":
                             data.data.item_type = "Attraction"
@@ -93,19 +111,25 @@ interface ItemData {
                         case "airportTaxis":
                             data.data.item_type = "Airport Taxi"
                             break;
-                        case "carRental":
+                        case "carRentals":
                             data.data.item_type = "Car Rental"
                             break;
                         case "flight": 
                             data.data.item_type = "Flight"
                             break;
-
                         default:
                             break;
                     }
+                    
                 });
+                
                 setDivs(initialDivs);
                 setFetchedData(data);
+                
+                divs.map(async (divItem) => {
+                    console.log(divItem?.data?.date);
+                })
+                
             } catch (error) {
                 console.error("Error fetching items:", error);
             }
@@ -118,16 +142,6 @@ interface ItemData {
         }
 
     }, [uploaded])
-
-    const handleAddDiv = () => {
-      console.log("Current divs: " + JSON.stringify(divs))    
-      const newId = divs.length;
-      const newDiv = {
-        id: newId,
-        data: fetchedData[newId % fetchedData.length],
-      };
-      setDivs([...divs, newDiv]);
-    };
 
     const handleRemoveDiv = async (id: number) => {
         if (canRemove) {
@@ -145,15 +159,12 @@ interface ItemData {
                     method: 'POST',
                     headers: {
                     'Content-Type': 'application/json',
-                    //   Authorization: `Bearer ${idToken}`,
                     },
                     body: JSON.stringify({ user_name, image_url, itinerary_id, timestamp }),
                 })
                 
-                //Div ids still need to be updated after deletion...
                 setDivs(divs.filter(divItem => divItem.id !== id));
                 
-                //CODE TO CHANGE DIV's IDs... 
                 for (let index = id+1; index < divs.length; index++) {
                     divs[index].id--;
                     if (divs[index].id < 0) {
@@ -184,16 +195,34 @@ interface ItemData {
     return (
         <>
         {divs.map((divItem) => (
-            divItem.data && <div key={divItem.id} className="relative border-2 border-black-500 rounded-md item-div font-sans">
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass">
-                    <a href="#" className='text-center flex justify-center'>
-                        <img className="w-full h-60 rounded-t-lg" src={divItem?.data?.image_url} alt="" />
+            divItem.data && <div key={divItem.id} className="relative border border-black-500 rounded-md item-div font-sans backdrop-filter backdrop-blur-[4px] max-w-[520] w-full mx-auto">
+                {/* <div className="max-w-sm rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 linkClass"> */}
+                    <a href="#" className='text-center flex justify-center ml-12 mr-12'>
+                        <img className="w-full h-60 mt-10 mb-2 border-[1px] border-white border-solid rounded-md" src={divItem?.data?.image_url} alt="" />
                     </a>
+
                     <div className="p-5">
                         <a href="#">
-                            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{truncateTitle(divItem?.data?.item_name, 55)}</h2>
+                            <h2 className="mb-2 text-base sm:text-md md:text-lg lg:text-xl xl:text-2xl font-bold tracking-tight text-black dark:text-black text-center" style={{ color: themeStyles.textColor }}>{truncateTitle(divItem?.data?.item_name, 30)}</h2>
                         </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{divItem?.data?.item_type}</p>
+
+                    <hr></hr>
+
+                <div className="moreInfo">
+                    <div className="flex justify-between mb-1">
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left" style={{ color: themeStyles.textColor }}>Type:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words text-black">{divItem?.data?.item_type}</div>
+                    </div>
+
+                    <div className="flex justify-between mb-1">
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left" style={{ color: themeStyles.textColor }}>Date:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{(divItem?.data?.date.length == 0 || divItem?.data?.date[0].length == 0) ? 'No date selected' : truncateInfo(divItem?.data?.date[0], 42)}</div>
+                    </div>
+
+                    <div className="flex justify-between mb-1">
+                        <div className="text-base sm:text-sm md:text-md lg:text-lg xl:text-xl mb-3 font-semibold text-black text-left" style={{ color: themeStyles.textColor }}>Address:</div>
+                        <div className="text-base sm:text-xs md:text-sm lg:text-md xl:text-lg text-right font-normal break-words overflow-hidden text-wrap whitespace-pre-wrap text-black">{truncateInfo(divItem?.data?.destination, 40)}</div>
+                    </div>
                     </div>
                 </div>
 
@@ -207,8 +236,8 @@ interface ItemData {
                 </Button>
             </div>
         ))}
-            <SearchModal handleAddDiv={ handleModelClose }/>
             <PopupMessage msg={message} trigger={trigger} />
+            <SearchModal handleAddDiv={ handleModelClose }/>
         </>
     );
 };

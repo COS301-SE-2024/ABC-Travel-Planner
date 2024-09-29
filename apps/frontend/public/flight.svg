@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 360 360" xml:space="preserve">
+<g id="XMLID_1353_">
+	<path id="XMLID_1375_" style="fill:#DEDDE0;" d="M180,0C80.748,0,0,80.748,0,180s80.748,180,180,180s180-80.748,180-180
+		S279.252,0,180,0z M180,330c-82.71,0-150-67.29-150-150S97.29,30,180,30s150,67.29,150,150S262.71,330,180,330z"/>
+	<path id="XMLID_1378_" style="fill:#78B9EB;" d="M155,255v-20l10-12v-26.461L115,205v-20l50-33.846V130c0-8.284,6.716-15,15-15V60
+		c-66.274,0-120,53.726-120,120s53.726,120,120,120v-55L155,255z"/>
+	<path id="XMLID_1379_" style="fill:#5A8BB0;" d="M180,60v55c8.284,0,15,6.716,15,15v21.154L245,185v20l-50-8.461V223l10,12v20
+		l-25-10v55c66.274,0,120-53.726,120-120S246.274,60,180,60z"/>
+	<path id="XMLID_1380_" style="fill:#FFFFFF;" d="M165,130v21.154L115,185v20l50-8.461V223l-10,12v20l25-10l25,10v-20l-10-12
+		v-26.461L245,205v-20l-50-33.846V130c0-8.284-6.716-15-15-15S165,121.716,165,130z"/>
+</g>
+</svg>

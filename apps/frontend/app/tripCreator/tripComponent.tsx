@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { useTheme } from "../context/ThemeContext";
 export interface Place {
   formattedAddress: string;
   displayName: string;
@@ -62,6 +62,7 @@ const spinnerAnimation = `
 }`;
 
 const TripComponent: React.FC = () => {
+  const { selectedTheme, setTheme, themeStyles } = useTheme();
   const [searchResults, setSearchResults] = useState<Place[]>([]);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -246,46 +247,70 @@ const TripComponent: React.FC = () => {
   };
 
   return (
-    <div className="mt-10 p-5 bg-blue-200">
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+    <div className=" p-5 bg-blue-200" style={{ backgroundColor: themeStyles.primaryColor}}>
+      <div className="flex justify-center items-center min-h-screen " style={{ backgroundColor: themeStyles.primaryColor}}>
         <div className="relative p-8 rounded-lg shadow-xl bg-white bg-opacity-90">
-          <h2 className="text-4xl font-bold text-center mb-6 text-blue-700 flex items-center justify-center">
+          <h2 className="text-4xl font-bold text-center mb-6 text-blue-700 flex items-center justify-center"  style={{ color: themeStyles.textColor}} >
             Your Trip to {country}
-            <FaPlane className="text-blue-700 ml-2 mr-2" />
-            <FaGlobe className="text-blue-700 mr-2" />
+            <FaPlane className="text-blue-700 ml-2 mr-2"   style={{ color: themeStyles.textColor}} />
+            <FaGlobe className="text-blue-700 mr-2"   style={{ color: themeStyles.textColor}}/>
           </h2>
 
           <div className="flex justify-center mb-6">
             <button
               onClick={() => setSelectedCategory("all")}
-              className={`px-4 py-2 rounded-lg mx-2 ${selectedCategory === "all" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}
+              className={`px-4 py-2 rounded-lg mx-2`}
+              style={{
+                backgroundColor: selectedCategory === "all" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+                color: themeStyles.textColor,
+              }}
             >
               All
             </button>
             <button
-              onClick={() => setSelectedCategory("attractions")}
-              className={`px-4 py-2 rounded-lg mx-2 ${selectedCategory === "attractions" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}
-            >
-              Attractions
-            </button>
-            <button
-              onClick={() => setSelectedCategory("stays")}
-              className={`px-4 py-2 rounded-lg mx-2 ${selectedCategory === "stays" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}
-            >
-              Stays
-            </button>
-            <button
-              onClick={() => setSelectedCategory("carRentals")}
-              className={`px-4 py-2 rounded-lg mx-2 ${selectedCategory === "carRentals" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}
-            >
-              Car Rentals
-            </button>
-            <button
-              onClick={() => setSelectedCategory("airportTaxis")}
-              className={`px-4 py-2 rounded-lg mx-2 ${selectedCategory === "airportTaxis" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"}`}
-            >
-              Airport Taxis
-            </button>
+  onClick={() => setSelectedCategory("attractions")}
+  className={`px-4 py-2 rounded-lg mx-2`}
+  style={{
+    backgroundColor: selectedCategory === "attractions" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+    color: selectedCategory === "attractions" ? 'white' : themeStyles.textColor,
+  }}
+>
+  Attractions
+</button>
+
+<button
+  onClick={() => setSelectedCategory("stays")}
+  className={`px-4 py-2 rounded-lg mx-2`}
+  style={{
+    backgroundColor: selectedCategory === "stays" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+    color: selectedCategory === "stays" ? 'white' : themeStyles.textColor,
+  }}
+>
+  Stays
+</button>
+
+<button
+  onClick={() => setSelectedCategory("carRentals")}
+  className={`px-4 py-2 rounded-lg mx-2`}
+  style={{
+    backgroundColor: selectedCategory === "carRentals" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+    color: selectedCategory === "carRentals" ? 'white' : themeStyles.textColor,
+  }}
+>
+  Car Rentals
+</button>
+
+<button
+  onClick={() => setSelectedCategory("airportTaxis")}
+  className={`px-4 py-2 rounded-lg mx-2`}
+  style={{
+    backgroundColor: selectedCategory === "airportTaxis" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+    color: selectedCategory === "airportTaxis" ? 'white' : themeStyles.textColor,
+  }}
+>
+  Airport Taxis
+</button>
+
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
@@ -382,12 +407,14 @@ const TripComponent: React.FC = () => {
           <div className="flex justify-center">
             <button
               className="bg-blue-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center mr-2"
+              style={{ backgroundColor: themeStyles.navbarColor}}
               onClick={goBackToItinerary}
             >
               <FaArrowLeft className="mr-2" /> Go Back
             </button>
             <button
               className="bg-green-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center"
+              style={{ backgroundColor: themeStyles.textColor}}
               onClick={sendToItineraryPage}
             >
               <FaSave className="mr-2" /> Save Trip

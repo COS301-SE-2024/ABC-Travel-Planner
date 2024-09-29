@@ -18,6 +18,12 @@ import { getItineraryImage } from '../app/itinerary';
 import { createItinerary } from '../app/itinerary';
 import { getItineraries } from '../app/itinerary';
 import SearchCard from '../app/search/searchCard';
+import { useTheme } from '../app/context/ThemeContext';
+
+
+jest.mock('../app/context/ThemeContext', () => ({
+  useTheme: jest.fn(),
+}));
 
 jest.mock("firebase/storage", () => ({
   getStorage: jest.fn(),
@@ -344,6 +350,22 @@ describe('dataTests', () => {
   });
 });
 describe('SearchCard Component', () => {
+  beforeEach(() => {
+    // Provide a mock implementation for useTheme
+    (useTheme as jest.Mock).mockReturnValue({
+      selectedTheme: 'beach',
+      themeStyles: {
+        background: '#ffffff',
+        textColor: '#000000',
+      },
+      setTheme: jest.fn(),
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  
   test('renders the title', () => {
     render(<FilterCard place={place} />);
     const titleElement = screen.getByText(/Hennops Hiking Trail & Mtb Trail/i);
@@ -495,6 +517,18 @@ describe('generatePrice', () => {
 describe('SearchCard', () => {
   beforeEach(() => {
     // Clear all instances and calls to constructor and all methods:
+    jest.clearAllMocks();
+    (useTheme as jest.Mock).mockReturnValue({
+      selectedTheme: 'beach',
+      themeStyles: {
+        background: '#ffffff',
+        textColor: '#000000',
+      },
+      setTheme: jest.fn(),
+    });
+  });
+
+  afterEach(() => {
     jest.clearAllMocks();
   });
 

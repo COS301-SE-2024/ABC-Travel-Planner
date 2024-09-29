@@ -160,6 +160,7 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  margin-top: 150px;
 }
 
 .search-title {
@@ -208,23 +209,26 @@ body {
 }
 
 .search-input {
-  padding: 1rem;
-  font-size: 1.25rem;
-  border-radius: 4px 0 0 4px;
-  border: 1px solid #ccc;
-  outline: none;
-  flex: 1;
+  height: 48px; /* Set a fixed height */
+  padding: 0 12px; /* Padding for input */
+  border: 1px solid #ccc; /* Add your desired styles */
+  border-radius: 4px; /* Rounded corners */
+  flex: 1; /* Allow the input to take available width */
+  box-sizing: border-box; /* Ensure padding and border are included in height */
 }
 
 .search-button-submit {
-  padding: 1rem 1.5rem;
-  font-size: 1.25rem;
-  border-radius: 0 4px 4px 0;
-  border: 1px solid #ccc;
-  background-color: #0070f3;
-  color: white;
-  cursor: pointer;
-  outline: none;
+  background-color: #3b82f6; /* Example blue color */
+  border: none; /* Remove default button border */
+  border-radius: 4px; /* Same border radius as input */
+  color: white; /* Icon color */
+  cursor: pointer; /* Pointer cursor */
+  height: 48px; /* Same height as the input */
+  width: 48px; /* Set width for the button */
+  display: flex; /* Use flex to center the icon */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  padding: 0; /* Remove default padding */
 }
 
 /*ACCOUNT*/
@@ -282,7 +286,7 @@ body {
   position: relative;
   background: rgba(173, 216, 230, 0.5);
   padding: 40px;
-  width: 100%;
+  width: 140%;
   max-width: 900px;
   border-radius: 10px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
@@ -396,32 +400,70 @@ body {
   font-size: larger;
 }
 
+.saved-itineraries {
+  width: 140%;
+  max-width: 900px;
+  background: rgba(173, 216, 230, 0.5);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  text-align: center;
+  max-height: 500px; /* Increased height */
+  overflow: hidden; /* Prevent overall section overflow */
+}
+
+.itinerary-cards {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto; /* Enable horizontal scrolling for the cards */
+  padding-bottom: 15px;
+  scrollbar-width: thin; /* For Firefox */
+  max-height: 300px; /* Adjust this height as needed */
+}
+.itinerary-card:hover {
+  transform: scale(1.01);
+}
 .itinerary-card {
-  flex: 0 0 auto;
-  width: 200px;
-  height: 150px;
+  flex: 0 0 auto; /* Prevent cards from shrinking */
+  width: 220px; /* Fixed width for cards */
+  min-height: 170px; /* Auto height to accommodate content */
+  max-height: 250px; /* Set a max height for uniformity */
   background: white;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Hide overflow to keep card clean */
 }
 
 .itinerary-image {
   width: 100%;
-
-  min-height: 100px;
-
-  height: 100px;
+  min-height: 100px; /* Minimum height for the image */
+  height: 100px; /* Fixed height for the image */
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
 .itinerary-content {
+  width: 100%; /* Ensure the container has a defined width */
   padding: 10px;
+  display: flex;
+  flex-direction: column;
   text-align: center;
+}
+
+.itinerary-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block; /* Ensure it's a block-level element */
+  width: 100%; /* Ensure full width */
+  min-width: 0; /* Important for flexbox to ensure ellipsis works */
 }
 .view-button {
   background: #007bff;
@@ -546,29 +588,6 @@ body {
   margin-bottom: 1rem;
 }
 
-.saved-itineraries {
-  width: 100%;
-  max-width: 900px;
-  background: rgba(173, 216, 230, 0.5);
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
-  text-align: center;
-  max-height: 500px; /* Increased height */
-  overflow-y: auto; /* Allow vertical scrolling if necessary */
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
-}
-
-.itinerary-cards {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding-bottom: 15px;
-  scrollbar-width: thin;
-  max-height: 300px; /* Adjust this height as needed */
-}
-
 .follow-button {
   background: #007bff;
   border: none;
@@ -576,8 +595,20 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 5px;
+  margin-right: 10px; /* Add space between buttons */
+  display: inline-block; /* Ensure buttons are aligned next to each other */
 }
+
+.block-button {
+  background: #ff5b6b;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block; /* Ensure buttons are aligned next to each other */
+}
+
 
 .follow-button.unfollow {
   background: #007bff;
@@ -1332,54 +1363,164 @@ body {
 }
 
 .comments-section {
-  margin-top: 10px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.comment-input {
-  width: 100%;
-  height: 60px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 8px;
-  margin-top: 10px;
+.comment-box {
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
 }
 
-.submit-comment-button {
-  background-color: #007bff;
+.add-comment-button {
+  background: linear-gradient(90deg, #D8BFD8, #00bfff);
   color: white;
-  padding: 8px 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
+  transition: all 0.3s;
 }
 
-.submit-comment-button:hover {
-  background-color: #0056b3;
+.add-comment-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #ff5f5f, #0099cc);
 }
 
 /* NEW HOME STYLING */
 
-@keyframes gentlePulse {
+/* Styling the ring */
+.destination-ring {
+  border: 5px solid #F08080; /* Light coral color for the ring */
+  border-radius: 50%;
+  padding: 10px;
+  animation: pulse 3s infinite ease-in-out;
+  transition: all 0.3s ease;
+}
+
+/* Subtle Pulse Animation */
+@keyframes pulse {
   0% {
-    opacity: 0.75;
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 160, 160, 0.5); /* Soft glow */
   }
   50% {
-    opacity: 1;
+    transform: scale(1.05); /* Slight expansion */
+    box-shadow: 0 0 20px rgba(255, 160, 160, 0.7); /* More intense glow */
   }
   100% {
-    opacity: 0.75;
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 160, 160, 0.5);
   }
 }
 
-.gentle-pulse {
-  animation: gentlePulse 2s infinite;
+/* Hover Effect */
+.destination-ring:hover {
+  transform: scale(1.08); /* Slight increase in size on hover */
+  box-shadow: 0 0 30px rgba(255, 160, 160, 0.9); /* More intense glow on hover */
 }
 
-/* filter search */
+/* Filter search */
 .filter-container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
+
+
+.profile-image {
+  width: 80px; 
+  height: 80px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  border: 2px solid #ddd; 
+}
+
+
+
+
+
+
+
+/* Chatbot related styles */
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.chat-panel {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-panel .header {
+  padding: 10px;
+  background-color: #1e90ff;
+  color: white;
+  font-size: 18px;
+}
+
+.chat-panel .message-container {
+  padding: 10px 10px 10px 20px; 
+  overflow-y: auto;
+  flex-grow: 1;
+  scrollbar-width: none; 
+}
+
+.chat-panel .message-container::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-panel .input-container {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.speech-bubble {
+  position: relative;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.speech-bubble .text-xs {
+  font-size: 0.75rem; 
+  color: #000000;
+  margin-top: 4px;
+  text-align: right;
+}
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px; /* Scrollbar height for horizontal scrolling */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background:rgb(255, 245, 245) /* Light background for the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--navbar-color); /* Use the navbar color for the scrollbar */
+  border-radius: 10px; /* Rounded scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(72, 154, 255, 0.8); /* Darker color on hover */
+}
+
+
+
