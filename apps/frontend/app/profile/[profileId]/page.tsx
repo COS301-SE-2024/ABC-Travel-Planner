@@ -176,16 +176,47 @@ const Profile = () => {
 
       setIsBlocked(blockRes.data);
 
-      const r = await axios.post(`${backendUrl}/follows/followers`, {
-        user_id: user_id,
-      });
-      setFollowers(r.data);
-      console.log(r.data);
-
       const f = await axios.post(`${backendUrl}/follows/following`, {
         user_id: user_id,
       });
-      setFollowing(f.data);
+
+      const r1 = await axios.post(`${backendUrl}/block/blockedUsers`, {
+        user_id: user_id,
+      });
+
+      const blockedUsers = r1.data;
+
+      const r2 = await axios.post(`${backendUrl}/block/blockedBy`, {
+        user_id: user_id,
+      });
+      const blockedBy = r2.data;
+
+      const filteredData = f.data.filter(
+        (item: any) =>
+          !blockedUsers.some((user: any) => user.user_id === item.user_id)
+      );
+
+      const filteredData2 = filteredData.filter(
+        (item: any) =>
+          !blockedBy.some((user: any) => user.user_id === item.user_id)
+      );
+
+      setFollowing(filteredData2);
+      const r = await axios.post(`${backendUrl}/follows/followers`, {
+        user_id: user_id,
+      });
+
+      const filteredData3 = r.data.filter(
+        (item: any) =>
+          !blockedUsers.some((user: any) => user.user_id === item.user_id)
+      );
+
+      const filteredData4 = filteredData3.filter(
+        (item: any) =>
+          !blockedBy.some((user: any) => user.user_id === item.user_id)
+      );
+
+      setFollowers(filteredData4);
 
       const u = await getUser(user_id);
       const user = JSON.parse(u || "{}");
@@ -205,7 +236,31 @@ const Profile = () => {
         }
       );
 
-      setPosts(postsResponse.data);
+      const filteredPosts = postsResponse.data.map((item: any) => {
+        const filteredComments = item.comments.filter(
+          (comment: any) =>
+            !blockedUsers.some((user: any) => comment.user_id === user.user_id)
+        );
+
+        return {
+          ...item,
+          comments: filteredComments,
+        };
+      });
+
+      const filteredPosts2 = filteredPosts.map((item: any) => {
+        const filteredComments = item.comments.filter(
+          (comment: any) =>
+            !blockedUsers.some((user: any) => comment.user_id === user.user_id)
+        );
+
+        return {
+          ...item,
+          comments: filteredComments,
+        };
+      });
+
+      setPosts(filteredPosts2);
     }
     fetch();
   }, []);
