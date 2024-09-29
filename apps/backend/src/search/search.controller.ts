@@ -11,8 +11,8 @@ export class SearchController {
   }
 
   @Get('user')
-  async searchUser(@Query('user') user: string): Promise<any> {
-    return this.searchService.searchProfile(user);
+  async searchUser(@Query('user') user: string, @Query('currUser') currUser: string): Promise<any> {
+    return this.searchService.searchProfile(user, currUser);
   }
 
   @Get('detailedPlace')
