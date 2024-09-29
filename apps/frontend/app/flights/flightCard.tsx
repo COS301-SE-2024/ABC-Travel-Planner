@@ -8,6 +8,7 @@ import Cookie from 'js-cookie'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import app from "@/libs/firebase/firebase";
 import { insertRecord } from '../utils/functions/insertRecord';
+import { useTheme } from '../context/ThemeContext';
 
 interface SegmentType {
   departure: {
@@ -106,6 +107,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
   const [segmentStringArr, setSegmentStringArr] = useState<string[]>([])
   const [startAirport, setStartAirport] = useState('');
   const [endAirport, setEndAirport] = useState('');
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
 
   useEffect(() => {
     const adjustMargin = () => {
@@ -241,19 +243,27 @@ const FlightCard: React.FC<FlightCardProps> = ({
         <div className="flex justify-between">
           <div className="w-1/2 pr-4">
             <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
-              <h1 className="text-4xl font-bold mb-2 text-blue-500">Flight offer: {title.substring(2,title.length)}</h1>
+              <h1 className="text-4xl font-bold mb-2 text-blue-500" style={{ color: themeStyles.textColor }}>Flight offer: {title.substring(2,title.length)}</h1>
             </div>
             {
               segmentStringArr.map((airport, idx) => (
-                <p key={idx} className="text-blue-500 text-md font-medium">{airport || ''}</p>
+                <p key={idx} className="text-blue-500 text-md font-medium" style={{ color: themeStyles.textColor }}>{airport || ''}</p>
               ))
             }
           </div>
           <div className="text-right">
-            <p className="text-gray-600 inline-block pr-2 mb-2">Flying from:</p>
-            <div className={`rounded-full bg-green-500 text-white px-2 py-2 text-sm mb-2 font-semibold inline-block`}>
-              {startAirport}
-            </div>
+            {
+              startAirport != '' ?
+              <>
+                <p className="text-gray-600 inline-block pr-2 mb-2">Flying from:</p>
+                <div className={`rounded-full bg-green-500 text-white px-2 py-2 text-sm mb-2 font-semibold inline-block`}>
+                  {startAirport}
+                </div>
+              </>
+              :
+              <div></div>
+            }
+           
             {
               endAirport != '' ? 
               <>
@@ -281,14 +291,14 @@ const FlightCard: React.FC<FlightCardProps> = ({
               <div className="mt-4 flex flex-col items-start space-y-4">
               </div>
               <div className="text-right absolute bottom-0 right-4 px-4 py-6">
-                <p className="text-3xl text-blue-500 font-semibold">R {((Number(price) * zaRate) * (1 / euRate)).toFixed(2)}</p>
+                <p className="text-3xl text-blue-500 font-semibold" style={{ color: themeStyles.textColor }}>R {((Number(price) * zaRate) * (1 / euRate)).toFixed(2)}</p>
                 {
                   weightSupported != null ? 
-                  <p className='text-blue-500 text-sm'>Supported luggage weight : {`${weightSupported} ${weightUnit}`}</p> :
+                  <p className='text-blue-500 text-sm' style={{ color: themeStyles.textColor }}>Supported luggage weight : {`${weightSupported} ${weightUnit}`}</p> :
                   <p></p>
                 }
-                <p className="text-blue-500 text-sm">{bookableSeats} seats available</p>
-                <p className="text-blue-500 text-sm">Last ticket date: {lastTicketDate}</p>
+                <p className="text-blue-500 text-sm" style={{ color: themeStyles.textColor }}>{bookableSeats} seats available</p>
+                <p className="text-blue-500 text-sm" style={{ color: themeStyles.textColor }}>Last ticket date: {lastTicketDate}</p>
               </div>
             </div>
           </div>

@@ -7,6 +7,7 @@ import { BlockController } from "./block.controller";
     imports:[FirebaseModule],
     controllers:[BlockController],
     providers:[BlockService],
+    exports: [BlockService]
 })
 
 export class BlockModule{}

@@ -348,5 +348,10 @@
     "context": "What are polite ways to say goodbye?",
     "question": "See ya",
     "answer": "See ya! Don't hesitate to reach out if you need any assistance in the future."
-  }
+  },
+  {
+    "context": "How do I book a flight? What are the steps to add a flight to my itinerary?",
+    "question": "How do I book a flight?",
+    "answer": "To book a flight, follow these steps: \n1. Go to the itinerary page.\n2. Select an itinerary that you've created previously or create a new one and select it.\n3. On the itinerary items page, click the plus button at the bottom right corner.\n4. Choose 'Flights'.\n5. Select the country of origin and the destination country.\n6. Choose your starting airport and destination airport.\n7. Enter the number of passengers and select the flight class.\n8. Click 'Search'.\n9. When results show up, click on one of the flight cards to add it to your itinerary."
+  }  
 ]

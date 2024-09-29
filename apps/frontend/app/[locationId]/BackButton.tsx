@@ -18,7 +18,7 @@ const BackButton: React.FC<BackButtonProps> = ({ destination, label }) => {
   };
 
   return (
-    <button onClick={handleBack} className="flex items-center hover:text-blue-800 mb-4 bg-blue-100 p-2 rounded-md shadow-md hover:bg-blue-200 transition-all" style={{ background: themeStyles.navbarColor}}>
+    <button onClick={handleBack} className="flex items-center hover:text-white mb-4 bg-blue-100 p-2 rounded-md shadow-md hover:bg-blue-200 transition-all" style={{ background: themeStyles.navbarColor}}>
       <FaArrowLeft className="mr-2" />
       {label}
     </button>
