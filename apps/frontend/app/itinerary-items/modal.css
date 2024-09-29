@@ -28,22 +28,24 @@
 
 .itineraryItemsBackground {
   /* background-image: url("../../public/Images/polygrid.png"); */
-  background-color:rgba(127, 204, 255, 0.729); 
+  background-color: rgb(53, 121, 246);
+  /* rgba(127, 204, 255, 0.729);  */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .addButton {
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  background-color: rgb(53, 121, 246);
   font-size: 80px;
   min-height: 15vh;
   min-width: 7.5vw;
   max-width: 7.5vw;
   max-height: 15vh;
-  color:rgb(0, 0, 0);
   opacity: 0.9;
   width: max-content;
+  height: max-content;
 }
 .closeButton {
   color: black;
@@ -54,8 +56,9 @@
   background-size: contain;
   background-repeat: no-repeat;
   margin-bottom: 20px;
+  padding: 5px;
   color: white;
-  background-color: rgb(180, 229, 255);
+  background-color: rgb(53, 121, 246);
   margin-left: 20px;
   margin-top: 30px;
   font-size: 20px;
@@ -65,6 +68,9 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+.backButton:hover {
+  background-color: rgb(65, 156, 247);
 }
 .item-div {
   margin-top: 20px;

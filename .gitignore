@@ -23,3 +23,15 @@ log.txt
 supabase/.temp/cli-latest
 apps/backend/src/firebase/project-admin.json
 apps/frontend/pages/api/email_format.html
+apps/frontend/app/itinerary-items/country_names.dat
+apps/frontend/app/utils/functions/combobox.dat
+apps/frontend/app/utils/functions/country_names.dat
+apps/frontend/app/utils/functions/data.dat
+apps/frontend/app/utils/functions/combobox.py
+apps/frontend/app/utils/functions/combobox.json
+apps/frontend/app/utils/functions/country_names.json
+apps/frontend/app/utils/functions/country_names.py
+apps/frontend/app/utils/functions/json_format.py
+apps/frontend/app/utils/functions/jsondata.json
+apps/frontend/app/flights/test.json
+apps/frontend/app/flights/result.json

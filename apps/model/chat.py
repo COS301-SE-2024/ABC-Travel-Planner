@@ -4,7 +4,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
-from transformers import pipeline #, AutoModelForTokenClassification, AutoTokenizer, AutoModelForSeq2SeqLM
+#from transformers import pipeline 
 import torch
 import os
 import logging
@@ -26,21 +26,6 @@ ner_model = None
 ner_tokenizer = None
 classifier = None
 
-def preload_models():
-    global ner_model, ner_tokenizer, classifier
-
-    # ner_model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
-    # ner_model = AutoModelForTokenClassification.from_pretrained(ner_model_name)
-    # ner_tokenizer = AutoTokenizer.from_pretrained(ner_model_name)
-
-    classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli", device=device)
-
-# Preload models
-#preload_models()
-
-# Initialize pipelines
-#ner = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple", device=device) 
-
 # Load dataset
 with open("chatbot_data.json", "r") as file:
     data = json.load(file)
@@ -61,31 +46,35 @@ db = FAISS.from_documents(split_docs, embeddings)
 # Flask app setup
 app = Flask(__name__)
 
-# def extract_location(query):
-#     """Extract location entities (like cities or countries) from the user's query."""
-#     entities = ner(query)
-#     locations = [entity['word'] for entity in entities if entity['entity_group'] == 'LOC']
-#     return locations
-
 def is_query_related(query):
-    labels = ['travel-related', 'social-media-related', 'greeting', 'farewell', 'authentication', 'account-management']
-    result = classifier(query, labels)
-    if result['scores'][0] > 0.75:
+    # Define keywords for each category
+    travel_keywords = ['travel', 'itinerary', 'itineraries', 'trip', 'trips', 'date', 'country', 'items', 'attractions', 'attraction', 'destination', 'tour', 'booking', 'flight', 'vacation', 'hotel', 'accommodation', 'holiday', 'rental', 'airport taxi', 'sightseeing', 'creator', 'generate', 'generator', 'google', 'social media']
+    social_media_keywords = ['post', 'like', 'comment', 'share', 'follow', 'login', 'logout', 'user', 'account', 'update', 'block', 'mute', 'profile', 'message', 'dm', 'friend', 'timeline', 'feed', 'story', 'share', 'dark mode', 'light mode', 'edit', 'image']
+    greeting_keywords = ['hello', 'hi', 'good morning', 'good afternoon', 'hey', 'good evening', 'how are you', 'how is it going', 'good day', 'morning', 'afternoon', 'evening', 'greetings', 'what\'s up']
+    farewell_keywords = ['goodbye', 'bye', 'see you', 'farewell', 'take care', 'later', 'catch you later', 'talk to you later', 'peace', 'adios', 'ciao', 'good night', 'so long', 'see you later', 'have a good day', 'good night', 'see ya']
+
+    query_lower = query.lower()
+
+    if any(word in query_lower for word in travel_keywords):
         return True
+    elif any(word in query_lower for word in social_media_keywords):
+        return True
+    elif any(word in query_lower for word in greeting_keywords):
+        return True
+    elif any(word in query_lower for word in farewell_keywords):
+        return True
+
     return False
 
 @app.route('/query', methods=['POST'])
 def process_query():
     query = request.json.get('query')
-    # if not is_query_related(query):
-    #     return jsonify({
-    #         "query": query,
-    #         "result": {"answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
-    #         "type": "error"
-    #     })
-
-    # locations = extract_location(query)
-    # location_str = ", ".join(locations) if locations else ""
+    if not is_query_related(query):
+        return jsonify({
+            "query": query,
+            "result": {"answer": "Your query doesn't seem to be related to travel or social media. Please ask something relevant to our app."},
+            "type": "error"
+        })
 
     similar_docs = db.similarity_search(query, k=2)
     if not similar_docs:

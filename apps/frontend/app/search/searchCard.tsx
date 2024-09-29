@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import { getItineraryImage } from '../itinerary';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useTheme } from '../context/ThemeContext';
 
 interface SearchCardProps {
     place: any;
@@ -95,6 +96,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
     const [itineraries, setItineraries] = useState<any>([]);
     const [newItinerary, setNewItinerary] = useState({ location: '', tripName: '' });
     const [selectedItinerary, setSelectedItinerary] = useState('');
+    const { selectedTheme, themeStyles, setTheme } = useTheme();
 
     const availableDates = ['2024-06-01', '2024-06-02', '2024-06-03'];
     const numRooms = null;
@@ -202,7 +204,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                 </div>
                 <div className="w-2/3 pl-4 overflow-hidden">
                     <Link href={`/${place.id}`} passHref>
-                        <h1 className="text-4xl font-bold mb-2 text-blue-500 pr-20">{place.displayName}</h1>
+                        <h1 className="text-4xl font-bold mb-2 text-blue-500 pr-20" style={{ color: themeStyles.textColor }}>{place.displayName}</h1>
                         <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
 
                         {place.goodForChildren && (
@@ -235,6 +237,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                             <button
                                 onClick={() => setShowCalendar(!showCalendar)}
                                 className="bg-blue-500 text-white rounded-md px-4 py-2"
+                                style={{ background: themeStyles.navbarColor}}
                             >
                                 Select Dates
                             </button>
@@ -270,6 +273,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                                         <button
                                             onClick={() => setShowCalendar(false)}
                                             className="bg-blue-500 text-white rounded-md px-4 py-2 mt-4 w-full"
+                                            style={{ background: themeStyles.navbarColor}}
                                         >
                                             Done
                                         </button>
@@ -290,13 +294,14 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         </div>
                         <div className="text-right">
                             <Link href={`/${place.id}`} passHref>
-                                <p className="text-3xl text-blue-500 font-semibold">ZAR {place.price}</p>
-                                <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
-                                <p className="text-gray-600 text-lg">Free cancellation</p>
+                                <p className="text-3xl text-blue-500 font-semibold" style={{ color: themeStyles.textColor }}>ZAR {place.price}</p>
+                                <p className="text-blue-500 text-sm" style={{ color: themeStyles.textColor }}>{getPricePlaceholder(place.type)}</p>
+                                <p className="text-gray-600 text-lg" style={{ color: themeStyles.navbarColor }}>Free cancellation</p>
                             </Link>
                             <button
                                 onClick={handleAddToItineraryClick}
                                 className="bg-blue-500 text-white rounded-md px-4 py-2 mt-2"
+                                style={{ background: themeStyles.navbarColor}}
                             >
                                 Add to Itinerary
                             </button>
@@ -323,12 +328,14 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         <button
                             onClick={handleSaveSelectedClick}
                             className="bg-blue-500 text-white rounded-md px-4 py-2 mr-2"
+                            style={{ background: themeStyles.navbarColor}}
                         >
                             Save to Selected
                         </button>
                         <button
                             onClick={handleNewItineraryClick}
                             className="bg-green-500 text-white rounded-md px-4 py-2 mr-2"
+                            style={{ background: themeStyles.textColor}}
                         >
                             Create New Itinerary
                         </button>
@@ -364,6 +371,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         <button
                             onClick={handleSaveNewItinerary}
                             className="bg-green-500 text-white rounded-md px-4 py-2 mr-2"
+                            style={{ background: themeStyles.navbarColor}}
                         >
                             Save New Itinerary
                         </button>

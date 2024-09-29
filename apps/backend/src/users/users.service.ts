@@ -4,9 +4,11 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class UsersService {
   private db: admin.firestore.Firestore;
-
+  private backendUrl: string;
+  
   constructor(@Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App) {
     this.db = firebaseApp.firestore();
+    this.backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || ''
   }
 
   async addUser(name: string, surname: string, email: string): Promise<void> {

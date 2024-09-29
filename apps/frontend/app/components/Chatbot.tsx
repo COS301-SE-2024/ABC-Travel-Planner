@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { AiOutlineMessage, AiOutlineClose, AiOutlineRobot } from 'react-icons/ai';
-
+import { useTheme } from '../context/ThemeContext';
 const ChatBot: React.FC = () => {
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ sender: string, text: string, time: string }[]>([]);
   const [userInput, setUserInput] = useState('');
@@ -33,7 +34,7 @@ const ChatBot: React.FC = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      if (data) {
+      if (data.result) {
         console.log(JSON.stringify(data));
         setMessages((prevMessages) => [
           ...prevMessages,
@@ -67,6 +68,7 @@ const ChatBot: React.FC = () => {
         <button
           className="bg-gray-900 p-4 rounded-full text-white shadow-lg"
           onClick={() => setIsOpen(true)}
+          style={{background: themeStyles.navbarColor}}
         >
           <AiOutlineMessage size={30} />
         </button>
@@ -114,6 +116,7 @@ const ChatBot: React.FC = () => {
             <button
               onClick={handleSendMessage}
               className="bg-gray-900 text-white p-2 rounded-md ml-2"
+              style={{background: themeStyles.navbarColor}}
             >
               Send
             </button>
