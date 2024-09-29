@@ -49,7 +49,7 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
 # Software Technologies:
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=express,figma,git,github,githubactions,jest,md,nextjs,postgres,firebase,tailwind,vercel&perline=6"/>
+    <img src="https://skillicons.dev/icons?i=nest,figma,git,github,githubactions,jest,md,flask,gcp,nextjs,firebase,tailwind,heroku,docker,python&perline=5"/>
   </a>
 </p>
 
@@ -58,51 +58,63 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
 
 <table>
   <tr>
-    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=express" alt="Express Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">To build RESTful APIs and handling backend logic.</td>
+    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=nest" alt="Nest Icon"></a></td>
+    <td style="text-align:left; vertical-align:middle;">NestJS was used to build a backend service</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=figma" alt="Figma Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">To prototype designs for frontend</td>
+    <td style="text-align:left; vertical-align:middle;">Figma was used to prototype designs for our frontend</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=git" alt="Git Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">For version control</td>
+    <td style="text-align:left; vertical-align:middle;">Git was used for version control</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=github" alt="GitHub Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">To collaborate with other developers</td>
+    <td style="text-align:left; vertical-align:middle;">Github collaboration with the team</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=githubactions" alt="GitHubActions Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">For automated testing</td>
+    <td style="text-align:left; vertical-align:middle;">Github actions facilitated automatic testing and other necessary functions</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=jest" alt="Jest Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">To write unit tests for our backend logic</td>
+    <td style="text-align:left; vertical-align:middle;">Jest was used to write unit tests for our backend services</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=md" alt="Markdown Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">To implement the README and to link other documentation from our google drive</td>
+    <td style="text-align:left; vertical-align:middle;">All README's are implemented in Markdown</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=flask" alt="Flask Icon"></a></td>
+    <td style="text-align:left; vertical-align:middle;">Flask was used as the web application for the chatbot model</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=gcp" alt="Google Cloud Icon"></a></td>
+    <td style="text-align:left; vertical-align:middle;">Google Cloud was used to integrate the Google Maps api and to set up email sending capabilities</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=nextjs" alt="NextJS Icon"></a></td>
     <td style="text-align:left; vertical-align:middle;">A React framework that simplifies server-side rendering and routing</td>
   </tr>
   <tr>
-    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=postgres" alt="PostgreSQL Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">PostgreSQL will be used as the main database engine</td>
-  </tr>
-  <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=firebase" alt="Firebase Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">This is the core database and authentication service. It provides real-time capabilities and APIs for building applications</td>
+    <td style="text-align:left; vertical-align:middle;">Firebase is the core database and authentication service, used to manage all stored application data </td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">A CSS framework to implement styling</td>
+    <td style="text-align:left; vertical-align:middle;">Tailwind is a CSS framework used to implement styling</td>
   </tr>
   <tr>
-    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=vercel" alt="Vercel Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">Deploy our frontend and backend to platforms</td>
+    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=heroku" alt="Heroku Icon"></a></td>
+    <td style="text-align:left; vertical-align:middle;">Heroku was used to deploy our chatbot, frontend and backend solutions to a platform</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=docker" alt="Docker Icon"></a></td>
+    <td style="text-align:left; vertical-align:middle;">A docker container was set up and used to create a stable environment to build and deploy the chatbot</td>
+  </tr>
+  <tr>
+    <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python" alt="Python Icon"></a></td>
+    <td style="text-align:left; vertical-align:middle;">Python was used to create scripts for sending emails as well as building the chatbot</td>
   </tr>
 </table>
