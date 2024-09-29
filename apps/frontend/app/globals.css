@@ -160,6 +160,7 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  margin-top: 150px;
 }
 
 .search-title {
@@ -594,8 +595,20 @@ body {
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 5px;
+  margin-right: 10px; /* Add space between buttons */
+  display: inline-block; /* Ensure buttons are aligned next to each other */
 }
+
+.block-button {
+  background: #ff5b6b;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block; /* Ensure buttons are aligned next to each other */
+}
+
 
 .follow-button.unfollow {
   background: #007bff;
@@ -1490,5 +1503,24 @@ body {
   margin-top: 4px;
   text-align: right;
 }
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px; /* Scrollbar height for horizontal scrolling */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background:rgb(255, 245, 245) /* Light background for the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--navbar-color); /* Use the navbar color for the scrollbar */
+  border-radius: 10px; /* Rounded scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(72, 154, 255, 0.8); /* Darker color on hover */
+}
+
 
 

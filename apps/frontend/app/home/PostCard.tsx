@@ -4,8 +4,9 @@ import { faHeart as filledHeart, faShareAlt, faComment } from '@fortawesome/free
 import { faHeart as unfilledHeart } from '@fortawesome/free-regular-svg-icons';
 import getUser from "@/libs/actions/getUser";
 import PopupMessage from '../utils/PopupMessage';
-import Cookie from "js-cookie";
 
+import Cookie from "js-cookie";
+import { useTheme } from '../context/ThemeContext';
 interface PostCardProps {
   post_id: string;
   user_id: string;
@@ -13,7 +14,7 @@ interface PostCardProps {
   post_description: string;
   post_likes: number;
   timestamp: number;
-  profileImageUrl?: string; // Add profileImageUrl to props
+  profileImageUrl?: string;
 }
 
 interface Comment {
@@ -60,7 +61,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   );
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_description, post_likes, timestamp, profileImageUrl }) => {
+const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_description, post_likes, timestamp }) => {
   const [liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(post_likes);
   const [showComments, setShowComments] = useState(false);
@@ -70,9 +71,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
   const [trigger, setTrigger] = useState(false);
   const [userName, setUserName] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
+  const curr_user = Cookie.get("user_id") ?? ''
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+  console.log(backendUrl)
 
-  const curr_user = Cookie.get("user_id") ?? '';
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: '',
@@ -95,7 +98,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           user_id: curr_user,
           timestamp: 0,
           username: u.username,
-        });
+        })
         const isLikedRes = await fetch(`${backendUrl}/likes/userLikesPost`, {
           method: 'POST',
           headers: {
@@ -105,60 +108,64 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             user_id: curr_user,
             post_id: post_id
           })
-        });
+        })
 
         const isLikedText = await isLikedRes.text();
 
-        if (isLikedText === "true") {
+        if (isLikedText == "true") {
           setLiked(true);
         }
 
       } catch (error) {
-        console.log(error);
-        throw new Error(`Could not get userName of ${user_id}: ${(error as Error).message}`);
+        console.log(error)
+        throw new Error(`Could not get userName of ${user_id}: ${(error as Error).message}`)
       }
-    };
+    }
 
-    getIsLiked();
+    getIsLiked()
   }, []);
 
   useEffect(() => {
     const getUserName = async () => {
       try {
-        const userNameRes = await fetch(`${backendUrl}/users/${user_id}`);
+        const userNameRes = await fetch(`${backendUrl}/users/${user_id}`)
         const userNameText: User[] = await userNameRes.json();
-        setUserName(userNameText[0].username);
+        setUserName(userNameText[0].username)
+
       } catch (error) {
-        console.log(error);
-        throw new Error(`Could not get userName of ${user_id}: ${(error as Error).message}`);
+        console.log(error)
+        throw new Error(`Could not get userName of ${user_id}: ${(error as Error).message}`)
       }
-    };
+    }
 
     getUserName();
-  }, []);
+  }, [])
 
   useEffect(() => {
     const isFollowing = async () => {
+      //Make this dynamic...
       const postData = {
         user_id: user_id,
         follower_id: Cookie.get('user_id')
-      };
+      }
 
       const isFollowingRes = await fetch(`${backendUrl}/follows/isFollowing`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+
         },
         body: JSON.stringify(postData)
-      });
-      const following = await isFollowingRes.text();
-      if (following === "true") {
-        setIsFollowing("Following");
+      })
+      const following = await isFollowingRes.text()
+      if (following == "true") {
+        console.log("Currently following user, updating frontend")
+        setIsFollowing("Following")
       }
-    };
+    }
 
-    isFollowing();
-  }, []);
+    isFollowing()
+  }, [])
 
   const handleLike = async () => {
     if (liked) {
@@ -167,6 +174,7 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            //Maybe an Auth header?
           },
           body: JSON.stringify({
             post_id: post_id,
@@ -183,29 +191,30 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             body: JSON.stringify({
               postId: post_id
             })
-          });
+          })
 
           if (decrementLikeRes) {
-            setNumLikes(numLikes - 1);
+            setNumLikes(numLikes - 1)
           }
         } else {
-          setMessage(`Could not like post...`);
+          setMessage(`Could not like post...`)
           setTrigger(true);
           setTimeout(() => {
             setTrigger(false);
           }, 4000);
-          throw new Error('unlikePost endpoint not functioning');
+          throw new Error('unlikePost endpoint not functioning')
         }
       } catch (error) {
-        console.log(error);
-        throw new Error(`Could not unlike post: ${(error as Error).message}`);
+        console.log(error)
+        throw new Error(`Could not unlike post: ${(error as Error).message}`)
       }
-    } else {
+    } else if (!liked) {
       try {
         const LikeRes = await fetch(`${backendUrl}/likes/likePost`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            //Maybe an Auth header?
           },
           body: JSON.stringify({
             post_id: post_id,
@@ -222,30 +231,31 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
             body: JSON.stringify({
               postId: post_id
             })
-          });
+          })
 
           if (incrementLikeRes) {
-            setNumLikes(numLikes + 1);
+            setNumLikes(numLikes + 1)
           }
         } else {
-          setMessage(`Could not like post...`);
+          setMessage(`Could not like post...`)
           setTrigger(true);
           setTimeout(() => {
             setTrigger(false);
           }, 4000);
-          throw new Error('likePost endpoint not functioning');
+          throw new Error('unlikePost endpoint not functioning')
         }
       } catch (error) {
-        console.log(error);
-        throw new Error(`Could not like post: ${(error as Error).message}`);
+        console.log(error)
+        throw new Error(`Could not like post: ${(error as Error).message}`)
       }
     }
-    setLiked(!liked);
-  };
+    setLiked(!liked)
+  }
 
   const handleCommentToggle = async () => {
     setShowComments(!showComments);
 
+    //No cache available atm...
     if (!showComments) {
       const commentRes = await fetch(`${backendUrl}/comments/getComments`, {
         method: 'POST',
@@ -253,10 +263,11 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ post_id })
-      });
+      })
 
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
+      console.log(midData)
       JSON.parse(midData).map((element: {
         comment: string;
         id: string;
@@ -275,23 +286,28 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           post_id: element.post_id,
           timestamp: element.timestamp._seconds,
           username: element.username
-        });
+        })
       });
-      setComments(receivedComments);
+      console.log("Received comments: " + JSON.stringify(receivedComments));
+      setComments(receivedComments)
     }
   };
 
   const handleAddComment = async () => {
+    console.log("Adding comment...")
     if (newComment) {
       const temp = await getUser(curr_user);
       const u = JSON.parse(temp || "{}");
+      console.log(JSON.stringify(u))
 
       const dataToAdd = {
         comment: newComment.comment,
         user_id: curr_user,
         post_id: newComment.post_id,
         username: u.username,
-      };
+      }
+
+      console.log("Comment to add: " + JSON.stringify(newComment))
 
       const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
         method: 'POST',
@@ -299,10 +315,10 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(dataToAdd),
-      });
+      })
 
       if (addCommentRes.ok) {
-        setMessage('Comment posted');
+        setMessage('Comment posted')
         setTrigger(true);
         setTimeout(() => {
           setTrigger(false);
@@ -317,77 +333,220 @@ const PostCard: React.FC<PostCardProps> = ({ post_id, user_id, image_url, post_d
         post_id: '',
         user_id: curr_user,
         timestamp: 0,
-        username: '',
+        username: u.username,
       });
     }
   };
 
-  return (
-    <div className="bg-white rounded-lg shadow-md p-4 my-4">
+  const getTimeAgo = (timestamp: any) => {
+    const now = new Date();
+    let postDate: Date;
+
+
+    if (timestamp.toDate) {
+      postDate = timestamp.toDate();
+    } else if (typeof timestamp === 'number') {
+
+      postDate = new Date(timestamp * 1000);
+    } else if (typeof timestamp === 'string') {
+      postDate = new Date(timestamp);
+    } else {
+      postDate = timestamp;
+    }
+
+
+    const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000);
+
+    console.log("Time Difference (seconds):", diffInSeconds);
+
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} seconds ago`;
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 604800) {
+      const days = Math.floor(diffInSeconds / 86400);
+      return `${days} day${days === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 2419200) {
+      const weeks = Math.floor(diffInSeconds / 604800);
+      return `${weeks} week${weeks === 1 ? '' : 's'} ago`;
+    } else if (diffInSeconds < 31536000) {
+      const months = Math.floor(diffInSeconds / 2592000);
+      return `${months} month${months === 1 ? '' : 's'} ago`; // Approximate 30 days per month
+    } else {
+      return postDate.toLocaleString();
+    }
+  };
+
+
+
+  const followUser = async () => {
+    //Change to dynamic...
+    const followData = {
+      user_id: user_id,
+      follower_id: curr_user
+    }
+
+    const response = await fetch(`${backendUrl}/follows/isFollowing`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        //Maybe an Auth header?
+      },
+      body: JSON.stringify(followData),
+    });
+
+    const following = await response.text()
+
+    if (following == "true") {
+      try {
+        const unfollowRes = await fetch(`${backendUrl}/follows/follow`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            //Maybe an Auth header?
+          },
+          body: JSON.stringify({
+            user_id: user_id,
+            follower_id: curr_user
+          }),
+        });
+
+        //Popup message
+        setMessage(`${userName} unfollowed`)
+        setTrigger(true);
+        setTimeout(() => {
+          setTrigger(false);
+        }, 5000);
+        setIsFollowing("Follow");
+      } catch (error) {
+        console.log(error)
+        throw new Error(`Could not unfollow user ${userName}: ${(error as Error).message}`)
+      }
+
+    } else {
+      try {
+        const followRes = await fetch(`${backendUrl}/follows/follow`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            //Maybe an Auth header?
+          },
+          body: JSON.stringify({
+            user_id: user_id,
+            follower_id: curr_user
+          }),
+        });
+
+        //Popup message
+        setMessage(`Following ${userName}`)
+        setTrigger(true);
+        setTimeout(() => {
+          setTrigger(false);
+        }, 5000);
+        setIsFollowing("Following");
+
+      } catch (error) {
+        console.log(error)
+        throw new Error(`Could not follow user ${userName}: ${(error as Error).message}`)
+      }
+    }
+  }
+
+ return (
+    <div className="flex justify-center items-center w-full">
       <PopupMessage msg={message} trigger={trigger} />
-      <div className="flex items-center">
-        {profileImageUrl && (
+      <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-4 flex flex-col items-start space-y-2 text-left">
+        <div className="flex items-center w-full space-x-3">
+          {/* Displaying the post image */}
+          {image_url && (
+            <img
+              src={`https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/Profiles%2F${user_id}.jpg?alt=media&token=cb1b06de-89b8-4918-8625-46fd742454e9`}
+              alt="Profile"
+              className="profile-image w-12 h-12 rounded-full object-cover"
+            />
+          )}
+  
+          {/* User info and post description */}
+          <div className="flex-1">
+            <a href={`/profile/${user_id}`} className="text-lg font-bold text-black hover:underline" style={{color: themeStyles.textColor}} >
+              @{userName}
+            </a>
+            <p className="text-sm text-gray-500" style={{color: themeStyles.textColor}}>{getTimeAgo(timestamp)}</p>
+            <h2>{post_description}</h2>
+          </div>
+        </div>
+  
+        {/* Follow button */}
+        {curr_user !== user_id && (
+          <button className="bg-blue-200 text-black font-bold py-1 px-3 rounded-full"  style={{background: themeStyles.primaryColor}} onClick={followUser}>
+            {isFollowing}
+          </button>
+        )}
+  
+        {/* Image with click handler */}
+        {image_url && (
           <img
-            src={profileImageUrl}
-            alt="User profile"
-            className="w-10 h-10 rounded-full mr-2" // Adjust size as needed
+            src={image_url}
+            alt="Post Image"
+            className="cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
           />
         )}
-        <h4 className="font-semibold">{userName}</h4>
-        <span className="text-gray-500 text-sm ml-2">{new Date(timestamp * 1000).toLocaleString()}</span>
-      </div>
-      {image_url && (
-        <img
-          src={image_url}
-          alt="Post"
-          className="w-full h-auto rounded-lg mt-2"
-          onClick={() => setIsModalOpen(true)}
-        />
-      )}
-      <div className="flex justify-between items-center mt-2">
-        <div>
-          <button onClick={handleLike} className="flex items-center">
-            <FontAwesomeIcon icon={liked ? filledHeart : unfilledHeart} className="text-red-500 mr-2" />
+  
+        {/* Modal for enlarged image */}
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <img src={image_url} alt="Enlarged Post Image" className="max-w-full max-h-screen" />
+        </Modal>
+  
+        {/* Like and comment buttons */}
+        <div className="flex items-center space-x-4">
+          <button className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none" onClick={handleLike}>
+            <FontAwesomeIcon icon={liked ? filledHeart : unfilledHeart} className={liked ? 'text-red-500' : ''} />
             <span>{numLikes}</span>
           </button>
-          <button onClick={handleCommentToggle} className="flex items-center ml-4">
-            <FontAwesomeIcon icon={faComment} className="mr-2" />
-            <span>{comments.length} Comments</span>
-          </button>
-          <button className="flex items-center ml-4">
-            <FontAwesomeIcon icon={faShareAlt} className="mr-2" />
-            <span>Share</span>
+  
+          <button className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 focus:outline-none" onClick={handleCommentToggle}>
+            <FontAwesomeIcon icon={faComment} />
           </button>
         </div>
-        <button className="text-blue-500">{isFollowing}</button>
-      </div>
-      {showComments && (
-        <div className="mt-4">
-          <div>
-            {comments.map((comment) => (
-              <div key={comment.id} className="flex items-center my-2">
-                <span className="font-semibold">{comment.username}:</span>
-                <span className="ml-2">{comment.comment}</span>
-              </div>
-            ))}
+  
+        {/* Comments section */}
+        {showComments && (
+          <div className="w-full mt-4 comments-section">
+            <div className="space-y-2">
+              {comments.map((comment, index) => (
+                <div key={index} className="p-2 bg-blue-100 rounded-md text-gray-800 text-sm comment-box"style={{ color: themeStyles.textColor, background:themeStyles.background }}>
+                  <a href={`/user/${comment.user_id}`} className="font-bold text-black hover:underline" style={{ color: themeStyles.textColor}}>
+                    @{comment.username}
+                  </a>: {comment.comment}
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center space-x-2">
+              <input
+                type="text"
+                value={newComment.comment}
+                onChange={(e) => setNewComment({
+                  post_id,
+                  user_id: Cookie.get('user_id') || '',
+                  comment: e.target.value,
+                  username: newComment.username
+                })}
+                placeholder="Add a comment..."
+                className="flex-grow p-2 border rounded-md"
+              />
+              <button onClick={handleAddComment} className="submit-comment-button mb-2"   style={{background: themeStyles.navbarColor}}>
+                Add
+              </button>
+            </div>
           </div>
-          <input
-            type="text"
-            value={newComment.comment}
-            onChange={(e) => setNewComment({ ...newComment, comment: e.target.value })}
-            placeholder="Add a comment..."
-            className="border p-2 w-full rounded mt-2"
-          />
-          <button onClick={handleAddComment} className="bg-blue-500 text-white px-4 py-2 rounded mt-2">Post</button>
-        </div>
-      )}
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <img src={image_url} alt="Post" className="w-full h-auto" />
-        </Modal>
-      )}
+        )}
+      </div>
     </div>
   );
-};
-
+}
 export default PostCard;

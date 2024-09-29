@@ -2,8 +2,29 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Help from '../app/help/page'; 
+import { useTheme } from '../app/context/ThemeContext';
+
+jest.mock('../app/context/ThemeContext', () => ({
+  useTheme: jest.fn(),
+}));
 
 describe('Help Component', () => {
+  beforeEach(() => {
+    // Provide a mock implementation for useTheme
+    (useTheme as jest.Mock).mockReturnValue({
+      selectedTheme: 'beach',
+      themeStyles: {
+        background: '#ffffff',
+        textColor: '#000000',
+      },
+      setTheme: jest.fn(),
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  
   it('renders the main heading', () => {
     render(<Help />);
     const mainHeading = screen.getByRole('heading', { name: /Help Centre/i });

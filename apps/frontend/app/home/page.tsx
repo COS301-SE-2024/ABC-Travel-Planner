@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PostCard from './PostCard';
 import Link from 'next/link';
-//import { useTheme } from '../context/ThemeContext'; 
+import { useTheme } from '../context/ThemeContext'; 
+import { back } from 'nock';
 interface Post {
   caption: string;
   id: string;
@@ -100,17 +101,16 @@ const Home = () => {
 
 
   //Theme
-  //const { selectedTheme, themeStyles, setTheme } = useTheme();
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
   return (
+    <div className="w-full mt-8" style={{minHeight: '100vh'}}>
+     <div className="flex justify-center mb-4 mt-4 mx-auto max-w-md" style={{ background: themeStyles.primaryColor, borderRadius: '12px' }}>
+      <h2 className="text-4xl font-extrabold" style={{ color: themeStyles.textColor }}>
+        Top Destinations
+      </h2>
+    </div>
 
-    <div className="w-full mt-8" >
-      <div className="flex justify-center mb-4 mt-4">
-        <h2 className={`text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
-          Top Destinations
-        </h2>
-      </div>
-
-      <div className={`flex flex-row overflow-x-auto w-full custom-scrollbar backgroundColor: 'rgba(173, 216, 230, 0.5)'`} style={{ gap: '16px', padding: '10px 0' }}>
+      <div className="flex flex-row overflow-x-auto custom-scrollbar mx-auto max-w-7xl custom-scrollbar" style={{ gap: '16px', padding: '10px 0', background: themeStyles.primaryColor,  borderRadius: '12px' }}>
         {popularDestinations.map((destination, index) => (
           <div key={index} style={{ flexShrink: 0, marginRight: '16px' }}>
             <Link href={`/${destination.place_id}`} passHref>
@@ -124,8 +124,9 @@ const Home = () => {
                     height: '120px',
                     objectFit: 'cover',
                     borderRadius: '50%',
-                    border: '5px solid #D8BFD8', // Solid purple border
-                    boxShadow: '0 0 10px rgba(128, 0, 128, 0.7), 0 0 20px rgba(128, 0, 128, 0.5)', // Neon glow effect
+                    boxShadow:themeStyles.navbarColor,
+                    background: themeStyles.navbarColor,
+                    border: `5px solid ${themeStyles.navbarColor}`,
                   }}
                 />
               </div>
@@ -134,24 +135,25 @@ const Home = () => {
         ))}
       </div>
 
-      <div className="flex justify-center mb-4 mt-4">
-        <h2 className={`text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-800 via-gray-900 to-blue-900 shadow-lg`}>
+      <div className="flex justify-center mb-4 mt-4 mx-auto max-w-md" style={{ background: themeStyles.primaryColor, borderRadius: '12px' }}>
+        <h2 className="text-4xl font-extrabold shadow-lg" style={{ color: themeStyles.textColor }}>
           Latest Posts
         </h2>
       </div>
-      <div className={`w-full max-w-screen-xl mx-auto mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left`} style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)', padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+
+      <div className="w-full max-w-screen-xl mx-auto mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left" style={{ background: themeStyles.primaryColor, padding: '20px', textAlign: 'center', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <div className="flex justify-center flex-col w-3/4 mx-auto">
           <div className="flex justify-center items-center flex-wrap gap-4">
             {posts.map((post) => (
               <PostCard
-                key={post.id} 
+                key={post.id}
                 post_id={post.id}
                 user_id={post.user_id}
                 image_url={post.imageUrl}
                 post_description={post.caption || 'No description available.'}
                 post_likes={post.post_likes || 0}
                 timestamp={post.timestamp}
-                profileImageUrl={post.profileImageUrl} // Pass the profileImageUrl here
+                profileImageUrl={post.profileImageUrl}
               />
             ))}
           </div>
@@ -159,6 +161,6 @@ const Home = () => {
       </div>
     </div>
   );
-
 };
+
 export default Home;

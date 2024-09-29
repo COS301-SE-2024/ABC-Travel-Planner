@@ -8,6 +8,7 @@ import country_names from './country_names.json'
 import combobox_values from './combobox.json'
 import { CButton } from '@coreui/react';
 import { Input } from '@nextui-org/react';
+import { useTheme } from '../context/ThemeContext';
 
 interface comboBoxValues {
     value: string,
@@ -23,8 +24,9 @@ country_names.forEach((item) => {
     })
 })
 
+
 const FilterContainer = () => {
- 
+    const { selectedTheme, themeStyles, setTheme } = useTheme();
     const [selectedTopic, setSelectedTopic] = useState<string>('');
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchTerm, setSearchTerm] = useState('');
@@ -133,69 +135,70 @@ const FilterContainer = () => {
             <h1 style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', marginTop: '30px', color: '#333' }}>Search at your Convenience!</h1>
             <p style={{ fontSize: '1.25rem', textAlign: 'center', marginBottom: '25px', color: '#666' }}>Click on an icon below to filter your search and provide better results</p>
     
-            <div  style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '25px' }}>
+            <div  style={{display: 'flex', justifyContent: 'space-around', marginBottom: '25px' }}>
                 <button
                     className={`search-button ${selectedTopic === 'Flights' ? 'search-button-selected' : ''}`}
                     onClick={() => handleTopicSelect('Flights')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Flights' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Flights' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s'}}
                 >
-                    <FaPlane className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Flights' ? '#007BFF' : '#333' }} />
-                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'flights' ? '#007BFF' : '#333' }}>Flights</span>
+                    <FaPlane className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Flights' ? `${themeStyles.navbarColor}` : '#333' }} />
+                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'flights' ? `${themeStyles.primaryColor}` : '#333' }}>Flights</span>
                 </button>
                 <button
                     className={`search-button ${selectedTopic === 'Hotels' ? 'search-button-selected' : ''}`}
                     onClick={() => handleTopicSelect('Hotels')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Hotels' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Hotels' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaHotel className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Hotels' ? '#007BFF' : '#333' }} />
-                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'stays' ? '#007BFF' : '#333' }}>Stays</span>
+                    <FaHotel className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Hotels' ? `${themeStyles.navbarColor}` : '#333' }} />
+                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'stays' ? `${themeStyles.navbarColor}` : '#333' }}>Stays</span>
                 </button>
                 <button
                     className={`search-button ${selectedTopic === 'Car Rentals' ? 'search-button-selected' : ''}`}
                     onClick={() => handleTopicSelect('Car Rentals')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Car Rentals' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Car Rentals' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaCar className="search-icon" style={{ marginLeft: '6px', fontSize: '2rem', color: selectedTopic === 'Car Rentals' ? '#007BFF' : '#333' }} />
-                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'carRentals' ? '#007BFF' : '#333' }}>Car Rentals</span>
+                    <FaCar className="search-icon" style={{ marginLeft: '6px', fontSize: '2rem', color: selectedTopic === 'Car Rentals' ? `${themeStyles.navbarColor}` : '#333' }} />
+                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'carRentals' ? `${themeStyles.navbarColor}` : '#333' }}>Car Rentals</span>
                 </button>
                 <button
                     className={`search-button ${selectedTopic === 'Attractions' ? 'search-button-selected' : ''}`}
                     onClick={() => handleTopicSelect('Attractions')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Attractions' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Attractions' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaBinoculars className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Attractions' ? '#007BFF' : '#333' }} />
-                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'attractions' ? '#007BFF' : '#333' }}>Attractions</span>
+                    <FaBinoculars className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Attractions' ? `${themeStyles.navbarColor}` : '#333' }} />
+                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'attractions' ? `${themeStyles.navbarColor}` : '#333' }}>Attractions</span>
                 </button>
                 <button
                     className={`search-button ${selectedTopic === 'Airport Taxis' ? 'search-button-selected' : ''}`}
                     onClick={() => handleTopicSelect('Airport Taxis')}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Airport Taxis' ? '2px solid #007BFF' : '2px solid transparent', transition: 'border 0.3s' }}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'Airport Taxis' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                 >
-                    <FaTaxi className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Airport Taxis' ? '#007BFF' : '#333' }} />
-                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'Airport Taxis' ? '#007BFF' : '#333' }}>Airport Taxis</span>
+                    <FaTaxi className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'Airport Taxis' ? `${themeStyles.navbarColor}` : '#333' }} />
+                    <span style={{ marginTop: '5px', fontSize: '1rem', color: selectedTopic === 'Airport Taxis' ? `${themeStyles.navbarColor}` : '#333' }}>Airport Taxis</span>
                 </button>
             </div>
     
             {selectedTopic && (
+
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     {selectedTopic === 'Flights' ? (
                         <>
                         <div style={{width: '100%', backgroundColor: 'white', height: '315px', display: 'block', justifyContent: 'center', borderRadius: '10px', padding: '20px'}} className=''>
-                            <hr style={{border: '1.5px solid rgba(65, 156, 247, 0.85)', width: '100%'}}></hr>
+                            <hr style={{border: `1.5px solid`, background: `${themeStyles.primaryColor}`, width: '100%'}}></hr>
                             <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px' }}>
-                                <label>
+                                <label style={{ color: themeStyles.textColor }}>
                                     Starting country:
                                     <Select id='originCountry' options={countries} placeholder="Select a starting location" className='text-black w-96' onChange={(selectedVal) => {handleStartCountry(selectedVal?.value || '')}}/>
                                 </label>
 
-                                <label>
+                                <label style={{ color: themeStyles.textColor }}>
                                     Destination country:
                                     <Select id='destinationCountry' options={countries} placeholder="Select a destination" className='text-black w-96' onChange={(selectedVal) => {handleDestinationCountry(selectedVal?.value || '')}}/>
                                 </label>
                             </div>
 
                             <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px' }}>
-                                <label>
+                                <label style={{ color: themeStyles.textColor }}>
                                     Flying from:
                                     <Select id='originAirport' options={startingAirport} placeholder="Select a starting location" className='text-black w-96' onChange={(val) => {
                                         const options = {
@@ -209,7 +212,7 @@ const FilterContainer = () => {
                                     }}/>
                                 </label>
 
-                                <label>
+                                <label style={{ color: themeStyles.textColor }}>
                                     Flying to:
                                     <Select id='destinationAirport' options={destinationAirport} placeholder="Select a destination" className='text-black w-96' onChange={(val) => {
                                         const options = {
@@ -225,7 +228,7 @@ const FilterContainer = () => {
                             </div>
 
                             <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px' }}>
-                                <label>
+                                <label style={{ color: themeStyles.textColor }}>
                                     Number of adults:
                                     <Input placeholder="1" className='w-full rounded-sm' onChange={(item) => {
                                         const options = {
@@ -239,7 +242,7 @@ const FilterContainer = () => {
                                     }}></Input>
                                 </label>
 
-                                <label>
+                                <label style={{ color: themeStyles.textColor }}>
                                     Travel class:
                                     <Select id='travelClassSelect' options={travelClassOptions} placeholder="Select a travel class" className='text-black w-96' onChange={(val) => {
                                         const options = {
@@ -255,7 +258,7 @@ const FilterContainer = () => {
                             </div>
 
                             <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px', marginTop: '10px'}}>
-                                <button className='w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700'
+                                <button className='w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700' style={{ background: themeStyles.navbarColor }}
                                     onClick={
                                         async (val) => {
                                             console.log('Searching...')
@@ -291,6 +294,7 @@ const FilterContainer = () => {
                             </button>
                         </div>
                         )}
+
                 </div>
             )}
 

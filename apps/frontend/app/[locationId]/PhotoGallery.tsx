@@ -2,22 +2,26 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-
+import { useTheme } from '../context/ThemeContext';
 interface PhotoGalleryProps {
   photos: string[];
+  displayName : string;
 }
 
-const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
+const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, displayName }) => {
   // Initialize with the first two photos
   const [mainPhotos, setMainPhotos] = useState<string[]>(photos.slice(0, 2));
-
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
   const handleSmallPhotoClick = (photo: string) => {
     // Swap the images
     setMainPhotos([mainPhotos[1], photo]);
   };
 
   return (
-    <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
+    <div>
+            <h1 className="text-5xl font-bold mb-4 text-gray-800 text-center" style={{ color: themeStyles.textColor }}>{displayName}</h1>
+
+      <div className="photos-section grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" style={{ background: themeStyles.primaryColor}}>
       <div className="small-photos flex flex-col gap-4">
         {Array.isArray(photos) && photos.length > 0 ? (
           photos.slice(2, 7).map((photo: string) => (
@@ -37,6 +41,8 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         ))}
       </div>
     </div>
+    </div>
+    
   );
 };
 

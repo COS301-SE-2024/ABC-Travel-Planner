@@ -5,7 +5,7 @@ import getUser from "@/libs/actions/getUser";
 import { createNewDates } from "../utils/functions/convertDates";
 import Cookie from "js-cookie"; 
 import axios, { all } from 'axios';
-
+import { useTheme } from '../context/ThemeContext';
 interface ConfirmBookingButtonProps {
   items: any[];
 }
@@ -14,6 +14,7 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [fade, setFade] = useState(false);
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
 
   const sendEmail = async() => {
     const temp = Cookie.get("user_id");
@@ -103,6 +104,7 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
         <button
           onClick={handleConfirmBooking}
           className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
+          style={{ background: themeStyles.navbarColor}}
         >
           Confirm Booking
         </button>

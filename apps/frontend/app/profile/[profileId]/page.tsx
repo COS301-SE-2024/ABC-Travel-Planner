@@ -11,7 +11,7 @@ import getUser from "@/libs/actions/getUser";
 import axios from "axios";
 import Link from "next/link";
 import Cookie from "js-cookie";
-
+import {useTheme} from "../../context/ThemeContext"
 const Profile = () => {
   const [profileDetails, setProfileDetails] = useState<{
     username: string;
@@ -37,6 +37,7 @@ const Profile = () => {
   const [followers, setFollowers] = useState<any>([]);
 
   const [following, setFollowing] = useState<any>([]);
+  const [isBlocked, setIsBlocked] = useState(false); // New state for block button
 
   interface Post {
     id: string;
@@ -205,16 +206,24 @@ const Profile = () => {
     setEnlargedPostIndex(null);
   };
 
+  const handleBlockButtonClick = async () => {
+    // Toggle the block/unblock state
+    setIsBlocked(!isBlocked);
+    
+    
+    
+  };
+  const { selectedTheme, setTheme, themeStyles } = useTheme();
   return (
     <div className="profile-page">
-      <header className="profile-header">
+      <header className="profile-header"  style={{background: themeStyles.primaryColor}}>  
         <div className="profile-pic">
           {profileDetails.imageUrl && (
             <img src={profileDetails.imageUrl} alt="Profile" />
           )}
         </div>
         <div className="profile-info">
-          <h1 data-testid="accountName">{profileDetails.username}</h1>
+          <h1 data-testid="accountName" style={{color: themeStyles.textColor}}>{profileDetails.username}</h1>
           <h2 data-testid="accountEmail">{profileDetails.email}</h2>
           {profileDetails.country && (
             <div className="location">
@@ -229,17 +238,28 @@ const Profile = () => {
             </div>
           )}
           {profileDetails.user_id && (
-            <button
-              className={`follow-button ${isFollowing ? "unfollow" : "follow"}`}
-              onClick={handleFollowButtonClick}
-            >
-              {isFollowing ? "Unfollow" : "Follow"}
-            </button>
+              <div className="button-group">
+              <button
+                className={`follow-button ${isFollowing ? "unfollow" : "follow"}`}
+                style={{background: themeStyles.navbarColor}}
+                onClick={handleFollowButtonClick}
+              >
+                {isFollowing ? "Unfollow" : "Follow"}
+              </button>
+              <button
+                className={`block-button ${isBlocked ? "unblock" : "block"}`}
+                onClick={handleBlockButtonClick}
+              >
+                {isBlocked ? "Unblock" : "Block"}
+              </button>
+            </div>
+            
+            
           )}
         </div>
       </header>
 
-      <section className="saved-itineraries">
+      <section className="saved-itineraries" style={{background: themeStyles.primaryColor}}>
         <div className="profile-stats">
           <div className="following" onClick={toggleFollowing}>
             <span>{following?.length}</span>
@@ -289,7 +309,7 @@ const Profile = () => {
                 </div>
               ))}
             </div>
-            <button className="close-button" onClick={toggleFollowers}>
+            <button className="close-button" onClick={toggleFollowers} style={{ backgroundColor: themeStyles.navbarColor}}>
               Close
             </button>
           </div>
@@ -312,7 +332,7 @@ const Profile = () => {
                 </div>
               ))}
             </div>
-            <button className="close-button" onClick={toggleFollowing}>
+            <button className="close-button" onClick={toggleFollowing} style={{ backgroundColor: themeStyles.navbarColor}}>
               Close
             </button>
           </div>
@@ -321,7 +341,7 @@ const Profile = () => {
 
       {/* Posts */}
 
-      <section className="posts py-6 px-4" style={{ width: "140%" }}>
+      <section className="posts py-6 px-4" style={{ width: "140%",background: themeStyles.primaryColor }}>
         <h3 className="text-xl font-bold mb-4">Travel Posts</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -427,6 +447,7 @@ const Profile = () => {
             <button
               onClick={handleCommentSubmit}
               className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
+              style={{ backgroundColor: themeStyles.navbarColor}}
             >
               Submit
             </button>

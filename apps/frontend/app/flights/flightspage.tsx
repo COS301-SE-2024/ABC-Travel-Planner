@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import FlightCard from './flightCard';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTheme } from '../context/ThemeContext';
 
 const FlightsPage = () => {
   const [resultsCount, setResultsCount] = useState(0);
@@ -16,6 +17,7 @@ const FlightsPage = () => {
   const [dest, setDest] = useState<string[]>([])
   const [randRate, setRandRate] = useState(0.000000)
   const [eurRate, setEurRate] = useState(0.000000)
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
 
   useEffect(() => {
       const fetchData = async () => {
@@ -71,8 +73,8 @@ const FlightsPage = () => {
   }, [])
 
   return (
-    <div className='ml-20 mr-20 mt-16'>
-      <h1 className='text-5xl font-bold text-gray-800 text-center mb-10'>Flights Available: </h1>
+    <div className='ml-20 mr-20 mt-16' style={{minHeight: '100vh'}} >
+      <h1 className='text-5xl font-bold text-gray-800 text-center mb-10' style={{ color: themeStyles.textColor }}>Flights Available: </h1>
       {loading && (
         <div className="flex justify-center items-center h-20">
           <div
@@ -117,6 +119,7 @@ const FlightsPage = () => {
           <button
             onClick={() => router.back()}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            style={{ background: themeStyles.navbarColor}}
           >
             Go Back
           </button>
