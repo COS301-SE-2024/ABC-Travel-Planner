@@ -348,7 +348,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
               <div className="text-right">
                 <p className="text-3xl text-blue-500 font-semibold">ZAR {place.price}</p>
                 <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
-                <p className="text-blue-500 text-sm">Tax and rates included</p>
+                <p className="text-blue-500 text-sm">Rates and taxes included</p>
               </div>
             </div>
           </div>

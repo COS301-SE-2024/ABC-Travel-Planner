@@ -105,7 +105,7 @@ const Itinerary = () => {
               Add Itinerary
             </button>
             <button
-              aria-label="AI Trip Creator"
+              aria-label="Trip Creator"
               onClick={openTripCreatorModal}
               className="flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 ml-2"
               style={{ background: themeStyles.textColor}}
@@ -200,8 +200,9 @@ const Itinerary = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
           <div className="relative w-full max-w-lg mx-auto my-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="flex justify-between items-center px-6 py-4 bg-green-600 text-white" style={{ background: themeStyles.textColor}}>
-                <h3 className="text-xl font-semibold place-self-center">AI Trip Creator</h3>
+
+              <div className="flex justify-between items-center px-6 py-4 bg-green-600 text-white">
+                <h3 className="text-xl font-semibold place-self-center">Trip Creator</h3>
                 <button className="text-gray-300 hover:text-gray-300 focus:outline-none" onClick={closeTripCreatorModal}>
                   &#215;
                 </button>
