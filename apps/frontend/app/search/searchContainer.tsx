@@ -7,7 +7,7 @@ import SearchCard from './searchCard';
 import ProfileCard from './ProfileCard';
 import { useTheme } from "../context/ThemeContext";
 const SearchContainer = () => {
-    const [selectedTopic, setSelectedTopic] = useState<string>('');
+    const [selectedTopic, setSelectedTopic] = useState<string>('stays');
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -62,7 +62,7 @@ const SearchContainer = () => {
     };
     const { selectedTheme, setTheme, themeStyles } = useTheme();
     return (
-        <div style={{background: themeStyles.background}} >
+        <div style={{background: themeStyles.background, minHeight: '100vh'}} >
             <div data-testid="searchContainer" className="search-container" style={{background: themeStyles.background}}>
                 <h1 className="search-title" style={{ fontSize: '2rem' }}>Search at your Convenience!</h1>
                 <p className="search-subtitle" style={{ fontSize: '1.5rem' }}>Click on an icon below to filter your search and provide better results</p>
