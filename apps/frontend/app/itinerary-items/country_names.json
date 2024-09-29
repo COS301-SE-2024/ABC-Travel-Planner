@@ -4,36 +4,12 @@
         "label": "Afghanistan"
     },
     {
-        "value": "Albania",
-        "label": "Albania"
-    },
-    {
         "value": "Algeria",
         "label": "Algeria"
     },
     {
-        "value": "Ambon",
-        "label": "Ambon"
-    },
-    {
-        "value": "American Samoa",
-        "label": "American Samoa"
-    },
-    {
         "value": "Angola",
         "label": "Angola"
-    },
-    {
-        "value": "Anguilla",
-        "label": "Anguilla"
-    },
-    {
-        "value": "Antarctica",
-        "label": "Antarctica"
-    },
-    {
-        "value": "Antigua and Barbuda",
-        "label": "Antigua and Barbuda"
     },
     {
         "value": "Argentina",
@@ -42,10 +18,6 @@
     {
         "value": "Armenia",
         "label": "Armenia"
-    },
-    {
-        "value": "Aruba",
-        "label": "Aruba"
     },
     {
         "value": "Australia",
@@ -72,40 +44,12 @@
         "label": "Bangladesh"
     },
     {
-        "value": "Barbados",
-        "label": "Barbados"
-    },
-    {
-        "value": "Belarus",
-        "label": "Belarus"
-    },
-    {
         "value": "Belgium",
         "label": "Belgium"
     },
     {
-        "value": "Belize",
-        "label": "Belize"
-    },
-    {
-        "value": "Benin",
-        "label": "Benin"
-    },
-    {
-        "value": "Bermuda",
-        "label": "Bermuda"
-    },
-    {
-        "value": "Bhutan",
-        "label": "Bhutan"
-    },
-    {
         "value": "Bolivia",
         "label": "Bolivia"
-    },
-    {
-        "value": "Bosnia and Herzegovina",
-        "label": "Bosnia and Herzegovina"
     },
     {
         "value": "Botswana",
@@ -116,60 +60,16 @@
         "label": "Brazil"
     },
     {
-        "value": "British Indian Ocean Territory",
-        "label": "British Indian Ocean Territory"
-    },
-    {
-        "value": "British Virgin Islands",
-        "label": "British Virgin Islands"
-    },
-    {
-        "value": "Brunei",
-        "label": "Brunei"
-    },
-    {
-        "value": "Bulgaria",
-        "label": "Bulgaria"
-    },
-    {
-        "value": "Burkina Faso",
-        "label": "Burkina Faso"
-    },
-    {
-        "value": "Burma",
-        "label": "Burma"
-    },
-    {
-        "value": "Burundi",
-        "label": "Burundi"
-    },
-    {
         "value": "Cambodia",
         "label": "Cambodia"
-    },
-    {
-        "value": "Cameroon",
-        "label": "Cameroon"
     },
     {
         "value": "Canada",
         "label": "Canada"
     },
     {
-        "value": "Cape Verde",
-        "label": "Cape Verde"
-    },
-    {
         "value": "Cayman Islands",
         "label": "Cayman Islands"
-    },
-    {
-        "value": "Central African Republic",
-        "label": "Central African Republic"
-    },
-    {
-        "value": "Chad",
-        "label": "Chad"
     },
     {
         "value": "Chile",
@@ -180,52 +80,8 @@
         "label": "China"
     },
     {
-        "value": "Christmas Island",
-        "label": "Christmas Island"
-    },
-    {
-        "value": "Cocos (Keeling) Islands",
-        "label": "Cocos (Keeling) Islands"
-    },
-    {
         "value": "Colombia",
         "label": "Colombia"
-    },
-    {
-        "value": "Comoros",
-        "label": "Comoros"
-    },
-    {
-        "value": "Congo (Brazzaville)",
-        "label": "Congo (Brazzaville)"
-    },
-    {
-        "value": "Congo (Kinshasa)",
-        "label": "Congo (Kinshasa)"
-    },
-    {
-        "value": "Cook Islands",
-        "label": "Cook Islands"
-    },
-    {
-        "value": "Costa Rica",
-        "label": "Costa Rica"
-    },
-    {
-        "value": "Cote d'Ivoire",
-        "label": "Cote d'Ivoire"
-    },
-    {
-        "value": "Croatia",
-        "label": "Croatia"
-    },
-    {
-        "value": "Cuba",
-        "label": "Cuba"
-    },
-    {
-        "value": "Cyprus",
-        "label": "Cyprus"
     },
     {
         "value": "Czech Republic",
@@ -240,16 +96,8 @@
         "label": "Djibouti"
     },
     {
-        "value": "Dominica",
-        "label": "Dominica"
-    },
-    {
         "value": "Dominican Republic",
         "label": "Dominican Republic"
-    },
-    {
-        "value": "East Timor",
-        "label": "East Timor"
     },
     {
         "value": "Ecuador",
@@ -264,28 +112,12 @@
         "label": "El Salvador"
     },
     {
-        "value": "Equatorial Guinea",
-        "label": "Equatorial Guinea"
-    },
-    {
-        "value": "Eritrea",
-        "label": "Eritrea"
-    },
-    {
-        "value": "Estonia",
-        "label": "Estonia"
-    },
-    {
         "value": "Ethiopia",
         "label": "Ethiopia"
     },
     {
         "value": "Falkland Islands",
         "label": "Falkland Islands"
-    },
-    {
-        "value": "Faroe Islands",
-        "label": "Faroe Islands"
     },
     {
         "value": "Fiji",
@@ -300,20 +132,8 @@
         "label": "France"
     },
     {
-        "value": "French Guiana",
-        "label": "French Guiana"
-    },
-    {
         "value": "French Polynesia",
         "label": "French Polynesia"
-    },
-    {
-        "value": "Gabon",
-        "label": "Gabon"
-    },
-    {
-        "value": "Gambia",
-        "label": "Gambia"
     },
     {
         "value": "Georgia",
@@ -322,14 +142,6 @@
     {
         "value": "Germany",
         "label": "Germany"
-    },
-    {
-        "value": "Ghana",
-        "label": "Ghana"
-    },
-    {
-        "value": "Gibraltar",
-        "label": "Gibraltar"
     },
     {
         "value": "Greece",
@@ -348,44 +160,12 @@
         "label": "Guadeloupe"
     },
     {
-        "value": "Guam",
-        "label": "Guam"
-    },
-    {
         "value": "Guatemala",
         "label": "Guatemala"
     },
     {
-        "value": "Guernsey",
-        "label": "Guernsey"
-    },
-    {
-        "value": "Guinea",
-        "label": "Guinea"
-    },
-    {
-        "value": "Guinea-Bissau",
-        "label": "Guinea-Bissau"
-    },
-    {
-        "value": "Guyana",
-        "label": "Guyana"
-    },
-    {
         "value": "Haiti",
         "label": "Haiti"
-    },
-    {
-        "value": "Harstad/Narvik",
-        "label": "Harstad/Narvik"
-    },
-    {
-        "value": "Higleig",
-        "label": "Higleig"
-    },
-    {
-        "value": "Honduras",
-        "label": "Honduras"
     },
     {
         "value": "Hong Kong",
@@ -444,10 +224,6 @@
         "label": "Jersey"
     },
     {
-        "value": "Johnston Atoll",
-        "label": "Johnston Atoll"
-    },
-    {
         "value": "Jordan",
         "label": "Jordan"
     },
@@ -460,28 +236,12 @@
         "label": "Kenya"
     },
     {
-        "value": "Kiribati",
-        "label": "Kiribati"
-    },
-    {
         "value": "Kuwait",
         "label": "Kuwait"
     },
     {
-        "value": "Kyrgyzstan",
-        "label": "Kyrgyzstan"
-    },
-    {
-        "value": "Laos",
-        "label": "Laos"
-    },
-    {
         "value": "Latvia",
         "label": "Latvia"
-    },
-    {
-        "value": "Laverton",
-        "label": "Laverton"
     },
     {
         "value": "Lebanon",
@@ -504,24 +264,12 @@
         "label": "Lithuania"
     },
     {
-        "value": "Luxembourg",
-        "label": "Luxembourg"
-    },
-    {
-        "value": "Macau",
-        "label": "Macau"
-    },
-    {
         "value": "Macedonia",
         "label": "Macedonia"
     },
     {
         "value": "Madagascar",
         "label": "Madagascar"
-    },
-    {
-        "value": "Malawi",
-        "label": "Malawi"
     },
     {
         "value": "Malaysia",
@@ -532,16 +280,8 @@
         "label": "Maldives"
     },
     {
-        "value": "Mali",
-        "label": "Mali"
-    },
-    {
         "value": "Malta",
         "label": "Malta"
-    },
-    {
-        "value": "Marshall Islands",
-        "label": "Marshall Islands"
     },
     {
         "value": "Martinique",
@@ -556,24 +296,12 @@
         "label": "Mauritius"
     },
     {
-        "value": "Mayotte",
-        "label": "Mayotte"
-    },
-    {
         "value": "Mexico",
         "label": "Mexico"
     },
     {
-        "value": "Micronesia",
-        "label": "Micronesia"
-    },
-    {
         "value": "Midway Islands",
         "label": "Midway Islands"
-    },
-    {
-        "value": "Mo i Rana",
-        "label": "Mo i Rana"
     },
     {
         "value": "Moldova",
@@ -586,10 +314,6 @@
     {
         "value": "Montenegro",
         "label": "Montenegro"
-    },
-    {
-        "value": "Montserrat",
-        "label": "Montserrat"
     },
     {
         "value": "Morocco",
@@ -608,10 +332,6 @@
         "label": "Namibia"
     },
     {
-        "value": "Nauru",
-        "label": "Nauru"
-    },
-    {
         "value": "Nepal",
         "label": "Nepal"
     },
@@ -624,16 +344,8 @@
         "label": "Netherlands Antilles"
     },
     {
-        "value": "New Caledonia",
-        "label": "New Caledonia"
-    },
-    {
         "value": "New Zealand",
         "label": "New Zealand"
-    },
-    {
-        "value": "Nicaragua",
-        "label": "Nicaragua"
     },
     {
         "value": "Niger",
@@ -642,10 +354,6 @@
     {
         "value": "Nigeria",
         "label": "Nigeria"
-    },
-    {
-        "value": "Niue",
-        "label": "Niue"
     },
     {
         "value": "Norfolk Island",
@@ -666,10 +374,6 @@
     {
         "value": "Oman",
         "label": "Oman"
-    },
-    {
-        "value": "Orsta-Volda",
-        "label": "Orsta-Volda"
     },
     {
         "value": "Oslo",
@@ -708,14 +412,6 @@
         "label": "Philippines"
     },
     {
-        "value": "Pine Bluff",
-        "label": "Pine Bluff"
-    },
-    {
-        "value": "Point Cook",
-        "label": "Point Cook"
-    },
-    {
         "value": "Poland",
         "label": "Poland"
     },
@@ -732,10 +428,6 @@
         "label": "Qatar"
     },
     {
-        "value": "Reunion",
-        "label": "Reunion"
-    },
-    {
         "value": "Romania",
         "label": "Romania"
     },
@@ -748,10 +440,6 @@
         "label": "Rwanda"
     },
     {
-        "value": "Rygge",
-        "label": "Rygge"
-    },
-    {
         "value": "R\u00f8rvik",
         "label": "R\u00f8rvik"
     },
@@ -760,32 +448,8 @@
         "label": "Saint Helena"
     },
     {
-        "value": "Saint Kitts and Nevis",
-        "label": "Saint Kitts and Nevis"
-    },
-    {
         "value": "Saint Lucia",
         "label": "Saint Lucia"
-    },
-    {
-        "value": "Saint Pierre and Miquelon",
-        "label": "Saint Pierre and Miquelon"
-    },
-    {
-        "value": "Saint Vincent and the Grenadines",
-        "label": "Saint Vincent and the Grenadines"
-    },
-    {
-        "value": "Samoa",
-        "label": "Samoa"
-    },
-    {
-        "value": "Sandefjord",
-        "label": "Sandefjord"
-    },
-    {
-        "value": "Sao Tome and Principe",
-        "label": "Sao Tome and Principe"
     },
     {
         "value": "Saudi Arabia",
@@ -852,14 +516,6 @@
         "label": "Sudan"
     },
     {
-        "value": "Suriname",
-        "label": "Suriname"
-    },
-    {
-        "value": "Svalbard",
-        "label": "Svalbard"
-    },
-    {
         "value": "Swaziland",
         "label": "Swaziland"
     },
@@ -888,32 +544,16 @@
         "label": "Tanzania"
     },
     {
-        "value": "Terre Haute",
-        "label": "Terre Haute"
-    },
-    {
         "value": "Thailand",
         "label": "Thailand"
-    },
-    {
-        "value": "Togo",
-        "label": "Togo"
     },
     {
         "value": "Tonga",
         "label": "Tonga"
     },
     {
-        "value": "Trinidad and Tobago",
-        "label": "Trinidad and Tobago"
-    },
-    {
         "value": "Tromso",
         "label": "Tromso"
-    },
-    {
-        "value": "Tunisia",
-        "label": "Tunisia"
     },
     {
         "value": "Turkey",
@@ -922,10 +562,6 @@
     {
         "value": "Turkmenistan",
         "label": "Turkmenistan"
-    },
-    {
-        "value": "Turks and Caicos Islands",
-        "label": "Turks and Caicos Islands"
     },
     {
         "value": "Tuvalu",
@@ -950,18 +586,6 @@
     {
         "value": "United States",
         "label": "United States"
-    },
-    {
-        "value": "Uruguay",
-        "label": "Uruguay"
-    },
-    {
-        "value": "Uzbekistan",
-        "label": "Uzbekistan"
-    },
-    {
-        "value": "Vanuatu",
-        "label": "Vanuatu"
     },
     {
         "value": "Vard\u00f8",

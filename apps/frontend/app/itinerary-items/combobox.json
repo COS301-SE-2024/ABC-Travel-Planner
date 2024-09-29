@@ -1284,12 +1284,6 @@
         "iata_code": "HRM"
     },
     {
-        "airport_name": "Bou Chekif Airport",
-        "city": "Tiaret",
-        "country": "Algeria",
-        "iata_code": "TID"
-    },
-    {
         "airport_name": "Tindouf Airport",
         "city": "Tindouf",
         "country": "Algeria",
@@ -1306,12 +1300,6 @@
         "city": "Oran",
         "country": "Algeria",
         "iata_code": "TAF"
-    },
-    {
-        "airport_name": "Zenata – Messali El Hadj Airport",
-        "city": "Tlemcen",
-        "country": "Algeria",
-        "iata_code": "TLM"
     },
     {
         "airport_name": "Es Senia Airport",
@@ -1350,12 +1338,6 @@
         "iata_code": "ELG"
     },
     {
-        "airport_name": "Noumérat - Moufdi Zakaria Airport",
-        "city": "Ghardaia",
-        "country": "Algeria",
-        "iata_code": "GHA"
-    },
-    {
         "airport_name": "Oued Irara Airport",
         "city": "Hassi Messaoud",
         "country": "Algeria",
@@ -1368,12 +1350,6 @@
         "iata_code": "INZ"
     },
     {
-        "airport_name": "Touggourt Sidi Madhi Airport",
-        "city": "Touggourt",
-        "country": "Algeria",
-        "iata_code": "TGR"
-    },
-    {
         "airport_name": "Laghouat Airport",
         "city": "Laghouat",
         "country": "Algeria",
@@ -1384,12 +1360,6 @@
         "city": "Timimoun",
         "country": "Algeria",
         "iata_code": "TMX"
-    },
-    {
-        "airport_name": "Ain el Beida Airport",
-        "city": "Ouargla",
-        "country": "Algeria",
-        "iata_code": "OGX"
     },
     {
         "airport_name": "In Aménas Airport",
@@ -5574,12 +5544,6 @@
         "iata_code": "SRT"
     },
     {
-        "airport_name": "Tirana International Airport Mother Teresa",
-        "city": "Tirana",
-        "country": "Albania",
-        "iata_code": "TIA"
-    },
-    {
         "airport_name": "Burgas Airport",
         "city": "Bourgas",
         "country": "Bulgaria",
@@ -9372,22 +9336,10 @@
         "iata_code": "KDH"
     },
     {
-        "airport_name": "Maimana Airport",
-        "city": "Maimama",
-        "country": "Afghanistan",
-        "iata_code": "MMZ"
-    },
-    {
         "airport_name": "Mazar I Sharif Airport",
         "city": "Mazar-i-sharif",
         "country": "Afghanistan",
         "iata_code": "MZR"
-    },
-    {
-        "airport_name": "Shindand Airport",
-        "city": "Shindand",
-        "country": "Afghanistan",
-        "iata_code": "OAH"
     },
     {
         "airport_name": "Konduz Airport",
@@ -10950,22 +10902,10 @@
         "iata_code": "COC"
     },
     {
-        "airport_name": "Gualeguaychu Airport",
-        "city": "Gualeguaychu",
-        "country": "Argentina",
-        "iata_code": "GHU"
-    },
-    {
         "airport_name": "Junin Airport",
         "city": "Junin",
         "country": "Argentina",
         "iata_code": "JNI"
-    },
-    {
-        "airport_name": "General Urquiza Airport",
-        "city": "Parana",
-        "country": "Argentina",
-        "iata_code": "PRA"
     },
     {
         "airport_name": "Islas Malvinas Airport",
@@ -10974,22 +10914,10 @@
         "iata_code": "ROS"
     },
     {
-        "airport_name": "Sauce Viejo Airport",
-        "city": "Santa Fe",
-        "country": "Argentina",
-        "iata_code": "SFN"
-    },
-    {
         "airport_name": "Jorge Newbery Airpark",
         "city": "Buenos Aires",
         "country": "Argentina",
         "iata_code": "AEP"
-    },
-    {
-        "airport_name": "Ingeniero Ambrosio Taravella Airport",
-        "city": "Cordoba",
-        "country": "Argentina",
-        "iata_code": "COR"
     },
     {
         "airport_name": "San Fernando Airport",
@@ -11022,12 +10950,6 @@
         "iata_code": "GNR"
     },
     {
-        "airport_name": "El Plumerillo Airport",
-        "city": "Mendoza",
-        "country": "Argentina",
-        "iata_code": "MDZ"
-    },
-    {
         "airport_name": "Comodoro D.R. Salomón Airport",
         "city": "Malargue",
         "country": "Argentina",
@@ -11046,24 +10968,6 @@
         "iata_code": "CTC"
     },
     {
-        "airport_name": "Vicecomodoro Angel D. La Paz Aragonés Airport",
-        "city": "Santiago Del Estero",
-        "country": "Argentina",
-        "iata_code": "SDE"
-    },
-    {
-        "airport_name": "Capitan V A Almonacid Airport",
-        "city": "La Rioja",
-        "country": "Argentina",
-        "iata_code": "IRJ"
-    },
-    {
-        "airport_name": "Teniente Benjamin Matienzo Airport",
-        "city": "Tucuman",
-        "country": "Argentina",
-        "iata_code": "TUC"
-    },
-    {
         "airport_name": "Domingo Faustino Sarmiento Airport",
         "city": "San Juan",
         "country": "Argentina",
@@ -11076,34 +10980,10 @@
         "iata_code": "RCU"
     },
     {
-        "airport_name": "Villa Dolores Airport",
-        "city": "Villa Dolores",
-        "country": "Argentina",
-        "iata_code": "VDR"
-    },
-    {
-        "airport_name": "Villa Reynolds Airport",
-        "city": "Villa Reynolds",
-        "country": "Argentina",
-        "iata_code": "VME"
-    },
-    {
-        "airport_name": "Brigadier Mayor D Cesar Raul Ojeda Airport",
-        "city": "San Luis",
-        "country": "Argentina",
-        "iata_code": "LUQ"
-    },
-    {
         "airport_name": "Corrientes Airport",
         "city": "Corrientes",
         "country": "Argentina",
         "iata_code": "CNQ"
-    },
-    {
-        "airport_name": "Resistencia International Airport",
-        "city": "Resistencia",
-        "country": "Argentina",
-        "iata_code": "RES"
     },
     {
         "airport_name": "Formosa Airport",
@@ -11118,46 +10998,10 @@
         "iata_code": "IGR"
     },
     {
-        "airport_name": "Paso De Los Libres Airport",
-        "city": "Paso De Los Libres",
-        "country": "Argentina",
-        "iata_code": "AOL"
-    },
-    {
         "airport_name": "Monte Caseros Airport",
         "city": "Monte Caseros",
         "country": "Argentina",
         "iata_code": "MCS"
-    },
-    {
-        "airport_name": "Libertador Gral D Jose De San Martin Airport",
-        "city": "Posadas",
-        "country": "Argentina",
-        "iata_code": "PSS"
-    },
-    {
-        "airport_name": "Termal Airport",
-        "city": "Presidencia R.s.pena",
-        "country": "Argentina",
-        "iata_code": "PRQ"
-    },
-    {
-        "airport_name": "Martin Miguel De Guemes International Airport",
-        "city": "Salta",
-        "country": "Argentina",
-        "iata_code": "SLA"
-    },
-    {
-        "airport_name": "Gobernador Horacio Guzman International Airport",
-        "city": "Jujuy",
-        "country": "Argentina",
-        "iata_code": "JUJ"
-    },
-    {
-        "airport_name": "Orán Airport",
-        "city": "Oran",
-        "country": "Argentina",
-        "iata_code": "ORA"
     },
     {
         "airport_name": "El Dorado Airport",
@@ -11166,22 +11010,10 @@
         "iata_code": "ELO"
     },
     {
-        "airport_name": "Goya Airport",
-        "city": "Goya",
-        "country": "Argentina",
-        "iata_code": "OYA"
-    },
-    {
         "airport_name": "Reconquista Airport",
         "city": "Reconquista",
         "country": "Argentina",
         "iata_code": "RCQ"
-    },
-    {
-        "airport_name": "Curuzu Cuatia Airport",
-        "city": "Curuzu Cuatia",
-        "country": "Argentina",
-        "iata_code": "UZU"
     },
     {
         "airport_name": "El Bolson Airport",
@@ -11190,28 +11022,10 @@
         "iata_code": "EHL"
     },
     {
-        "airport_name": "General E. Mosconi Airport",
-        "city": "Comodoro Rivadavia",
-        "country": "Argentina",
-        "iata_code": "CRD"
-    },
-    {
-        "airport_name": "Brigadier Antonio Parodi Airport",
-        "city": "Esquel",
-        "country": "Argentina",
-        "iata_code": "EQS"
-    },
-    {
         "airport_name": "Almirante Marco Andres Zar Airport",
         "city": "Trelew",
         "country": "Argentina",
         "iata_code": "REL"
-    },
-    {
-        "airport_name": "Gobernador Castello Airport",
-        "city": "Viedma",
-        "country": "Argentina",
-        "iata_code": "VDM"
     },
     {
         "airport_name": "El Tehuelche Airport",
@@ -11220,22 +11034,10 @@
         "iata_code": "PMY"
     },
     {
-        "airport_name": "Puerto Deseado Airport",
-        "city": "Puerto Deseado",
-        "country": "Argentina",
-        "iata_code": "PUD"
-    },
-    {
         "airport_name": "Hermes Quijada International Airport",
         "city": "Rio Grande",
         "country": "Argentina",
         "iata_code": "RGA"
-    },
-    {
-        "airport_name": "Piloto Civil N. Fernández Airport",
-        "city": "Rio Gallegos",
-        "country": "Argentina",
-        "iata_code": "RGL"
     },
     {
         "airport_name": "Malvinas Argentinas Airport",
@@ -11244,52 +11046,16 @@
         "iata_code": "USH"
     },
     {
-        "airport_name": "Capitan D Daniel Vazquez Airport",
-        "city": "San Julian",
-        "country": "Argentina",
-        "iata_code": "ULA"
-    },
-    {
-        "airport_name": "Perito Moreno Airport",
-        "city": "Perito Moreno",
-        "country": "Argentina",
-        "iata_code": "PMQ"
-    },
-    {
         "airport_name": "Santa Cruz Airport",
         "city": "Santa Cruz",
         "country": "Argentina",
         "iata_code": "RZA"
     },
     {
-        "airport_name": "Comandante Espora Airport",
-        "city": "Bahia Blanca",
-        "country": "Argentina",
-        "iata_code": "BHI"
-    },
-    {
-        "airport_name": "Brigadier D.H.E. Ruiz Airport",
-        "city": "Colonel Suarez",
-        "country": "Argentina",
-        "iata_code": "CSZ"
-    },
-    {
         "airport_name": "Olavarria Airport",
         "city": "Olavarria",
         "country": "Argentina",
         "iata_code": "OVR"
-    },
-    {
-        "airport_name": "General Pico Airport",
-        "city": "General Pico",
-        "country": "Argentina",
-        "iata_code": "GPO"
-    },
-    {
-        "airport_name": "Tres Arroyos Airport",
-        "city": "Tres Arroyos",
-        "country": "Argentina",
-        "iata_code": "OYO"
     },
     {
         "airport_name": "Ástor Piazzola International Airport",
@@ -11320,24 +11086,6 @@
         "city": "San Carlos De Bariloche",
         "country": "Argentina",
         "iata_code": "BRC"
-    },
-    {
-        "airport_name": "Héroes De Malvinas Airport",
-        "city": "Tandil",
-        "country": "Argentina",
-        "iata_code": "TDL"
-    },
-    {
-        "airport_name": "Villa Gesell Airport",
-        "city": "Villa Gesell",
-        "country": "Argentina",
-        "iata_code": "VLG"
-    },
-    {
-        "airport_name": "Cutral-Co Airport",
-        "city": "Cutralco",
-        "country": "Argentina",
-        "iata_code": "CUT"
     },
     {
         "airport_name": "Aviador C. Campos Airport",
@@ -12076,12 +11824,6 @@
         "city": "Rancagua",
         "country": "Chile",
         "iata_code": "QRC"
-    },
-    {
-        "airport_name": "Teniente Rodolfo Marsh Martin Base",
-        "city": "Isla Rey Jorge",
-        "country": "Antarctica",
-        "iata_code": "TNM"
     },
     {
         "airport_name": "La Florida Airport",
@@ -14884,12 +14626,6 @@
         "city": "Luwuk",
         "country": "Indonesia",
         "iata_code": "LUW"
-    },
-    {
-        "airport_name": "Pattimura Airport",
-        "city": " Ambon",
-        "country": "Ambon",
-        "iata_code": "Indonesia"
     },
     {
         "airport_name": "Fakfak Airport",
