@@ -219,7 +219,15 @@ const Account = () => {
       console.log(response);
     }
     await updateUserProfile(profileDetails);
-    toggleEdit(); // Exit edit mode
+    if(file)
+    {
+      window.location.reload();
+    }
+    else 
+    {
+      toggleEdit();
+    }
+    
   };
 
   const toggleEdit = () => {

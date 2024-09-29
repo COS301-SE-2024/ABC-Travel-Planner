@@ -38,13 +38,47 @@ export async function deleteAccount(user_id: any) {
         });
       }
     });
+
+    const q3 = collection(db, "Follow-Details");
+    const querySnapshot3 = await getDocs(q3);
+    querySnapshot3.forEach(async (doc: any) => {
+      if (
+        doc.data().user_id === user_id ||
+        doc.data().follower_id === user_id
+      ) {
+        await deleteDoc(doc.ref);
+      }
+    });
+
+    const q4 = collection(db, "Favourite-Countries");
+    const querySnapshot4 = await getDocs(q4);
+    querySnapshot4.forEach(async (doc: any) => {
+      if (doc.id === user_id) {
+        await deleteDoc(doc.ref);
+      }
+    });
+
+    const q5 = collection(db, "Comments");
+    const querySnapshot5 = await getDocs(q5);
+    querySnapshot5.forEach(async (doc: any) => {
+      if (doc.data().user_id === user_id) {
+        await deleteDoc(doc.ref);
+      }
+    });
+
+    const q6 = collection(db, "Likes");
+    const querySnapshot6 = await getDocs(q6);
+    querySnapshot6.forEach(async (doc: any) => {
+      if (doc.data().user_id === user_id) {
+        await deleteDoc(doc.ref);
+      }
+    });
   } catch (error) {
     return JSON.stringify({ message: error });
   }
 }
 
 export async function getFavouriteCountries(user_id: any) {
-  //from the favourite-country collection doc is the user_id
   const db = getFirestore(app);
   const q = collection(db, "Favourite-Countries");
   const querySnapshot = await getDocs(q);
