@@ -103,7 +103,7 @@ const Home = () => {
   //Theme
   const { selectedTheme, themeStyles, setTheme } = useTheme();
   return (
-    <div className="w-full mt-8">
+    <div className="w-full mt-8" style={{minHeight: '100vh'}}>
      <div className="flex justify-center mb-4 mt-4 mx-auto max-w-md" style={{ background: themeStyles.primaryColor, borderRadius: '12px' }}>
       <h2 className="text-4xl font-extrabold" style={{ color: themeStyles.textColor }}>
         Top Destinations
