@@ -77,4 +77,15 @@ export class PostsController {
     ) {
         return this.postsService.decreaseLikes(body.postId);
     }
+
+    @Post("delete")
+    async deletePost(
+        @Body()
+        body: {
+            postId: string,
+            userId: string
+        }
+    ) {
+        return this.postsService.deletePost(body.postId, body.userId)
+    }
 }

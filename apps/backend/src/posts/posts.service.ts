@@ -132,6 +132,57 @@ export class PostsService {
     return result;
   }
 
+  async deletePost(postId: string, userId: string) {
+    try {
+      //Check if it exists...
+      const postsDir = this.firebaseApp
+          .firestore()
+          .collection('Posts')
+          
+      console.log(postsDir)
+          
+      const postsSnapshot = await postsDir
+          .where('user_id', '==', userId)
+          .where('id', '==', postId)
+          .limit(1)
+          .get()
+
+      console.log(postsSnapshot)
+
+      if (postsSnapshot.empty) {
+        console.log("Could not delete... No matching docs found")
+        throw new Error('Could not delete item - not found')
+      }
+
+      //Deleting the post
+      postsSnapshot.forEach((item) => {
+        item.ref.delete();
+        console.log("Document deleted successfully")
+      })
+
+      //Delete likes associated with post
+      const likesDir = this.firebaseApp
+          .firestore()
+          .collection('Likes')
+      console.log(likesDir)
+
+      const likesSnapshot = await likesDir
+          .where('user_id', '==', userId)
+          .where('post_id', '==', postId)
+          .get()
+      
+      if (!likesSnapshot.empty) {
+        likesSnapshot.forEach((likeItem) => {
+          likeItem.ref.delete();
+          console.log("Like document deleted successfully")
+        })
+      }
+    } catch (error) {
+        console.error('Could not delete document: ', error.message)
+        return error.message
+    }
+  }
+
   async getPostsFeed(): Promise<any[]> {
     try {
       let data
@@ -200,4 +251,6 @@ export class PostsService {
           
     return randomizedData
   }
+
+
 }

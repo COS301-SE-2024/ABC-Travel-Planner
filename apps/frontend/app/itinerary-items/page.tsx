@@ -1,5 +1,5 @@
-"use client"
-import { Button} from "@nextui-org/react";
+
+import { Button } from "@nextui-org/react";
 import Link from 'next/link';
 import React from "react";
 import BookMarkComponent from "./BookMarkComponent";
@@ -46,18 +46,17 @@ const ItineraryItems = async ({ searchParams }: { searchParams: { id?: any; loca
               </Link>
         </div>
 
-        
 
-        <div className='mt-10 w-100 h-10'>
-        <div className="absolute top-8 right-8 px-4">
-        <Link href={`/booking?id=${id}`}>
-          <Button className="border-2 border-black-500 rounded-md doneButton bg-sky-500" style={{background: themeStyles.navbarColor}}>
-            Done
-          </Button>
-        </Link>
-        </div>
+        <div className='absolute align-center right-8 mt-2 w-22 h-10 mx-4'>
+            <Link href={`/booking?id=${id}`}>
+              <button className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700">
+                Done
+              </button>    
+            </Link>
+          </div>
       </div>
-      </div>
+
+
 
       <div className="flex justify-center">
         <div className="ml-2 mr-2">
