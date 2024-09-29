@@ -23,6 +23,7 @@ import { join } from 'path';
 import { ChatModule } from './chat/chat.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { AitaModule } from './aita/aita.module';
+import { BlockModule } from './block/block.module';
 
 @Module({
   imports: [
@@ -50,7 +51,8 @@ import { AitaModule } from './aita/aita.module';
     ChatModule,
     InvoiceModule,
     FlightsModule,
-    AitaModule
+    AitaModule,
+    BlockModule
   ],
   controllers: [AppController],
   providers: [AppService],
