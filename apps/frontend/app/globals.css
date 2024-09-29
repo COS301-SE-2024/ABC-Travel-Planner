@@ -1474,3 +1474,21 @@ body {
   text-align: right;
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px; /* Scrollbar height for horizontal scrolling */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background:rgb(255, 245, 245) /* Light background for the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--navbar-color); /* Use the navbar color for the scrollbar */
+  border-radius: 10px; /* Rounded scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(72, 154, 255, 0.8); /* Darker color on hover */
+}
+
+
