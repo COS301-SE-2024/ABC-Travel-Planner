@@ -13,6 +13,7 @@ import {
   FaHeart,
   FaComment,
   FaPlus,
+  FaTrash,
   FaPaperPlane,
   FaBookmark,
   FaUser,
@@ -364,6 +365,18 @@ const Account = () => {
   const handleViewChange = (view: string) => {
     setView(view);
   };
+//delete button
+  const handleDeletePost = async (postId: string) => {
+    try {
+      //await axios.delete(`/api/posts/${postId}`);
+      //Update posts state to remove the deleted post
+      //setPosts(posts.filter((post) => post.id !== postId));
+      closeEnlargedPost(); // Close the modal after deletion
+    } catch (error) {
+      console.error("Failed to delete the post:", error);
+    }
+  };
+  
 
   return (
     <div data-testid="accountContainer" className="profile-page">
@@ -737,6 +750,14 @@ const Account = () => {
               >
                 <FaComment className="mr-1 text-2xl" />
                 {posts[enlargedPostIndex]?.comments?.length}
+              </button>
+               {/* Delete Button */}
+              <button
+                onClick={() => handleDeletePost(posts[enlargedPostIndex].id)}
+                className="flex items-center text-red-600"
+              >
+                <FaTrash className="mr-1 text-2xl" />
+                Delete Post
               </button>
             </div>
             <div className="mb-4">
