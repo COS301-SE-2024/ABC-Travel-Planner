@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from "@nestjs/config"
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -32,12 +32,12 @@ import { BlockModule } from './block/block.module';
       isGlobal: true, // Makes ConfigModule globally available
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'Images'), 
+      rootPath: join(__dirname, '..', 'Images'),
     }),
-    ItineraryModule, 
+    ItineraryModule,
     ItineraryItemsModule,
-    UsersModule, 
-    FirebaseModule, 
+    UsersModule,
+    FirebaseModule,
     ReviewsModule,
     AuthModule,
     SearchModule,
@@ -52,7 +52,7 @@ import { BlockModule } from './block/block.module';
     InvoiceModule,
     FlightsModule,
     AitaModule,
-    BlockModule
+    BlockModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -60,4 +60,3 @@ import { BlockModule } from './block/block.module';
 export class AppModule {
   constructor() {}
 }
-

@@ -234,13 +234,16 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                     </Link>
                     <div className="mt-3 flex justify-between items-end">
                         <div className="mt-4 flex flex-col items-start space-y-4">
-                            <button
-                                onClick={() => setShowCalendar(!showCalendar)}
-                                className="bg-blue-500 text-white rounded-md px-4 py-2"
-                                style={{ background: themeStyles.navbarColor}}
-                            >
-                                Select Dates
-                            </button>
+                            {place.type !== 'flights' && (
+                                <button
+                                    onClick={() => setShowCalendar(!showCalendar)}
+                                    className="bg-blue-500 text-white rounded-md px-4 py-2"
+                                    style={{ background: themeStyles.navbarColor }}
+                                >
+                                    Select Dates
+                                </button>
+                            )}
+
 
                             {showCalendar && (
                                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -273,7 +276,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                                         <button
                                             onClick={() => setShowCalendar(false)}
                                             className="bg-blue-500 text-white rounded-md px-4 py-2 mt-4 w-full"
-                                            style={{ background: themeStyles.navbarColor}}
+                                            style={{ background: themeStyles.navbarColor }}
                                         >
                                             Done
                                         </button>
@@ -294,17 +297,19 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         </div>
                         <div className="text-right">
                             <Link href={`/${place.id}`} passHref>
-                                <p className="text-3xl text-blue-500 font-semibold" style={{ color: themeStyles.textColor }}>ZAR {place.price}</p>
+                                <p className="text-3xl text-blue-500 font-semibold" style={{ color: themeStyles.textColor }}>{place.type == 'flights' ? "N/A" : `ZAR ${place.price}`} </p>
                                 <p className="text-blue-500 text-sm" style={{ color: themeStyles.textColor }}>{getPricePlaceholder(place.type)}</p>
-                                <p className="text-gray-600 text-lg" style={{ color: themeStyles.navbarColor }}>Free cancellation</p>
+                                <p className="text-gray-600 text-lg" style={{ color: themeStyles.navbarColor }}>{place.type == 'flights' ? "" : "Free cancellation"}</p>
                             </Link>
-                            <button
-                                onClick={handleAddToItineraryClick}
-                                className="bg-blue-500 text-white rounded-md px-4 py-2 mt-2"
-                                style={{ background: themeStyles.navbarColor}}
-                            >
-                                Add to Itinerary
-                            </button>
+                            {place.type !== 'flights' && (
+                                <button
+                                    onClick={handleAddToItineraryClick}
+                                    className="bg-blue-500 text-white rounded-md px-4 py-2 mt-2"
+                                    style={{ background: themeStyles.navbarColor }}
+                                >
+                                    Add to Itinerary
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -328,14 +333,14 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         <button
                             onClick={handleSaveSelectedClick}
                             className="bg-blue-500 text-white rounded-md px-4 py-2 mr-2"
-                            style={{ background: themeStyles.navbarColor}}
+                            style={{ background: themeStyles.navbarColor }}
                         >
                             Save to Selected
                         </button>
                         <button
                             onClick={handleNewItineraryClick}
                             className="bg-green-500 text-white rounded-md px-4 py-2 mr-2"
-                            style={{ background: themeStyles.textColor}}
+                            style={{ background: themeStyles.textColor }}
                         >
                             Create New Itinerary
                         </button>
@@ -371,7 +376,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
                         <button
                             onClick={handleSaveNewItinerary}
                             className="bg-green-500 text-white rounded-md px-4 py-2 mr-2"
-                            style={{ background: themeStyles.navbarColor}}
+                            style={{ background: themeStyles.navbarColor }}
                         >
                             Save New Itinerary
                         </button>
