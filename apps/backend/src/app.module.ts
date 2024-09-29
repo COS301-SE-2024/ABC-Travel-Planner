@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from "@nestjs/config"
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -23,6 +23,7 @@ import { join } from 'path';
 import { ChatModule } from './chat/chat.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { AitaModule } from './aita/aita.module';
+import { BlockModule } from './block/block.module';
 
 @Module({
   imports: [
@@ -31,12 +32,12 @@ import { AitaModule } from './aita/aita.module';
       isGlobal: true, // Makes ConfigModule globally available
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'Images'), 
+      rootPath: join(__dirname, '..', 'Images'),
     }),
-    ItineraryModule, 
+    ItineraryModule,
     ItineraryItemsModule,
-    UsersModule, 
-    FirebaseModule, 
+    UsersModule,
+    FirebaseModule,
     ReviewsModule,
     AuthModule,
     SearchModule,
@@ -50,7 +51,8 @@ import { AitaModule } from './aita/aita.module';
     ChatModule,
     InvoiceModule,
     FlightsModule,
-    AitaModule
+    AitaModule,
+    BlockModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -58,4 +60,3 @@ import { AitaModule } from './aita/aita.module';
 export class AppModule {
   constructor() {}
 }
-

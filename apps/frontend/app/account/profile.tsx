@@ -25,6 +25,7 @@ import {
   updateUserProfile,
   getSharedItineraries,
   updateImageURL,
+  deletePost,
 } from ".";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -220,15 +221,11 @@ const Account = () => {
       console.log(response);
     }
     await updateUserProfile(profileDetails);
-    if(file)
-    {
+    if (file) {
       window.location.reload();
-    }
-    else 
-    {
+    } else {
       toggleEdit();
     }
-    
   };
 
   const toggleEdit = () => {
@@ -373,22 +370,24 @@ const Account = () => {
   const handleViewChange = (view: string) => {
     setView(view);
   };
-//delete button
+  //delete button
   const handleDeletePost = async (postId: string) => {
     try {
-      //await axios.delete(`/api/posts/${postId}`);
-      //Update posts state to remove the deleted post
-      //setPosts(posts.filter((post) => post.id !== postId));
-      closeEnlargedPost(); // Close the modal after deletion
+      await deletePost(postId);
+
+      setPosts(posts.filter((post) => post.id !== postId));
+      closeEnlargedPost();
     } catch (error) {
       console.error("Failed to delete the post:", error);
     }
   };
-  
 
   return (
     <div data-testid="accountContainer" className="profile-page">
-      <header className="profile-header" style={{background: themeStyles.primaryColor}}>
+      <header
+        className="profile-header"
+        style={{ background: themeStyles.primaryColor }}
+      >
         <div className="profile-pic">
           <div className="relative">
             {profileDetails.imageUrl && (
@@ -404,7 +403,7 @@ const Account = () => {
             )}
           </div>
         </div>
-        <div className="profile-info" >
+        <div className="profile-info">
           {isEditing ? (
             <div className="edit-profile">
               <input
@@ -432,8 +431,12 @@ const Account = () => {
                 placeholder="Country"
                 className="edit-input"
               />
-              <div className="edit-buttons" >
-                <button onClick={handleSave} className="save-button" style={{ backgroundColor: themeStyles.navbarColor}}>
+              <div className="edit-buttons">
+                <button
+                  onClick={handleSave}
+                  className="save-button"
+                  style={{ backgroundColor: themeStyles.navbarColor }}
+                >
                   Save
                 </button>
                 <button onClick={handleCancel} className="cancel-button">
@@ -443,7 +446,12 @@ const Account = () => {
             </div>
           ) : (
             <>
-              <h1 data-testid="accountName"style={{color: themeStyles.textColor}} >{profileDetails.username}</h1>
+              <h1
+                data-testid="accountName"
+                style={{ color: themeStyles.textColor }}
+              >
+                {profileDetails.username}
+              </h1>
               <h2 data-testid="accountEmail">{profileDetails.email}</h2>
               {profileDetails.country && (
                 <div className="location">
@@ -485,7 +493,10 @@ const Account = () => {
         )}
       </header>
 
-      <section className="saved-itineraries" style={{background: themeStyles.primaryColor}}>
+      <section
+        className="saved-itineraries"
+        style={{ background: themeStyles.primaryColor }}
+      >
         <h3 className="Following-title">My Following</h3>
         <div className="profile-stats">
           <div className="following" onClick={toggleFollowing}>
@@ -597,7 +608,10 @@ const Account = () => {
                 </div>
               ))}
             </div>
-            <button  onClick={toggleFollowers} style={{ backgroundColor: themeStyles.navbarColor}}>
+            <button
+              onClick={toggleFollowers}
+              style={{ backgroundColor: themeStyles.navbarColor }}
+            >
               Close
             </button>
           </div>
@@ -621,7 +635,11 @@ const Account = () => {
                 </div>
               ))}
             </div>
-            <button className="close-button" onClick={toggleFollowing} style={{ backgroundColor: themeStyles.navbarColor}}>
+            <button
+              className="close-button"
+              onClick={toggleFollowing}
+              style={{ backgroundColor: themeStyles.navbarColor }}
+            >
               Close
             </button>
           </div>
@@ -629,12 +647,15 @@ const Account = () => {
       )}
       {/* Posts */}
 
-      <section className="posts py-6 px-4 " style={{ width: "140%", background: themeStyles.primaryColor }}>
+      <section
+        className="posts py-6 px-4 "
+        style={{ width: "140%", background: themeStyles.primaryColor }}
+      >
         <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
         <button
           onClick={() => setShowPostModal(true)}
           className="mt-6 mb-4 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg flex items-center mx-auto"
-          style={{background: themeStyles.navbarColor}}
+          style={{ background: themeStyles.navbarColor }}
         >
           <FaPlus className="mr-2" /> Add Post
         </button>
@@ -703,7 +724,7 @@ const Account = () => {
               <button
                 onClick={handleNewPostSubmit}
                 className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
-                style={{ backgroundColor: themeStyles.navbarColor}}
+                style={{ backgroundColor: themeStyles.navbarColor }}
               >
                 Submit
               </button>
@@ -759,7 +780,7 @@ const Account = () => {
                 <FaComment className="mr-1 text-2xl" />
                 {posts[enlargedPostIndex]?.comments?.length}
               </button>
-               {/* Delete Button */}
+              {/* Delete Button */}
               <button
                 onClick={() => handleDeletePost(posts[enlargedPostIndex].id)}
                 className="flex items-center text-red-600"
@@ -785,7 +806,7 @@ const Account = () => {
             <button
               onClick={handleCommentSubmit}
               className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
-              style={{ backgroundColor: themeStyles.navbarColor}}
+              style={{ backgroundColor: themeStyles.navbarColor }}
             >
               Submit
             </button>

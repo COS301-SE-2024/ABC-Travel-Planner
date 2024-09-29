@@ -11,7 +11,7 @@ import getUser from "@/libs/actions/getUser";
 import axios from "axios";
 import Link from "next/link";
 import Cookie from "js-cookie";
-import {useTheme} from "../../context/ThemeContext"
+import { useTheme } from "../../context/ThemeContext";
 const Profile = () => {
   const [profileDetails, setProfileDetails] = useState<{
     username: string;
@@ -161,6 +161,32 @@ const Profile = () => {
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const user_id = window.location.pathname.replace("/profile/", "");
 
+      const follower_id = Cookie.get("user_id");
+      const res = await axios.post(`${backendUrl}/follows/isFollowing`, {
+        user_id: user_id,
+        follower_id: follower_id,
+      });
+
+      setIsFollowing(res.data);
+
+      const blockRes = await axios.post(`${backendUrl}/block/isBlocked`, {
+        user_id: follower_id,
+        blocked_id: user_id,
+      });
+
+      setIsBlocked(blockRes.data);
+
+      const r = await axios.post(`${backendUrl}/follows/followers`, {
+        user_id: user_id,
+      });
+      setFollowers(r.data);
+      console.log(r.data);
+
+      const f = await axios.post(`${backendUrl}/follows/following`, {
+        user_id: user_id,
+      });
+      setFollowing(f.data);
+
       const u = await getUser(user_id);
       const user = JSON.parse(u || "{}");
       if (user.sharingMode !== "private") {
@@ -180,25 +206,6 @@ const Profile = () => {
       );
 
       setPosts(postsResponse.data);
-
-      const r = await axios.post(`${backendUrl}/follows/followers`, {
-        user_id: user_id,
-      });
-      setFollowers(r.data);
-      console.log(r.data);
-
-      const f = await axios.post(`${backendUrl}/follows/following`, {
-        user_id: user_id,
-      });
-      setFollowing(f.data);
-
-      const follower_id = Cookie.get("user_id");
-      const res = await axios.post(`${backendUrl}/follows/isFollowing`, {
-        user_id: user_id,
-        follower_id: follower_id,
-      });
-
-      setIsFollowing(res.data);
     }
     fetch();
   }, []);
@@ -207,23 +214,36 @@ const Profile = () => {
   };
 
   const handleBlockButtonClick = async () => {
-    // Toggle the block/unblock state
     setIsBlocked(!isBlocked);
-    
-    
-    
+    const blocked_id = profileDetails.user_id;
+    const user_id = Cookie.get("user_id");
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    await axios.post(`${backendUrl}/block/blockUser`, {
+      user_id: user_id,
+      blocked_id: blocked_id,
+    });
   };
+
   const { selectedTheme, setTheme, themeStyles } = useTheme();
   return (
     <div className="profile-page">
-      <header className="profile-header"  style={{background: themeStyles.primaryColor}}>  
+      <header
+        className="profile-header"
+        style={{ background: themeStyles.primaryColor }}
+      >
         <div className="profile-pic">
           {profileDetails.imageUrl && (
             <img src={profileDetails.imageUrl} alt="Profile" />
           )}
         </div>
         <div className="profile-info">
-          <h1 data-testid="accountName" style={{color: themeStyles.textColor}}>{profileDetails.username}</h1>
+          <h1
+            data-testid="accountName"
+            style={{ color: themeStyles.textColor }}
+          >
+            {profileDetails.username}
+          </h1>
           <h2 data-testid="accountEmail">{profileDetails.email}</h2>
           {profileDetails.country && (
             <div className="location">
@@ -238,10 +258,12 @@ const Profile = () => {
             </div>
           )}
           {profileDetails.user_id && (
-              <div className="button-group">
+            <div className="button-group">
               <button
-                className={`follow-button ${isFollowing ? "unfollow" : "follow"}`}
-                style={{background: themeStyles.navbarColor}}
+                className={`follow-button ${
+                  isFollowing ? "unfollow" : "follow"
+                }`}
+                style={{ background: themeStyles.navbarColor }}
                 onClick={handleFollowButtonClick}
               >
                 {isFollowing ? "Unfollow" : "Follow"}
@@ -253,13 +275,14 @@ const Profile = () => {
                 {isBlocked ? "Unblock" : "Block"}
               </button>
             </div>
-            
-            
           )}
         </div>
       </header>
 
-      <section className="saved-itineraries" style={{background: themeStyles.primaryColor}}>
+      <section
+        className="saved-itineraries"
+        style={{ background: themeStyles.primaryColor }}
+      >
         <div className="profile-stats">
           <div className="following" onClick={toggleFollowing}>
             <span>{following?.length}</span>
@@ -309,7 +332,11 @@ const Profile = () => {
                 </div>
               ))}
             </div>
-            <button className="close-button" onClick={toggleFollowers} style={{ backgroundColor: themeStyles.navbarColor}}>
+            <button
+              className="close-button"
+              onClick={toggleFollowers}
+              style={{ backgroundColor: themeStyles.navbarColor }}
+            >
               Close
             </button>
           </div>
@@ -332,7 +359,11 @@ const Profile = () => {
                 </div>
               ))}
             </div>
-            <button className="close-button" onClick={toggleFollowing} style={{ backgroundColor: themeStyles.navbarColor}}>
+            <button
+              className="close-button"
+              onClick={toggleFollowing}
+              style={{ backgroundColor: themeStyles.navbarColor }}
+            >
               Close
             </button>
           </div>
@@ -341,7 +372,10 @@ const Profile = () => {
 
       {/* Posts */}
 
-      <section className="posts py-6 px-4" style={{ width: "140%",background: themeStyles.primaryColor }}>
+      <section
+        className="posts py-6 px-4"
+        style={{ width: "140%", background: themeStyles.primaryColor }}
+      >
         <h3 className="text-xl font-bold mb-4">Travel Posts</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -447,7 +481,7 @@ const Profile = () => {
             <button
               onClick={handleCommentSubmit}
               className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
-              style={{ backgroundColor: themeStyles.navbarColor}}
+              style={{ backgroundColor: themeStyles.navbarColor }}
             >
               Submit
             </button>

@@ -275,7 +275,6 @@ const SettingsPage: React.FC = () => {
     setSharingMode(mode);
   };
 
-  //User Management
   const [showBlockedModal, setShowBlockedModal] = useState<boolean>(false);
   const [showActivityModal, setShowActivityModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
