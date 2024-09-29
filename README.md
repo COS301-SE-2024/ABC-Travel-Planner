@@ -87,7 +87,7 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=flask" alt="Flask Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">Flask was used to build the chatbot model</td>
+    <td style="text-align:left; vertical-align:middle;">Flask was used as the web application for the chatbot model</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=gcp" alt="Google Cloud Icon"></a></td>
@@ -107,11 +107,11 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=heroku" alt="Heroku Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">Heroku was used to deploy our frontend and backend solutions to a platform</td>
+    <td style="text-align:left; vertical-align:middle;">Heroku was used to deploy our chatbot, frontend and backend solutions to a platform</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=docker" alt="Docker Icon"></a></td>
-    <td style="text-align:left; vertical-align:middle;">Docker containers were set up and used to test and build the chatbot</td>
+    <td style="text-align:left; vertical-align:middle;">A docker container was set up and used to create a stable environment to build and deploy the chatbot</td>
   </tr>
   <tr>
     <td style="text-align:center; vertical-align:middle;"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python" alt="Python Icon"></a></td>
