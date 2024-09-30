@@ -18,11 +18,8 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
     <td><ul><li><a href="https://github.com/orgs/COS301-SE-2024/projects/103">Project Board</a></li></ul></td>
   </tr>
   <tr>
-    <th>Documentation</th>
+    <th>Videos</th>
     <td>
-     <ul>
-       <li><a href="https://drive.google.com/drive/folders/1lyyva4NtzyIOwxwUOKRMtfsFis6fee8h?usp=sharing">Google Drive link</a></li>
-     </ul>
      <ul>
        <li><a href="https://drive.google.com/file/d/1SR8Ux8d2_2mLT3v9ll6KLk3EU1nUdqMD/view?usp=drive_link">Demo 1 Video</a></li>
      </ul>
@@ -34,17 +31,37 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
      </ul>
     </td>
   </tr>
+  <tr>
+    <th>Documentation</th>
+    <td>
+     <ul>
+       <li><a href="https://drive.google.com/drive/folders/1lyyva4NtzyIOwxwUOKRMtfsFis6fee8h?usp=sharing">Google Drive link</a></li>
+       <li><a href="https://drive.google.com/file/d/1vYky3RjgYIeraEzf1o8sapqSiunCPcZB/view?usp=sharing">System Requirements Specification</a></li>
+       <li><a href="https://drive.google.com/file/d/1vuntinwK_hBOCsZMvu-F7OVk1FAVgHIU/view?usp=sharing">Architectural Specifications</a></li>
+       <li><a href="https://drive.google.com/file/d/1iBqYIPMALXIp_NXP1IhNPubIOj-OYHdY/view?usp=sharing">Coding Standards</a></li>
+       <li><a href="https://drive.google.com/file/d/1sNUHpTYb9F9NyEC_U_nNhw2CYakV9nh7/view?usp=sharing">Technical Install Manual</a></li>
+       <li><a href="https://drive.google.com/file/d/1Zt1ChBNI9lCNQLQxSBc-gyRJu9sp3KUt/view?usp=sharing">User Manual</a></li>
+       <li><a href="STILL NEEDS TO BE ADDED">Testing Policies</a></li>
+     </ul>
+    </td>
+  </tr>
 </table>
+
+## Deployed solution:
+Click <a href="https://abctravelplanner-8a6f6247b848.herokuapp.com" alt="Deployed Heroku App">here</a> to access the deployed app🚀
+
+## Meet the Team
+<img src="assets/Group.jpg" alt="picture" />
 
 ## Team Members and Roles
 
 | Name | Roles | Description |
 |:------:|:------:|---------------|
-| <img src="https://th.bing.com/th/id/OIP.6SuAxxZ7uetUPsmWppXHWAHaHa?pid=ImgDet&w=900&h=900&rs=1" alt="picture" width="200"/> <br> **Mishka Dukhanti** (u22617541) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/mishka-dukhanti-658674305)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/MishkaD)|Project Manager, Business Analyst and UI Designer & Engineer| I love a challenge and coding always brings one, Love working with my team. Having a work-hard and play-hard balance is important to me.|
-| <img src="https://th.bing.com/th/id/OIP.6SuAxxZ7uetUPsmWppXHWAHaHa?pid=ImgDet&w=900&h=900&rs=1" alt="picture" width="200"/> <br> **Aidan Govender** (u22520458) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/aidan-govender-95b927252)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/AidanG19)|Testing & Integration Engineer, Business Analyst, Architect| Hi, my name is Aidan Govender. I am always enthusiastic about expanding my knowledge in the field of information technology. I am well-versed in multiple programming languages and data structures. Technology has always fascinated me, and it motivates me to be an agent of change wherever I find myself in the technological space. |
-| <img src="https://th.bing.com/th/id/OIP.6SuAxxZ7uetUPsmWppXHWAHaHa?pid=ImgDet&w=900&h=900&rs=1" alt="picture" width="200"/> <br> **Victor Igbojinna** (u22492616) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](http://www.linkedin.com/in/victor-igbojinna-2a5b71194)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/Bigmanfish1)|Integration & DevOps Engineer, UI Engineer | I am a final year Computer Science student aspiring to be a Software engineer particularly focusing on backend development |
-| <img src="https://th.bing.com/th/id/OIP.6SuAxxZ7uetUPsmWppXHWAHaHa?pid=ImgDet&w=900&h=900&rs=1" alt="picture" width="200"/> <br> **Kabelo Motloung** (u22566954) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/kabelo-motloung-02b99320b/)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/KabeloMotloung)|Services & Intergration Engineer | 👋 Hello! I'm Kabelo, a final-year Computer Science student with a passion for software engineering. I love creating innovative solutions to real-world problems and constantly challenging myself to learn and grow in this ever-evolving field. |
-| <img src="https://th.bing.com/th/id/OIP.6SuAxxZ7uetUPsmWppXHWAHaHa?pid=ImgDet&w=900&h=900&rs=1" alt="picture" width="200"/> <br> **Calvyn Van Wyngaardt** (u22656342)<br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/calvyn-van-wyngaardt-266277231/)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/Calvyn-Van-Wyngaardt)|Integration Engineer, Data Engineer, Business Analyst|Being passionate about computers since a young age I've always been, and still am, keen to learn new things. I am by heart a very curious person, who likes to delve deeper into the inner workings of processes and systems. I enjoy tinkering, trying new things and spending time with people. |
+| <img src="assets/Mishka.jpg" alt="picture" width="200"/> <br> **Mishka Dukhanti** (u22617541) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/mishka-dukhanti-658674305)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/MishkaD)|Project Manager, Business Analyst and UI Designer & Engineer| I love a challenge and coding always brings one, Love working with my team. Having a work-hard and play-hard balance is important to me.|
+| <img src="assets/Aidan.jpg" alt="picture" width="200"/> <br> **Aidan Govender** (u22520458) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/aidan-govender-95b927252)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/AidanG19)|Testing & Integration Engineer, Business Analyst, Architect| Hi, my name is Aidan Govender. I am always enthusiastic about expanding my knowledge in the field of information technology. I am well-versed in multiple programming languages and data structures. Technology has always fascinated me, and it motivates me to be an agent of change wherever I find myself in the technological space. |
+| <img src="assets/Victor.jpg" alt="picture" width="200"/> <br> **Victor Igbojinna** (u22492616) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](http://www.linkedin.com/in/victor-igbojinna-2a5b71194)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/Bigmanfish1)|Integration & DevOps Engineer, UI Engineer | I am a final year Computer Science student aspiring to be a Software engineer particularly focusing on backend development |
+| <img src="assets/Kabelo.jpg" alt="picture" width="200"/> <br> **Kabelo Motloung** (u22566954) <br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/kabelo-motloung-02b99320b/)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/KabeloMotloung)|Services & Integration Engineer | 👋 Hello! I'm Kabelo, a final-year Computer Science student with a passion for software engineering. I love creating innovative solutions to real-world problems and constantly challenging myself to learn and grow in this ever-evolving field. |
+| <img src="assets/Calvyn.jpg" alt="picture" width="200"/> <br> **Calvyn Van Wyngaardt** (u22656342)<br> [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/calvyn-van-wyngaardt-266277231/)[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/Calvyn-Van-Wyngaardt)|Integration Engineer, Data Engineer, Business Analyst|Being passionate about computers since a young age I've always been, and still am, keen to learn new things. I am by heart a very curious person, who likes to delve deeper into the inner workings of processes and systems. I enjoy tinkering, trying new things and spending time with people. |
 
 # Software Technologies:
 <p align="center">
