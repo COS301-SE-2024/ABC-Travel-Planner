@@ -88,6 +88,6 @@ export async function getFavouriteCountries(user_id: any) {
       countries = doc.data().favouriteCountries;
     }
   });
-  console.log(countries);
+
   return countries;
 }

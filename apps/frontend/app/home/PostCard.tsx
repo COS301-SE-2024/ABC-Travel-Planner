@@ -91,7 +91,6 @@ const PostCard: React.FC<PostCardProps> = ({
   const { selectedTheme, themeStyles, setTheme } = useTheme();
   const curr_user = Cookie.get("user_id") ?? "";
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  console.log(backendUrl);
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: "",
@@ -176,7 +175,6 @@ const PostCard: React.FC<PostCardProps> = ({
       });
       const following = await isFollowingRes.text();
       if (following == "true") {
-        console.log("Currently following user, updating frontend");
         setIsFollowing("Following");
       }
     };
@@ -290,7 +288,6 @@ const PostCard: React.FC<PostCardProps> = ({
 
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
-      console.log(midData);
       JSON.parse(midData).map(
         (element: {
           comment: string;
@@ -333,17 +330,14 @@ const PostCard: React.FC<PostCardProps> = ({
         (item) => !blockedBy.some((user: any) => user.user_id === item.user_id)
       );
 
-      console.log("Received comments: " + JSON.stringify(filteredData2));
       setComments(filteredData2);
     }
   };
 
   const handleAddComment = async () => {
-    console.log("Adding comment...");
     if (newComment) {
       const temp = await getUser(curr_user);
       const u = JSON.parse(temp || "{}");
-      console.log(JSON.stringify(u));
 
       const dataToAdd = {
         comment: newComment.comment,
@@ -352,7 +346,6 @@ const PostCard: React.FC<PostCardProps> = ({
         username: u.username,
       };
 
-      console.log("Comment to add: " + JSON.stringify(newComment));
 
       const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
         method: "POST",
@@ -401,7 +394,6 @@ const PostCard: React.FC<PostCardProps> = ({
       (now.getTime() - postDate.getTime()) / 1000
     );
 
-    console.log("Time Difference (seconds):", diffInSeconds);
 
     if (diffInSeconds < 60) {
       return `${diffInSeconds} seconds ago`;

@@ -261,7 +261,6 @@ const FilterContainer = () => {
                                 <button className='w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700' style={{ background: themeStyles.navbarColor }}
                                     onClick={
                                         async (val) => {
-                                            console.log('Searching...')
                                             const adults = flights.adults;
                                             const destination = flights.end;
                                             const startingPoint = flights.start;
@@ -269,7 +268,6 @@ const FilterContainer = () => {
                                             
                                             const departureDate = `${selectedDate.getFullYear()}-${(selectedDate.getMonth()+1).toString().length === 1 ? '0' + (selectedDate.getMonth()+1).toString() : selectedDate.getMonth()+1}-${selectedDate.getDate()}`
                                             const travelClass = flights.class;
-                                            console.log(departureDate)
 
                                             handleFlightSearch(startingPoint, destination, adults, departureDate, travelClass)
                                         }

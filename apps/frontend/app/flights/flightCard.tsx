@@ -207,9 +207,6 @@ const FlightCard: React.FC<FlightCardProps> = ({
           image_url
         }
   
-        // console.log("Going to upload to db...")
-        // console.log(uploadDetails)
-  
         try {
           setIsUploading(true);
           await insertRecord(uploadDetails);

@@ -34,7 +34,6 @@ const Itinerary = () => {
   const handleCreateTrip = async (e: any) => {
     e.preventDefault();
     setTripGenerated(true);
-    console.log("Trip generated:", true);
 
     closeTripCreatorModal();
   };

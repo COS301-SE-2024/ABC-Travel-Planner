@@ -4,7 +4,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
-#from transformers import pipeline 
 import torch
 import os
 import logging

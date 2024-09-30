@@ -82,7 +82,6 @@ const Filter = () => {
           const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
             constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
             defaultImageUrl;
-          console.log('First Photo URL:', firstPhotoUrl);
 
           return {
             ...place,
@@ -93,7 +92,6 @@ const Filter = () => {
         }));
 
         setSearchResults(detailedPlaces);
-        console.log('Detailed Places:', detailedPlaces);
       } else {
         setSearchResults([]);
       }
@@ -132,7 +130,6 @@ const Filter = () => {
           const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
             constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
             defaultImageUrl;
-          console.log('First Photo URL:', firstPhotoUrl);
 
           return {
             ...place,
@@ -143,7 +140,6 @@ const Filter = () => {
         }));
 
         setSearchResults(detailedPlaces);
-        console.log('Detailed Places:', detailedPlaces);
       } else {
         setSearchResults([]);
       }
@@ -182,7 +178,6 @@ const Filter = () => {
           const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
             constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
             defaultImageUrl;
-          console.log('First Photo URL:', firstPhotoUrl);
 
           return {
             ...place,
@@ -193,7 +188,6 @@ const Filter = () => {
         }));
 
         setSearchResults(detailedPlaces);
-        console.log('Detailed Places:', detailedPlaces);
       } else {
         setSearchResults([]);
       }
@@ -232,7 +226,6 @@ const Filter = () => {
           const firstPhotoUrl = detailedPlace.photos && detailedPlace.photos.length > 0 ?
             constructImageUrl(detailedPlace.photos[0].name, apiKey as string) :
             defaultImageUrl;
-          console.log('First Photo URL:', firstPhotoUrl);
 
           return {
             ...place,
@@ -243,7 +236,6 @@ const Filter = () => {
         }));
 
         setSearchResults(detailedPlaces);
-        console.log('Detailed Places:', detailedPlaces);
       } else {
         setSearchResults([]);
       }
@@ -262,7 +254,6 @@ const Filter = () => {
         const data = await response.json();
         if (data.length) {
           setSearchResults(data);
-          console.log(JSON.stringify(data));
         } else {
           setSearchResults([]);
         }
