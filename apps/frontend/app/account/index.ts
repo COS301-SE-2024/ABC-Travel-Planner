@@ -80,6 +80,5 @@ export async function getSharedItineraries() {
     .from("Itinerary")
     .select()
     .eq("shared", true);
-  console.log(sharedItineraries);
   return sharedItineraries;
 }

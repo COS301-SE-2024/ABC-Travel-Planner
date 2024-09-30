@@ -105,7 +105,6 @@ const TripComponent: React.FC = () => {
           if (data.places) {
             setSearchResults(data.places);
             localStorage.setItem("searchResults", JSON.stringify(data.places));
-            console.log("Fetched places:", JSON.stringify(data.places));
           } else {
             setSearchResults([]);
           }
@@ -229,7 +228,6 @@ const TripComponent: React.FC = () => {
       );
     }
 
-    console.log(JSON.stringify(searchResults));
   };
 
 

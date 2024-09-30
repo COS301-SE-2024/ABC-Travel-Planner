@@ -50,7 +50,6 @@ const SearchContainer = () => {
             const data = await response.json();
             if (data.length) {
                 setSearchResults(data);
-                //console.log(JSON.stringify(data));
             } else {
                 setSearchResults([]);
             }
