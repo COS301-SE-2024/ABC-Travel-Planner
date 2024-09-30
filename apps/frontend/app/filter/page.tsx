@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Loader } from "@googlemaps/js-api-loader";
 import SearchCard from '../search/searchCard';
 //import { handleSearchAirports } from '../search/index';
+import { useTheme } from '../context/ThemeContext';
 
 
 const Filter = () => {
@@ -188,6 +189,7 @@ const Filter = () => {
         }));
 
         setSearchResults(detailedPlaces);
+
       } else {
         setSearchResults([]);
       }
@@ -272,9 +274,10 @@ const Filter = () => {
       generalSearch(searchTerm, topic);
     }
   }, [searchTerm, topic]);
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
 
   return (
-    <div className='ml-20 mr-20 mt-16'>
+    <div className='ml-20 mr-20 mt-10 ' style={{ minHeight: '100vh'}}>
       <h1 className='text-5xl font-bold text-gray-800 text-center mb-10'>Select a Destination</h1>
       {loading && (
         <div className="flex justify-center items-center h-20">
@@ -288,12 +291,10 @@ const Filter = () => {
         </div>
       )}
       {searchResults.length > 0 && (
-        <div className="flex flex-col gap-4 rounded-lg pt-10 pb-10" style={{ backgroundColor: 'rgba(173, 216, 230, 0.5)' }}>
-          <div className="flex flex-col items-center gap-4 rounded-lg pt-10">
+        <div className="flex flex-col items-center rounded-lg pt-10" style={{ background: themeStyles.primaryColor}}>
             {searchResults.map((result, index) => (
               <FilterCard key={index} place={result} />
             ))}
-          </div>
         </div>
       )}
 

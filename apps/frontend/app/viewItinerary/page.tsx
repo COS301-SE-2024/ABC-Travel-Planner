@@ -116,13 +116,24 @@ const ViewItinerary = ({
  
   const { selectedTheme, setTheme, themeStyles } = useTheme();
   return (
-    <div>
-      <div className="pl-8 pt-6" >
-      <button  style={{ backgroundColor: themeStyles.navbarColor, padding: '10px 20px', borderRadius: '5px', display: 'inline-block'}}>
-      <a href= {`../account`} >{"Back"}</a>
-      <FaArrowLeft style={{ marginRight: '8px' }} />
-    </button>
-      </div>
+    <div style={{ minHeight: '100vh'}}>
+        <div className="pl-8 pt-6">
+          <button 
+            style={{ 
+              backgroundColor: themeStyles.navbarColor, 
+              padding: '10px 20px', 
+              borderRadius: '5px', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              color: "white" 
+            }}>
+            <a href="../account" style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
+              <FaArrowLeft style={{ marginRight: '8px' }} />
+              {"Back"}
+            </a>
+          </button>
+        </div>
+
       <div className="view-itinerary-page"   style={{color: themeStyles.textColor}}>
         {images.length > 0 ? (
           <div className="w-full max-w-2xl mx-auto bg-blue-100 shadow-lg rounded-lg overflow-hidden"  style={{ backgroundColor: themeStyles.primaryColor}}>

@@ -1,5 +1,6 @@
 "use client";
 
+import PopupMessage from '../utils/PopupMessage';
 import {
   FaMapMarkerAlt,
   FaRegCalendarAlt,
@@ -36,6 +37,28 @@ import Link from "next/link";
 import { FaPerson } from "react-icons/fa6";
 import { useTheme } from "../context/ThemeContext";
 
+const overlayStyle: React.CSSProperties = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 1000,
+};
+
+const spinnerStyle: React.CSSProperties = {
+  width: '50px',
+  height: '50px',
+  border: '8px solid white',
+  borderTop: '8px solid blue',
+  borderRadius: '50%',
+  animation: 'spin 1s linear infinite',
+};
+
 const Account = () => {
   const [profileDetails, setProfileDetails] = useState<{
     username: string;
@@ -62,6 +85,9 @@ const Account = () => {
     timestamp: string;
   }
   const { selectedTheme, setTheme, themeStyles } = useTheme();
+  const [isUploading, setIsUploading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [trigger, setTrigger] = useState(false);
   const [originalProfileDetails, setOriginalProfileDetails] =
     useState(profileDetails);
   const [file, setFile] = useState<any>(null);
@@ -334,6 +360,7 @@ const Account = () => {
     }
 
     if (newPostImage && newPostCaption) {
+      setIsUploading(true);
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const result = await axios.post(`${backendUrl}/posts/create`, {
         user_id: profileDetails.user_id,
@@ -348,8 +375,13 @@ const Account = () => {
         postId: result.data,
       });
       setPosts([newPost.data, ...posts]);
+
+      
       setNewPostImage("");
       setNewPostCaption("");
+      setTimeout(() => {
+        setIsUploading(false)
+      }, 4000)
       setShowPostModal(false);
     }
   };
@@ -436,6 +468,15 @@ const Account = () => {
   };
 
   return (
+    <>
+    <div>
+        {isUploading && (
+          <div style={overlayStyle}>
+            <div style={spinnerStyle}></div>
+          </div>
+        )}
+      </div>
+
     <div data-testid="accountContainer" className="profile-page">
       <header
         className="profile-header"
@@ -732,7 +773,7 @@ const Account = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <p className="text-md mb-2">{post.caption}</p>
+                <p className="text-md mb-2 line-clamp-1">{post.caption}</p>
                 <div className="flex justify-between items-center">
                   <button
                     onClick={(e) => {
@@ -839,7 +880,14 @@ const Account = () => {
               </button>
               {/* Delete Button */}
               <button
-                onClick={() => handleDeletePost(posts[enlargedPostIndex].id)}
+                onClick={() => {
+                  handleDeletePost(posts[enlargedPostIndex].id)
+                  setMessage(`Post deleted!`);
+                  setTrigger(true);
+                  setTimeout(() => {
+                      setTrigger(false);
+                  }, 1500);
+                }}
                 className="flex items-center text-red-600"
               >
                 <FaTrash className="mr-1 text-2xl" />
@@ -870,7 +918,9 @@ const Account = () => {
           </div>
         </div>
       )}
+      <PopupMessage msg={message} trigger={trigger}/>
     </div>
+    </>
   );
 };
 

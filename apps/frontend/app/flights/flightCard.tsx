@@ -206,6 +206,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
           destination: address,
           image_url
         }
+
   
         try {
           setIsUploading(true);

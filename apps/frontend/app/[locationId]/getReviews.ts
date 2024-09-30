@@ -23,6 +23,7 @@ export const getReviews = async (location_id: string) => {
         return [];
     }
 
+
     return mockReviews;
 };
 

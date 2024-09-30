@@ -230,7 +230,7 @@ const FilterContainer = () => {
                             <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', paddingTop: '5px' }}>
                                 <label style={{ color: themeStyles.textColor }}>
                                     Number of adults:
-                                    <Input placeholder="1" className='w-full rounded-sm' onChange={(item) => {
+                                    <Input placeholder="Input number of adults" className='w-full rounded-sm' onChange={(item) => {
                                         const options = {
                                             start: flights.start,
                                             end: flights.end,
@@ -266,7 +266,7 @@ const FilterContainer = () => {
                                             const startingPoint = flights.start;
                                             const selectedDate = new Date()
                                             
-                                            const departureDate = `${selectedDate.getFullYear()}-${(selectedDate.getMonth()+1).toString().length === 1 ? '0' + (selectedDate.getMonth()+1).toString() : selectedDate.getMonth()+1}-${selectedDate.getDate()}`
+                                            const departureDate = `${selectedDate.getFullYear()}-${(selectedDate.getMonth()+1).toString().length === 1 ? '0' + (selectedDate.getMonth()+1).toString() : selectedDate.getMonth()+1}-${selectedDate.getDate().toString().length === 1 ? '0' + (selectedDate.getDate().toString()) : selectedDate.getDate()}`
                                             const travelClass = flights.class;
 
                                             handleFlightSearch(startingPoint, destination, adults, departureDate, travelClass)

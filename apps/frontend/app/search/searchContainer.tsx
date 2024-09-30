@@ -63,6 +63,12 @@ const SearchContainer = () => {
 
     };
 
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+      };
+
     const getPlaceholderText = () => {
         switch (selectedTopic) {
             case 'flights':
@@ -138,6 +144,7 @@ const SearchContainer = () => {
                         data-testid="searchInput"
                         type="text"
                         placeholder={getPlaceholderText()}
+                        onKeyPress={handleKeyPress}
                         className="search-input"
                         ref={searchInputRef}
                         value={searchTerm}
