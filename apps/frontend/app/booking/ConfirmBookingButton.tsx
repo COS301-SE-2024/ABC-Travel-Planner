@@ -23,7 +23,6 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
 
     items.forEach((item) => {
       item.date = [createNewDates(item.date)];
-      console.log("NEW DATE: " + item.date[0])
     })
 
     const jsonBody = {
@@ -37,7 +36,6 @@ const ConfirmBookingButton: React.FC<ConfirmBookingButtonProps> = ({ items }) =>
     )
 
     const data = res.data;
-    console.log(data)
   }
 
   const handleConfirmBooking = () => {

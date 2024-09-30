@@ -22,7 +22,7 @@ export const getReviews = async (location_id: string) => {
         console.error('Location ID is undefined');
         return [];
     }
-    console.log(`(${typeof location_id}) Received id: ${location_id}`);
+
 
     return mockReviews;
 };
@@ -37,8 +37,6 @@ export const addReview = async (comment: string, rating: number): Promise<void> 
         title: 'New Review', // Default title or form input
     };
     mockReviews.push(newReview);
-    console.log('New review added:', newReview);
-    console.log('Updated mockReviews:', mockReviews);
 }
 
 export default getReviews;

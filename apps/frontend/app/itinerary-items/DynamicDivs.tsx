@@ -79,7 +79,6 @@ interface ItemData {
             }
 
             const itinerary_location = location;
-            console.log(itinerary_location)
         } else {
             throw new Error('Location for itinerary not included');
         }
@@ -90,7 +89,6 @@ interface ItemData {
                 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
                 const response = await fetch(`${backendUrl}/itinerary-items/${id}/${user_id}`);
                 const data: ItemData[] = await response.json();
-                console.log("Response from server: " + JSON.stringify(data))
                 
                 
                 const initialDivs = data.map((dataItem, index) => ({
@@ -126,9 +124,9 @@ interface ItemData {
                 setDivs(initialDivs);
                 setFetchedData(data);
                 
-                divs.map(async (divItem) => {
-                    console.log(divItem?.data?.date);
-                })
+                // divs.map(async (divItem) => {
+                //     console.log(divItem?.data?.date);
+                // })
                 
             } catch (error) {
                 console.error("Error fetching items:", error);
@@ -146,7 +144,6 @@ interface ItemData {
     const handleRemoveDiv = async (id: number) => {
         if (canRemove) {
             setCanRemove(false);
-            console.log(`Removing DIV ${id} from: ${divs[id]?.data?.itinerary_id}`)
             const image_url = divs[id].data.image_url
             const itinerary_id = divs[id].data.itinerary_id
             const timestamp = divs[id].data.timestamp

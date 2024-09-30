@@ -240,7 +240,6 @@ const SettingsPage: React.FC = () => {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getLikesCount`,
       { userId }
     );
-    //console.log(response);
     if (!response.data) {
       throw new Error("Failed to fetch likes count");
     }
@@ -252,8 +251,6 @@ const SettingsPage: React.FC = () => {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getCommentsCount`,
       { userId }
     );
-    console.log("Data is :" + response.data);
-    console.log(response);
     if (!response.data) {
       throw new Error("Failed to fetch comments count");
     }
@@ -265,8 +262,6 @@ const SettingsPage: React.FC = () => {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getPostsCount`,
       { userId }
     );
-    console.log("Data is :" + response.data);
-    console.log(response);
     if (!response.data) {
       throw new Error("Failed to fetch posts count");
     }

@@ -153,13 +153,11 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
 
   const uploadItem = async () => {
     const destination = place;
-    console.log("TYPE: " + typeof destination);
 
     if (!uploaded && destination) {
       const id = JSON.parse(localStorage.getItem('id') as string).id;
       const location = JSON.parse(localStorage.getItem('location') as string).location;
       const objectToUpload = place;
-      console.log("object: " + JSON.stringify(objectToUpload));
 
       const userId = Cookie.get('user_id') ?? 'User1';
       const itemTitle = objectToUpload.displayName ?? 'NONAME';
@@ -185,8 +183,6 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           image_url
         }
   
-        console.log("Going to upload to db...")
-        console.log(uploadDetails)
   
         try {
           setIsUploading(true);
