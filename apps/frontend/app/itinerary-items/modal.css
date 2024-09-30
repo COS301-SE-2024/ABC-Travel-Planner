@@ -18,6 +18,8 @@
 }
 
 .iteneraryInfo {
+  position: absolute;
+  top: 5%;
   justify-content: center;
   margin-top: 40px;
   align-items: center;
