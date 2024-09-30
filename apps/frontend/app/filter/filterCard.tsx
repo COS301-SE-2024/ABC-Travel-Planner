@@ -185,7 +185,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           image_url
         }
   
-  
+
         try {
           setIsUploading(true);
           await insertRecord(uploadDetails);

@@ -93,6 +93,7 @@ const PostCard: React.FC<PostCardProps> = ({
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [profilePicUrl, setProfilePicUrl] = useState("");
 
+
   const [newComment, setNewComment] = useState<Comment>({
     comment: "",
     id: "",
@@ -351,6 +352,7 @@ const PostCard: React.FC<PostCardProps> = ({
         username: u.username,
       };
 
+
       const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
         method: "POST",
         headers: {
@@ -397,6 +399,7 @@ const PostCard: React.FC<PostCardProps> = ({
     const diffInSeconds = Math.floor(
       (now.getTime() - postDate.getTime()) / 1000
     );
+
 
     if (diffInSeconds < 60) {
       return `${diffInSeconds} seconds ago`;
