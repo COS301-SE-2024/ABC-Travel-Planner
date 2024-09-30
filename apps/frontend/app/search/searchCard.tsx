@@ -120,7 +120,6 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         const user_id = Cookies.get("user_id");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const temp = await axios.post(`${backendUrl}/itinerary/getItineraries`, { user_id: user_id });
-        console.log(JSON.stringify(temp.data));
         setItineraries(temp.data);
         setIsModalOpen(true);
     };
@@ -135,7 +134,6 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         setIsModalOpen(false);
         const user_id = Cookies.get("user_id");
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        console.log(selectedItinerary);
         //const parsedItem = JSON.parse(selectedItinerary);
         let parsedItem;
         if (selectedItinerary) {
@@ -145,10 +143,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
             console.warn("selectedItinerary is not set");
             parsedItem = {}; // or provide default values
         }
-        console.log(JSON.stringify({
-            user_id: user_id, item_name: place.displayName, item_type: place.type,
-            location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, dates: selectedDates
-        }));
+       
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`, {
             user_id: user_id, item_name: place.displayName, item_type: place.type,
             location: parsedItem.location, itinerary_id: parsedItem.id, destination: place.formattedAddress, image_url: place.firstPhotoUrl, price: place.price, date: selectedDates
@@ -162,7 +157,6 @@ const SearchCard: React.FC<SearchCardProps> = ({ place }) => {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const image = await getItineraryImage(newItinerary.location);
         const newI = await axios.post(`${backendUrl}/itinerary/create`, { name: newItinerary.tripName, location: newItinerary.location, user_id: user_id, imageUrl: image });
-        console.log(JSON.stringify(newI));
         //Now add the item
         const newItemData = JSON.parse(newI.config.data);
         const newItem = await axios.post(`${backendUrl}/itinerary-items/add`, {

@@ -24,11 +24,9 @@ const SearchModal: React.FC<SearchModalProp> = ({ handleAddDiv }) => {
       if (isOpen) {
         handleAddDiv();
         setIsOpen(false)
-        console.log("Open: " + isOpen)
       }
       else  {
         setIsOpen(true) 
-        console.log("Open: " + isOpen)
       }
   }
   return (

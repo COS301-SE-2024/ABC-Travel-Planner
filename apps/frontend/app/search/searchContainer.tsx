@@ -50,7 +50,6 @@ const SearchContainer = () => {
             const data = await response.json();
             if (data.length) {
                 setSearchResults(data);
-                //console.log(JSON.stringify(data));
             } else {
                 setSearchResults([]);
             }
@@ -63,6 +62,12 @@ const SearchContainer = () => {
         }
 
     };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+      };
 
     const getPlaceholderText = () => {
         switch (selectedTopic) {
@@ -139,6 +144,7 @@ const SearchContainer = () => {
                         data-testid="searchInput"
                         type="text"
                         placeholder={getPlaceholderText()}
+                        onKeyPress={handleKeyPress}
                         className="search-input"
                         ref={searchInputRef}
                         value={searchTerm}
