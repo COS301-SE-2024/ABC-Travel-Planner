@@ -652,11 +652,13 @@ const Account = () => {
             <div className="users-list">
               {followers.map((follower: any, index: any) => (
                 <div key={index} className="user-item">
-                  <img
-                    src={follower.imageUrl}
-                    alt={follower.username}
-                    className="user-pic"
-                  />
+                  <Link href={`/profile/${follower.user_id}`} passHref>
+                    <img
+                      src={follower.imageUrl}
+                      alt={follower.username}
+                      className="user-pic"
+                    />
+                  </Link>
                   <p>{follower.username}</p>
                 </div>
               ))}
@@ -679,11 +681,13 @@ const Account = () => {
             <div className="users-list">
               {following.map((user: any, index: any) => (
                 <div key={index} className="user-item">
-                  <img
-                    src={user.imageUrl}
-                    alt={user.username}
-                    className="user-pic"
-                  />
+                  <Link href={`/profile/${following.user_id}`} passHref>
+                    <img
+                      src={user.imageUrl}
+                      alt={user.username}
+                      className="user-pic"
+                    />
+                  </Link>
                   <p>{user.username}</p>
                 </div>
               ))}
