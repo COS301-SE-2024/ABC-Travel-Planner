@@ -316,7 +316,7 @@ const PostCard: React.FC<PostCardProps> = ({
       const r = await axios.post(`${backendUrl}/block/blockedUsers`, {
         user_id: user_id,
       });
-      
+
       const blockedUsers = r.data;
 
       const r2 = await axios.post(`${backendUrl}/block/blockedBy`, {
@@ -598,7 +598,7 @@ const PostCard: React.FC<PostCardProps> = ({
                   }}
                 >
                   <a
-                    href={`/user/${comment.user_id}`}
+                    href={`/profile/${comment.user_id}`}
                     className="font-bold text-black hover:underline"
                     style={{ color: themeStyles.textColor }}
                   >
