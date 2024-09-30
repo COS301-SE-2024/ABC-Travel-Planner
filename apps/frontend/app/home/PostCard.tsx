@@ -91,6 +91,7 @@ const PostCard: React.FC<PostCardProps> = ({
   const { selectedTheme, themeStyles, setTheme } = useTheme();
   const curr_user = Cookie.get("user_id") ?? "";
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const [profilePicUrl, setProfilePicUrl] = useState("");
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: "",
@@ -106,6 +107,9 @@ const PostCard: React.FC<PostCardProps> = ({
       try {
         const temp = await getUser(curr_user);
         const u = JSON.parse(temp || "{}");
+        const t = await getUser(user_id);
+        const u2 = JSON.parse(t || "{}");
+        setProfilePicUrl(u2.imageUrl);
         setNewComment({
           comment: "",
           id: "",
@@ -114,6 +118,7 @@ const PostCard: React.FC<PostCardProps> = ({
           timestamp: 0,
           username: u.username,
         });
+
         const isLikedRes = await fetch(`${backendUrl}/likes/userLikesPost`, {
           method: "POST",
           headers: {
@@ -498,7 +503,7 @@ const PostCard: React.FC<PostCardProps> = ({
           {/* Displaying the post image */}
           {image_url && (
             <img
-              src={`https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/Profiles%2F${user_id}.jpg?alt=media&token=cb1b06de-89b8-4918-8625-46fd742454e9`}
+              src={profilePicUrl}
               alt="Profile"
               className="profile-image w-12 h-12 rounded-full object-cover"
             />
