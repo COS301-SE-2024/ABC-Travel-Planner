@@ -610,7 +610,7 @@ const PostCard: React.FC<PostCardProps> = ({
                   }}
                 >
                   <a
-                    href={`/user/${comment.user_id}`}
+                    href={`/profile/${comment.user_id}`}
                     className="font-bold text-black hover:underline"
                     style={{ color: themeStyles.textColor }}
                   >
