@@ -335,7 +335,6 @@ const PostCard: React.FC<PostCardProps> = ({
   };
 
   const handleAddComment = async () => {
-    console.log("Adding comment...");
     if (newComment) {
       const temp = await getUser(curr_user);
       const u = JSON.parse(temp || "{}");
@@ -631,7 +630,7 @@ const PostCard: React.FC<PostCardProps> = ({
                 />
               <button
                 onClick={() => {
-                  if (newComment.comment !== '' || newComment.comment.replace(/\s/g, '').length !== 0) {
+                  if (newComment.comment.trim() !== '') {
                     handleAddComment();
                   }
                 }}
