@@ -313,7 +313,7 @@ const PostCard: React.FC<PostCardProps> = ({
       const r = await axios.post(`${backendUrl}/block/blockedUsers`, {
         user_id: user_id,
       });
-      
+
       const blockedUsers = r.data;
 
       const r2 = await axios.post(`${backendUrl}/block/blockedBy`, {
@@ -345,7 +345,6 @@ const PostCard: React.FC<PostCardProps> = ({
         post_id: newComment.post_id,
         username: u.username,
       };
-
 
       const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
         method: "POST",
@@ -545,26 +544,23 @@ const PostCard: React.FC<PostCardProps> = ({
           />
         )}
 
-          {/* Modal for enlarged image */}
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <div className="relative max-w-screen-sm mx-auto bg-white rounded-lg shadow-lg p-4">
-              {/* Close cross */}
-              <span
-                className="absolute top-[-15px] right-2 text-4xl text-gray-600 hover:text-gray-900 cursor-pointer"
-                onClick={() => setIsModalOpen(false)}
-              >
-                &times;
-              </span>
-              <img
-                src={image_url}
-                alt="Enlarged Post Image"
-                className="max-w-full max-h-[80vh] rounded-lg"
-              />
-            </div>
-          </Modal>
-
-
-
+        {/* Modal for enlarged image */}
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <div className="relative max-w-screen-sm mx-auto bg-white rounded-lg shadow-lg p-4">
+            {/* Close cross */}
+            <span
+              className="absolute top-[-15px] right-2 text-4xl text-gray-600 hover:text-gray-900 cursor-pointer"
+              onClick={() => setIsModalOpen(false)}
+            >
+              &times;
+            </span>
+            <img
+              src={image_url}
+              alt="Enlarged Post Image"
+              className="max-w-full max-h-[80vh] rounded-lg"
+            />
+          </div>
+        </Modal>
 
         {/* Like and comment buttons */}
         <div className="flex items-center space-x-4">
@@ -600,13 +596,23 @@ const PostCard: React.FC<PostCardProps> = ({
                     background: themeStyles.background,
                   }}
                 >
-                  <a
-                    href={`/profile/${comment.user_id}`}
-                    className="font-bold text-black hover:underline"
-                    style={{ color: themeStyles.textColor }}
-                  >
-                    @{comment.username}
-                  </a>
+                  {curr_user !== comment.user_id ? (
+                    <a
+                      href={`/profile/${comment.user_id}`}
+                      className="font-bold text-black hover:underline"
+                      style={{ color: themeStyles.textColor }}
+                    >
+                      @{comment.username}
+                    </a>
+                  ) : (
+                    <a
+                      href={`/account`}
+                      className="font-bold text-black hover:underline"
+                      style={{ color: themeStyles.textColor }}
+                    >
+                      @{comment.username}
+                    </a>
+                  )}
                   : {comment.comment}
                 </div>
               ))}
@@ -615,22 +621,20 @@ const PostCard: React.FC<PostCardProps> = ({
               <input
                 type="text"
                 value={newComment.comment}
-                onChange={(e) =>
-                  {
-                    setNewComment({
-                      post_id,
-                      user_id: Cookie.get("user_id") || "",
-                      comment: e.target.value,
-                      username: newComment.username,
-                    });
-                  }
-                }
+                onChange={(e) => {
+                  setNewComment({
+                    post_id,
+                    user_id: Cookie.get("user_id") || "",
+                    comment: e.target.value,
+                    username: newComment.username,
+                  });
+                }}
                 placeholder="Add a comment..."
                 className="flex-grow p-2 border rounded-md"
-                />
+              />
               <button
                 onClick={() => {
-                  if (newComment.comment.trim() !== '') {
+                  if (newComment.comment.trim() !== "") {
                     handleAddComment();
                   }
                 }}
