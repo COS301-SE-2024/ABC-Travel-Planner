@@ -31,8 +31,10 @@ export const getPricePlaceholder = (type: string) => {
       return 'per ticket';
     case 'Car Rentals':
       return 'per day';
-    case 'Car Rentals':
+    case 'Airport Taxis':
       return 'per ride';
+    default:
+      return 'Price not available';
   }
 };
 
@@ -48,7 +50,7 @@ export const generatePrice = (id: string, type: string, country: string) => {
     case 'Car Rentals':
       basePrice = 70;
       break;
-    case 'Car Rentals':
+    case 'Airport Taxis':
       basePrice = 40;
       break;
     default:

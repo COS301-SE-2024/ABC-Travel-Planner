@@ -10,6 +10,7 @@ import { insertRecord } from '@/app/utils/functions/insertRecord';
 import Cookie from 'js-cookie';
 import nock from 'nock';
 // import getDate from '../app/utils/functions/getDate'
+import { useTheme } from '../app/context/ThemeContext';
 
 beforeAll(() => {
   jest.useFakeTimers('modern');
@@ -19,6 +20,10 @@ beforeAll(() => {
 afterAll(() => {
   jest.useRealTimers();
 });
+
+jest.mock('../app/context/ThemeContext', () => ({
+  useTheme: jest.fn(),
+}));
 
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
@@ -106,7 +111,7 @@ const place = {
     // other photos...
   ],
   firstPhotoUrl: 'https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1-1500x1000.jpg',
-  type: "attractions"
+  type: "Attractions"
 };
 
 describe('FilterCard Component', () => {
@@ -122,6 +127,14 @@ describe('FilterCard Component', () => {
       push: routerPushMock,
     });
 
+    (useTheme as jest.Mock).mockReturnValue({
+      selectedTheme: 'beach',
+      themeStyles: {
+        background: '#ffffff',
+        textColor: '#000000',
+      },
+      setTheme: jest.fn(),
+    });
 
     global.localStorage.setItem('id', JSON.stringify({ id: 'mockId' }));
     global.localStorage.setItem('location', JSON.stringify({ location: 'mockLocation' }));
@@ -220,7 +233,7 @@ describe('FilterCard Component', () => {
     render(<FilterCard place={place} />);
 
     const uploadButton = screen.getByText(place.displayName); // Adjust the button selector as per your component
-    
+
     const selectButton = screen.getByText(/Select Dates/i);
     fireEvent.click(selectButton);
 
@@ -235,7 +248,7 @@ describe('FilterCard Component', () => {
     const dateToSelect = screen.getByLabelText(/Choose Wednesday, October 30th, 2024/i);
     expect(dateToSelect).toBeInTheDocument();
     fireEvent.click(dateToSelect);
-    
+
     // Close the DatePicker
     const doneButton = screen.getByText(/Done/i);
     fireEvent.click(doneButton);
@@ -249,12 +262,12 @@ describe('FilterCard Component', () => {
     await waitFor(() => {
       const triggerState = screen.getByTestId('trigger-state');
       expect(triggerState.textContent).toBe('false');
-    }, {timeout: 100})
+    }, { timeout: 100 })
 
     await waitFor(() => {
       const triggerState = screen.getByTestId('trigger-state');
       expect(triggerState.textContent).toBe('false')
-    }, { timeout: 2500})
+    }, { timeout: 2500 })
 
     await waitFor(() => expect(insertRecord).toHaveBeenCalledWith({
       user_id: 'mockUserId',
@@ -287,7 +300,7 @@ describe('FilterCard Component', () => {
     );
   });
 
-  it('should check trigger value for dates', async() => {
+  it('should check trigger value for dates', async () => {
     (insertRecord as jest.Mock).mockResolvedValue(200);
 
     render(<FilterCard place={place} />);
@@ -299,12 +312,12 @@ describe('FilterCard Component', () => {
     await waitFor(() => {
       const triggerState = screen.getByTestId('trigger-state');
       expect(triggerState.textContent).toBe('true');
-    }, {timeout: 100})
+    }, { timeout: 100 })
 
     await waitFor(() => {
       const triggerState = screen.getByTestId('trigger-state');
       expect(triggerState.textContent).toBe('false')
-    }, { timeout: 2500})
+    }, { timeout: 2500 })
   });
 
 });
@@ -328,19 +341,19 @@ describe('getRatingColor', () => {
 
 describe('getPricePlaceholder', () => {
   it('returns correct placeholder for stays', () => {
-    expect(getPricePlaceholder('stays')).toBe('per night');
+    expect(getPricePlaceholder('Hotels')).toBe('per night');
   });
 
   it('returns correct placeholder for attractions', () => {
-    expect(getPricePlaceholder('attractions')).toBe('per ticket');
+    expect(getPricePlaceholder('Attractions')).toBe('per ticket');
   });
 
   it('returns correct placeholder for carRental', () => {
-    expect(getPricePlaceholder('carRental')).toBe('per day');
+    expect(getPricePlaceholder('Car Rentals')).toBe('per day');
   });
 
   it('returns correct placeholder for airportTaxis', () => {
-    expect(getPricePlaceholder('airportTaxis')).toBe('per ride');
+    expect(getPricePlaceholder('Airport Taxis')).toBe('per ride');
   });
 
   it('returns default placeholder for unknown type', () => {
@@ -350,22 +363,22 @@ describe('getPricePlaceholder', () => {
 
 describe('generatePrice', () => {
   it('calculates price for stays in Africa', () => {
-    const price = generatePrice('abc', 'stays', 'Africa');
+    const price = generatePrice('abc', 'Hotels', 'Africa');
     expect(price).toBeCloseTo(1971, -2);
   });
 
   it('calculates price for attractions in USA', () => {
-    const price = generatePrice('def', 'attractions', 'USA');
+    const price = generatePrice('def', 'Attractions', 'USA');
     expect(price).toBeCloseTo(1083, -2);
   });
 
   it('calculates price for car rental in UK', () => {
-    const price = generatePrice('ghi', 'carRental', 'UK');
+    const price = generatePrice('ghi', 'Car Rentals', 'UK');
     expect(price).toBeCloseTo(1658, -2);
   });
 
   it('calculates price for airport taxis in unknown country', () => {
-    const price = generatePrice('jkl', 'airportTaxis', 'Unknown');
+    const price = generatePrice('jkl', 'Airport Taxis', 'Unknown');
     expect(price).toBeCloseTo(809, -2);
   });
 
