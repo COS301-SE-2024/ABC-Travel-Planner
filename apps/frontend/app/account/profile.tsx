@@ -733,7 +733,7 @@ const Account = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <p className="text-md mb-2">{post.caption}</p>
+                <p className="text-md mb-2 line-clamp-1">{post.caption}</p>
                 <div className="flex justify-between items-center">
                   <button
                     onClick={(e) => {
