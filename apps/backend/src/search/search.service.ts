@@ -265,7 +265,8 @@ export class SearchService {
             const name = data.name.toLowerCase();
             const username = data.username.toLowerCase();
             const blocked = await this.blockService.isBlocked(currUser, data.user_id);
-            if ((name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) &&  !blocked) {
+            const youBlocked = await this.blockService.isBlocked(data.user_id, currUser);
+            if ((name.includes(lowerCaseUser) || username.includes(lowerCaseUser)) &&  !blocked && !youBlocked) {
                 return {
                     name: data.name,
                     username: data.username,
