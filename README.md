@@ -47,6 +47,9 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
   </tr>
 </table>
 
+## Deployed solution:
+Click <a href="https://abctravelplanner-8a6f6247b848.herokuapp.com" alt="Deployed Heroku App">here</a> to access the deployed app🚀
+
 ## Meet the Team
 <img src="assets/Group.jpg" alt="picture" />
 
