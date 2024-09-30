@@ -42,8 +42,6 @@ export const getPricePlaceholder = (type: string) => {
             return 'per day';
         case 'airportTaxis':
             return 'per ride';
-        default:
-            return 'Price not available';
     }
 };
 
