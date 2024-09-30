@@ -41,7 +41,7 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
        <li><a href="https://drive.google.com/file/d/1iBqYIPMALXIp_NXP1IhNPubIOj-OYHdY/view?usp=sharing">Coding Standards</a></li>
        <li><a href="https://drive.google.com/file/d/1sNUHpTYb9F9NyEC_U_nNhw2CYakV9nh7/view?usp=sharing">Technical Install Manual</a></li>
        <li><a href="https://drive.google.com/file/d/1Zt1ChBNI9lCNQLQxSBc-gyRJu9sp3KUt/view?usp=sharing">User Manual</a></li>
-       <li><a href="STILL NEEDS TO BE ADDED">Testing Policies</a></li>
+       <li><a href="https://drive.google.com/file/d/1dP-QH0tAoigkwiyzGf-BvKBD3cJIMi7Q/view?usp=sharing">Testing Policies</a></li>
      </ul>
     </td>
   </tr>
