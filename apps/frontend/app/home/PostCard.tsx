@@ -597,13 +597,23 @@ const PostCard: React.FC<PostCardProps> = ({
                     background: themeStyles.background,
                   }}
                 >
-                  <a
-                    href={`/profile/${comment.user_id}`}
-                    className="font-bold text-black hover:underline"
-                    style={{ color: themeStyles.textColor }}
-                  >
-                    @{comment.username}
-                  </a>
+                  {curr_user !== comment.user_id ? (
+                    <a
+                      href={`/profile/${comment.user_id}`}
+                      className="font-bold text-black hover:underline"
+                      style={{ color: themeStyles.textColor }}
+                    >
+                      @{comment.username}
+                    </a>
+                  ) : (
+                    <a
+                      href={`/account`}
+                      className="font-bold text-black hover:underline"
+                      style={{ color: themeStyles.textColor }}
+                    >
+                      @{comment.username}
+                    </a>
+                  )}
                   : {comment.comment}
                 </div>
               ))}
