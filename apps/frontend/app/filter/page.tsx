@@ -283,7 +283,7 @@ const Filter = () => {
   }, [searchTerm, topic]);
 
   return (
-    <div className='ml-20 mr-20 mt-16 minHeight:100vh'>
+    <div className='ml-20 mr-20 mt-16 ' style={{ minHeight: '100vh'}}>
       <h1 className='text-5xl font-bold text-gray-800 text-center mb-10'>Select a Destination</h1>
       {loading && (
         <div className="flex justify-center items-center h-20">
