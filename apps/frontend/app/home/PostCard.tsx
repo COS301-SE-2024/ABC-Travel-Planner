@@ -91,7 +91,6 @@ const PostCard: React.FC<PostCardProps> = ({
   const { selectedTheme, themeStyles, setTheme } = useTheme();
   const curr_user = Cookie.get("user_id") ?? "";
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  console.log(backendUrl);
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: "",
@@ -176,7 +175,6 @@ const PostCard: React.FC<PostCardProps> = ({
       });
       const following = await isFollowingRes.text();
       if (following == "true") {
-        console.log("Currently following user, updating frontend");
         setIsFollowing("Following");
       }
     };
@@ -290,7 +288,6 @@ const PostCard: React.FC<PostCardProps> = ({
 
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
-      console.log(midData);
       JSON.parse(midData).map(
         (element: {
           comment: string;
@@ -333,7 +330,6 @@ const PostCard: React.FC<PostCardProps> = ({
         (item) => !blockedBy.some((user: any) => user.user_id === item.user_id)
       );
 
-      console.log("Received comments: " + JSON.stringify(filteredData2));
       setComments(filteredData2);
     }
   };
@@ -343,7 +339,6 @@ const PostCard: React.FC<PostCardProps> = ({
     if (newComment) {
       const temp = await getUser(curr_user);
       const u = JSON.parse(temp || "{}");
-      console.log(JSON.stringify(u));
 
       const dataToAdd = {
         comment: newComment.comment,
@@ -352,7 +347,6 @@ const PostCard: React.FC<PostCardProps> = ({
         username: u.username,
       };
 
-      console.log("Comment to add: " + JSON.stringify(newComment));
 
       const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
         method: "POST",
@@ -400,8 +394,6 @@ const PostCard: React.FC<PostCardProps> = ({
     const diffInSeconds = Math.floor(
       (now.getTime() - postDate.getTime()) / 1000
     );
-
-    console.log("Time Difference (seconds):", diffInSeconds);
 
     if (diffInSeconds < 60) {
       return `${diffInSeconds} seconds ago`;
@@ -625,20 +617,24 @@ const PostCard: React.FC<PostCardProps> = ({
                 type="text"
                 value={newComment.comment}
                 onChange={(e) =>
-                  e.target.value !== '' ?
-                  setNewComment({
-                    post_id,
-                    user_id: Cookie.get("user_id") || "",
-                    comment: e.target.value,
-                    username: newComment.username,
-                  }) :
-                  console.log("Please enter something to post")
+                  {
+                    setNewComment({
+                      post_id,
+                      user_id: Cookie.get("user_id") || "",
+                      comment: e.target.value,
+                      username: newComment.username,
+                    });
+                  }
                 }
                 placeholder="Add a comment..."
                 className="flex-grow p-2 border rounded-md"
-              />
+                />
               <button
-                onClick={handleAddComment}
+                onClick={() => {
+                  if (newComment.comment !== '' || newComment.comment.replace(/\s/g, '').length !== 0) {
+                    handleAddComment();
+                  }
+                }}
                 className="add-post-button mb-2"
                 style={{ background: themeStyles.navbarColor }}
               >
