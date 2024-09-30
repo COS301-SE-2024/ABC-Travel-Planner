@@ -625,12 +625,14 @@ const PostCard: React.FC<PostCardProps> = ({
                 type="text"
                 value={newComment.comment}
                 onChange={(e) =>
+                  e.target.value !== '' ?
                   setNewComment({
                     post_id,
                     user_id: Cookie.get("user_id") || "",
                     comment: e.target.value,
                     username: newComment.username,
-                  })
+                  }) :
+                  console.log("Please enter something to post")
                 }
                 placeholder="Add a comment..."
                 className="flex-grow p-2 border rounded-md"
