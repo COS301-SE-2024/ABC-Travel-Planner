@@ -12,17 +12,13 @@ from dotenv import load_dotenv
 
 logging.basicConfig(level=logging.ERROR)
 
-# Load environment variables if in development
 if os.getenv('ENV') == 'development':
     dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env.local')
     load_dotenv(dotenv_path)
 
-# Determine the device (GPU or CPU)
 device = 0 if torch.cuda.is_available() else -1
 
 # Initialize models and pipelines
-ner_model = None
-ner_tokenizer = None
 classifier = None
 
 # Load dataset
