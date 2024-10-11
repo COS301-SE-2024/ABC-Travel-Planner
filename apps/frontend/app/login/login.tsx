@@ -100,7 +100,7 @@ const SplashPage = () => {
         alignItems: "center",
         justifyContent: "center",
         backgroundImage:
-          "url(https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/background%2Flogin.jpg?alt=media&token=33511fc2-c660-43b9-ae64-5187ab5fa23c)",
+          "url(https://firebasestorage.googleapis.com/v0/b/zinc-sanctuary-438017-u1.appspot.com/o/background%2Flogin.jpg?alt=media&token=ed298b6a-21e6-4098-915d-b6a45bd616e5)",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
