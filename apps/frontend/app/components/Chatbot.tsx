@@ -35,7 +35,6 @@ const ChatBot: React.FC = () => {
       }
       const data = await response.json();
       if (data.result) {
-        console.log(JSON.stringify(data));
         setMessages((prevMessages) => [
           ...prevMessages,
           { sender: 'bot', text: data.result.answer, time: getCurrentTime() },

@@ -4,7 +4,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
-#from transformers import pipeline 
 import torch
 import os
 import logging
@@ -13,17 +12,13 @@ from dotenv import load_dotenv
 
 logging.basicConfig(level=logging.ERROR)
 
-# Load environment variables if in development
 if os.getenv('ENV') == 'development':
     dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env.local')
     load_dotenv(dotenv_path)
 
-# Determine the device (GPU or CPU)
 device = 0 if torch.cuda.is_available() else -1
 
 # Initialize models and pipelines
-ner_model = None
-ner_tokenizer = None
 classifier = None
 
 # Load dataset
@@ -43,11 +38,9 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 split_docs = text_splitter.split_documents(documents)
 db = FAISS.from_documents(split_docs, embeddings)
 
-# Flask app setup
 app = Flask(__name__)
 
 def is_query_related(query):
-    # Define keywords for each category
     travel_keywords = ['travel', 'itinerary', 'itineraries', 'trip', 'trips', 'date', 'country', 'items', 'attractions', 'attraction', 'destination', 'tour', 'booking', 'flight', 'vacation', 'hotel', 'accommodation', 'holiday', 'rental', 'airport taxi', 'sightseeing', 'creator', 'generate', 'generator', 'google', 'social media']
     social_media_keywords = ['post', 'like', 'comment', 'share', 'follow', 'login', 'logout', 'user', 'account', 'update', 'block', 'mute', 'profile', 'message', 'dm', 'friend', 'timeline', 'feed', 'story', 'share', 'dark mode', 'light mode', 'edit', 'image']
     greeting_keywords = ['hello', 'hi', 'good morning', 'good afternoon', 'hey', 'good evening', 'how are you', 'how is it going', 'good day', 'morning', 'afternoon', 'evening', 'greetings', 'what\'s up']

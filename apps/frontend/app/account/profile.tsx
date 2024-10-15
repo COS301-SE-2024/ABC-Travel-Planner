@@ -34,7 +34,7 @@ import Cookie from "js-cookie";
 import getUser from "@/libs/actions/getUser";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
-import { FaPerson } from "react-icons/fa6";
+import { FaE, FaPerson } from "react-icons/fa6";
 import { useTheme } from "../context/ThemeContext";
 
 const overlayStyle: React.CSSProperties = {
@@ -488,13 +488,20 @@ const Account = () => {
               <img src={profileImage} alt="Profile" />
             )}
             {isEditing && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="absolute bottom-0 opacity-0 right-0 cursor-pointer w-20 h-20"
-              />
+              <>
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="profileInput"
+                  onChange={handleImageChange}
+                  className="absolute bottom-0 opacity-0 right-0 cursor-pointer w-20 h-20 z-40" />
+
+                <label htmlFor="profileImageInput" className="edit-icon float-right absolute bottom-0 right-0">
+                  <FaEdit className="icon" style={{ color: "white" }} />
+                </label>
+              </>
             )}
+            
           </div>
         </div>
         <div className="profile-info">

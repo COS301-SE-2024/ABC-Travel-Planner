@@ -32,6 +32,7 @@ const ItineraryComponent: React.FC<ItineraryComponentProps> = ({
   const handleLocationChange = (e: any) => setNewLocation(e.target.value);
   // const iId = JSON.parse(localStorage.getItem('id') as string).id;
 
+
   const openEditModal = (e: any) => {
     e.preventDefault();
     setShowEditModal(true);

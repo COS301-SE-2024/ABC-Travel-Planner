@@ -88,5 +88,6 @@ export async function getFavouriteCountries(user_id: any) {
       countries = doc.data().favouriteCountries;
     }
   });
+
   return countries;
 }

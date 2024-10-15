@@ -2,7 +2,6 @@
 import createSupabaseServerClient from '../../libs/supabase/server';
 
 export const DatabaseUpload = async(details: any) => {
-    console.log("REAAAACCHHHEEEED DATABASE")
     const supabase = await createSupabaseServerClient();
     const formattedDate = new Date().toISOString();
     const id = details.id

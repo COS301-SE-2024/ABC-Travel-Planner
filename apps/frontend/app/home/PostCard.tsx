@@ -93,6 +93,7 @@ const PostCard: React.FC<PostCardProps> = ({
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [profilePicUrl, setProfilePicUrl] = useState("");
 
+
   const [newComment, setNewComment] = useState<Comment>({
     comment: "",
     id: "",
@@ -293,6 +294,8 @@ const PostCard: React.FC<PostCardProps> = ({
 
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
+
+
       JSON.parse(midData).map(
         (element: {
           comment: string;
@@ -335,7 +338,9 @@ const PostCard: React.FC<PostCardProps> = ({
         (item) => !blockedBy.some((user: any) => user.user_id === item.user_id)
       );
 
-      setComments(filteredData2);
+      const sortedComments = filteredData2.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0));
+
+      setComments(sortedComments);
     }
   };
 
@@ -350,6 +355,7 @@ const PostCard: React.FC<PostCardProps> = ({
         post_id: newComment.post_id,
         username: u.username,
       };
+
 
       const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
         method: "POST",
@@ -397,6 +403,7 @@ const PostCard: React.FC<PostCardProps> = ({
     const diffInSeconds = Math.floor(
       (now.getTime() - postDate.getTime()) / 1000
     );
+
 
     if (diffInSeconds < 60) {
       return `${diffInSeconds} seconds ago`;
