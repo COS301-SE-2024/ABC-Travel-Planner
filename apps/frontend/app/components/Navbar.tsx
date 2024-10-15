@@ -108,18 +108,20 @@ export const Navbar = () => {
               </div>
             </Link>
             {/* image for profile */}
-            {profileUrl && (
-              <div className="flex items-center justify-center">
-                <Image
-                  src={profileUrl}
-                  alt="Avatar"
-                  width={32}
-                  height={32}
-                  style={{ minHeight: "32px", minWidth: "32px" }}
-                  className="ml-2 rounded-full border border-white overflow-hidden"
-                />
-              </div>
-            )}
+            <Link href="/account">
+              {profileUrl && (
+                <div className="flex items-center justify-center">
+                  <Image
+                    src={profileUrl}
+                    alt="Avatar"
+                    width={32}
+                    height={32}
+                    style={{ minHeight: "32px", minWidth: "32px" }}
+                    className="ml-2 rounded-full border border-white overflow-hidden"
+                  />
+                </div>
+              )}
+            </Link>
           </div>
         </div>
       </nav>
