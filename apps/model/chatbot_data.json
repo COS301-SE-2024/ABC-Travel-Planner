@@ -280,8 +280,18 @@
     "answer": "Good day! I’m here to help you with any questions you might have about your trip or account."
   },
   {
-    "context": "What are polite ways to thank the app for help?",
+    "context": "polite ways to thank the app for help",
     "question": "Thank you",
+    "answer": "You're welcome! Let me know if there's anything else I can help with."
+  },
+  {
+    "context": "thank the app for help",
+    "question": "thank you",
+    "answer": "You're welcome! Let me know if there's anything else I can help with."
+  },
+  {
+    "context": "thank the app for help",
+    "question": "thank you so much",
     "answer": "You're welcome! Let me know if there's anything else I can help with."
   },
   {
