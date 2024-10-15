@@ -130,7 +130,7 @@ const Home = () => {
   return (
     <div className="w-full mt-8" style={{minHeight: '100vh'}}>
      <div className="flex justify-center mb-4 mt-4 mx-auto max-w-md" style={{ background: themeStyles.primaryColor, borderRadius: '12px' }}>
-      <h2 className="text-4xl font-extrabold" style={{ color: themeStyles.textColor }}>
+      <h2 className="text-4xl font-extrabold py-2" style={{ color: themeStyles.textColor }}>
         Top Destinations
       </h2>
     </div>
@@ -179,7 +179,7 @@ const Home = () => {
         style={{ background: themeStyles.primaryColor, borderRadius: "12px" }}
       >
         <h2
-          className="text-4xl font-extrabold shadow-lg"
+          className="text-4xl font-extrabold py-2"
           style={{ color: themeStyles.textColor }}
         >
           Latest Posts
