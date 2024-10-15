@@ -41,7 +41,7 @@ const ItemsPage:React.FC<ItemsPageProps> = ({id, location, destination}) => {
 
         <div className='absolute align-center right-8 mt-2 w-22 h-10 mx-4'>
           <Link href={`/booking?id=${id}`}>
-            <button className="flex items-center w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700 mb-4" style={{ background: themeStyles.navbarColor}}>
+            <button className="flex items-center w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-700 mb-4" style={{ background: themeStyles.navbarColor}}>
               <FaCheck className="order-1 ml-2 text-white" />
               <span className="order-0">Done</span>
             </button>    
