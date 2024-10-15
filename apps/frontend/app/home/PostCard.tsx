@@ -294,6 +294,8 @@ const PostCard: React.FC<PostCardProps> = ({
 
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
+
+
       JSON.parse(midData).map(
         (element: {
           comment: string;
@@ -336,7 +338,9 @@ const PostCard: React.FC<PostCardProps> = ({
         (item) => !blockedBy.some((user: any) => user.user_id === item.user_id)
       );
 
-      setComments(filteredData2);
+      const sortedComments = filteredData2.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0));
+
+      setComments(sortedComments);
     }
   };
 
