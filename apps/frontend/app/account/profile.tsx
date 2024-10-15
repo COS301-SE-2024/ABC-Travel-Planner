@@ -134,9 +134,7 @@ const Account = () => {
   };
   const fetchProfileDetails = async () => {
     const temp = Cookie.get("user_id");
-    console.log(temp);
     const r = await getUser(temp);
-    console.log(r);
     const tmp = JSON.parse(r || "");
     setProfileDetails(tmp);
     if (tmp.imageUrl) {
@@ -290,11 +288,9 @@ const Account = () => {
 
   const handleSave = async () => {
     const temp = Cookie.get("user_id");
-    console.log(temp);
     // Save changes to the database
     if (file) {
       const url = await uploadImage(file);
-      console.log(url);
     }
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     if (originalProfileDetails.email !== profileDetails.email) {
@@ -302,7 +298,6 @@ const Account = () => {
         email: profileDetails.email,
         user_id: temp,
       });
-      console.log(response);
     }
     await updateUserProfile(profileDetails);
     if (file) {

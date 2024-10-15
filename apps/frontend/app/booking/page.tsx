@@ -13,7 +13,6 @@ const Booking = async ({ searchParams}: { searchParams: { id?: any; }}) => {
   const fetchItems = async() => {
     try {
       const response = await axios.get(`${backendUrl}/itinerary-items/${id}/${curr_user}`);
-      console.log("RESPONSE FROM SERVER: " + JSON.stringify(response.data));
       return response.data;
     } catch (error) {
       console.error('Error fetching data:', error); // Handle the error

@@ -27,7 +27,6 @@ const ViewItinerary = ({
 }) => {
   const router = useRouter();
   const { itineraryName, itineraryId, myItinerary, prev } = searchParams;
-  console.log(itineraryName, itineraryId);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -45,7 +44,6 @@ const ViewItinerary = ({
       `${backendUrl}/itinerary-items/${itineraryId}/${u.data}`
     );
     const data = await response.json();
-    console.log(data);
     setImages(data);
 
     const user_id = Cookie.get("user_id");
@@ -62,7 +60,6 @@ const ViewItinerary = ({
         itinerary_id: itineraryId,
       }
     );
-    console.log("Bookmarked", res2.data);
     setBookmarked(res2.data);
   };
 
