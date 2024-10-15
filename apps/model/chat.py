@@ -44,7 +44,7 @@ def is_query_related(query):
     travel_keywords = ['travel', 'itinerary', 'itineraries', 'trip', 'trips', 'date', 'country', 'items', 'attractions', 'attraction', 'destination', 'tour', 'booking', 'flight', 'vacation', 'hotel', 'accommodation', 'holiday', 'rental', 'airport taxi', 'sightseeing', 'creator', 'generate', 'generator', 'google', 'social media']
     social_media_keywords = ['post', 'like', 'comment', 'share', 'follow', 'login', 'logout', 'user', 'account', 'update', 'block', 'mute', 'profile', 'message', 'dm', 'friend', 'timeline', 'feed', 'story', 'share', 'dark mode', 'light mode', 'edit', 'image']
     greeting_keywords = ['hello', 'hi', 'good morning', 'good afternoon', 'hey', 'good evening', 'how are you', 'how is it going', 'good day', 'morning', 'afternoon', 'evening', 'greetings', 'what\'s up']
-    farewell_keywords = ['goodbye', 'bye', 'see you', 'farewell', 'take care', 'later', 'catch you later', 'talk to you later', 'peace', 'adios', 'ciao', 'good night', 'so long', 'see you later', 'have a good day', 'good night', 'see ya']
+    farewell_keywords = ['goodbye', 'bye', 'see you', 'farewell', 'take care', 'later', 'catch you later', 'talk to you later', 'peace', 'adios', 'ciao', 'good night', 'so long', 'see you later', 'have a good day', 'good night', 'see ya', 'thank you']
 
     query_lower = query.lower()
 
