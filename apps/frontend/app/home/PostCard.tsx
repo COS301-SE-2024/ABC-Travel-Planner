@@ -92,7 +92,7 @@ const PostCard: React.FC<PostCardProps> = ({
   const curr_user = Cookie.get("user_id") ?? "";
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [profilePicUrl, setProfilePicUrl] = useState("");
-
+  const [busyCommenting, setBusyCommenting] = useState(false);
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: "",
@@ -346,6 +346,8 @@ const PostCard: React.FC<PostCardProps> = ({
 
   const handleAddComment = async () => {
     if (newComment) {
+      setBusyCommenting(true);
+      console.log("handleAddComment (Before): " + busyCommenting)
       const temp = await getUser(curr_user);
       const u = JSON.parse(temp || "{}");
 
@@ -383,6 +385,9 @@ const PostCard: React.FC<PostCardProps> = ({
         timestamp: 0,
         username: u.username,
       });
+
+      setBusyCommenting(false);
+      console.log("handleAddComment (Before): " + busyCommenting)
     }
   };
 
@@ -647,7 +652,10 @@ const PostCard: React.FC<PostCardProps> = ({
               <button
                 onClick={() => {
                   if (newComment.comment.trim() !== "") {
-                    handleAddComment();
+                    console.log("Onclick: " + busyCommenting)
+                    if (!busyCommenting) {
+                      handleAddComment();
+                    }
                   }
                 }}
                 className="add-post-button mb-2"

@@ -112,6 +112,8 @@ const Account = () => {
   const [enlargedPostIndex, setEnlargedPostIndex] = useState<number | null>(
     null
   );
+  const [busyCommenting, setBusyCommenting] = useState(false);
+
 
   const [followers, setFollowers] = useState<any>([]);
 
@@ -424,7 +426,11 @@ const Account = () => {
   // };
 
   const handleCommentSubmit = async () => {
+    console.log("ENTERED FUNCTION!")
     if (enlargedPostIndex !== null && newComment.trim()) {
+      setBusyCommenting(true)
+      console.log("Handle Comment Submit (Start): " + busyCommenting)
+
       const updatedPosts = [...posts];
       const user_id = Cookie.get("user_id");
       const temp = await getUser(user_id);
@@ -447,6 +453,8 @@ const Account = () => {
 
       setPosts(updatedPosts);
       setNewComment("");
+      setBusyCommenting(false);
+      console.log("Handle Comment Submit (After): " + busyCommenting)
     }
   };
 
@@ -916,7 +924,13 @@ const Account = () => {
               className="w-full p-2 border border-gray-300 rounded-lg mb-4"
             />
             <button
-              onClick={handleCommentSubmit}
+              onClick={() => {
+                console.log("On click: " + busyCommenting)
+                if (busyCommenting === false) {
+                  handleCommentSubmit()
+                }
+              }
+              }
               className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
               style={{ backgroundColor: themeStyles.navbarColor }}
             >
