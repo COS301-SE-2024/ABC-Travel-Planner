@@ -8,7 +8,10 @@ import {
   Typography,
   useTheme,
   Link,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import NextLink from "next/link";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -32,7 +35,8 @@ export default function RegisterPage() {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const theme = useTheme();
 
   const handleRegisterChange = async (
@@ -61,6 +65,14 @@ export default function RegisterPage() {
         setPasswordsMatch(false);
       }
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
   };
 
   const handleRegister = async (e: any) => {
@@ -190,30 +202,55 @@ export default function RegisterPage() {
               fullWidth
               id="registerPassword"
               label="Password"
-              type="password"
+              type={passwordVisible ? "text" : "password"}
               name="password"
               value={registerData.password}
               onChange={handleRegisterChange}
               error={passwordError}
               helperText={
                 passwordError
-                  ? "Password must be alphanumeric and contain at least 8 characters"
+                  ? "Password must be at least 8 characters.Include letters, digits, and special characters."
                   : ""
               }
               margin="normal"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={togglePasswordVisibility} edge="end">
+                      {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               required
               fullWidth
               id="registerConfirmPassword"
               label="Confirm Password"
-              type="password"
+              type={confirmPasswordVisible ? "text" : "password"}
               name="confirmPassword"
               value={registerData.confirmPassword}
               onChange={handleRegisterChange}
               error={!passwordsMatch}
               helperText={!passwordsMatch ? "Passwords do not match" : ""}
               margin="normal"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={toggleConfirmPasswordVisibility}
+                      edge="end"
+                    >
+                      {confirmPasswordVisible ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               type="submit"
