@@ -253,12 +253,17 @@ const Account = () => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true)
     let file = e.target.files?.[0]; // Use optional chaining
 
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl); // Set the new image URL for preview
       setFile(file);
+      
+      setTimeout(() => {
+        setIsUploading(false)
+      }, 1000)
     }
   };
 
