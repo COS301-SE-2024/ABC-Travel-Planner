@@ -126,7 +126,7 @@ const ViewItinerary = ({
           }}
         >
           <a
-            href={`/${prev}`}
+            href={`../${prev}`}
             style={{
               display: "flex",
               alignItems: "center",
