@@ -71,6 +71,7 @@ const TripComponent: React.FC = () => {
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: Date[] }>({});
   const [showModal, setShowModal] = useState(false);
   const [itineraryLoading, setItineraryLoading] = useState(false);
+  const [showDateModal, setShowDateModal] = useState(false);
   const searchParams = useSearchParams();
   const country = searchParams?.get("country");
   const reason = searchParams?.get("reason");
@@ -132,6 +133,13 @@ const TripComponent: React.FC = () => {
 
 
   const sendToItineraryPage = async () => {
+    const missingDates = searchResults.some(item => !item.dates || item.dates.length === 0);
+
+    if (missingDates) {
+      setShowDateModal(true); // Show modal if any dates are missing
+      return;
+    }
+
     setItineraryLoading(true);
     const user_id = Cookies.get("user_id");
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -245,13 +253,13 @@ const TripComponent: React.FC = () => {
   };
 
   return (
-    <div className=" p-5 bg-blue-200" style={{ backgroundColor: themeStyles.primaryColor}}>
-      <div className="flex justify-center items-center min-h-screen " style={{ backgroundColor: themeStyles.primaryColor}}>
+    <div className=" p-5 bg-blue-200" style={{ backgroundColor: themeStyles.primaryColor }}>
+      <div className="flex justify-center items-center min-h-screen " style={{ backgroundColor: themeStyles.primaryColor }}>
         <div className="relative p-8 rounded-lg shadow-xl bg-white bg-opacity-90">
-          <h2 className="text-4xl font-bold text-center mb-6 text-blue-700 flex items-center justify-center"  style={{ color: themeStyles.textColor}} >
+          <h2 className="text-4xl font-bold text-center mb-6 text-blue-700 flex items-center justify-center" style={{ color: themeStyles.textColor }} >
             Your Trip to {country}
-            <FaPlane className="text-blue-700 ml-2 mr-2"   style={{ color: themeStyles.textColor}} />
-            <FaGlobe className="text-blue-700 mr-2"   style={{ color: themeStyles.textColor}}/>
+            <FaPlane className="text-blue-700 ml-2 mr-2" style={{ color: themeStyles.textColor }} />
+            <FaGlobe className="text-blue-700 mr-2" style={{ color: themeStyles.textColor }} />
           </h2>
 
           <div className="flex justify-center mb-6">
@@ -266,48 +274,48 @@ const TripComponent: React.FC = () => {
               All
             </button>
             <button
-  onClick={() => setSelectedCategory("attractions")}
-  className={`px-4 py-2 rounded-lg mx-2`}
-  style={{
-    backgroundColor: selectedCategory === "attractions" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
-    color: selectedCategory === "attractions" ? 'white' : themeStyles.textColor,
-  }}
->
-  Attractions
-</button>
+              onClick={() => setSelectedCategory("attractions")}
+              className={`px-4 py-2 rounded-lg mx-2`}
+              style={{
+                backgroundColor: selectedCategory === "attractions" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+                color: selectedCategory === "attractions" ? 'white' : themeStyles.textColor,
+              }}
+            >
+              Attractions
+            </button>
 
-<button
-  onClick={() => setSelectedCategory("stays")}
-  className={`px-4 py-2 rounded-lg mx-2`}
-  style={{
-    backgroundColor: selectedCategory === "stays" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
-    color: selectedCategory === "stays" ? 'white' : themeStyles.textColor,
-  }}
->
-  Stays
-</button>
+            <button
+              onClick={() => setSelectedCategory("stays")}
+              className={`px-4 py-2 rounded-lg mx-2`}
+              style={{
+                backgroundColor: selectedCategory === "stays" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+                color: selectedCategory === "stays" ? 'white' : themeStyles.textColor,
+              }}
+            >
+              Stays
+            </button>
 
-<button
-  onClick={() => setSelectedCategory("carRentals")}
-  className={`px-4 py-2 rounded-lg mx-2`}
-  style={{
-    backgroundColor: selectedCategory === "carRentals" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
-    color: selectedCategory === "carRentals" ? 'white' : themeStyles.textColor,
-  }}
->
-  Car Rentals
-</button>
+            <button
+              onClick={() => setSelectedCategory("carRentals")}
+              className={`px-4 py-2 rounded-lg mx-2`}
+              style={{
+                backgroundColor: selectedCategory === "carRentals" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+                color: selectedCategory === "carRentals" ? 'white' : themeStyles.textColor,
+              }}
+            >
+              Car Rentals
+            </button>
 
-<button
-  onClick={() => setSelectedCategory("airportTaxis")}
-  className={`px-4 py-2 rounded-lg mx-2`}
-  style={{
-    backgroundColor: selectedCategory === "airportTaxis" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
-    color: selectedCategory === "airportTaxis" ? 'white' : themeStyles.textColor,
-  }}
->
-  Airport Taxis
-</button>
+            <button
+              onClick={() => setSelectedCategory("airportTaxis")}
+              className={`px-4 py-2 rounded-lg mx-2`}
+              style={{
+                backgroundColor: selectedCategory === "airportTaxis" ? themeStyles.primaryColor : 'rgba(229, 231, 235, 1)', // Adjust the gray color if needed
+                color: selectedCategory === "airportTaxis" ? 'white' : themeStyles.textColor,
+              }}
+            >
+              Airport Taxis
+            </button>
 
           </div>
 
@@ -398,21 +406,21 @@ const TripComponent: React.FC = () => {
                   </div>
                 </div>
               ))
-              
+
             )}
           </div>
 
           <div className="flex justify-center">
             <button
               className="bg-blue-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center mr-2"
-              style={{ backgroundColor: themeStyles.navbarColor}}
+              style={{ backgroundColor: themeStyles.navbarColor }}
               onClick={goBackToItinerary}
             >
               <FaArrowLeft className="mr-2" /> Go Back
             </button>
             <button
               className="bg-green-500 text-white rounded-lg py-2 px-4 focus:outline-none flex items-center"
-              style={{ backgroundColor: themeStyles.textColor}}
+              style={{ backgroundColor: themeStyles.textColor }}
               onClick={sendToItineraryPage}
             >
               <FaSave className="mr-2" /> Save Trip
@@ -443,14 +451,30 @@ const TripComponent: React.FC = () => {
             </div>
           )}
           <div>
-      {itineraryLoading && (
-        <div style={overlayStyle}>
-          <div style={spinnerStyle}></div>
-        </div>
-      )}
-    </div>
+            {itineraryLoading && (
+              <div style={overlayStyle}>
+                <div style={spinnerStyle}></div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+      {showDateModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-xl font-semibold mb-4">Please select dates for all items in your trip before saving.</h3>
+            <div className="flex justify-center">
+              <button
+                className="bg-blue-500 text-white rounded-lg py-2 px-4"
+                onClick={() => setShowDateModal(false)}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 
