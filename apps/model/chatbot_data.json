@@ -80,6 +80,11 @@
     "answer": "You can make a post by navigating to the account tab. Scroll down to the My Travel Posts section and click on the add post button. A pop-up will appear where you can add any text or images you want to post"
   },
   {
+    "context": "How do I create a post on the app? How do I share text or images?",
+    "question": "How do I create a post?",
+    "answer": "You can make a post by navigating to the account tab. Scroll down to the My Travel Posts section and click on the add post button. A pop-up will appear where you can add any text or images you want to post"
+  },
+  {
     "context": "What are the top destinations circles? How do I find popular destinations?",
     "question": "What are the top destinations circles?",
     "answer": "The top destinations on the home page are popular destination suggestions. If you click on any of them, you'll get more information on that particular destination"
@@ -88,6 +93,11 @@
     "context": "How do I comment on a post? Can I interact with other users' posts?",
     "question": "How do I comment on a post?",
     "answer": "You can comment on a post by clicking on the message icon on the post. The comment section will expand, allowing you to add your comment"
+  },
+  {
+    "context": "How do I delete a comment on a post?",
+    "question": "How do I delete a comment?",
+    "answer": "Unfortunately, you cannot delete a comment you have posted on our application."
   },
   {
     "context": "How do I follow another user? How can I keep track of someone's posts?",
@@ -250,7 +260,7 @@
     "answer": "Hello! How can I assist you today with your travel plans or social media activities?"
   },
   {
-    "context": "How do I greet the app? What are basic greetings I can use?",
+    "context": "How do I say hi to the app",
     "question": "Hi",
     "answer": "Hi there! How can I help you with your travel planning or social media needs?"
   },
@@ -270,8 +280,23 @@
     "answer": "Good day! I’m here to help you with any questions you might have about your trip or account."
   },
   {
-    "context": "What are polite ways to thank the app for help?",
+    "context": "polite ways to thank the app for help",
     "question": "Thank you",
+    "answer": "You're welcome! Let me know if there's anything else I can help with."
+  },
+  {
+    "context": "thank the app for help",
+    "question": "I appreciate it",
+    "answer": "Happy to help! Feel free to ask if you need anything else."
+  },
+  {
+    "context": "thank the app for help",
+    "question": "thank you",
+    "answer": "You're welcome! Let me know if there's anything else I can help with."
+  },
+  {
+    "context": "thank the app for help",
+    "question": "thank you so much",
     "answer": "You're welcome! Let me know if there's anything else I can help with."
   },
   {
@@ -353,5 +378,5 @@
     "context": "How do I book a flight? What are the steps to add a flight to my itinerary?",
     "question": "How do I book a flight?",
     "answer": "To book a flight, follow these steps: \n1. Go to the itinerary page.\n2. Select an itinerary that you've created previously or create a new one and select it.\n3. On the itinerary items page, click the plus button at the bottom right corner.\n4. Choose 'Flights'.\n5. Select the country of origin and the destination country.\n6. Choose your starting airport and destination airport.\n7. Enter the number of passengers and select the flight class.\n8. Click 'Search'.\n9. When results show up, click on one of the flight cards to add it to your itinerary."
-  }  
+  }
 ]
