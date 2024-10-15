@@ -24,8 +24,6 @@ const ViewItinerary = ({
     myItinerary?: string;
     prev?: string;
   };
-
-  
 }) => {
   const router = useRouter();
   const { itineraryName, itineraryId, myItinerary, prev } = searchParams;
@@ -37,7 +35,6 @@ const ViewItinerary = ({
   const [images, setImages] = useState<any>([]);
 
   const fetchItems = async () => {
-    
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     const u = await axios.post(`${backendUrl}/itinerary/getItineraryOwner`, {
       itinerary_id: itineraryId,
@@ -113,78 +110,117 @@ const ViewItinerary = ({
   useEffect(() => {
     fetchItems();
   }, []);
- 
+
   const { selectedTheme, setTheme, themeStyles } = useTheme();
   return (
-    <div style={{ minHeight: '100vh'}}>
-        <div className="pl-8 pt-6">
-          <button 
-            style={{ 
-              backgroundColor: themeStyles.navbarColor, 
-              padding: '10px 20px', 
-              borderRadius: '5px', 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              color: "white" 
-            }}>
-            <a href="../account" style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
-              <FaArrowLeft style={{ marginRight: '8px' }} />
-              {"Back"}
-            </a>
-          </button>
-        </div>
+    <div style={{ minHeight: "100vh" }}>
+      <div className="pl-8 pt-6">
+        <button
+          style={{
+            backgroundColor: themeStyles.navbarColor,
+            padding: "10px 20px",
+            borderRadius: "5px",
+            display: "inline-flex",
+            alignItems: "center",
+            color: "white",
+          }}
+        >
+          <a
+            href={`../${prev}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            <FaArrowLeft style={{ marginRight: "8px" }} />
+            {"Back"}
+          </a>
+        </button>
+      </div>
 
-      <div className="view-itinerary-page"   style={{color: themeStyles.textColor}}>
+      <div
+        className="view-itinerary-page"
+        style={{ color: themeStyles.textColor }}
+      >
         {images.length > 0 ? (
-          <div className="w-full max-w-2xl mx-auto bg-blue-100 shadow-lg rounded-lg overflow-hidden"  style={{ backgroundColor: themeStyles.primaryColor}}>
-            <h2 className="text-2xl font-bold text-gray-800 p-4 text-center"  style={{ color: themeStyles.textColor}}>
+          <div
+            className="w-full max-w-2xl mx-auto bg-blue-100 shadow-lg rounded-lg overflow-hidden"
+            style={{ backgroundColor: themeStyles.primaryColor }}
+          >
+            <h2
+              className="text-2xl font-bold text-gray-800 p-4 text-center"
+              style={{ color: themeStyles.textColor }}
+            >
               {itineraryName}
             </h2>
             <div className="relative flex items-center justify-between">
               <button
                 onClick={goToPreviousImage}
-                className="absolute left-1 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300" style={{ background: themeStyles.textColor}}
+                className="absolute left-1 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"
+                style={{ background: themeStyles.textColor }}
               >
                 <FaArrowLeft />
               </button>
               <div className="flex items-center justify-center w-full">
-                <div className="text-left p-4" style={{ color: themeStyles.textColor}}>
+                <div
+                  className="text-left p-4"
+                  style={{ color: themeStyles.textColor }}
+                >
                   <img
                     src={images[currentImageIndex].image_url}
                     alt="Itinerary"
                     className="w-full h-64 object-cover rounded-lg mb-4"
                   />
                   <p
-                    style={{ color: themeStyles.textColor}}
+                    style={{ color: themeStyles.textColor }}
                     className="text-xl font-semibold  text-center"
                   >
                     {images[currentImageIndex].item_name}
                   </p>
                   <div className="flex items-center mt-2">
                     <FaLocationPin className="text-gray-600 mr-2" />
-                    <p className="text-gray-600" style={{ color: themeStyles.textColor}}>
+                    <p
+                      className="text-gray-600"
+                      style={{ color: themeStyles.textColor }}
+                    >
                       {images[currentImageIndex].destination}
                     </p>
                   </div>
-                  <div className="flex items-center mt-2" >
+                  <div className="flex items-center mt-2">
                     <FaMoneyBillWave className="text-green-500 mr-2" />
-                    <p className="text-gray-600" style={{ color: themeStyles.textColor}}>
+                    <p
+                      className="text-gray-600"
+                      style={{ color: themeStyles.textColor }}
+                    >
                       Price: R{images[currentImageIndex].price}
                     </p>
                   </div>
-                  {images[currentImageIndex].date.length !==0 && (
-                  <div className="flex items-center mt-2">
-                    <FaCalendarAlt className="text-blue-500 mr-2" />
-                    <p className="text-gray-600" style={{ color: themeStyles.textColor}}>
-                      Date: {images[currentImageIndex].date.length === 1 ? images[currentImageIndex].date[0].substring(0,10): images[currentImageIndex].date[0].substring(0,10) + "  -  " + images[currentImageIndex].date[images[currentImageIndex].date.length - 1].substring(0,10)} 
-                    </p>
-                  </div>
+                  {images[currentImageIndex].date.length !== 0 && (
+                    <div className="flex items-center mt-2">
+                      <FaCalendarAlt className="text-blue-500 mr-2" />
+                      <p
+                        className="text-gray-600"
+                        style={{ color: themeStyles.textColor }}
+                      >
+                        Date:{" "}
+                        {images[currentImageIndex].date.length === 1
+                          ? images[currentImageIndex].date[0].substring(0, 10)
+                          : images[currentImageIndex].date[0].substring(0, 10) +
+                            "  -  " +
+                            images[currentImageIndex].date[
+                              images[currentImageIndex].date.length - 1
+                            ].substring(0, 10)}
+                      </p>
+                    </div>
                   )}
                 </div>
               </div>
               <button
                 onClick={goToNextImage}
-                className="absolute right-1 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"  style={{ background: themeStyles.textColor}}
+                className="absolute right-1 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors duration-300"
+                style={{ background: themeStyles.textColor }}
               >
                 <FaArrowRight />
               </button>
@@ -209,7 +245,10 @@ const ViewItinerary = ({
           </div>
         ) : (
           <div className="text-center p-8">
-            <h2 className="text-xl font-semibold text-gray-700" style={{ color: themeStyles.textColor}}>
+            <h2
+              className="text-xl font-semibold text-gray-700"
+              style={{ color: themeStyles.textColor }}
+            >
               No items found in this itinerary
             </h2>
           </div>

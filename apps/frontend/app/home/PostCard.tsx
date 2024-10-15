@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart as filledHeart,
@@ -93,6 +94,7 @@ const PostCard: React.FC<PostCardProps> = ({
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [profilePicUrl, setProfilePicUrl] = useState("");
   const [busyCommenting, setBusyCommenting] = useState(false);
+  const router = useRouter();
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: "",
@@ -187,6 +189,16 @@ const PostCard: React.FC<PostCardProps> = ({
 
     isFollowing();
   }, []);
+
+  const handleViewProfile = () => {
+    const curr = user_id;
+    const curr_user_id = Cookie.get("user_id");
+    if (curr_user_id === curr) {
+      router.push("/account");
+    } else {
+      router.push(`/profile/${curr}`);
+    }
+  };
 
   const handleLike = async () => {
     if (liked) {
@@ -524,7 +536,7 @@ const PostCard: React.FC<PostCardProps> = ({
           {/* User info and post description */}
           <div className="flex-1">
             <a
-              href={`/profile/${user_id}`}
+              onClick={handleViewProfile}
               className="text-lg font-bold text-black hover:underline"
               style={{ color: themeStyles.textColor }}
             >

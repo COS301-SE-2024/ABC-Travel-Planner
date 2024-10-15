@@ -407,7 +407,7 @@ const Profile = () => {
             <div className="users-list">
               {following.map((user: any, index: any) => (
                 <div key={index} className="user-item">
-                  <Link href={`/profile/${following.user_id}`} passHref>
+                  <Link href={`/profile/${user.user_id}`} passHref>
                     <img
                       src={user?.imageUrl}
                       alt={user?.username}
