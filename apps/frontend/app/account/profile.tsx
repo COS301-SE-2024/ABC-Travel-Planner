@@ -17,6 +17,7 @@ import {
   FaPaperPlane,
   FaBookmark,
   FaUser,
+  FaUserFriends,
 } from "react-icons/fa";
 import app from "@/libs/firebase/firebase";
 import axios from "axios";
@@ -441,10 +442,11 @@ const Account = () => {
   };
 
   return (
-    <div data-testid="accountContainer" className="profile-page">
+    <div data-testid="accountContainer" className="profile-page" style={{background: themeStyles.background, minHeight: '100vh'}}>
       <header
         className="profile-header"
-        style={{ background: themeStyles.primaryColor }}
+        style={{ background: themeStyles.primaryColor , color: themeStyles.textColor}}
+
       >
         <div className="profile-pic">
           <div className="relative">
@@ -526,7 +528,7 @@ const Account = () => {
             </>
           )}
         </div>
-        <button className="menu-button" onClick={() => setShowMenu(!showMenu)}>
+        <button className="menu-button" style={{ color: themeStyles.textColor}} onClick={() => setShowMenu(!showMenu)}>
           {showMenu ? <FaTimes /> : <FaBars />}
         </button>
         {showMenu && (
@@ -555,7 +557,10 @@ const Account = () => {
         className="saved-itineraries"
         style={{ background: themeStyles.primaryColor }}
       >
-        <h3 className="Following-title">My Following</h3>
+       <h3 className="text-xl font-bold mb-4 flex items-center justify-center text-center">
+        My Following
+        <FaUserFriends className="ml-2" />
+       </h3>
         <div className="profile-stats">
           <div className="following" onClick={toggleFollowing}>
             <span>{following?.length}</span>
@@ -709,7 +714,10 @@ const Account = () => {
         className="posts py-6 px-4 "
         style={{ width: "140%", background: themeStyles.primaryColor }}
       >
-        <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
+         <h3 className="text-xl font-bold mb-4 flex items-center justify-center text-center">
+          My Travel Posts
+          <FaPlane className="ml-2" />
+        </h3>
         <button
           onClick={() => setShowPostModal(true)}
           className="mt-6 mb-4 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg flex items-center mx-auto"

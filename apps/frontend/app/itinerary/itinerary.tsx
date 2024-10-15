@@ -201,7 +201,7 @@ const Itinerary = () => {
           <div className="relative w-full max-w-lg mx-auto my-6">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
 
-              <div className="flex justify-between items-center px-6 py-4 bg-green-600 text-white">
+              <div className="flex justify-between items-center px-6 py-4 bg-green-600 text-white"  style={{ background: themeStyles.textColor}} >
                 <h3 className="text-xl font-semibold place-self-center">Trip Creator</h3>
                 <button className="text-gray-300 hover:text-gray-300 focus:outline-none" onClick={closeTripCreatorModal}>
                   &#215;
