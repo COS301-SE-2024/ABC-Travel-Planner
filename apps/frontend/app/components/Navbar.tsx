@@ -108,12 +108,14 @@ export const Navbar = () => {
               </div>
             </Link>
             {/* image for profile */}
+
             {profileUrl && (
               <Link href="/account">
                 <div className="flex items-center justify-center">
                   <Image
                     src={profileUrl}
                     alt="Avatar"
+
                     width={40}
                     height={40}
                     style={{ minHeight: "32px", minWidth: "32px", height: "40px" }}
