@@ -260,7 +260,7 @@
     "answer": "Hello! How can I assist you today with your travel plans or social media activities?"
   },
   {
-    "context": "How do I greet the app? What are basic greetings I can use?",
+    "context": "How do I say hi to the app",
     "question": "Hi",
     "answer": "Hi there! How can I help you with your travel planning or social media needs?"
   },
@@ -283,6 +283,11 @@
     "context": "polite ways to thank the app for help",
     "question": "Thank you",
     "answer": "You're welcome! Let me know if there's anything else I can help with."
+  },
+  {
+    "context": "thank the app for help",
+    "question": "I appreciate it",
+    "answer": "Happy to help! Feel free to ask if you need anything else."
   },
   {
     "context": "thank the app for help",
