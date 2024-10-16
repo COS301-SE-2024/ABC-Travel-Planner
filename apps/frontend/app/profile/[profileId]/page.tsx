@@ -299,7 +299,7 @@ const Profile = () => {
           >
             {profileDetails.username}
           </h1>
-          <h2 data-testid="accountEmail">{profileDetails.email}</h2>
+          {/* <h2 data-testid="accountEmail">{profileDetails.email}</h2> */}
           {profileDetails.country && (
             <div className="location">
               <FaMapMarkerAlt />
