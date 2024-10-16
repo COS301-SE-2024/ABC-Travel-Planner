@@ -39,7 +39,19 @@ const Itinerary = () => {
   };
 
   const handleToggleReason = (reason: string) => {
-    setSelectedReasons(reason);
+    if (selectedReasons === reason) {
+      // Do nothing if the user clicks the already selected option
+      return;
+    }
+  
+    if (selectedReasons) {
+      // Show an alert if they try to select a second reason
+      alert("You can only select one reason for travel.");
+    } else {
+      // If no reason is selected yet, allow the user to select this reason
+      setSelectedReasons(reason);
+    }
+    // setSelectedReasons(reason);
   };
   const openModal = () => setShowModal(true);
   const closeModal = () => {
@@ -87,21 +99,7 @@ const Itinerary = () => {
     fetchItineraries();
   }, []);
   const { selectedTheme, setTheme, themeStyles } = useTheme();
-  const handleReasonClick = (reasonOption: React.SetStateAction<string>) => {
-    if (selectedReasons === reasonOption) {
-      // User clicked the already selected option, do nothing
-      return;
-    }
-  
-    if (selectedReasons) {
-     
-      alert("You can only select one reason for travel."); 
-    } else {
-      // Select the reason if none is currently selected
-      setSelectedReasons(reasonOption);
-    }
-  };
-  
+
   return (
     <div className="flex flex-col items-center m-4 mt-20" style={{ minHeight: '100vh'}}>
       <div className="p-8 mt-4 w-full rounded-lg bg-blue-50 shadow-xl" style={{background: themeStyles.primaryColor}}>
@@ -241,9 +239,9 @@ const Itinerary = () => {
             <div className="flex flex-wrap">
               {["Vacation", "Leisure", "Adventure", "Business", "Research", "Other"].map((reasonOption) => (
                 <button
-                  type="button" 
+                  type="button"
                   key={reasonOption}
-                  onClick={() => handleReasonClick(reasonOption)} 
+                  onClick={() => handleToggleReason (reasonOption)} 
                   className={`mr-2 mb-2 px-4 py-2 text-sm font-medium rounded-full ${selectedReasons === reasonOption ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"
                     } hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500`}
                 >
@@ -268,10 +266,19 @@ const Itinerary = () => {
 
           <div className="flex justify-end">
             <button type="button" onClick={closeTripCreatorModal} className="px-4 py-2 mr-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500">Cancel</button>
-
+            <Link
+                    href={{
+                      pathname: '/tripCreator',
+                      query: {
+                        country: country,
+                        reason: selectedReasons,
+                        interests: interests,
+                      },
+                    }}
+                  >
             {/* Check if all required fields are filled before enabling the button */}
             <button
-              type="submit" 
+              type="button" 
               data-testid="createTripSubmit"
               className={`px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 ${!(country && selectedReasons && interests) ? 'opacity-50 cursor-not-allowed' : ''}`}
               style={{ background: themeStyles.textColor }}
@@ -279,6 +286,7 @@ const Itinerary = () => {
             >
               Create Trip
             </button>
+            </Link>
           </div>
         </form>
       </div>
