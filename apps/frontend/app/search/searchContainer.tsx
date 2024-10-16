@@ -98,43 +98,49 @@ const SearchContainer = () => {
                         data-testid="flightsButton"
                         className={`search-button ${selectedTopic === 'flights' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('flights')}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'flights' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s'}}
                     >
-                        <FaPlane className="search-icon" />
+                        <FaPlane className="search-icon" style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'flights' ? `${themeStyles.navbarColor}` : '#333' }}/>
                         Airports
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'stays' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('stays')}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'stays' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                     >
-                        <FaHotel className="search-icon" />
+                        <FaHotel className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'stays' ? `${themeStyles.navbarColor}` : '#333' }}/>
                         Stays
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'carRentals' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('carRentals')}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'carRentals' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                     >
-                        <FaCar className="search-icon" />
+                        <FaCar className="search-icon" style={{ marginLeft: '6px', fontSize: '2rem', color: selectedTopic === 'carRentals' ? `${themeStyles.navbarColor}` : '#333' }}/>
                         Car Rentals
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'attractions' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('attractions')}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'attractions' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                     >
-                        <FaBinoculars className="search-icon" />
+                        <FaBinoculars className="search-icon" style={{ marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'attractions' ? `${themeStyles.navbarColor}` : '#333' }}/>
                         Attractions
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'airportTaxis' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('airportTaxis')}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'airportTaxis' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                     >
-                        <FaTaxi className="search-icon" />
+                        <FaTaxi className="search-icon"  style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'airportTaxis' ? `${themeStyles.navbarColor}` : '#333' }}/>
                         Airport Taxis
                     </button>
                     <button
                         className={`search-button ${selectedTopic === 'profile' ? 'search-button-selected' : ''}`}
                         onClick={() => handleTopicSelect('profile')}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', cursor: 'pointer', borderRadius: '8px', border: selectedTopic === 'profile' ? `2px solid ${themeStyles.navbarColor}` : '2px solid transparent', transition: 'border 0.3s' }}
                     >
-                        <FaUser className="search-icon" />
+                        <FaUser className="search-icon"  style={{marginLeft: '8px', fontSize: '2rem', color: selectedTopic === 'profile' ? `${themeStyles.navbarColor}` : '#333' }}/>
                         Profile
                     </button>
                 </div>

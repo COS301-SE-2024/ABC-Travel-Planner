@@ -32,15 +32,14 @@ export const Navbar = () => {
         style={{
           backgroundColor: themeStyles.navbarColor,
           color: themeStyles.textColor,
-          cursor: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="${encodeURIComponent(
-            themeStyles.cursorColor
-          )}"><circle cx="8" cy="8" r="5" /></svg>') 8 8, auto`,
+          cursor: 'pointer'
+,
         }}
       >
         <Link href="/">
           <div className="inline-flex items-center p-2 mr-4 cursor-pointer">
             <Image
-              src="/Images/logo2.png"
+              src="/Images/logo3.png"
               alt="Logo"
               width={80}
               height={80}
@@ -99,7 +98,7 @@ export const Navbar = () => {
             </Link>
             <Link href="/help">
               <div className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold items-center justify-center hover:bg-gray-200 hover:text-gray-800">
-                Help?
+                Help
               </div>
             </Link>
             <Link href="/settings">
@@ -108,17 +107,21 @@ export const Navbar = () => {
               </div>
             </Link>
             {/* image for profile */}
+
             {profileUrl && (
-              <div className="flex items-center justify-center">
-                <Image
-                  src={profileUrl}
-                  alt="Avatar"
-                  width={32}
-                  height={32}
-                  style={{ minHeight: "32px", minWidth: "32px" }}
-                  className="ml-2 rounded-full border border-white overflow-hidden"
-                />
-              </div>
+              <Link href="/account">
+                <div className="flex items-center justify-center">
+                  <Image
+                    src={profileUrl}
+                    alt="Avatar"
+
+                    width={40}
+                    height={40}
+                    style={{ minHeight: "32px", minWidth: "32px", height: "40px" }}
+                    className="ml-2 rounded-full border border-white overflow-hidden"
+                  />
+                </div>
+              </Link>
             )}
           </div>
         </div>

@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { AiOutlineMessage, AiOutlineClose, AiOutlineRobot } from 'react-icons/ai';
 import { useTheme } from '../context/ThemeContext';
 const ChatBot: React.FC = () => {
-  const { selectedTheme, themeStyles, setTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<{ sender: string, text: string, time: string }[]>([]);
-  const [userInput, setUserInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-
   // time in 'hh:mm AM/PM' format
   const getCurrentTime = () => {
     const date = new Date();
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<{ sender: string, text: string, time: string }[]>([{ sender: 'bot', text: "Welcome to the ABC Travel Planner chatbot! 🎒✈️ I'm here to assist you with any queries you may have about using the ABC Travel Planner and help you make the most of your travel and social media experience.\nFeel free to ask me questions like, 'How do I create an itinerary?' or 'How do I find car rentals?' and I'll provide helpful responses to guide you through the steps and features in the app.\nPlease note that while I can give you guidance and instructions, I am unable to perform actions for you. My goal is to help you navigate and explore the app effortlessly! 😊", time: getCurrentTime() }]);
+  const [userInput, setUserInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+ 
 
   // submit message
   const handleSendMessage = async () => {
@@ -95,7 +96,7 @@ const ChatBot: React.FC = () => {
               <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`rounded-lg p-3 max-w-xs ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'} speech-bubble`}>
                   {msg.text}
-                  <div className="text-xs text-gray-500 mt-1 text-right">{msg.time}</div> {/* Timestamp */}
+                  <div className="text-xs text-gray-500 mt-1 text-right">{msg.time}</div> 
                 </div>
               </div>
             ))}

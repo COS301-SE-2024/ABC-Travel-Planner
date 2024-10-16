@@ -31,7 +31,7 @@ export class PostsService {
     @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App,
   ) {
     this.lastPostId = '';
-    this.LIMIT_SIZE = 50;
+    this.LIMIT_SIZE = 120;
   }
   async createPost(user_id: string, caption: string) {
     const result = await this.firebaseApp

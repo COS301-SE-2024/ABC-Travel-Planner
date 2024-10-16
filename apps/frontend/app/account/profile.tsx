@@ -18,6 +18,7 @@ import {
   FaPaperPlane,
   FaBookmark,
   FaUser,
+  FaUserFriends,
 } from "react-icons/fa";
 import app from "@/libs/firebase/firebase";
 import axios from "axios";
@@ -34,7 +35,7 @@ import Cookie from "js-cookie";
 import getUser from "@/libs/actions/getUser";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
-import { FaPerson } from "react-icons/fa6";
+import { FaE, FaPerson } from "react-icons/fa6";
 import { useTheme } from "../context/ThemeContext";
 
 const overlayStyle: React.CSSProperties = {
@@ -112,6 +113,8 @@ const Account = () => {
   const [enlargedPostIndex, setEnlargedPostIndex] = useState<number | null>(
     null
   );
+  const [busyCommenting, setBusyCommenting] = useState(false);
+
 
   const [followers, setFollowers] = useState<any>([]);
 
@@ -251,12 +254,17 @@ const Account = () => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true)
     let file = e.target.files?.[0]; // Use optional chaining
 
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl); // Set the new image URL for preview
       setFile(file);
+      
+      setTimeout(() => {
+        setIsUploading(false)
+      }, 1000)
     }
   };
 
@@ -424,7 +432,11 @@ const Account = () => {
   // };
 
   const handleCommentSubmit = async () => {
+    console.log("ENTERED FUNCTION!")
     if (enlargedPostIndex !== null && newComment.trim()) {
+      setBusyCommenting(true)
+      console.log("Handle Comment Submit (Start): " + busyCommenting)
+
       const updatedPosts = [...posts];
       const user_id = Cookie.get("user_id");
       const temp = await getUser(user_id);
@@ -447,6 +459,8 @@ const Account = () => {
 
       setPosts(updatedPosts);
       setNewComment("");
+      setBusyCommenting(false);
+      console.log("Handle Comment Submit (After): " + busyCommenting)
     }
   };
 
@@ -480,7 +494,8 @@ const Account = () => {
     <div data-testid="accountContainer" className="profile-page">
       <header
         className="profile-header"
-        style={{ background: themeStyles.primaryColor }}
+        style={{ background: themeStyles.primaryColor , color: themeStyles.textColor}}
+
       >
         <div className="profile-pic">
           <div className="relative">
@@ -488,13 +503,20 @@ const Account = () => {
               <img src={profileImage} alt="Profile" />
             )}
             {isEditing && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="absolute bottom-0 opacity-0 right-0 cursor-pointer w-20 h-20"
-              />
+              <>
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="profileInput"
+                  onChange={handleImageChange}
+                  className="absolute bottom-0 opacity-0 right-0 cursor-pointer w-20 h-20 z-40" />
+
+                <label htmlFor="profileImageInput" className="edit-icon float-right absolute bottom-0 right-0">
+                  <FaEdit className="icon" style={{ color: "white" }} />
+                </label>
+              </>
             )}
+            
           </div>
         </div>
         <div className="profile-info">
@@ -559,10 +581,19 @@ const Account = () => {
                   <span>Member Since: {profileDetails.memberSince}</span>
                 </div>
               )}
+              <div className="mt-4">
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg flex items-center"
+                  style={{ background: themeStyles.navbarColor}}
+                  onClick={handleSignout}
+                >
+                  <FaSignOutAlt className="mr-2" /> Logout
+                </button>
+              </div>
             </>
           )}
         </div>
-        <button className="menu-button" onClick={() => setShowMenu(!showMenu)}>
+        <button className="menu-button" style={{ color: themeStyles.textColor}} onClick={() => setShowMenu(!showMenu)}>
           {showMenu ? <FaTimes /> : <FaBars />}
         </button>
         {showMenu && (
@@ -580,9 +611,7 @@ const Account = () => {
               <FaQuestionCircle /> Help Center
             </button>
 
-            <button onClick={handleSignout}>
-              <FaSignOutAlt /> Logout
-            </button>
+            
           </div>
         )}
       </header>
@@ -591,7 +620,10 @@ const Account = () => {
         className="saved-itineraries"
         style={{ background: themeStyles.primaryColor }}
       >
-        <h3 className="Following-title">My Following</h3>
+       <h3 className="text-xl font-bold mb-4 flex items-center justify-center text-center">
+        My Following
+        <FaUserFriends className="ml-2" />
+       </h3>
         <div className="profile-stats">
           <div className="following" onClick={toggleFollowing}>
             <span>{following?.length}</span>
@@ -722,7 +754,7 @@ const Account = () => {
             <div className="users-list">
               {following.map((user: any, index: any) => (
                 <div key={index} className="user-item">
-                  <Link href={`/profile/${following.user_id}`} passHref>
+                  <Link href={`/profile/${user.user_id}`} passHref>
                     <img
                       src={user.imageUrl}
                       alt={user.username}
@@ -749,7 +781,10 @@ const Account = () => {
         className="posts py-6 px-4 "
         style={{ width: "140%", background: themeStyles.primaryColor }}
       >
-        <h3 className="text-xl font-bold mb-4">My Travel Posts</h3>
+         <h3 className="text-xl font-bold mb-4 flex items-center justify-center text-center">
+          My Travel Posts
+          <FaPlane className="ml-2" />
+        </h3>
         <button
           onClick={() => setShowPostModal(true)}
           className="mt-6 mb-4 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg flex items-center mx-auto"
@@ -909,7 +944,13 @@ const Account = () => {
               className="w-full p-2 border border-gray-300 rounded-lg mb-4"
             />
             <button
-              onClick={handleCommentSubmit}
+              onClick={() => {
+                console.log("On click: " + busyCommenting)
+                if (busyCommenting === false) {
+                  handleCommentSubmit()
+                }
+              }
+              }
               className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
               style={{ backgroundColor: themeStyles.navbarColor }}
             >

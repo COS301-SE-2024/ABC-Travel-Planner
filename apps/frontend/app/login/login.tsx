@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import {
   Container,
@@ -13,6 +14,8 @@ import {
   Box,
   Link,
   useTheme,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -25,6 +28,7 @@ const SplashPage = () => {
   const router = useRouter();
   const theme = useTheme();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -92,6 +96,10 @@ const SplashPage = () => {
     setLoginData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
     <Box
       sx={{
@@ -132,18 +140,27 @@ const SplashPage = () => {
               margin="normal"
               required
             />
-            <TextField
-              data-testid="signInPassword"
-              fullWidth
-              label="Password"
-              type="password"
-              name="password"
-              value={loginData.password}
-              onChange={handleLoginChange}
-              variant="outlined"
-              margin="normal"
-              required
-            />
+             <TextField
+      data-testid="signInPassword"
+      fullWidth
+      label="Password"
+      type={passwordVisible ? "text" : "password"}
+      name="password"
+      value={loginData.password}
+      onChange={handleLoginChange}
+      variant="outlined"
+      margin="normal"
+      required
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <IconButton onClick={togglePasswordVisibility} edge="end">
+              {passwordVisible ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+    />
             <Button
               data-testid="signInSubmit"
               fullWidth

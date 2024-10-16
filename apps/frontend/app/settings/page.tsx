@@ -62,14 +62,19 @@ const countries = [
 ];
 
 const themes: {
-  value: "default" | "beach" | "adventure" | "cultural" | "nature";
+  value: "default" | "beach" | "adventure" | "cultural" | "nature" | "purple" | "silver" | "maroon"|"pink"| "Deepblue";
   name: string;
 }[] = [
-  { value: "default", name: "Default Theme" },
-  { value: "beach", name: "Beach Holiday" },
-  { value: "adventure", name: "Sunsets and Pretty skies" },
-  { value: "cultural", name: "Cultural Exploration" },
-  { value: "nature", name: "Nature Retreat" },
+  { value: "default", name: "Classic Monochrome" },
+  { value: "beach", name: "Blue Horizon" },
+  { value: "adventure", name: "Amber Glow" },
+  { value: "cultural", name: "Earthy Hues" },
+  { value: "nature", name: "Evergreen Essence" },
+  { value: "purple", name: "Purple Haze" }, 
+  { value: "silver", name: "Silver Elegance" }, 
+  { value: "maroon", name: "Burgundy Bliss " },
+  { value: "pink", name: "Blush Petal " },
+  { value: "Deepblue", name: "Royal Blues" },
 ];
 
 const SettingsPage: React.FC = () => {
@@ -84,7 +89,7 @@ const SettingsPage: React.FC = () => {
   const [showModalTheme, setShowModalTheme] = useState<boolean>(false);
 
   const handleThemeSelect = (
-    themeValue: "default" | "beach" | "adventure" | "cultural" | "nature"
+    themeValue: "default" | "beach" | "adventure" | "cultural" | "nature" | "purple" | "silver" | "maroon"|"pink"|"Deepblue"
   ) => {
     setTheme(themeValue); // Use the context method to set theme
     setShowModal(false);
@@ -364,8 +369,8 @@ const SettingsPage: React.FC = () => {
             <span>User Management</span>
           </h2>
           {expandedSection === "user-management" && (
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
+            <div className="space-y-4 bg-white p-4 rounded-lg shadow-sm">
+              <div className="flex justify-between items-center ">
                 <div>
                   <h3 className="text-xl font-semibold">Blocked Users</h3>
                   <p className="text-gray-700">
@@ -383,7 +388,7 @@ const SettingsPage: React.FC = () => {
                 <div>
                   <h3 className="text-xl font-semibold">Activity</h3>
                   <p className="text-gray-700">
-                    View posts you liked, commented on, or deleted.
+                    View the number of posts you created, liked and number of comments made.
                   </p>
                 </div>
                 <button
@@ -561,7 +566,7 @@ const SettingsPage: React.FC = () => {
             <span>Itinerary Settings</span>
           </h2>
           {expandedSection === "itinerary-settings" && (
-            <div className="space-y-4">
+            <div className="space-y-4 bg-white p-4 rounded-lg shadow-sm">
               <div className="flex justify-between items-center">
                 <h3 className="text-xl font-semibold">
                   Select Favourite Countries
@@ -739,7 +744,7 @@ const SettingsPage: React.FC = () => {
             <span>Account Settings</span>
           </h2>
           {expandedSection === "account-settings" && (
-            <div className="space-y-4">
+            <div className="space-y-4 bg-white p-4 rounded-lg shadow-sm">
               <div className="flex justify-between items-center">
                 <h3 className="text-xl font-semibold">Change Password</h3>
                 <button
@@ -818,7 +823,7 @@ const SettingsPage: React.FC = () => {
           style={{ background: themeStyles.primaryColor }}
         >
           <h2
-            className="text-2xl font-semibold mb-4 cursor-pointer flex items-center space-x-2"
+            className="text-2xl font-semibold mb-4 cursor-pointer transition-colors duration-200 hover:text-blue-600 flex items-center space-x-2"
             onClick={() => setShowModal(true)}
           >
             <HomeIcon className="w-6 h-6 text-purple-500" />
