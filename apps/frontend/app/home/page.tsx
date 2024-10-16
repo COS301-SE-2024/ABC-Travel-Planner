@@ -202,7 +202,7 @@ const Home = () => {
         </div>
 
         <div
-          className="flex justify-center mb-4 mx-auto max-w-md"
+          className="flex justify-center mb-4 mx-auto max-w-md mt-3"
           style={{ background: themeStyles.primaryColor, borderRadius: '12px' }}
         >
           <h2 className="text-4xl font-extrabold" style={{ color: themeStyles.textColor }}>
