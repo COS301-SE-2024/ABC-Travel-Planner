@@ -34,7 +34,6 @@ const Itinerary = () => {
   const handleCreateTrip = async (e: any) => {
     e.preventDefault();
     setTripGenerated(true);
-    console.log("Trip generated:", true);
 
     closeTripCreatorModal();
   };
@@ -104,7 +103,7 @@ const Itinerary = () => {
   };
   
   return (
-    <div className="flex flex-col items-center m-4 mt-20">
+    <div className="flex flex-col items-center m-4 mt-20" style={{ minHeight: '100vh'}}>
       <div className="p-8 mt-4 w-full rounded-lg bg-blue-50 shadow-xl" style={{background: themeStyles.primaryColor}}>
         <div className="flex justify-between items-center mb-8">
           <h1 data-testid="itinerariesTitle" className="text-4xl font-bold text-gray-800" style={{ color: themeStyles.textColor}}>My Itineraries</h1>

@@ -245,7 +245,7 @@ const SettingsPage: React.FC = () => {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getLikesCount`,
       { userId }
     );
-    //console.log(response);
+
     if (!response.data) {
       throw new Error("Failed to fetch likes count");
     }
@@ -257,8 +257,7 @@ const SettingsPage: React.FC = () => {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getCommentsCount`,
       { userId }
     );
-    console.log("Data is :" + response.data);
-    console.log(response);
+
     if (!response.data) {
       throw new Error("Failed to fetch comments count");
     }
@@ -270,8 +269,7 @@ const SettingsPage: React.FC = () => {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/activity/getPostsCount`,
       { userId }
     );
-    console.log("Data is :" + response.data);
-    console.log(response);
+
     if (!response.data) {
       throw new Error("Failed to fetch posts count");
     }
@@ -390,7 +388,7 @@ const SettingsPage: React.FC = () => {
                 <div>
                   <h3 className="text-xl font-semibold">Activity</h3>
                   <p className="text-gray-700">
-                    View posts you liked, commented on, or deleted.
+                    View the number of posts you created, liked and number of comments made.
                   </p>
                 </div>
                 <button

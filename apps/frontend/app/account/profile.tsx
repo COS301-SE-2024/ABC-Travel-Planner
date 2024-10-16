@@ -1,5 +1,6 @@
 "use client";
 
+import PopupMessage from '../utils/PopupMessage';
 import {
   FaMapMarkerAlt,
   FaRegCalendarAlt,
@@ -34,8 +35,30 @@ import Cookie from "js-cookie";
 import getUser from "@/libs/actions/getUser";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
-import { FaPerson } from "react-icons/fa6";
+import { FaE, FaPerson } from "react-icons/fa6";
 import { useTheme } from "../context/ThemeContext";
+
+const overlayStyle: React.CSSProperties = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 1000,
+};
+
+const spinnerStyle: React.CSSProperties = {
+  width: '50px',
+  height: '50px',
+  border: '8px solid white',
+  borderTop: '8px solid blue',
+  borderRadius: '50%',
+  animation: 'spin 1s linear infinite',
+};
 
 const Account = () => {
   const [profileDetails, setProfileDetails] = useState<{
@@ -63,6 +86,9 @@ const Account = () => {
     timestamp: string;
   }
   const { selectedTheme, setTheme, themeStyles } = useTheme();
+  const [isUploading, setIsUploading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [trigger, setTrigger] = useState(false);
   const [originalProfileDetails, setOriginalProfileDetails] =
     useState(profileDetails);
   const [file, setFile] = useState<any>(null);
@@ -87,6 +113,8 @@ const Account = () => {
   const [enlargedPostIndex, setEnlargedPostIndex] = useState<number | null>(
     null
   );
+  const [busyCommenting, setBusyCommenting] = useState(false);
+
 
   const [followers, setFollowers] = useState<any>([]);
 
@@ -109,9 +137,7 @@ const Account = () => {
   };
   const fetchProfileDetails = async () => {
     const temp = Cookie.get("user_id");
-    console.log(temp);
     const r = await getUser(temp);
-    console.log(r);
     const tmp = JSON.parse(r || "");
     setProfileDetails(tmp);
     if (tmp.imageUrl) {
@@ -228,12 +254,17 @@ const Account = () => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true)
     let file = e.target.files?.[0]; // Use optional chaining
 
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl); // Set the new image URL for preview
       setFile(file);
+      
+      setTimeout(() => {
+        setIsUploading(false)
+      }, 1000)
     }
   };
 
@@ -265,11 +296,9 @@ const Account = () => {
 
   const handleSave = async () => {
     const temp = Cookie.get("user_id");
-    console.log(temp);
     // Save changes to the database
     if (file) {
       const url = await uploadImage(file);
-      console.log(url);
     }
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     if (originalProfileDetails.email !== profileDetails.email) {
@@ -277,7 +306,6 @@ const Account = () => {
         email: profileDetails.email,
         user_id: temp,
       });
-      console.log(response);
     }
     await updateUserProfile(profileDetails);
     if (file) {
@@ -340,6 +368,7 @@ const Account = () => {
     }
 
     if (newPostImage && newPostCaption) {
+      setIsUploading(true);
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const result = await axios.post(`${backendUrl}/posts/create`, {
         user_id: profileDetails.user_id,
@@ -354,8 +383,13 @@ const Account = () => {
         postId: result.data,
       });
       setPosts([newPost.data, ...posts]);
+
+      
       setNewPostImage("");
       setNewPostCaption("");
+      setTimeout(() => {
+        setIsUploading(false)
+      }, 4000)
       setShowPostModal(false);
     }
   };
@@ -398,7 +432,11 @@ const Account = () => {
   // };
 
   const handleCommentSubmit = async () => {
+    console.log("ENTERED FUNCTION!")
     if (enlargedPostIndex !== null && newComment.trim()) {
+      setBusyCommenting(true)
+      console.log("Handle Comment Submit (Start): " + busyCommenting)
+
       const updatedPosts = [...posts];
       const user_id = Cookie.get("user_id");
       const temp = await getUser(user_id);
@@ -421,6 +459,8 @@ const Account = () => {
 
       setPosts(updatedPosts);
       setNewComment("");
+      setBusyCommenting(false);
+      console.log("Handle Comment Submit (After): " + busyCommenting)
     }
   };
 
@@ -442,7 +482,16 @@ const Account = () => {
   };
 
   return (
-    <div data-testid="accountContainer" className="profile-page" style={{background: themeStyles.background, minHeight: '100vh'}}>
+    <>
+    <div>
+        {isUploading && (
+          <div style={overlayStyle}>
+            <div style={spinnerStyle}></div>
+          </div>
+        )}
+      </div>
+
+    <div data-testid="accountContainer" className="profile-page">
       <header
         className="profile-header"
         style={{ background: themeStyles.primaryColor , color: themeStyles.textColor}}
@@ -454,13 +503,20 @@ const Account = () => {
               <img src={profileImage} alt="Profile" />
             )}
             {isEditing && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="absolute bottom-0 opacity-0 right-0 cursor-pointer w-20 h-20"
-              />
+              <>
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="profileInput"
+                  onChange={handleImageChange}
+                  className="absolute bottom-0 opacity-0 right-0 cursor-pointer w-20 h-20 z-40" />
+
+                <label htmlFor="profileImageInput" className="edit-icon float-right absolute bottom-0 right-0">
+                  <FaEdit className="icon" style={{ color: "white" }} />
+                </label>
+              </>
             )}
+            
           </div>
         </div>
         <div className="profile-info">
@@ -669,11 +725,13 @@ const Account = () => {
             <div className="users-list">
               {followers.map((follower: any, index: any) => (
                 <div key={index} className="user-item">
-                  <img
-                    src={follower.imageUrl}
-                    alt={follower.username}
-                    className="user-pic"
-                  />
+                  <Link href={`/profile/${follower.user_id}`} passHref>
+                    <img
+                      src={follower.imageUrl}
+                      alt={follower.username}
+                      className="user-pic"
+                    />
+                  </Link>
                   <p>{follower.username}</p>
                 </div>
               ))}
@@ -696,11 +754,13 @@ const Account = () => {
             <div className="users-list">
               {following.map((user: any, index: any) => (
                 <div key={index} className="user-item">
-                  <img
-                    src={user.imageUrl}
-                    alt={user.username}
-                    className="user-pic"
-                  />
+                  <Link href={`/profile/${user.user_id}`} passHref>
+                    <img
+                      src={user.imageUrl}
+                      alt={user.username}
+                      className="user-pic"
+                    />
+                  </Link>
                   <p>{user.username}</p>
                 </div>
               ))}
@@ -748,7 +808,7 @@ const Account = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <p className="text-md mb-2">{post.caption}</p>
+                <p className="text-md mb-2 line-clamp-1">{post.caption}</p>
                 <div className="flex justify-between items-center">
                   <button
                     onClick={(e) => {
@@ -855,7 +915,14 @@ const Account = () => {
               </button>
               {/* Delete Button */}
               <button
-                onClick={() => handleDeletePost(posts[enlargedPostIndex].id)}
+                onClick={() => {
+                  handleDeletePost(posts[enlargedPostIndex].id)
+                  setMessage(`Post deleted!`);
+                  setTrigger(true);
+                  setTimeout(() => {
+                      setTrigger(false);
+                  }, 1500);
+                }}
                 className="flex items-center text-red-600"
               >
                 <FaTrash className="mr-1 text-2xl" />
@@ -877,7 +944,13 @@ const Account = () => {
               className="w-full p-2 border border-gray-300 rounded-lg mb-4"
             />
             <button
-              onClick={handleCommentSubmit}
+              onClick={() => {
+                console.log("On click: " + busyCommenting)
+                if (busyCommenting === false) {
+                  handleCommentSubmit()
+                }
+              }
+              }
               className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
               style={{ backgroundColor: themeStyles.navbarColor }}
             >
@@ -886,7 +959,9 @@ const Account = () => {
           </div>
         </div>
       )}
+      <PopupMessage msg={message} trigger={trigger}/>
     </div>
+    </>
   );
 };
 

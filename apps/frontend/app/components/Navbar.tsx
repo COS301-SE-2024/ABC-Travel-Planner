@@ -39,7 +39,7 @@ export const Navbar = () => {
         <Link href="/">
           <div className="inline-flex items-center p-2 mr-4 cursor-pointer">
             <Image
-              src="/Images/logo2.png"
+              src="/Images/logo3.png"
               alt="Logo"
               width={80}
               height={80}
@@ -107,17 +107,21 @@ export const Navbar = () => {
               </div>
             </Link>
             {/* image for profile */}
+
             {profileUrl && (
-              <div className="flex items-center justify-center">
-                <Image
-                  src={profileUrl}
-                  alt="Avatar"
-                  width={32}
-                  height={32}
-                  style={{ minHeight: "32px", minWidth: "32px" }}
-                  className="ml-2 rounded-full border border-white overflow-hidden"
-                />
-              </div>
+              <Link href="/account">
+                <div className="flex items-center justify-center">
+                  <Image
+                    src={profileUrl}
+                    alt="Avatar"
+
+                    width={40}
+                    height={40}
+                    style={{ minHeight: "32px", minWidth: "32px", height: "40px" }}
+                    className="ml-2 rounded-full border border-white overflow-hidden"
+                  />
+                </div>
+              </Link>
             )}
           </div>
         </div>

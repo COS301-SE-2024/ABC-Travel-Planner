@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
 import { insertRecord } from '../utils/functions/insertRecord';
 import PopupMessage  from '../utils/PopupMessage';
+import { useTheme } from '../context/ThemeContext';
 
 interface FilterCardProps {
   place: any;
@@ -24,13 +25,13 @@ export const getRatingColor = (rating: number) => {
 
 export const getPricePlaceholder = (type: string) => {
   switch (type) {
-    case 'stays':
+    case 'Hotels':
       return 'per night';
-    case 'attractions':
+    case 'Attractions':
       return 'per ticket';
-    case 'carRental':
+    case 'Car Rentals':
       return 'per day';
-    case 'airportTaxis':
+    case 'Airport Taxis':
       return 'per ride';
     default:
       return 'Price not available';
@@ -40,16 +41,16 @@ export const getPricePlaceholder = (type: string) => {
 export const generatePrice = (id: string, type: string, country: string) => {
   let basePrice;
   switch (type) {
-    case 'stays':
+    case 'Hotels':
       basePrice = 100;
       break;
-    case 'attractions':
+    case 'Attractions':
       basePrice = 50;
       break;
-    case 'carRental':
+    case 'Car Rentals':
       basePrice = 70;
       break;
-    case 'airportTaxis':
+    case 'Airport Taxis':
       basePrice = 40;
       break;
     default:
@@ -154,13 +155,11 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
 
   const uploadItem = async () => {
     const destination = place;
-    console.log("TYPE: " + typeof destination);
 
     if (!uploaded && destination) {
       const id = JSON.parse(localStorage.getItem('id') as string).id;
       const location = JSON.parse(localStorage.getItem('location') as string).location;
       const objectToUpload = place;
-      console.log("object: " + JSON.stringify(objectToUpload));
 
       const userId = Cookie.get('user_id') ?? 'User1';
       const itemTitle = objectToUpload.displayName ?? 'NONAME';
@@ -186,9 +185,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
           image_url
         }
   
-        console.log("Going to upload to db...")
-        console.log(uploadDetails)
-  
+
         try {
           setIsUploading(true);
           await insertRecord(uploadDetails);
@@ -219,6 +216,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
   ratingNum = ratingNum.toFixed(1);
   const cityCountry = addressParts.slice(-2).map((part: string) => part.trim()).join(', ');
   const price = generatePrice(place.id, place.type, location.country);
+  const { selectedTheme, themeStyles, setTheme } = useTheme();
 
   return (
     <><div>
@@ -241,7 +239,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
         <div className="flex justify-between">
           <div className="w-1/2 pr-4">
             <div style={{ cursor: 'pointer' }} onClick={uploadItem}>
-              <h1 className="text-4xl font-bold mb-2 text-blue-500">{place.displayName}</h1>
+              <h1 className="text-4xl font-bold mb-2 text-blue-500" style={{ color: themeStyles.textColor }}>{place.displayName}</h1>
             </div>
             <p className="text-gray-700 text-lg font-semibold">{`${location.city} ${location.country}`}</p>
           </div>
@@ -293,6 +291,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 <button
                   onClick={() => setShowCalendar(!showCalendar)}
                   className="bg-blue-500 text-white rounded-md px-4 py-2"
+                  style={{ background: themeStyles.navbarColor }}
                 >
                   Select Dates
                 </button>
@@ -346,9 +345,9 @@ const FilterCard: React.FC<FilterCardProps> = ({ place }) => {
                 )}
               </div>
               <div className="text-right">
-                <p className="text-3xl text-blue-500 font-semibold">ZAR {place.price}</p>
-                <p className="text-blue-500 text-sm">{getPricePlaceholder(place.type)}</p>
-                <p className="text-blue-500 text-sm">Rates and taxes included</p>
+                <p className="text-3xl text-blue-500 font-semibold" style={{ color: themeStyles.textColor }}>ZAR {place.price}</p>
+                <p className="text-blue-500 text-sm" style={{ color: themeStyles.textColor }}>{getPricePlaceholder(place.type)}</p>
+                <p className="text-blue-500 text-sm" style={{ color: themeStyles.navbarColor }}>Rates and taxes included</p>
               </div>
             </div>
           </div>

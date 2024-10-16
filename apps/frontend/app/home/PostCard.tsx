@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart as filledHeart,
@@ -62,9 +63,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
       onClick={handleOverlayClick}
     >
       <div className="bg-white p-4 rounded shadow-lg">
-        <button onClick={onClose} className="text-red-500">
+        {/* <button onClick={onClose} className="text-red-500">
           Close
-        </button>
+        </button> */}
         {children}
       </div>
     </div>
@@ -91,7 +92,9 @@ const PostCard: React.FC<PostCardProps> = ({
   const { selectedTheme, themeStyles, setTheme } = useTheme();
   const curr_user = Cookie.get("user_id") ?? "";
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  console.log(backendUrl);
+  const [profilePicUrl, setProfilePicUrl] = useState("");
+  const [busyCommenting, setBusyCommenting] = useState(false);
+  const router = useRouter();
 
   const [newComment, setNewComment] = useState<Comment>({
     comment: "",
@@ -107,6 +110,9 @@ const PostCard: React.FC<PostCardProps> = ({
       try {
         const temp = await getUser(curr_user);
         const u = JSON.parse(temp || "{}");
+        const t = await getUser(user_id);
+        const u2 = JSON.parse(t || "{}");
+        setProfilePicUrl(u2.imageUrl);
         setNewComment({
           comment: "",
           id: "",
@@ -115,6 +121,7 @@ const PostCard: React.FC<PostCardProps> = ({
           timestamp: 0,
           username: u.username,
         });
+
         const isLikedRes = await fetch(`${backendUrl}/likes/userLikesPost`, {
           method: "POST",
           headers: {
@@ -176,13 +183,22 @@ const PostCard: React.FC<PostCardProps> = ({
       });
       const following = await isFollowingRes.text();
       if (following == "true") {
-        console.log("Currently following user, updating frontend");
         setIsFollowing("Following");
       }
     };
 
     isFollowing();
   }, []);
+
+  const handleViewProfile = () => {
+    const curr = user_id;
+    const curr_user_id = Cookie.get("user_id");
+    if (curr_user_id === curr) {
+      router.push("/account");
+    } else {
+      router.push(`/profile/${curr}`);
+    }
+  };
 
   const handleLike = async () => {
     if (liked) {
@@ -290,7 +306,8 @@ const PostCard: React.FC<PostCardProps> = ({
 
       const midData = await commentRes.text();
       let receivedComments: Comment[] = [];
-      console.log(midData);
+
+
       JSON.parse(midData).map(
         (element: {
           comment: string;
@@ -316,7 +333,7 @@ const PostCard: React.FC<PostCardProps> = ({
       const r = await axios.post(`${backendUrl}/block/blockedUsers`, {
         user_id: user_id,
       });
-      
+
       const blockedUsers = r.data;
 
       const r2 = await axios.post(`${backendUrl}/block/blockedBy`, {
@@ -333,17 +350,18 @@ const PostCard: React.FC<PostCardProps> = ({
         (item) => !blockedBy.some((user: any) => user.user_id === item.user_id)
       );
 
-      console.log("Received comments: " + JSON.stringify(filteredData2));
-      setComments(filteredData2);
+      const sortedComments = filteredData2.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0));
+
+      setComments(sortedComments);
     }
   };
 
   const handleAddComment = async () => {
-    console.log("Adding comment...");
     if (newComment) {
+      setBusyCommenting(true);
+      console.log("handleAddComment (Before): " + busyCommenting)
       const temp = await getUser(curr_user);
       const u = JSON.parse(temp || "{}");
-      console.log(JSON.stringify(u));
 
       const dataToAdd = {
         comment: newComment.comment,
@@ -352,7 +370,6 @@ const PostCard: React.FC<PostCardProps> = ({
         username: u.username,
       };
 
-      console.log("Comment to add: " + JSON.stringify(newComment));
 
       const addCommentRes = await fetch(`${backendUrl}/comments/create`, {
         method: "POST",
@@ -380,6 +397,9 @@ const PostCard: React.FC<PostCardProps> = ({
         timestamp: 0,
         username: u.username,
       });
+
+      setBusyCommenting(false);
+      console.log("handleAddComment (Before): " + busyCommenting)
     }
   };
 
@@ -401,7 +421,6 @@ const PostCard: React.FC<PostCardProps> = ({
       (now.getTime() - postDate.getTime()) / 1000
     );
 
-    console.log("Time Difference (seconds):", diffInSeconds);
 
     if (diffInSeconds < 60) {
       return `${diffInSeconds} seconds ago`;
@@ -508,7 +527,7 @@ const PostCard: React.FC<PostCardProps> = ({
           {/* Displaying the post image */}
           {image_url && (
             <img
-              src={`https://firebasestorage.googleapis.com/v0/b/abctravelplanner.appspot.com/o/Profiles%2F${user_id}.jpg?alt=media&token=cb1b06de-89b8-4918-8625-46fd742454e9`}
+              src={profilePicUrl}
               alt="Profile"
               className="profile-image w-12 h-12 rounded-full object-cover"
             />
@@ -517,7 +536,7 @@ const PostCard: React.FC<PostCardProps> = ({
           {/* User info and post description */}
           <div className="flex-1">
             <a
-              href={`/profile/${user_id}`}
+              onClick={handleViewProfile}
               className="text-lg font-bold text-black hover:underline"
               style={{ color: themeStyles.textColor }}
             >
@@ -556,11 +575,20 @@ const PostCard: React.FC<PostCardProps> = ({
 
         {/* Modal for enlarged image */}
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <img
-            src={image_url}
-            alt="Enlarged Post Image"
-            className="max-w-full max-h-screen"
-          />
+          <div className="relative max-w-screen-sm mx-auto bg-white rounded-lg shadow-lg p-4">
+            {/* Close cross */}
+            <span
+              className="absolute top-[-15px] right-2 text-4xl text-gray-600 hover:text-gray-900 cursor-pointer"
+              onClick={() => setIsModalOpen(false)}
+            >
+              &times;
+            </span>
+            <img
+              src={image_url}
+              alt="Enlarged Post Image"
+              className="max-w-full max-h-[80vh] rounded-lg"
+            />
+          </div>
         </Modal>
 
         {/* Like and comment buttons */}
@@ -597,13 +625,23 @@ const PostCard: React.FC<PostCardProps> = ({
                     background: themeStyles.background,
                   }}
                 >
-                  <a
-                    href={`/user/${comment.user_id}`}
-                    className="font-bold text-black hover:underline"
-                    style={{ color: themeStyles.textColor }}
-                  >
-                    @{comment.username}
-                  </a>
+                  {curr_user !== comment.user_id ? (
+                    <a
+                      href={`/profile/${comment.user_id}`}
+                      className="font-bold text-black hover:underline"
+                      style={{ color: themeStyles.textColor }}
+                    >
+                      @{comment.username}
+                    </a>
+                  ) : (
+                    <a
+                      href={`/account`}
+                      className="font-bold text-black hover:underline"
+                      style={{ color: themeStyles.textColor }}
+                    >
+                      @{comment.username}
+                    </a>
+                  )}
                   : {comment.comment}
                 </div>
               ))}
@@ -612,20 +650,27 @@ const PostCard: React.FC<PostCardProps> = ({
               <input
                 type="text"
                 value={newComment.comment}
-                onChange={(e) =>
+                onChange={(e) => {
                   setNewComment({
                     post_id,
                     user_id: Cookie.get("user_id") || "",
                     comment: e.target.value,
                     username: newComment.username,
-                  })
-                }
+                  });
+                }}
                 placeholder="Add a comment..."
                 className="flex-grow p-2 border rounded-md"
               />
               <button
-                onClick={handleAddComment}
-                className="submit-comment-button mb-2"
+                onClick={() => {
+                  if (newComment.comment.trim() !== "") {
+                    console.log("Onclick: " + busyCommenting)
+                    if (!busyCommenting) {
+                      handleAddComment();
+                    }
+                  }
+                }}
+                className="add-post-button mb-2"
                 style={{ background: themeStyles.navbarColor }}
               >
                 Add
