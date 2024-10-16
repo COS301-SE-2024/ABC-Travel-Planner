@@ -31,7 +31,7 @@ const SummaryDiv: React.FC<SummaryDivProps> = ({ data }) => {
                     </div>
                     <div className="flex items-center text-gray-600" style={{ color: themeStyles.textColor }}>
                         <FaGlobe className="mr-2 text-gray-600" />
-                        <span><strong>Website:</strong> <a href={data.websiteUri} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{data.websiteUri}</a></span>
+                        <span><strong>Website:</strong> <a href={data.websiteUri} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" style={{ wordBreak: "break-all", overflowWrap: "break-word" }}>{data.websiteUri}</a></span>
                     </div>
                     <div className="flex items-center text-gray-600" style={{ color: themeStyles.textColor }}>
                         <FaPhone className="mr-2 text-gray-600" />
