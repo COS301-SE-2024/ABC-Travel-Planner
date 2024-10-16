@@ -35,6 +35,31 @@ const Home = () => {
   const [showInfo, setShowInfo] = useState(false);
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const toggleInfo = () => setShowInfo(!showInfo);
+  const [showInfoIcon, setShowInfoIcon] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        // User is scrolling down
+        setShowInfoIcon(false);
+      } else {
+        // User is scrolling up
+        setShowInfoIcon(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -131,26 +156,32 @@ const Home = () => {
   const { selectedTheme, themeStyles, setTheme } = useTheme();
   return (
     <div className="w-full mt-8" style={{ minHeight: '100vh', position: 'relative' }}>
-      {/* Floating Info Icon */}
-      <div className="absolute top-4 left-4 z-10">
-        <button onClick={toggleInfo} className="p-2 bg-blue-500 rounded-full shadow-lg" style={{background:themeStyles.navbarColor}}>
-          <AiOutlineInfoCircle
-            size={40}
-            color={showInfo ? themeStyles.primaryColor : themeStyles.primaryColor}
-          />
-        </button>
-        {showInfo && (
-          <div
-            className="mt-2 p-4 rounded-lg shadow-md"
-            style={{
-              background: themeStyles.primaryColor,
-              color: themeStyles.textColor,
-            }}
+     {/* Floating Info Icon */}
+     {showInfoIcon && (
+        <div className="absolute top-4 left-4 z-10">
+          <button
+            onClick={toggleInfo}
+            className="p-2 bg-blue-500 rounded-full shadow-lg"
+            style={{ background: themeStyles.navbarColor }}
           >
-            <p>Click on the destination stories to explore the location in detail.</p>
-          </div>
-        )}
-      </div>
+            <AiOutlineInfoCircle
+              size={40}
+              color={showInfo ? themeStyles.primaryColor : themeStyles.primaryColor}
+            />
+          </button>
+          {showInfo && (
+            <div
+              className="mt-2 p-4 rounded-lg shadow-md"
+              style={{
+                background: themeStyles.primaryColor,
+                color: themeStyles.textColor,
+              }}
+            >
+              <p>Click on the destination stories to explore the location in detail.</p>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="w-full mt-8" style={{ minHeight: '100vh' }}>
         <div
