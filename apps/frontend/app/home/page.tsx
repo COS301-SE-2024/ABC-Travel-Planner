@@ -55,7 +55,6 @@ const Home = () => {
 
         if (!response.ok) throw new Error("Network response was not ok");
         const data: Post[] = await response.json();
-        //blockedUsers returns an array with users as objects so check the user_id field
         const filteredData = data.filter(
           (item) =>
             !blockedUsers.some((user: any) => user.user_id === item.user_id)
@@ -77,16 +76,16 @@ const Home = () => {
                 throw new Error("Failed to fetch user profile image");
               }
               const userData = await userResponse.json();
-              const imageLink = userData.profileImageUrl; // Assuming this field contains the image URL
-              return { ...item, profileImageUrl: imageLink }; // Add the image URL to the post data
+              const imageLink = userData.profileImageUrl; 
+              return { ...item, profileImageUrl: imageLink }; 
             } catch (error) {
               console.error("Error fetching profile image:", error);
-              return item; // Return the original item if the fetch fails
+              return item; 
             }
           })
         );
 
-        setPosts(updatedData); // Update state with posts containing profile images
+        setPosts(updatedData); 
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -105,7 +104,7 @@ const Home = () => {
         const data = await response.json();
         const places = data.results;
 
-        // Limit to 12 destinations
+        
         const imageDestinations = places.slice(0, 12).map((place: Place) => {
           if (place.photos && place.photos.length > 0) {
             const photoReference = place.photos[0].photo_reference;
@@ -133,8 +132,8 @@ const Home = () => {
   return (
     <div className="w-full mt-8" style={{ minHeight: '100vh', position: 'relative' }}>
       {/* Floating Info Icon */}
-      <div className="absolute top-4 right-4 z-10">
-        <button onClick={toggleInfo} className="p-2 bg-blue-500 rounded-full shadow-lg">
+      <div className="absolute top-4 left-4 z-10">
+        <button onClick={toggleInfo} className="p-2 bg-blue-500 rounded-full shadow-lg" style={{background:themeStyles.navbarColor}}>
           <AiOutlineInfoCircle
             size={40}
             color={showInfo ? themeStyles.primaryColor : themeStyles.primaryColor}
