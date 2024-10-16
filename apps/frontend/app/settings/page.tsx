@@ -383,7 +383,7 @@ const SettingsPage: React.FC = () => {
                 <div>
                   <h3 className="text-xl font-semibold">Activity</h3>
                   <p className="text-gray-700">
-                    View posts you liked, commented on, or deleted.
+                    View the number of posts you created, liked and number of comments made.
                   </p>
                 </div>
                 <button

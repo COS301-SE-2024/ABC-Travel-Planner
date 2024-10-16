@@ -36,7 +36,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, displayName }) => {
       <div className="main-photos col-span-2 grid grid-cols-2 md:grid-cols-2 gap-3">
         {mainPhotos.map((photo: string, index: number) => (
           <div key={photo} className="main-photo">
-            <Image src={`${photo}`} alt={`Photo ${index + 1}`} width={800} height={800} className="rounded-lg shadow-lg" />
+            <Image src={`${photo}`} alt={`Photo ${index + 1}`} width={800} height={800} className="rounded-lg shadow-lg" style={{ minHeight: '500px' }}/>
           </div>
         ))}
       </div>

@@ -34,7 +34,7 @@ import Cookie from "js-cookie";
 import getUser from "@/libs/actions/getUser";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
-import { FaPerson } from "react-icons/fa6";
+import { FaE, FaPerson } from "react-icons/fa6";
 import { useTheme } from "../context/ThemeContext";
 
 const overlayStyle: React.CSSProperties = {
@@ -112,6 +112,8 @@ const Account = () => {
   const [enlargedPostIndex, setEnlargedPostIndex] = useState<number | null>(
     null
   );
+  const [busyCommenting, setBusyCommenting] = useState(false);
+
 
   const [followers, setFollowers] = useState<any>([]);
 
@@ -251,12 +253,17 @@ const Account = () => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true)
     let file = e.target.files?.[0]; // Use optional chaining
 
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl); // Set the new image URL for preview
       setFile(file);
+      
+      setTimeout(() => {
+        setIsUploading(false)
+      }, 1000)
     }
   };
 
@@ -424,7 +431,11 @@ const Account = () => {
   // };
 
   const handleCommentSubmit = async () => {
+    console.log("ENTERED FUNCTION!")
     if (enlargedPostIndex !== null && newComment.trim()) {
+      setBusyCommenting(true)
+      console.log("Handle Comment Submit (Start): " + busyCommenting)
+
       const updatedPosts = [...posts];
       const user_id = Cookie.get("user_id");
       const temp = await getUser(user_id);
@@ -447,6 +458,8 @@ const Account = () => {
 
       setPosts(updatedPosts);
       setNewComment("");
+      setBusyCommenting(false);
+      console.log("Handle Comment Submit (After): " + busyCommenting)
     }
   };
 
@@ -488,13 +501,20 @@ const Account = () => {
               <img src={profileImage} alt="Profile" />
             )}
             {isEditing && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="absolute bottom-0 opacity-0 right-0 cursor-pointer w-20 h-20"
-              />
+              <>
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="profileInput"
+                  onChange={handleImageChange}
+                  className="absolute bottom-0 opacity-0 right-0 cursor-pointer w-20 h-20 z-40" />
+
+                <label htmlFor="profileImageInput" className="edit-icon float-right absolute bottom-0 right-0">
+                  <FaEdit className="icon" style={{ color: "white" }} />
+                </label>
+              </>
             )}
+            
           </div>
         </div>
         <div className="profile-info">
@@ -722,7 +742,7 @@ const Account = () => {
             <div className="users-list">
               {following.map((user: any, index: any) => (
                 <div key={index} className="user-item">
-                  <Link href={`/profile/${following.user_id}`} passHref>
+                  <Link href={`/profile/${user.user_id}`} passHref>
                     <img
                       src={user.imageUrl}
                       alt={user.username}
@@ -909,7 +929,13 @@ const Account = () => {
               className="w-full p-2 border border-gray-300 rounded-lg mb-4"
             />
             <button
-              onClick={handleCommentSubmit}
+              onClick={() => {
+                console.log("On click: " + busyCommenting)
+                if (busyCommenting === false) {
+                  handleCommentSubmit()
+                }
+              }
+              }
               className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg"
               style={{ backgroundColor: themeStyles.navbarColor }}
             >
