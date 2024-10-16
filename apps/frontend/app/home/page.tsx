@@ -158,7 +158,12 @@ const Home = () => {
     <div className="w-full mt-8" style={{ minHeight: '100vh', position: 'relative' }}>
      {/* Floating Info Icon */}
      {showInfoIcon && (
-        <div className="absolute top-4 left-4 z-10">
+        <div
+          className={`fixed top-18 left-4 z-10 transition-opacity duration-300 ease-in-out ${
+            showInfoIcon ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{ marginTop: '16px' }} // Ensures it doesn't overlap the navbar
+        >
           <button
             onClick={toggleInfo}
             className="p-2 bg-blue-500 rounded-full shadow-lg"
