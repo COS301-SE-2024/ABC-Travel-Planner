@@ -525,6 +525,15 @@ const Account = () => {
                   <span>Member Since: {profileDetails.memberSince}</span>
                 </div>
               )}
+              <div className="mt-4">
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg flex items-center"
+                  style={{ background: themeStyles.navbarColor}}
+                  onClick={handleSignout}
+                >
+                  <FaSignOutAlt className="mr-2" /> Logout
+                </button>
+              </div>
             </>
           )}
         </div>
@@ -546,9 +555,7 @@ const Account = () => {
               <FaQuestionCircle /> Help Center
             </button>
 
-            <button onClick={handleSignout}>
-              <FaSignOutAlt /> Logout
-            </button>
+            
           </div>
         )}
       </header>
