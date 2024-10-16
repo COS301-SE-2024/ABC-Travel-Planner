@@ -64,8 +64,8 @@ const Help = () => {
           </div>
           <p className="text-gray-700">If you have any other questions or need assistance, please contact our customer support team:</p>
           <p className="text-gray-700">
-            Email: <FaEnvelope className="inline-block" /><a className="text-blue-500" href="mailto:abctravel@gmail.com"> techtitans.capstone@gmail.com</a><br />
-            Phone:<FaPhone className="inline-block" /> <a className="text-blue-500" href="tel:+1814562345661"> 081 586 3228 </a> or <a className="text-blue-500" href="tel:+1713452668"> 063 244 1519</a>
+            Email: <FaEnvelope className="inline-block" /><a className="text-blue-500" href="mailto:techtitans.capstone@gmail.com"> techtitans.capstone@gmail.com</a><br />
+            Phone:<FaPhone className="inline-block" /> <a className="text-blue-500" href="tel:+27 815863228"> 081 586 3228 </a> or <a className="text-blue-500" href="tel:+27 632441519"> 063 244 1519</a>
           </p>
         </div>
       </div>

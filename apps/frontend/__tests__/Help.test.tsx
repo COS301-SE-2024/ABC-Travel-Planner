@@ -58,9 +58,9 @@ describe('Help Component', () => {
     const contactHeading = screen.getByRole('heading', { name: /Contact Us/i });
     expect(contactHeading).toBeInTheDocument();
 
-    expect(screen.getByText('abctravel@gmail.com')).toBeInTheDocument();
-    expect(screen.getByText('0814562345')).toBeInTheDocument();
-    expect(screen.getByText('0713452668')).toBeInTheDocument();
+    expect(screen.getByText('techtitans.capstone@gmail.com')).toBeInTheDocument();
+    expect(screen.getByText('081 586 3228')).toBeInTheDocument();
+    expect(screen.getByText('063 244 1519')).toBeInTheDocument();
   });
 
   it('renders the video section', () => {
