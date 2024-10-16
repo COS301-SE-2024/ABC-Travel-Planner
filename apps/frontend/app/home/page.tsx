@@ -42,15 +42,18 @@ const Home = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY) {
-        // User is scrolling down
-        setShowInfoIcon(false);
-      } else {
-        // User is scrolling up
-        setShowInfoIcon(true);
-      }
+     // Only show the icon when scrolling back to the top
+     if (currentScrollY === 0) {
+      setShowInfoIcon(true);
+    } else if (currentScrollY > lastScrollY) {
+      // User is scrolling down, hide the icon
+      setShowInfoIcon(false);
+    } else {
+      // User is scrolling up, but we don't show the icon until reaching the top
+      setShowInfoIcon(false);
+    }
 
-      setLastScrollY(currentScrollY);
+    setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
