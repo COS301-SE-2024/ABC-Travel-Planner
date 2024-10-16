@@ -42,12 +42,15 @@ const Home = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY) {
-        // User is scrolling down
+     // Only show the icon when scrolling back to the top
+      if (currentScrollY === 0) {
+        setShowInfoIcon(true);
+      } else if (currentScrollY > lastScrollY) {
+        // User is scrolling down, hide the icon
         setShowInfoIcon(false);
       } else {
-        // User is scrolling up
-        setShowInfoIcon(true);
+        // User is scrolling up, but we don't show the icon until reaching the top
+        setShowInfoIcon(false);
       }
 
       setLastScrollY(currentScrollY);
@@ -157,9 +160,9 @@ const Home = () => {
   return (
     <div className="w-full mt-8" style={{ minHeight: '100vh', position: 'relative' }}>
      {/* Floating Info Icon */}
-      {showInfoIcon && (
+     {showInfoIcon && (
         <div
-          className={`fixed top-16 left-4 z-10 transition-opacity duration-300 ease-in-out ${
+          className={`fixed top-18 left-4 z-10 transition-opacity duration-300 ease-in-out ${
             showInfoIcon ? 'opacity-100' : 'opacity-0'
           }`}
           style={{ marginTop: '16px' }} // Ensures it doesn't overlap the navbar
