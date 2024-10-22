@@ -15,35 +15,14 @@ the ABC Travel Planner will offer users a seamless and personalised travel exper
 <table>
   <tr>
     <th>Project Board</th>
-    <td><ul><li><a href="https://github.com/orgs/COS301-SE-2024/projects/103">Project Board</a></li></ul></td>
+    <td><li><a href="https://github.com/orgs/COS301-SE-2024/projects/103">Project Board</a></li></td>
   </tr>
   <tr>
     <th>Videos & Documentation</th>
     <td>
-     <ul>
-       <li><a href="https://drive.google.com/drive/folders/1lyyva4NtzyIOwxwUOKRMtfsFis6fee8h?usp=sharing">Google Drive link</a></li>
-     </ul>
-     <ul>
-       <li><a href="https://drive.google.com/file/d/1Gg36B1rfFvXr8QPPPS2dFo3kIDvZ2z4F/view?usp=drive_link">Demo 2 Video</a></li>
-     </ul>
-      <ul>
-       <li><a href="https://drive.google.com/file/d/1xPJCr6eVpIEinqGCS-oEtO7q6qjqvsCi/view?usp=drive_link">Demo 3 Video</a></li>
-     </ul>
-    </td>
-  </tr>
-  <tr>
-    <th>Documentation</th>
-    <td>
-     <ul>
-       <li><a href="https://drive.google.com/file/d/1vYky3RjgYIeraEzf1o8sapqSiunCPcZB/view?usp=sharing">System Requirements Specification</a></li>
-       <li><a href="https://drive.google.com/file/d/1YcXY7UVt74zRj9euUyu_L0Fex-0z19Hj/view?usp=sharing">Architectural Specifications</a></li>
-       <li><a href="https://drive.google.com/file/d/1iBqYIPMALXIp_NXP1IhNPubIOj-OYHdY/view?usp=sharing">Coding Standards</a></li>
-       <li><a href="https://drive.google.com/file/d/1sNUHpTYb9F9NyEC_U_nNhw2CYakV9nh7/view?usp=sharing">Technical Install Manual</a></li>
-       <li><a href="https://drive.google.com/file/d/1MU95S8WMjSqOpgszo5Kl4SHJl_ADDSUq/view?usp=sharing">User Manual</a></li>
-       <li><a href="https://drive.google.com/file/d/1dP-QH0tAoigkwiyzGf-BvKBD3cJIMi7Q/view?usp=drive_link">Testing Policies</a></li>
+       <li><a href="https://drive.google.com/drive/folders/1lyyva4NtzyIOwxwUOKRMtfsFis6fee8h?usp=sharing">Google drive link</a></li>
        <li><a href="https://veed.io/view/a8eb279a-7151-4b56-8462-68033f450bc9">Marketing Video</a></li>
        <li><a href="https://drive.google.com/file/d/1Yv7qGqQZTg5L9Ttqrj5DNDWKZkZOT67i/view?usp=drive_link">Tutorial Video</a></li>
-     </ul>
     </td>
   </tr>
 </table>
