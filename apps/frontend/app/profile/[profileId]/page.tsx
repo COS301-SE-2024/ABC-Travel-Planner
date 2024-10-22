@@ -282,7 +282,7 @@ const Profile = () => {
 
   const { selectedTheme, setTheme, themeStyles } = useTheme();
   return (
-    <div className="profile-page">
+    <div className="profile-page" style={{minHeight: '100vh'}}>
       <header
         className="profile-header"
         style={{ background: themeStyles.primaryColor }}
@@ -315,9 +315,8 @@ const Profile = () => {
           {profileDetails.user_id && (
             <div className="button-group">
               <button
-                className={`follow-button ${
-                  isFollowing ? "unfollow" : "follow"
-                }`}
+                className={`follow-button ${isFollowing ? "unfollow" : "follow"
+                  }`}
                 style={{ background: themeStyles.navbarColor }}
                 onClick={handleFollowButtonClick}
               >
@@ -441,9 +440,8 @@ const Profile = () => {
           {posts.map((post, index) => (
             <div
               key={index}
-              className={`bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer ${
-                enlargedPostIndex === index ? "enlarged" : ""
-              }`}
+              className={`bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer ${enlargedPostIndex === index ? "enlarged" : ""
+                }`}
               onClick={() => handlePostClick(index)}
             >
               <img

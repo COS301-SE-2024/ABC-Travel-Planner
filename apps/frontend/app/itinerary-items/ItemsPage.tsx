@@ -20,7 +20,7 @@ const ItemsPage:React.FC<ItemsPageProps> = ({id, location, destination}) => {
     const { selectedTheme, setTheme, themeStyles } = useTheme();
     const router = useRouter();
     const handleBack = () => {
-      router.back();
+      router.push('/itinerary');
     };
 
     return (
