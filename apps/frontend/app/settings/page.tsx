@@ -840,8 +840,8 @@ const SettingsPage: React.FC = () => {
 
         {/* Modal for theme selection */}
         {showModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 ">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative p-2 space-y-2 max-h-[50vh] overflow-y-auto">
               <button
                 className="absolute top-2 right-2"
                 onClick={() => setShowModal(false)}

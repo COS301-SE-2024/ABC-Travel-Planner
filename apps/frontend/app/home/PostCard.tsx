@@ -575,7 +575,7 @@ const PostCard: React.FC<PostCardProps> = ({
 
         {/* Modal for enlarged image */}
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <div className="relative max-w-screen-sm mx-auto bg-white rounded-lg shadow-lg p-4">
+          <div className="relative max-w-screen-sm mx-auto bg-white rounded-lg shadow-lg p-4 mt-4">
             {/* Close cross */}
             <span
               className="absolute top-[-15px] right-2 text-4xl text-gray-600 hover:text-gray-900 cursor-pointer"

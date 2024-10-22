@@ -35,6 +35,34 @@ const Home = () => {
   const [showInfo, setShowInfo] = useState(false);
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const toggleInfo = () => setShowInfo(!showInfo);
+  const [showInfoIcon, setShowInfoIcon] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+     // Only show the icon when scrolling back to the top
+      if (currentScrollY === 0) {
+        setShowInfoIcon(true);
+      } else if (currentScrollY > lastScrollY) {
+        // User is scrolling down, hide the icon
+        setShowInfoIcon(false);
+      } else {
+        // User is scrolling up, but we don't show the icon until reaching the top
+        setShowInfoIcon(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -131,26 +159,37 @@ const Home = () => {
   const { selectedTheme, themeStyles, setTheme } = useTheme();
   return (
     <div className="w-full mt-8" style={{ minHeight: '100vh', position: 'relative' }}>
-      {/* Floating Info Icon */}
-      <div className="absolute top-4 left-4 z-10">
-        <button onClick={toggleInfo} className="p-2 bg-blue-500 rounded-full shadow-lg" style={{background:themeStyles.navbarColor}}>
-          <AiOutlineInfoCircle
-            size={40}
-            color={showInfo ? themeStyles.primaryColor : themeStyles.primaryColor}
-          />
-        </button>
-        {showInfo && (
-          <div
-            className="mt-2 p-4 rounded-lg shadow-md"
-            style={{
-              background: themeStyles.primaryColor,
-              color: themeStyles.textColor,
-            }}
+     {/* Floating Info Icon */}
+     {showInfoIcon && (
+        <div
+          className={`fixed top-18 left-4 z-10 transition-opacity duration-300 ease-in-out ${
+            showInfoIcon ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{ marginTop: '16px' }} // Ensures it doesn't overlap the navbar
+        >
+          <button
+            onClick={toggleInfo}
+            className="p-2 bg-blue-500 rounded-full shadow-lg"
+            style={{ background: themeStyles.navbarColor }}
           >
-            <p>Click on the destination stories to explore the location in detail.</p>
-          </div>
-        )}
-      </div>
+            <AiOutlineInfoCircle
+              size={40}
+              color={showInfo ? themeStyles.primaryColor : themeStyles.primaryColor}
+            />
+          </button>
+          {showInfo && (
+            <div
+              className="mt-2 p-4 rounded-lg shadow-md"
+              style={{
+                background: themeStyles.primaryColor,
+                color: themeStyles.textColor,
+              }}
+            >
+              <p>Click on the destination stories to explore the location in detail.</p>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="w-full mt-8" style={{ minHeight: '100vh' }}>
         <div
@@ -202,7 +241,7 @@ const Home = () => {
         </div>
 
         <div
-          className="flex justify-center mb-4 mx-auto max-w-md"
+          className="flex justify-center mb-4 mx-auto max-w-md mt-3"
           style={{ background: themeStyles.primaryColor, borderRadius: '12px' }}
         >
           <h2 className="text-4xl font-extrabold" style={{ color: themeStyles.textColor }}>
