@@ -65,7 +65,7 @@ const BookingPage:React.FC<BookingPageProps> = ({data}) => {
     }
 
     return (
-        <div className="container mx-auto p-4 relative">
+        <div className="container mx-auto p-4 relative" style={{minHeight: '100vh'}}>
         <h1 className="text-2xl font-bold mb-4 text-center" style={{ color: themeStyles.textColor }}>Book Your Trip</h1>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
