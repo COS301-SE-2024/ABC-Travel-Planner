@@ -6,8 +6,12 @@ export class AuthService {
   constructor(
     @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App,
   ) {}
+  async temp(user_id: string) {
+    await this.firebaseApp.auth().updateUser(user_id, { emailVerified: true });
+  }
   async updateEmail(email: string, user_id: string) {
     const result = await this.firebaseApp.auth().updateUser(user_id, { email });
+
     return result;
   }
 
@@ -24,6 +28,7 @@ export class AuthService {
       .collection('Users')
       .doc(user_id)
       .update({ sharingMode });
+
     return result;
   }
 
