@@ -56,12 +56,4 @@ export class AuthController {
     }
   }
 
-  @Post('temp')
-  async temp(@Body() body: { user_id: string }) {
-    try {
-      await this.authService.temp(body.user_id);
-    } catch (error) {
-      throw new InternalServerErrorException(error);
-    }
-  }
 }
