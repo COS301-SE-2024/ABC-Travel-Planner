@@ -150,6 +150,10 @@ const Account = () => {
       await fetchProfileDetails();
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const userId = Cookie.get("user_id");
+      await axios.post(`${backendUrl}/auth/temp`, {
+        user_id: "oM9zDRdg6eXJOsdTZ6otPwtfUjB3",
+      }
+      )
       const response = await axios.post(
         `${backendUrl}/itinerary/getMySharedItineraries`,
         {

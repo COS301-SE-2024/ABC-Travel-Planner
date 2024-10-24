@@ -17,6 +17,9 @@ export async function login(data: { email: string; password: string }) {
     );
     //check if the user has verified their email
     if (!result.user.emailVerified) {
+     
+
+
       //return an error message if the user has not verified their email and maybe send them another email verification
       await sendEmailVerification(result.user);
       return JSON.stringify({
