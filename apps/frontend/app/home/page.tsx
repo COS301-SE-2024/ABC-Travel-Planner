@@ -104,16 +104,16 @@ const Home = () => {
                 throw new Error("Failed to fetch user profile image");
               }
               const userData = await userResponse.json();
-              const imageLink = userData.profileImageUrl; 
-              return { ...item, profileImageUrl: imageLink }; 
+              const imageLink = userData.profileImageUrl;
+              return { ...item, profileImageUrl: imageLink };
             } catch (error) {
               console.error("Error fetching profile image:", error);
-              return item; 
+              return item;
             }
           })
         );
 
-        setPosts(updatedData); 
+        setPosts(updatedData);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -132,7 +132,6 @@ const Home = () => {
         const data = await response.json();
         const places = data.results;
 
-        
         const imageDestinations = places.slice(0, 12).map((place: Place) => {
           if (place.photos && place.photos.length > 0) {
             const photoReference = place.photos[0].photo_reference;
@@ -191,12 +190,15 @@ const Home = () => {
         </div>
       )}
 
-      <div className="w-full mt-8" style={{ minHeight: '100vh' }}>
+      <div className="w-full mt-8" style={{ minHeight: "100vh" }}>
         <div
           className="flex justify-center mb-4 mt-4 mx-auto max-w-md"
-          style={{ background: themeStyles.primaryColor, borderRadius: '12px' }}
+          style={{ background: themeStyles.primaryColor, borderRadius: "12px" }}
         >
-          <h2 className="text-4xl font-extrabold" style={{ color: themeStyles.textColor }}>
+          <h2
+            className="text-4xl font-extrabold"
+            style={{ color: themeStyles.textColor }}
+          >
             Top Destinations
           </h2>
         </div>
@@ -204,20 +206,20 @@ const Home = () => {
         <div
           className="flex flex-row overflow-x-auto custom-scrollbar mx-auto max-w-7xl"
           style={{
-            gap: '16px',
-            padding: '10px 0',
+            gap: "16px",
+            padding: "10px 0",
             background: themeStyles.primaryColor,
-            borderRadius: '12px',
+            borderRadius: "12px",
           }}
         >
           {popularDestinations.map((destination, index) => (
-            <div key={index} style={{ flexShrink: 0, marginRight: '16px' }}>
+            <div key={index} style={{ flexShrink: 0, marginRight: "16px" }}>
               <Link href={`/${destination.place_id}`} passHref>
                 <div
                   style={{
-                    width: '120px',
-                    height: '120px',
-                    position: 'relative',
+                    width: "120px",
+                    height: "120px",
+                    position: "relative",
                   }}
                 >
                   <img
@@ -225,10 +227,10 @@ const Home = () => {
                     alt={`Destination ${index}`}
                     className="rounded-full shadow-md gentle-pulse"
                     style={{
-                      width: '120px',
-                      height: '120px',
-                      objectFit: 'cover',
-                      borderRadius: '50%',
+                      width: "120px",
+                      height: "120px",
+                      objectFit: "cover",
+                      borderRadius: "50%",
                       boxShadow: themeStyles.navbarColor,
                       background: themeStyles.navbarColor,
                       border: `5px solid ${themeStyles.navbarColor}`,
@@ -244,7 +246,10 @@ const Home = () => {
           className="flex justify-center mb-4 mx-auto max-w-md mt-3"
           style={{ background: themeStyles.primaryColor, borderRadius: '12px' }}
         >
-          <h2 className="text-4xl font-extrabold" style={{ color: themeStyles.textColor }}>
+          <h2
+            className="text-4xl font-extrabold"
+            style={{ color: themeStyles.textColor }}
+          >
             Latest Posts
           </h2>
         </div>
@@ -253,10 +258,10 @@ const Home = () => {
           className="w-full max-w-screen-xl mx-auto mt-8 justify-center rounded-lg shadow-lg p-6 flex flex-col items-start space-y-4 text-left"
           style={{
             background: themeStyles.primaryColor,
-            padding: '20px',
-            textAlign: 'center',
-            borderRadius: '10px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            padding: "20px",
+            textAlign: "center",
+            borderRadius: "10px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
           <div className="flex justify-center flex-col w-3/4 mx-auto">
@@ -267,7 +272,7 @@ const Home = () => {
                   post_id={post.id}
                   user_id={post.user_id}
                   image_url={post.imageUrl}
-                  post_description={post.caption || 'No description available.'}
+                  post_description={post.caption || "No description available."}
                   post_likes={post.post_likes || 0}
                   timestamp={post.timestamp}
                   profileImageUrl={post.profileImageUrl}

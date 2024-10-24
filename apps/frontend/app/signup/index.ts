@@ -3,12 +3,12 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendEmailVerification,
   updateProfile,
 } from "firebase/auth";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { getFirestore, doc, setDoc, collection } from "firebase/firestore";
 import app from "@/libs/firebase/firebase";
-
 
 export async function signUpWithEmailAndPassword(data: {
   name: string;
@@ -28,6 +28,10 @@ export async function signUpWithEmailAndPassword(data: {
       data.email,
       data.password
     );
+    //send them an email verification before they can login or before they can use the app
+    await sendEmailVerification(result.user);
+    //will it they be able to login without verifying their email?
+
     if (result.user) {
       await updateProfile(result.user, {
         displayName: `${data.name} ${data.surname}`,

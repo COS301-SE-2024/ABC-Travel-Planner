@@ -104,11 +104,11 @@ export default function RegisterPage() {
       alert("Email already in use");
       return;
     } else {
-      alert("Registration successful!");
-      localStorage.setItem("user_id", user.uid);
-      Cookie.set("user_id", user.uid, { expires: 7 });
-
-      router.push("/home");
+      //check if the user has verified their email
+      if (!user.emailVerified) {
+        alert("Please verify your email before logging in");
+        return;
+      }
     }
   };
 

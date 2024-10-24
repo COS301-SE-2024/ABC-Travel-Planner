@@ -43,7 +43,12 @@ const SplashPage = () => {
     if (user) {
       Cookie.set("user_id", user.uid, { expires: 7 });
       router.push("/home");
-    } else {
+    } 
+    //check if the error message is "Please verify your email before logging in"
+    else if (tmp?.error === "Please verify your email before logging in") {
+      alert(tmp.error);
+    }
+    else {
       alert("Invalid email or password");
     }
   };
