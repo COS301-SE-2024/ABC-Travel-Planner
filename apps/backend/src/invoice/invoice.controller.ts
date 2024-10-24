@@ -16,7 +16,7 @@ export class InvoiceController {
     @Post('send')
     async sendInvoice(@Body() body: { items: any[]; email: string}) {
         try {
-            console.log("ITEMS RECEIVED ON BACKEND SIDE:\n" + body.items + "\n" + body.email)
+            console.log("ITEMS RECEIVED ON BACKEND SIDE:\n" + JSON.stringify(body.items) + "\n" + body.email)
             const html = await this.invoiceService.generateInvoice(body.items);
             
             //Create a file with html inside...
