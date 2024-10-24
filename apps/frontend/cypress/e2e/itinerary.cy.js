@@ -1,6 +1,6 @@
 describe("Create an itinerary", () => {
   beforeEach(() => {
-    cy.login("kabza@gmail.com", "Password#1234");
+    cy.login("kaybeek990@gmail.com", "Password#1234");
   });
   it("should display the itinerary page", () => {
     cy.visit("/itinerary");

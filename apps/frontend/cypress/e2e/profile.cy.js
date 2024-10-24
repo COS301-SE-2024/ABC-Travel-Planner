@@ -1,6 +1,6 @@
 describe("View profile info", () => {
   beforeEach(() => {
-    cy.login("kabza@gmail.com", "Password#1234");
+    cy.login("kaybeek990@gmail.com", "Password#1234");
   });
   it("should display account page", () => {
     cy.visit("/account");

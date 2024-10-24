@@ -1,6 +1,6 @@
 describe("View destination info", () => {
     beforeEach(() => {
-      cy.login("kabza@gmail.com", "Password#1234");
+      cy.login("kaybeek990@gmail.com", "Password#1234");
     });
     it("should allow display home page", () => {
         cy.url().should("include", "/home");

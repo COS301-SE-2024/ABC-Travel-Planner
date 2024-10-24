@@ -1,6 +1,6 @@
 describe("Search", () => {
   beforeEach(() => {
-    cy.login("kabza@gmail.com", "Password#1234");
+    cy.login("kaybeek990@gmail.com", "Password#1234");
   });
 
   it("Should display Search page", () => {
