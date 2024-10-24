@@ -49,7 +49,7 @@ Cypress.Commands.add("login", (email: string, password: string) => {
     cy.get('[data-testid="signInPassword"]').type(password);
     cy.get('[data-testid="signInSubmit"]').click({ force: true });
   
-    cy.wait(2000);
+    cy.wait(3000);
     cy.url().should("include", "/home");
   });
   
